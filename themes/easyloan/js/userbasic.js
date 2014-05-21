@@ -21,12 +21,16 @@ function setSelectOptions(json, target, value){
 Drupal.behaviors.userbasic = {
   attach: function(context, settings) {
 
+      var a = $("#userInfoForm"); // the user info form
+      var c = {};                 // this is gonna be a clone of a
+    
       $.cachedScript = function( url, options ) {
         // Allow user to set any option except for dataType, cache, and url
         options = $.extend( options || {}, {
           dataType: "script",
           cache: false,
           url: url,
+          async: false,
         });
         return $.ajax( options );
       };
@@ -37,9 +41,13 @@ Drupal.behaviors.userbasic = {
       ///
       ///  provinceid - the id of the province
       ///  value      - the default city value
-      function setCities(provinceid, value){
-        var url = js_path + 'city/cities_' + provinceid + '.js';
-        $.cachedScript(url).done(function(data, textStatus) {
+      function setCities(provinceid, value, async){ 
+
+        if (async == undefined) { async = true; } 
+
+        var url = js_path + 'city/cities_' + provinceid + '.js'; 
+
+        $.cachedScript(url, {async:async}).done(function(data, textStatus) { 
           var cities = eval('cities_' + provinceid);
           cityCache[provinceid] = cities;
           setSelectOptions(cities, 'city', value);
@@ -57,107 +65,80 @@ Drupal.behaviors.userbasic = {
           }
       });
 
-      var validateForm = function(){
-        $("#userInfoForm").validate({
-          errorPlacement: function(error, element) {
-            element.parent().append(error); // default function
-          },
-          rules: {/*
-            education: {
-              required: true,
-              number:true,
-            },
-            province: {
-              required: true,
-              number:true,
-            },
-            city: {
-              required: true,
-              number:true,
-            },*/
-            address:{
-              required: true,
-            }
-          },
-          messages: {/*
-            education: {
-              required: "受教育程度不能为空",
-              number: "请选择受教育程度",
-            },
-            province: {
-              required: "省份不能为空",
-              number: "请选择省份",
-            },
-            city: {
-              required: "城市不能为空",
-              number: "请选择城市",
-            },*/
-            address: {
-              required: "居住地不能为空",
-            },
-          }
-        });
-      };
+    $.getJSON( Drupal.settings.basePath + "api/basic", 
+      function(d) { 
+        $("span#nickname").html(d.nick); 
 
-    $.getJSON(
-      "http://localhost/d71/api/basic",
-      function(d) {
-        $("span#nickname").html(d.nick);
-        $("span#name").html(d.name);
-        $("span#ssn").html(d.ssn);
-        $("span#mobile").html(d.mobile);
-        $("span#email").html(d.email);
-        $("span#gender").html(d.gender==1?"男":"女");
+        if (d.name){
+          $("span#name").html(d.name).parent().find('span.pass').addClass('icon-status').end()
+                                              .find('span.noauth').removeClass('icon-status');
+        }
+        if (d.ssn){
+          $("span#ssn").html(d.ssn).parent().find('span.pass').addClass('icon-status').end()
+                                              .find('span.noauth').removeClass('icon-status');
+        }
+        if (d.mobile){
+          $("span#mobile").html(d.mobile).parent().find('span.pass').addClass('icon-status').end()
+                                              .find('span.noauth').removeClass('icon-status');
+        }
+        if (d.email){
+          $("span#email").html(d.email).parent().find('span.pass').addClass('icon-status').end()
+                                              .find('span.noauth').removeClass('icon-status');
+        }
+
+        if (d.gender){
+          $("span#gender").html(d.gender==1?"男":"女");
+        }
         $("span#dob").html(d.dob);
         $("#address").val(d.address);
 
         setSelectOptions(educations, 'education', d.education);
         setSelectOptions(marital_status, 'marital', d.marital);
         setSelectOptions(provinces, 'province', d.province);
-        setCities(d.province, d.city);
+        // use 'false' to make sure that all cities have been loaded before 'done()' 
+        setCities(d.province, d.city, false); 
       })
+    .done(function(){
+        // we have to clone the form here, must before the cities are loaded 
+        c = a.clone();
+
+        c.find("input,select,a.photo").each(function () {
+          if ("submit" == this.type || "hidden" == this.type) $(this).remove();
+          else if ("A" == this.tagName.toUpperCase() && "modUserPhoto" == this.id) $(this).attr("href", "#");
+          else if ("text" == this.type) {var a = $(this).val(); $(this).after(a).remove();}
+          else {var a = $(this).find("option:selected").text(); $(this).after(a).remove();}
+        });
+        a.hide().after(c);
+    })
     .fail(function() {
       alert( "网络出现问题，请重新刷新页面" );
     });
-
-    var a = $("#userInfoForm");
-    var c = a.clone();
-    c.find("input,select,a.photo").each(function () {
-        if ("submit" == this.type || "hidden" == this.type) $(this).remove();
-        else if ("A" == this.tagName.toUpperCase() && "modUserPhoto" == this.id) $(this).attr("href", "#");
-        else {
-            var a = $(this).val();
-            $(this).after(a).remove();
-        }
-    }),
-
-    a.hide().after(c), 
-    
+   
     $("#modiForm").click(function () {
         "修改信息" != $(this).text() ? (c.show(), a.hide(), $(this).html("修改信息")) : (c.hide(), a.show(), $(this).html("取消修改"))
     });
 
-/*
-    new d({
-        trigger: "#modUserPhoto",
-        width: "550px",
-        height: /msie 6/i.test(navigator.userAgent) ? "550px" : "220px"
-    }).before("show", function () {
-        this.set("content", this.activeTrigger.attr("href"))
-    }).after("hide", function () {}), e.validate({
-        validateData: {
-            submitHandler: function (a) {
-                e.ajaxSubmit(b(a), {
-                    msgafter: "#" + $(a).find("input[type='submit']")[0].id,
-                    success: function (a) {
-                        this.msg(a.message, "warn"), 0 === a.status && setTimeout(function () {
-                            location.reload()
-                        }, 1500)
-                    }
-                })
-            }
-        }
-    })*/
+
+    $('#savebt').click(function(event) {
+        //$('#savebt').prop('disabled', true).removeClass('.ui-button-green:hover');
+        $.post(Drupal.settings.basePath + "/api/basic", 
+              {
+                education: $('#education').val(),
+                marital: $('#marital').val(),
+                province: $('#province').val(),
+                city: $('#city').val(),
+                address: $('#address').val(),
+              },
+              function(d) {
+                if (d.result==1) {
+                  var msg = $('<span class="ui-form-required pl5">成功保存用户消息</span>');
+                  $('#savebt').after(msg.show().delay(1000).fadeOut().queue(function() { $(this).remove(); location.reload();}));
+                }
+            }, "json") 
+        .fail(function() {
+          alert( "网络出现问题，请重新刷新页面" );
+        });
+    });
   }
 };
 
