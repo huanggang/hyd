@@ -1,0 +1,626 @@
+<?php
+/**
+ * Implements hook_install()
+ */
+function easyloan_install(){
+	// create any roles we will be using
+	$auditor_permissions = array(
+		'auditor permission',
+	);
+	$accountant_permissions = array(
+		'accountant permission',
+	);
+	$manager_permissions = array(
+		'manager permission',
+	);
+	
+	add_role('auditor', 10);
+	add_role('accountant', 20);
+	add_role('manager', 30);
+
+	add_permissions('auditor', $auditor_permissions);
+	add_permissions('accountant', $accountant_permissions);
+	add_permissions('manager', $manager_permissions); 
+
+	// create new content types for easyloan
+	// get the translation function relevant to our current localisation
+	$t = get_t();
+	// define the content type as an array (same as in hook_node_info())
+	$notice = array(
+		'type'        => 'notice',
+		'name'        => $t('网站公告'),
+		'base'        => 'node_content',
+		'description' => $t('好易贷网站公告内容类型'),
+		'body_label'  => $t('网站公告'),
+		'promote'     => 0,
+		'status'      => 1,
+		'comment'     => 0,
+	);
+	$news = array(
+		'type'        => 'news',
+		'name'        => $t('最新动态'),
+		'base'        => 'node_content',
+		'description' => $t('好易贷最新动态内容类型'),
+		'body_label'  => $t('最新动态'),
+		'promote'     => 0,
+		'status'      => 1,
+		'comment'     => 0,
+	);
+	$explanation = array(
+		'type'        => 'explanation',
+		'name'        => $t('帮助中心'),
+		'base'        => 'node_content',
+		'description' => $t('好易贷帮助中心内容类型'),
+		'body_label'  => $t('帮助中心'),
+		'promote'     => 0,
+		'status'      => 1,
+		'comment'     => 0,
+	);
+	$slideshow = array(
+		'type'        => 'slideshow',
+		'name'        => $t('首页幻灯片'),
+		'base'        => 'node_content',
+		'description' => $t('首页幻灯片内容类型'),
+		'body_label'  => $t('首页幻灯片'),
+		'promote'     => 0,
+		'status'      => 1,
+		'comment'     => 0,
+	);
+	$guide = array(
+		'type'        => 'guide',
+		'name'        => $t('新手指引'),
+		'base'        => 'node_content',
+		'description' => $t('新手指引内容类型'),
+		'body_label'  => $t('新手指引'),
+		'promote'     => 0,
+		'status'      => 1,
+		'comment'     => 0,
+	);
+
+	_declare_node_type('notice', $notice);
+	_declare_node_type('news', $news);
+	_declare_node_type('explanation', $explanation);
+	_declare_node_type('slideshow', $slideshow);
+	_declare_node_type('guide', $guide);
+}
+
+/*
+* 
+* 
+*/
+function _declare_node_type($type, $content_type_array){
+	// set default values for anything not explicitly defined in the above array
+	$content_type = node_type_set_defaults($content_type_array);
+
+	// add the body field to the content type
+	node_add_body_field($content_type, 'Body');
+
+	// create the content type
+	node_type_save($content_type);
+
+	variable_set('node_options_' . $type, array('status'));
+	// hide comments for this node. http://api.drupal.org/api/drupal/modules--comment--comment.module/7
+	variable_set('comment_' . $type, 'COMMENT_NODE_HIDDEN');
+
+	// Hide date and author information 
+	variable_set('node_submitted_' . $type, FALSE); 
+
+	// Create all the fields we are adding to our content type.
+	// http://api.drupal.org/api/function/field_create_field/7
+	foreach (_installed_fields($type) as $field) {
+		field_create_field($field);
+	}
+
+	// Create all the instances for our fields.
+	// http://api.drupal.org/api/function/field_create_instance/7
+	foreach (_installed_instances($type) as $instance) {
+		$instance['entity_type'] = 'node';
+		$instance['bundle'] = $type;
+		field_create_instance($instance);
+	}
+
+	// adjust the weight so it's called after a dependant module called 'categories'
+	$weight = db_query("SELECT weight FROM {system} WHERE name = :name", array(':name' => 'categories'))->fetchField();
+	db_update('system')->fields(array(
+							'weight' => $weight + 1,))
+	->condition('name', $type)
+	->execute();
+
+	variable_set('flippy_custom_sorting_' . $type, 0);
+	variable_set('flippy_ellipse_' . $type, '');
+	variable_set('flippy_firstlast_' . $type, 0);
+	variable_set('flippy_first_label_' . $type, '');
+	variable_set('flippy_head_' . $type, 0);
+	variable_set('flippy_last_label_' . $type, '');
+	variable_set('flippy_loop_' . $type, 0);
+	variable_set('flippy_' . $type, 1);
+	variable_set('flippy_next_label_' . $type, '下一篇');
+	variable_set('flippy_order_' . $type, 'ASC');
+	variable_set('flippy_prev_label_' . $type, '上一篇');
+	variable_set('flippy_random_label_' . $type, '');
+	variable_set('flippy_random_' . $type, 0);
+	variable_set('flippy_show_empty_' . $type, 1);
+	variable_set('flippy_sort_' . $type, 'created');
+	variable_set('flippy_truncate_' . $type, '');
+}
+
+function _remove_node_type($type){
+	// Gather all the example content that might have been created while this
+	// module was enabled.  Simple selects still use db_query().
+	// http://api.drupal.org/api/function/db_query/7
+	$sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+	$result = db_query($sql, array(':type' => $type));
+	$nids = array();
+	foreach ($result as $row) {
+		$nids[] = $row->nid;
+	}
+
+	// Delete all the nodes at once
+	// http://api.drupal.org/api/function/node_delete_multiple/7
+	node_delete_multiple($nids);
+
+	// Loop over each of the fields defined by this module and delete
+	// all instances of the field, their data, and the field itself.
+	// http://api.drupal.org/api/function/field_delete_field/7
+	foreach (array_keys(_installed_fields($type)) as $field) {
+		field_delete_field($field);
+	}
+
+	// Delete our content type
+	// http://api.drupal.org/api/function/node_type_delete/7
+	node_type_delete($type);
+
+	// Purge all field information
+	// http://api.drupal.org/api/function/field_purge_batch/7
+	field_purge_batch(1000);
+}
+
+function _installed_fields($type) {
+  $t = get_t();
+  switch ($type) {
+  	case 'notice':
+  		$fields = array(
+	    // text field
+	    'notice_publisher' => array(
+	      'field_name'   => 'notice_publisher',
+	      'label'        => $t('公告发布者'),
+	      'cardinality'  => 1,
+	      'type'         => 'text',
+	      'settings'     => array(
+	        'max_length'  => 1000,
+	      ),
+	    ),
+
+	    // date field (date module required)
+	    'notice_date' => array(
+	      'field_name'   => 'notice_date',
+	      'label'        => $t('公告发布日期'),
+	      'cardinality'  => 1,
+	      'type'         => 'date',
+	    ),
+	  );
+	  return $fields;
+  	case 'news':
+  		$fields = array(
+	    // date field (date module required)
+	    'news_date' => array(
+	      'field_name'   => 'news_date',
+	      'label'        => $t('动态新闻发布日期'),
+	      'cardinality'  => 1,
+	      'type'         => 'date',
+	    ),
+	  );
+	  return $fields;
+  	case 'explanation':
+  		$fields = array(
+	    // date field (date module required)
+		'explanation_group' => array(
+		'field_name'        => 'explanation_group',
+		'type'              => 'taxonomy_term_reference',
+		'label'             => $t('分组标签'),
+		'cardinality'       => 1,
+		'settings' 			=> array(
+				'allowed_values' => array(
+					array(
+					'vocabulary' => 'help',
+					'parent'     => 0
+				)
+			)
+		)
+  	      ),
+	  	);
+
+	  return $fields;
+  	case 'slideshow':
+  		$fields = array(
+	    'field_img' => array(
+	      'field_name'   => 'field_img',
+	      'label'        => $t('幻灯片图片'),
+	      'cardinality'  => 1,
+	      'type'         => 'image', // image_image
+	    ),
+	    'field_link' => array(
+	      'field_name'   => 'field_link',
+	      'label'        => $t('链接'),
+	      'cardinality'  => 1,
+	      'type'         => 'link', // link_field
+	    ),
+	  );
+	  return $fields;
+	case 'guide':
+  		$fields = array(
+	    'field_group' => array(
+	      'field_name'   => 'field_group',
+	      'label'        => $t('标签'),
+	      'cardinality'  => 1,
+	      'type'         => 'taxonomy_term_reference',
+	      'settings' 	 => array(
+				'allowed_values' => array(
+					array(
+					'vocabulary' => 'help',
+					'parent'     => 0
+				)
+			)
+		)
+	    ),
+	  );
+	  return $fields;
+  	default:
+  		# code...
+  		break;
+  }
+}
+
+
+function _installed_instances($type) {
+  $t = get_t();
+  switch ($type) {
+  	case 'notice':
+  		$instances = array(
+	    // instance of the text field above
+	    // instance of the taxonomy term reference field above
+	    'notice_publisher' => array(
+	      'field_name' => 'notice_publisher',
+	      'entity_type' => 'node',
+	      'label' => $t('公告发布者'),
+	      'bundle' => 'article',
+	      'required' => TRUE,
+	      '#default_value' => '好易贷团队',
+	      'widget' => array(
+	        'type' => 'text_textfield',
+	      ),
+	    ),
+
+	    // instance of the date field above
+	    'notice_date' => array(
+	      'field_name'  => 'notice_date',
+	      'label'       => $t('公告发布日期'),
+	      'cardinality' => 1,
+	      'widget'      => array(
+	        'type'       => 'date_popup',
+	      ),
+	    ),
+	  );
+	  return $instances;
+	case 'news':
+  		$instances = array(
+	    // instance of the date field above
+	    'news_date' => array(
+	      'field_name'  => 'news_date',
+	      'label'       => $t('动态新闻发布日期'),
+	      'cardinality' => 1,
+	      'widget'      => array(
+	        'type'       => 'date_popup',
+	      ),
+	    ),
+	  );
+	  return $instances;
+	case 'explanation':
+		$instances = array(
+		'explanation_group' => array(
+	      'field_name'   => 'explanation_group',
+	      'label'        => $t('分组标签'),
+			'required' => TRUE,
+		    'widget' => array(
+		      'type' => 'options_select',
+		      'weight' => -10,
+		    )
+	      ),
+	  	);
+	  return $instances;
+	case 'slideshow':
+  		$instances = array(
+	    // instance of the date field above
+	    'field_img' => array(
+	      'field_name'  => 'field_img',
+	      'label'       => $t('幻灯片图片'),
+	      'cardinality' => 1,
+	      'widget'      => array(
+	        'type'       => 'image_image',
+	      ),
+	    ),
+	    'field_link' => array(
+	      'field_name'  => 'field_link',
+	      'label'       => $t('链接'),
+	      'cardinality' => 1,
+	      'widget'      => array(
+	        'type'       => 'link_field',
+	      ),
+	    ),
+	  );
+	  return $instances;
+  	case 'guide':
+		$instances = array(
+		'field_group' => array(
+	      'field_name'   => 'field_group',
+	      'label'        => $t('标签'),
+			'required' => TRUE,
+		    'widget' => array(
+		      'type' => 'options_select',
+		      'weight' => -10,
+		    )
+	      ),
+	  	);
+	  return $instances;
+  	default:
+  		# code...
+  		break;
+  }
+  
+}
+
+
+/**
+ *	Adds a new role
+ *      @machine_name - the name of the role to be added
+ *      @weight - the optional display weight for role
+ */
+function add_role($machine_name, $weight = 0){ 
+	$role         = new stdClass(); 
+	$role->name   = $machine_name; 
+	$role->weight = $weight; 
+	
+	if (!user_role_load_by_name($role->name)){ 
+    	user_role_save($role); 
+  	}
+}
+
+/**
+ *	Adds permissions to a role
+ *	@role_name - the name of the role to receive an update
+ *	@permissions - the array of permissions to add
+ */
+function add_permissions($role_name, $permissions){
+	$role = user_role_load_by_name($role_name);
+
+	// to make sure this method works, we have to implement the 
+	// hook_permissions() in the module
+	user_role_grant_permissions($role->rid, $permissions);
+}
+
+
+function easyloan_enable() {
+	$t = get_t();
+	// Create a custom menu, if Menu module is enabled.
+	// @see easyloan_modules_installed()
+	if (module_exists('menu')) {
+		menu_save(array(
+			'menu_name'   => 'easyloan_exchange', 
+			'title'       => $t('好易贷友情链接'),
+			'description' => $t('好易贷的友情链接'), 
+			'module'     => 'easyloan',
+		));
+
+		menu_save(array(
+			'menu_name'   => 'easyloan_guide', 
+			'title'       => $t('好易贷新手指引链接'), 
+			'description' => $t('新手指引菜单'), 
+			'module'     => 'easyloan',
+		));
+
+		menu_save(array(
+			'menu_name'   => 'easyloan_about', 
+			'title'       => $t('好易贷关于我们链接'), 
+			'description' => $t('关于我们左边菜单'), 
+			'module'     => 'easyloan',
+		));
+
+		menu_save(array(
+			'menu_name'   => 'easyloan_account', 
+			'title'       => $t('好易贷个人账户链接'), 
+			'description' => $t('个人账户页面左边菜单'), 
+			'module'     => 'easyloan',
+		));
+
+		menu_save(array(
+			'menu_name'   => 'easyloan_help', 
+			'title'       => $t('好易贷帮助中心链接'), 
+			'description' => $t('帮助中心左边链接'), 
+			'module'     => 'easyloan',
+		));
+
+		$menu_item = array(
+			'link_title' => $t('我的好易贷'),
+			'menu_name'  => 'easyloan_account',
+			'customized' => 1,
+			'link_path'  => 'user', 
+			'module'     => 'easyloan',
+		);
+		menu_link_save($menu_item);
+/*
+		// add sample exchange links
+		$menu_item = array(
+		  'link_title' => $t('人人贷'),
+		  'menu_name'  => 'easyloan_exchange',
+		  'customized' => 1,
+		  'link_path'  => 'http://www.renrendai.com', 
+		  'module'     => 'easyloan',
+		);
+		menu_link_save($menu_item);
+*/
+	}
+	
+	// 好易贷‘关于我们’左边菜单模块设置
+	db_update('block') 
+	    ->fields(array(
+			'region'     => 'sidebar_first', 
+			'visibility' => 2,	// 1: listed pages; 2: show PHP code 
+			'status'     => 1, 
+			'title'      => '<none>',
+			'pages'      => '<?php 
+$m = FALSE;
+$types = array("notice"=>1, "news"=>1, );
+$url = request_uri();
+if ((arg(0) == "node") && is_numeric(arg(1))) {
+$node = node_load(arg(1));
+	if (isset(types[$node->type])){
+		$m = TRUE;
+	}
+}
+// block is invisible on URLs entered here 
+if (strpos($url, "about/notices")) {
+	$m = TRUE;
+}
+return $m;
+?>',
+			'cache'      => DRUPAL_CACHE_GLOBAL, // 8 is for DRUPAL_CACHE_GLOBAL
+	    ))
+	    ->condition('module', 'menu')
+	    ->condition('theme', 'easyloan')
+	    ->condition('delta', 'easyloan_about') // always cache 
+	    ->execute();
+
+	// 好易贷‘新手指导’菜单模块设置
+	db_update('block') 
+	    ->fields(array(
+			'region'     => 'content_top',
+			'status'     => 1,
+			'visibility' => 1,	// show only on listed pages 
+			'title'      => '<none>',
+			'pages'      => 'guide/*',
+			'cache'      => DRUPAL_CACHE_GLOBAL,
+	    ))
+	    ->condition('module', 'menu')
+	    ->condition('theme', 'easyloan')
+	    ->condition('delta', 'easyloan_guide') // always cache 
+	    ->execute();
+
+	// 好易贷‘友情链接’菜单模块设置
+	db_update('block') 
+	    ->fields(array(
+			'region'     => 'footer',
+			'status'     => 1,
+			'visibility' => 0,	// show on all pages
+			'title'      => '<none>',
+			'pages'      => '',
+			'cache'      => DRUPAL_CACHE_GLOBAL,
+	    ))
+	    ->condition('module', 'menu')
+	    ->condition('theme', 'easyloan')
+	    ->condition('delta', 'easyloan_exchange') // always cache 
+	    ->execute();
+
+	// 好易贷‘帮助中心’菜单模块设置
+	db_update('block') 
+	    ->fields(array(
+			'region'     => 'sidebar_first',
+			'status'     => 1,
+			'visibility' => 1,	// show only on listed pages 
+			'title'      => '<none>',
+			'pages'      => 'help/*',
+			'cache'      => DRUPAL_CACHE_GLOBAL,
+	    ))
+	    ->condition('module', 'menu')
+	    ->condition('theme', 'easyloan')
+	    ->condition('delta', 'easyloan_help') // always cache 
+	    ->execute();
+
+	// 好易贷‘个人账户’菜单模块设置 
+	db_update('block') 
+	    ->fields(array( 
+			'region'     => 'sidebar_first', 
+			'status'     => 1, 
+			'visibility' => 1,	// show only on listed pages 
+			'title'      => '<none>', 
+			'pages'      => 'user/*
+user
+capital_management/*
+invest_management
+loan_management
+account_management/*
+management/*', // Please DO NOT change the 'pages' list, the whitespaces format are important
+			'cache'      => DRUPAL_CACHE_PER_ROLE,	// cache per role 
+	    ))
+	    ->condition('module', 'menu')
+	    ->condition('theme', 'easyloan')
+	    ->condition('delta', 'easyloan_account') // always cache 
+	    ->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function easyloan_uninstall() {
+
+	// remove any roles we created 
+	user_role_delete('auditor');
+	user_role_delete('accountant');
+	user_role_delete('manager');
+
+		// Delete the easyloan menu.
+	if (module_exists('menu')) { 
+		if ($menu = menu_load('easyloan_exchange')) { 
+			menu_delete($menu); 
+		}
+		if ($menu = menu_load('easyloan_guide')) { 
+			menu_delete($menu); 
+		}
+		if ($menu = menu_load('easyloan_about')) { 
+			menu_delete($menu); 
+		}
+		if ($menu = menu_load('easyloan_account')) { 
+			menu_delete($menu); 
+		}
+		if ($menu = menu_load('easyloan_help')) { 
+			menu_delete($menu); 
+		}
+	}
+	
+	_remove_node_type('notice');
+	_remove_node_type('news');
+	_remove_node_type('explanation');
+
+	// remove the flippy settings for content types 
+	_remove_flippy_variables('notice');
+	_remove_flippy_variables('news');
+}
+
+function easyloan_disable(){
+	// Delete all links of the easyloan menu.
+	if (module_exists('menu')) { 
+		menu_delete_links('easyloan_exchange');  // this one should be deleted manually
+		menu_delete_links('easyloan_guide'); 
+		menu_delete_links('easyloan_about'); 
+		menu_delete_links('easyloan_account'); 
+		menu_delete_links('easyloan_help'); 
+	}
+}
+
+function _remove_flippy_variables($type){
+	variable_del('flippy_custom_sorting_' . $type);
+	variable_del('flippy_ellipse_' . $type);
+	variable_del('flippy_firstlast_' . $type);
+	variable_del('flippy_first_label_' . $type);
+	variable_del('flippy_head_' . $type);
+	variable_del('flippy_last_label_' . $type);
+	variable_del('flippy_loop_' . $type);
+	variable_del('flippy_' . $type);
+	variable_del('flippy_next_label_' . $type);
+	variable_del('flippy_order_' . $type);
+	variable_del('flippy_prev_label_' . $type);
+	variable_del('flippy_random_label_' . $type);
+	variable_del('flippy_random_' . $type);
+	variable_del('flippy_show_empty_' . $type);
+	variable_del('flippy_sort_' . $type);
+	variable_del('flippy_truncate_' . $type);
+}

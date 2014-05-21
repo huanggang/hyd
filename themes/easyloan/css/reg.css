@@ -1,0 +1,129 @@
+#pg-reg {
+background:#f2f2f2;
+min-height:500px;
+_height:500px;
+}
+
+#pg-login .container_12 {
+padding:50px 0;
+}
+
+#pg-reg .regbox {
+background:#fff;
+width:800px;
+min-height:400px;
+margin:30px auto;
+padding:20px 0;
+}
+
+#pg-reg .oauth-hint {
+padding-left:170px;
+margin-bottom:20px;
+}
+
+#pg-reg .ui-form-item .icon {
+left:180px;
+}
+
+#pg-reg .ui-form-item .placeholder {
+left:150px;
+}
+
+#pg-reg .ui-form legend {
+padding-left:170px;
+}
+
+#pg-reg .ui-form .ui-input {
+width:180px;
+}
+
+#pg-reg .ui-form .code {
+width:110px;
+}
+
+#pg-reg .getMobileCode {
+margin-left:33px;
+}
+
+#pg-reg .servelResult {
+margin-left:170px;
+color:red;
+line-height:30px;
+}
+
+#mobileCodeBox .notice li {
+line-height:24px;
+color:#969696;
+padding-left:75px;
+}
+
+
+/**********************************/ 
+#pg-reg legend {
+	font-size:16px;
+	margin-bottom:15px;
+	padding-left:170px; 
+}
+
+#pg-reg .ui-form-item-check input {
+	display:block;
+	float:left;
+	margin-top: 5px;
+}
+
+#pg-reg .ui-form-item-check label {
+	display:block;
+	float:left;
+}
+
+#pg-reg .ui-form-item input {
+	display:block;
+	float:left;
+}
+
+#pg-reg .ui-form-item label {
+	display:block;
+	float:left;
+}
+
+#pg-reg input.input-icon{
+	padding-left: 30px;
+	margin-right: 10px;
+}
+
+#edit-captcha-response{
+	float:left;
+}
+
+.captcha div.form-item{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+
+.ui-form-item .ui-button{
+	margin-right: 20px;
+}
+
+
+#pg-reg .ui-form-item label.error {
+    display: block;
+    clear: both;
+    margin-top: 5px;
+}
+
+/***************wizard fixing***************/
+div.steps{
+	display: none;
+}
+div.actions .disabled{
+	display: none;
+}
+#reg h3.title{
+	display: none;
+}
+div.actions li{
+	width: 100px;
+	float: left;
+}
+

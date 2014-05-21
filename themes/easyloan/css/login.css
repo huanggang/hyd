@@ -1,0 +1,80 @@
+#pg-login {
+color:#8c8c8c;
+min-height:500px;
+_height:500px;
+}
+
+#pg-login .container_12 {
+padding:50px 0;
+}
+
+#pg-login .loginbox {
+background:#fff;
+padding:25px 40px;
+}
+
+#pg-login .oauth-hint {
+margin-bottom:20px;
+}
+
+#pg-login .ui-form-item {
+padding:0 5px 20px 0;
+display: block;
+}
+
+#pg-login .loginbox .ui-input {
+width:260px;
+}
+
+#pg-login .loginbox .findpsw {
+position:absolute;
+right:0;
+}
+
+#pg-login .logininfo {
+width:420px;
+}
+
+#pg-login .pull_5 {
+_margin-right:5px;
+}
+
+#pg-login .logininfo h1 {
+font-size:26px;
+font-weight:700;
+line-height:44px;
+}
+
+#pg-login .code {
+width:140px;
+}
+
+#pg-login .ui-label {
+display:none;
+}
+
+#randImage {
+position:absolute;
+left:230px;
+top:10px;
+}
+/**********************************/
+.loginbox legend {
+	font-size:16px;
+	margin-bottom:15px;
+}
+
+#pg-login .ui-form-item-check input{
+	display:block;
+	float:left;
+	margin-top: 5px;
+}
+#pg-login .ui-form-item-check label{
+	width:90px;
+	display:block;
+	float:left;
+}
+
+#pg-login input.input-icon{
+	padding-left: 30px;
+}

@@ -1,0 +1,32 @@
+; $Id: bots.info,v 1.0 2010/09/04 05:50:55 dries Exp $
+name = easyloan
+description = An online loaning system
+package = Boryi
+core = 7.x
+files[] = easyloan.module
+files[] = easyloan.install
+
+configure=admin/config/content/easyloan/settings
+
+
+dependencies[] = captcha
+dependencies[] = ckeditor
+;dependencies[] = csna
+dependencies[] = ctools
+dependencies[] = date
+dependencies[] = flippy
+dependencies[] = imce
+dependencies[] = pagerer
+dependencies[] = jquery_update
+dependencies[] = link
+dependencies[] = pagerer
+dependencies[] = views
+
+
+
+; Information added by drupal.org packaging script on 2010-11-22
+version = "1.0"
+project = "Boryi"
+datestamp = "1281559292"
+
+

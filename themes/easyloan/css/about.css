@@ -1,0 +1,8 @@
+.right-container{padding:20px;background:#fff}#pg-about-detail .title{margin:10px 0}#pg-about-detail .top{text-align:right}#pg-about-detail .article{min-height:300px}.rrdcolor-blue-text{font-size:16px}h1.rrdcolor-blue-text{margin-bottom:10px;font-size:22px}.pg-about-img{max-width:760px;text-align:center}.team{position:relative}.team-item{padding:15px}.team-item:hover{background:#f9f9f9}.team-item img{float:left;margin-right:20px;border:1px solid #eee;padding:2px}.team-item .team-logo{display:block;float:left;width:224px;min-height:46px;margin-right:20px;padding:2px;background:#fff;border:1px solid #eee;text-align:center}.team-item .team-logo img{max-width:224px;border:0}.record{float:left;width:550px}.record h5{position:relative;border-bottom:1px solid #0697da;font-size:20px;margin-bottom:5px;padding-bottom:5px;width:100%}.record h5 span{position:absolute;top:12px;right:25px;color:#898989;font-size:12px}.performance a.look{margin:5px 0}.responsibility>a{float:left;display:inline-block}.responsibility .record{width:50%}.partner .img{float:left;width:33%}.partner .fr{float:left;width:60%}.report .record{width:50%}#news-list .ui-list-field.text{width:80%}#notices-list .ui-list-field.text{width:80%}.partner .record{width:60%}.record h5 b{margin-right:10px}
+
+li.viewall{
+	list-style: none;
+}
+table.pagerer{
+	width:740px;
+}

@@ -1,0 +1,41 @@
+/*
+ * Account page: includes all css under account module
+ * name space: .pg-account
+ */
+
+.pg-account .box {
+/*   box-shadow: 0 0 4px #ddd; */
+/*   border:1px solid #ddd; */
+  background:#fff;
+}
+
+.pg-account .list-more {
+  background: url("/static/img/list-more.png?rrdversion=20131013b") no-repeat 0 center;
+  padding-left:15px;
+}
+
+#inbox_content{
+	background:#fff;
+}
+
+.tips{
+	color:#0099dd;
+	font-size:14px;
+	margin-left:5px;
+	color:#7fd4f3;
+}
+
+.tips:hover{
+	color:#09d;
+}
+
+.pg-account .box-summary-left {
+  padding-right: 20px;
+	width: 200px;
+}
+
+.pg-account .box-summary-right {
+  border-left: 1px solid #e0e0e0;
+  padding-left: 19px;
+  width: 500px;
+}

@@ -1,0 +1,123 @@
+#pg-account-user .box{
+  padding:10px 0;
+}
+
+#pg-account-user .inputs{
+   margin-left:150px;
+}
+
+#pg-account-user .head{
+   margin:20px;
+}
+
+#pg-account-user .title{
+  font-size: 22px;
+}
+
+#pg-account-user #userInfoForm{
+  position:relative;
+  width:100%;
+}
+
+#pg-account-user .userphoto{
+  position:absolute;
+  top:0;
+  left:30px;
+  cursor:pointer;
+}
+
+#pg-account-user .userphoto .photo{
+  width:96px;
+  height:96px;
+  display:block;
+  border:1px solid #ddd;
+}
+
+#pg-account-user .userphoto img{
+  width:96px;
+  height:96px;
+}
+
+#pg-account-user .uploadPhoto{
+  width:550px;
+}
+
+#pg-account-user .uploadPhoto .inputs{
+  margin:30px 50px;
+}
+
+#pg-account-user .uploadPhoto .bts{
+  margin-top:20px;
+  text-align:right;
+}
+
+#pg-account-user .uploadPhoto .bts input{
+  margin:0 10px;
+}
+
+
+#pg-account-user .uploadPhoto .title{
+  line-height:40px;
+  padding-left:20px;
+  background:#e1e1e1;
+  font-size:16px;
+}
+
+#pg-account-user .uploadPhoto .selectFile{
+ margin-bottom:10px;
+ position:relative;
+}
+#pg-account-user .uploadPhoto .selectFile input{
+ position:absolute;
+ top:0;
+ right:0;
+ height:28px;
+ font-size:300px;
+ cursor:pointer;
+ opacity:0;
+ border:0 none;
+ filter:alpha(opacity=0);
+}
+
+
+#pg-account-user .uploadPhoto .selectFile .fileInput{
+  width:350px;
+  height:28px;
+  line-height:28px;
+  border:1px solid #bEbbbb;
+  cursor:text;
+}
+
+#pg-account-user .uploadPhoto .selectFile .fileBt{
+  padding:0 15px;
+  height:30px;
+  line-height:30px;
+  background:#00a8e8;
+  margin-left:-1px;
+  color:#fff;
+  cursor:pointer;
+  
+}
+
+#pg-account-user .ui-form-item .icon-status{
+  display:block;
+  color:#ccc;
+  position:absolute;
+  padding-left:20px;
+  top:0px;
+  right:50px;
+}
+#pg-account-user .ui-form-item .pass{
+  background:url("../images/pass.png") left center no-repeat; 
+}
+#pg-account-user .ui-form-item .noauth{
+  background:url("../images/noauth.png") left center no-repeat; 
+}
+
+#pg-account-user .ui-button{
+  display: inline-block;
+}
+
+label {
+  font-weight: normal;
+}

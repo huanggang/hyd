@@ -1,0 +1,1654 @@
+.pg-account .list-more {
+background:url(../images/list-more.png?rrdversion=20131013b) no-repeat 0 center;
+padding-left:15px;
+}
+
+#inbox_content {
+background:#fff;
+position:relative;
+min-height:500px;
+}
+
+.tips {
+font-size:14px;
+margin-left:5px;
+color:#7fd4f3;
+}
+
+.tips:hover {
+color:#09d;
+}
+
+.pg-account .box-summary-left {
+padding-right:20px;
+width:200px;
+}
+
+.pg-account .box-summary-right {
+border-left:1px solid #e0e0e0;
+padding-left:19px;
+width:500px;
+}
+
+#pg-account-index .ad-section {
+width:780px;
+height:49px;
+overflow:hidden;
+}
+
+#pg-account-index .box {
+background:#fff;
+border:1px solid #e0e0e0;
+box-shadow:0 0 2px 1px #efefef;
+}
+
+#pg-account-index .box-user-info {
+position:relative;
+border-top:0;
+}
+
+#pg-account-index .user-avatar-container {
+position:absolute;
+top:-50px;
+width:96px;
+height:96px;
+border:1px solid #ccc;
+background:#fff;
+margin:20px;
+padding:2px;
+}
+
+#pg-account-index .user-info-container {
+padding-left:142px;
+padding-bottom:10px;
+}
+
+#pg-account-index .user-security-container {
+width:168px;
+position:relative;
+}
+
+#pg-account-index .user-security-container .safe {
+height:24px;
+margin:6px 0;
+}
+
+#pg-account-index .safe-progressbar {
+width:102px;
+height:10px;
+border:1px solid #c5c4c4;
+border-radius:5px;
+overflow:hidden;
+margin:5px 2px 0;
+}
+
+#pg-account-index .safe-progressbar .bar {
+background:#fa0;
+width:0;
+height:8px;
+border-radius:4px;
+margin:1px;
+}
+
+#pg-account-index .icon-box {
+margin-right:1px;
+border-radius:4px;
+background:#f9f9f9;
+padding:5px;
+}
+
+#pg-account-index .icon-box.light {
+background:#f6fbfd;
+}
+
+#pg-account-index .safe-rank {
+background:url(../images/security-icons.png?rrdversion=20131013b) no-repeat;
+width:30px;
+height:30px;
+display:inline-block;
+_display:inline;
+zoom:1;
+}
+
+#pg-account-index .icons .man.light {
+background-position:0 -30px;
+}
+
+#pg-account-index .icons .cellphone {
+background-position:-30px 0;
+}
+
+#pg-account-index .icons .cellphone.light {
+background-position:-30px -30px;
+}
+
+#pg-account-index .icons .mail {
+background-position:-60px 0;
+}
+
+#pg-account-index .icons .mail.light {
+background-position:-60px -30px;
+}
+
+#pg-account-index .icons .lock {
+background-position:-90px 0;
+}
+
+#pg-account-index .icons .lock.light {
+background-position:-90px -30px;
+}
+
+#pg-account-index .user-info-container .surplus span {
+line-height:36px;
+height:36px;
+}
+
+#pg-account-index .user-info-container .surplus .num-xl {
+width:200px;
+}
+
+#pg-account-index .user-info-container .surplus .ui-button {
+margin-top:3px;
+}
+
+#pg-account-index .user-info-container .surplus-detail {
+line-height:40px;
+height:40px;
+}
+
+#pg-account-index .equation {
+border-bottom:2px solid #f2f2f2;
+padding:10px 0 20px;
+}
+
+#pg-account-index .equation .text-center {
+width:147px;
+}
+
+#pg-account-index .equation .symbol {
+width:30px;
+height:40px;
+line-height:80px;
+font-family:arial;
+font-size:32px;
+text-align:center;
+margin:0 10px;
+}
+
+#pg-account-index .summary {
+padding-left:10px;
+}
+
+#pg-account-index .summary,#pg-account-index .summary p {
+height:50px;
+line-height:50px;
+}
+
+#pg-account-index .ui-list {
+min-height:0;
+}
+
+#pg-account-index .ui-list-header {
+background:#f6fbfd;
+border-top:1px solid #f2f2f2;
+border-bottom:1px solid #f2f2f2;
+}
+
+#pg-account-index .ui-list-item.last {
+border-bottom:1px solid #f2f2f2;
+}
+
+#pg-account-index .ui-list-status {
+height:30px;
+line-height:30px;
+font-size:14px;
+border-bottom:1px solid #f2f2f2;
+padding:5px 0;
+}
+
+#pg-account-index .ui-list-invest.loan-s span {
+height:36px;
+line-height:36px;
+}
+
+#pg-account-index .ui-list-invest.loan-s .ui-loantype {
+margin:3px 5px;
+}
+
+#pg-account-index .ui-list-invest.loan-s .ui-creditlevel {
+border-radius:15px;
+width:30px;
+height:30px;
+line-height:30px;
+font-size:16px;
+margin:3px auto;
+}
+
+#pg-account-index .ui-list-invest.loan-s .ui-button {
+display:block;
+margin-top:7px;
+margin-left:5px;
+width:35px;
+min-width:0;
+}
+
+#pg-account-index .plan {
+padding-bottom:10px;
+border-bottom:2px solid #f2f2f2;
+}
+
+#pg-account-index .plan span.fn-left {
+height:24px;
+line-height:24px;
+}
+
+#pg-account-index .plan-title {
+line-height:40px;
+}
+
+#pg-account-index .plan-conditions {
+width:160px;
+margin-top:16px;
+}
+
+#pg-account-index .plan .ui-button {
+margin-top:25px;
+}
+
+#pg-account-stat ul.stat {
+width:325px;
+margin-top:35px;
+}
+
+#pg-account-stat ul.stat .wide {
+height:123px;
+line-height:123px;
+}
+
+#pg-account-stat ul li {
+vertical-align:top;
+}
+
+#pg-account-stat ul.stat li.bottom-border {
+border-bottom:1px solid #e5e4e2;
+}
+
+#pg-account-stat div.chart {
+width:415px;
+height:300px;
+}
+
+#pg-account-stat div.chart.empty {
+color:#ccc;
+font-size:20px;
+line-height:200px;
+text-align:center;
+}
+
+#pg-addcard {
+background:#fff;
+width:650px;
+}
+
+#pg-addcard .inputs {
+padding-left:180px;
+}
+
+#pg-addcard .title {
+height:30px;
+line-height:30px;
+border-bottom:1px solid #ddd;
+padding-left:20px;
+font-size:16px;
+margin-bottom:20px;
+}
+
+#pg-addcard .areadiv {
+line-height:26px;
+color:#AAA;
+}
+
+#pg-addcard .areadiv span {
+margin-left:10px;
+cursor:pointer;
+color:#444;
+}
+
+#pg-addcard .probox {
+position:absolute;
+border:1px solid #ccc;
+box-shadow:#ccc 0 1px 5px;
+width:430px;
+height:157px;
+left:0;
+top:41px;
+z-index:999;
+background-color:#fff;
+display:none;
+padding:10px;
+}
+
+#pg-addcard #citybox {
+position:absolute;
+z-index:11;
+width:270px;
+border:1px solid #CCC;
+background:#FFF;
+display:none;
+padding:5px 10px;
+}
+
+#pg-addcard #cityboxcon {
+width:260px;
+}
+
+#pg-addcard #citybox a {
+margin-right:10px;
+text-decoration:none;
+line-height:22px;
+cursor:pointer;
+}
+
+#pg-addcard .probox .close {
+position:absolute;
+right:10px;
+top:5px;
+cursor:pointer;
+}
+
+#pg-addcard .bankSearch {
+position:absolute;
+border:1px solid #ccc;
+box-shadow:0 1px 5px #ccc;
+-moz-box-shadow:0 1px 5px #ccc;
+-webkit-box-shadow:0 1px 5px #ccc;
+width:330px;
+height:160px;
+left:0;
+top:41px;
+_top:35px;
+z-index:1;
+background:#fff;
+overflow:auto;
+display:none;
+padding:10px;
+}
+
+#pg-addcard .bankSearch li.enter {
+background:#bfe9ff;
+}
+
+#pg-addcard .serverMsg {
+color:red;
+padding-left:100px;
+line-height:40px;
+}
+
+#pg-account-bank .bankList {
+padding-bottom:20px;
+}
+
+#pg-account-bank .bankList ul li {
+width:224px;
+height:120px;
+text-align:center;
+border:1px solid #ccc;
+border-radius:5px;
+float:left;
+display:inline;
+cursor:pointer;
+color:#a5a5a5;
+overflow:hidden;
+position:relative;
+margin:10px;
+}
+
+#pg-account-bank .bankList ul li .card {
+position:absolute;
+left:0;
+bottom:0;
+width:100%;
+line-height:30px;
+color:#A5A5A5;
+border-top:1px solid #DDD;
+}
+
+#pg-account-bank .bankList ul li.checked {
+border:2px solid #00a8e7;
+height:118px;
+}
+
+#pg-account-security .title {
+font-size:22px;
+padding-left:20px;
+height:30px;
+line-height:30px;
+}
+
+#pg-account-security .security-ul {
+line-height:32px;
+padding:0 20px;
+}
+
+#pg-account-security .security-ul li {
+border-bottom:1px solid #eee;
+padding:20px 0;
+}
+
+#pg-account-security .security-ul .icon {
+background:url(../images/securityall.png?rrdversion=20131013b);
+width:32px;
+height:32px;
+float:left;
+margin-right:30px;
+display:inline;
+}
+
+#pg-account-security .security-ul .icon-email {
+background-position:0 -50px;
+}
+
+#pg-account-security .security-ul .icon-id {
+background-position:0 -90px;
+}
+
+#pg-account-security .security-ul .icon-loginpsw {
+background-position:3px -138px;
+}
+
+#pg-account-security .security-ul .icon-mobile {
+background-position:3px -188px;
+}
+
+#pg-account-security .security-ul .icon-nick {
+background-position:0 -232px;
+}
+
+#pg-account-security .security-ul h3 {
+float:left;
+width:150px;
+font-size:18px;
+}
+
+#pg-account-security .security-ul p {
+float:left;
+width:250px;
+}
+
+#pg-account-security .security-ul .update {
+float:right;
+color:#ccc;
+}
+
+#pg-account-security .content {
+width:700px;
+}
+
+#pg-account-security .mauto {
+margin:0 auto;
+padding:20px 0;
+}
+
+#pg-account-security .content .inputs {
+margin-left:100px;
+}
+
+#pg-account-security .content p.info {
+text-align:center;
+color:#adadad;
+padding:10px 0;
+}
+
+#pg-account-security .success {
+width:700px;
+text-align:center;
+}
+
+#pg-account-security .success h3 {
+height:80px;
+line-height:80px;
+}
+
+#pg-account-security .success .backBt {
+margin-bottom:20px;
+}
+
+#pg-account-security .errortext .iconfont {
+font-size:30px;
+color:#f17975;
+}
+
+#pg-account-security .errortext .text-big {
+font-size:20px;
+color:#4b4b4b;
+}
+
+#pg-account-security .setFormBox {
+padding-top:50px;
+}
+
+.safety_step {
+padding-top:30px;
+}
+
+.safety_step .bgline {
+background:none repeat scroll 0 0 #EBF2DE;
+font-size:0;
+height:5px;
+top:31px;
+width:100%;
+z-index:1;
+}
+
+.safety_step .fourStep,.safety_step .threeStep {
+left:107px;
+top:-19px;
+}
+
+.safety_step ul li {
+float:left;
+text-align:center;
+background-image:url(../images/safety-step.png?rrdversion=20131013b);
+background-repeat:no-repeat;
+padding-top:40px;
+}
+
+.safety_step .fourStep ul li,.safety_step .threeStep ul li {
+width:135px;
+padding-left:0;
+}
+
+.safety_step .threeStep ul li {
+width:185px;
+}
+
+.safety_step .fourStep ul .no {
+background-position:-796px top;
+}
+
+.safety_step .fourStep ul .one {
+background-position:50px 0;
+}
+
+.safety_step .fourStep ul .two {
+background-position:-156px top;
+}
+
+.safety_step .fourStep ul .three {
+background-position:-365px top;
+}
+
+.safety_step .fourStep ul .four {
+background-position:-580px top;
+}
+
+.safety_step .threeStep ul .no {
+background-position:-770px top;
+}
+
+.safety_step .threeStep ul .one {
+background-position:75px top;
+}
+
+.safety_step .threeStep ul .two {
+background-position:-132px top;
+}
+
+.safety_step .threeStep ul .three {
+background-position:-340px top;
+}
+
+#pg-account-user .inputs {
+margin-left:150px;
+}
+
+#pg-account-user .head {
+margin:20px;
+}
+
+#pg-account-user .title {
+font-size:22px;
+}
+
+#pg-account-user #userInfoForm {
+position:relative;
+width:100%;
+}
+
+#pg-account-user .userphoto {
+position:absolute;
+top:0;
+left:30px;
+cursor:pointer;
+}
+
+#pg-account-user .userphoto .photo {
+width:96px;
+height:96px;
+display:block;
+border:1px solid #ddd;
+}
+
+#pg-account-user .uploadPhoto {
+width:550px;
+}
+
+#pg-account-user .uploadPhoto .inputs {
+margin:30px 50px;
+}
+
+#pg-account-user .uploadPhoto .bts {
+margin-top:20px;
+text-align:right;
+}
+
+#pg-account-user .uploadPhoto .bts input {
+margin:0 10px;
+}
+
+#pg-account-user .uploadPhoto .title {
+line-height:40px;
+padding-left:20px;
+background:#e1e1e1;
+font-size:16px;
+}
+
+#pg-account-user .uploadPhoto .selectFile {
+margin-bottom:10px;
+position:relative;
+}
+
+#pg-account-user .uploadPhoto .selectFile input {
+position:absolute;
+top:0;
+right:0;
+height:28px;
+font-size:300px;
+cursor:pointer;
+opacity:0;
+border:0 none;
+filter:alpha(opacity=0);
+}
+
+#pg-account-user .uploadPhoto .selectFile .fileInput {
+width:350px;
+height:28px;
+line-height:28px;
+border:1px solid #bEbbbb;
+cursor:text;
+}
+
+#pg-account-user .uploadPhoto .selectFile .fileBt {
+height:30px;
+line-height:30px;
+background:#00a8e8;
+margin-left:-1px;
+color:#fff;
+cursor:pointer;
+padding:0 15px;
+}
+
+#pg-account-user .ui-form-item .icon-status {
+display:block;
+color:#ccc;
+position:absolute;
+padding-left:20px;
+top:0;
+right:50px;
+}
+
+#pg-account-user .ui-form-item .pass {
+background:url(../images/pass.png?rrdversion=20131013b) left center no-repeat;
+}
+
+#pg-account-user .ui-form-item .noauth {
+background:url(../images/noauth.png?rrdversion=20131013b) left center no-repeat;
+}
+
+#pg-account-verify .tablebox table tr td {
+height:30px;
+line-height:30px;
+border-bottom:1px solid #f1f1f1;
+}
+
+#pg-account-verify .tablebox table tr td.last {
+border-bottom:0 none;
+}
+
+#pg-account-verify .tablebox .iconfont {
+font-size:20px;
+}
+
+#pg-account-verify .tablebox .wait {
+color:#a5a5a5;
+}
+
+#pg-account-verify .tablebox .pass {
+color:#83a700;
+}
+
+#pg-account-verify .tablebox .question {
+color:#1bb8e2;
+}
+
+#pg-account-verify .tablebox .reject {
+color:#d33;
+}
+
+#pg-account-verify .tablebox .warn {
+color:#fa6b00;
+}
+
+#pg-account-repayments .em-box {
+width:477px;
+border:1px solid #b9c8d3;
+background:#f8fcff;
+padding:2px 10px;
+}
+
+#pg-account-repayments .ui-button-blue.switch.active,#pg-account-repayments .ui-button-blue.switch.active:hover {
+box-shadow:inset 0 0 4px 1px #046a99;
+background:#0697da;
+}
+
+#pg-account-repayments .ui-button-green.switch.active,#pg-account-repayments .ui-button-green.switch.active:hover {
+box-shadow:inset 0 0 4px 1px #5c7500;
+background:#6e8b00;
+}
+
+#pg-account-repayments .repayment-record.dark {
+background:#f2f2f2;
+}
+
+#pg-account-recharge .bankList dl dd {
+float:left;
+width:142px;
+height:40px;
+line-height:40px;
+border:1px solid #ddd;
+position:relative;
+display:inline;
+text-align:center;
+margin:0 20px 20px;
+}
+
+#pg-account-recharge .bankList dl dd:hover,#pg-account-recharge .bankList dl dd.current {
+border:1px solid #55A500;
+}
+
+#pg-account-recharge .bankList dt {
+margin-bottom:5px;
+}
+
+#pg-account-recharge .bankList dl dd label {
+display:block;
+width:142px;
+height:40px;
+overflow:hidden;
+}
+
+#pg-account-recharge .bankList dl dd img {
+width:142px;
+height:40px;
+margin:0;
+}
+
+#pg-account-recharge .bankList dl dd input {
+position:absolute;
+left:-20px;
+top:13px;
+}
+
+#pg-account-recharge .inputbox .wrap {
+padding-left:110px;
+}
+
+#pg-account-recharge .errorforbank {
+margin-left:30px;
+}
+
+#afterSub a {
+margin-top:20px;
+}
+
+#pg-account-recharge .foldbox {
+padding-right:23px;
+text-align:center;
+}
+
+#pg-account-transactions .summary-button {
+margin-top:11px;
+}
+
+#pg-account-withdraw .bankList {
+border-bottom:1px solid #ddd;
+padding-bottom:20px;
+}
+
+#pg-account-withdraw .bankList ul li {
+width:224px;
+height:100px;
+text-align:center;
+border:1px solid #ccc;
+border-radius:5px;
+float:left;
+display:inline;
+cursor:pointer;
+overflow:hidden;
+position:relative;
+margin:10px;
+}
+
+#pg-account-withdraw .bankList ul li .card {
+position:absolute;
+left:0;
+bottom:0;
+width:100%;
+line-height:30px;
+color:#a5a5a5;
+border-top:1px solid #ddd;
+}
+
+#pg-account-withdraw #banklis {
+height:125px;
+overflow:hidden;
+}
+
+#pg-account-withdraw .bankList ul li.checked {
+border:2px solid #55a500;
+height:98px;
+}
+
+#pg-account-withdraw .bankList ul li.checked em {
+width:17px;
+height:17px;
+text-indent:-999px;
+display:inline-block;
+background:url(../images/selected.png?rrdversion=20131013b) no-repeat;
+position:absolute;
+bottom:0;
+right:0;
+}
+
+#pg-account-withdraw .operateBank {
+padding:0 20px;
+}
+
+#pg-account-withdraw .bankList .mgmtBank {
+margin-left:20px;
+margin-right:10px;
+}
+
+#pg-account-withdraw .ui-poptip table {
+border-left:1px solid #ddd;
+border-top:1px solid #ddd;
+}
+
+#pg-account-withdraw .ui-poptip table tr td,#pg-account-withdraw .ui-poptip table tr th {
+border-right:1px solid #ddd;
+border-bottom:1px solid #ddd;
+text-align:center;
+padding:0 5px;
+}
+
+#pg-account-withdraw .invisiblediv input.error {
+border:0;
+}
+
+#pg-account-mails div.pagelist {
+text-align:center;
+text-decoration:none;
+vertical-align:middle;
+padding:7px;
+}
+
+#pg-account-mails div.pagelist .bt-next {
+background:none repeat scroll 0 0 #1A58A7;
+color:#FFF;
+}
+
+#pg-account-mails div.pagelist .bt-prev {
+background:none repeat scroll 0 0 #1A58A7;
+color:#FFF;
+padding:2px 4px;
+}
+
+#pg-account-mails div.pagelist .end,div.pagelist .begin {
+display:none;
+}
+
+#pg-account-mails div.pagelist a {
+color:#8F8975;
+cursor:pointer;
+font-size:14px;
+text-decoration:none;
+margin:1px;
+padding:2px 4px;
+}
+
+#pg-account-mails div.pagelist a:hover {
+text-decoration:underline;
+}
+
+#pg-account-mails div.pagelist a:active {
+text-decoration:none;
+}
+
+#pg-account-mails div.pagelist span.current {
+color:#1A58A7;
+font-size:14px;
+text-decoration:none;
+margin:1px;
+padding:2px 4px;
+}
+
+#pg-account-mails div.pagelist span.disabled {
+border:1px solid #EEE;
+color:#DDD;
+margin:1px;
+padding:2px;
+}
+
+#pg-account-mails div.pagelist span.page_hint {
+display:none;
+padding-left:20px;
+}
+
+#pg-account-mails div.pagelist span.page_feed_back {
+color:red;
+display:none;
+}
+
+#pg-account-mails .comment_edit textarea {
+width:500px;
+height:80px;
+}
+
+#notif ul li .photo {
+border:1px solid #CCC;
+display:inline;
+float:left;
+height:60px;
+margin-right:10px;
+margin-top:3px;
+width:60px;
+padding:2px;
+}
+
+#notif ul li .title {
+width:160px;
+margin-right:10px;
+float:left;
+display:inline;
+}
+
+#notif ul li .title p {
+line-height:1.5;
+}
+
+#notif ul li .detail {
+width:640px;
+line-height:1.5;
+margin-top:5px;
+float:left;
+overflow:hidden;
+}
+
+#notif ul li .detail img {
+float:right;
+cursor:pointer;
+}
+
+#notif ul li {
+border-bottom:1px solid #EEE;
+cursor:default;
+float:none;
+position:relative;
+margin:0 10px;
+padding:10px 0;
+}
+
+#pg-account-mails .swicthRCon {
+top:0;
+width:267px;
+right:0;
+position:absolute;
+height:38px;
+line-height:38px;
+}
+
+#sxSearch {
+float:left;
+}
+
+#swicthRCon0,#swicthRCon1,#swicthRCon3 {
+float:right;
+}
+
+#sxSearch input {
+border:1px solid #CCC;
+height:24px;
+line-height:24px;
+vertical-align:middle;
+width:150px;
+}
+
+#sxSearchBt {
+background:url(../images/sxSearch.png?rrdversion=20131013b) no-repeat scroll 0 0;
+width:27px;
+height:26px;
+border:0;
+vertical-align:middle;
+cursor:pointer;
+}
+
+#pg-account-mails .sendDigSX {
+background:none repeat scroll 0 0 #FFF;
+border:1px solid #ccc;
+box-shadow:0 0 5px #484848;
+left:134px;
+position:absolute;
+top:10px;
+width:500px;
+z-index:99999;
+padding:20px;
+}
+
+#pg-account-mails .sendDigSX .closeBt {
+position:absolute;
+right:5px;
+top:5px;
+cursor:pointer;
+color:#1076D5;
+padding:0 5px;
+}
+
+#pg-account-mails .sendDigSX .label {
+float:left;
+width:60px;
+text-align:right;
+}
+
+#pg-account-mails .sendDigSX .inputs {
+float:left;
+position:relative;
+}
+
+#pg-account-mails .sendDigSX .inputs input {
+width:180px;
+position:absolute;
+left:0;
+top:0;
+height:19px;
+_height:17px;
+z-index:999;
+}
+
+#pg-account-mails .sendDigSX .inputs select {
+width:200px;
+vertical-align:top;
+position:absolute;
+left:0;
+top:0;
+z-index:98;
+height:21px;
+}
+
+#pg-account-mails .sendDigSX .inputs .clip {
+clip:rect(autoautoauto182px);
+}
+
+#pg-account-mails .sendDigSX .inputs textarea {
+width:430px;
+height:150px;
+}
+
+#pg-account-mails .sendDigSX .bts {
+padding-left:60px;
+}
+
+#pg-account-mails .sendDigSX .bts span {
+padding-left:20px;
+color:red;
+}
+
+#pg-account-mails .sendDigSX .item {
+margin-bottom:10px;
+}
+
+#pg-account-mails #notif h3 {
+font-size:16px;
+}
+
+#pg-account-mails .viewSX {
+line-height:1.5;
+text-align:right;
+width:100%;
+margin:0;
+padding:0;
+}
+
+#pg-account-mails .shixing .sendBox {
+margin-left:120px;
+width:600px;
+}
+
+#pg-account-mails .shixing .sendBox #sendSX .sxEditor {
+border:2px solid #B1C0E6;
+float:left;
+width:487px;
+}
+
+#pg-account-mails .shixing .sendBox #sendSX .sxEditor textarea {
+border:0 none;
+height:58px;
+width:470px;
+padding:5px;
+}
+
+#pg-account-mails .shixing .sendBox #sendSX .sxArrow {
+background:url(../images/sxArrow.jpg?rrdversion=20131013b) no-repeat scroll 0 center transparent;
+display:inline;
+float:left;
+height:70px;
+margin-left:-2px;
+margin-right:10px;
+width:25px;
+}
+
+#sendSXBtBox {
+width:492px;
+}
+
+#pg-account-mails .sxlist .leftList {
+margin-right:110px;
+margin-top:20px;
+width:591px;
+}
+
+#pg-account-mails .sxlist .leftList .conTxt {
+border:1px solid #CCC;
+float:right;
+min-height:56px;
+position:relative;
+width:460px;
+padding:5px 15px;
+}
+
+#pg-account-mails .sxlist .leftList .conTxt .sxTextContent {
+min-height:37px;
+word-break:break-all;
+word-wrap:break-word;
+}
+
+#pg-account-mails .delCurSx {
+display:none;
+float:right;
+position:absolute;
+right:5px;
+top:0;
+cursor:pointer;
+}
+
+#pg-account-mails .sxlist .leftList .leftArrow {
+background:url(../images/leftArrow.jpg?rrdversion=20131013b) no-repeat scroll 0 center transparent;
+display:inline;
+float:left;
+height:70px;
+left:10px;
+position:relative;
+width:25px;
+}
+
+#pg-account-mails .sxlist .rightList .conTxt {
+border:1px solid #CCC;
+float:left;
+min-height:56px;
+position:relative;
+width:460px;
+padding:5px 15px;
+}
+
+#pg-account-mails .sxlist .rightList .conTxt .sxTextContent {
+min-height:37px;
+overflow:hidden;
+}
+
+#pg-account-mails .sxlist .rightList .conTxt .delCurSx {
+float:right;
+position:absolute;
+right:5px;
+top:0;
+}
+
+#pg-account-mails .sxlist .rightList .rightArrow {
+background:url(../images/rightArrow.jpg?rrdversion=20131013b) no-repeat scroll 0 center transparent;
+display:inline;
+float:left;
+height:70px;
+margin-left:-1px;
+margin-right:10px;
+position:relative;
+width:25px;
+}
+
+#pg-account-mails .sxlist .rightList {
+margin-left:99px;
+margin-top:20px;
+width:600px;
+}
+
+#pg-account-mails .right_tab_select {
+background:#fff;
+color:#000;
+float:left;
+font-family:'Microsoft Yahei',黑体;
+font-size:13px;
+font-weight:700;
+height:38px;
+line-height:38px;
+text-align:center;
+width:104px;
+}
+
+#pg-account-mails .right_tab_unselect {
+background:0 0;
+color:#8E8E8E;
+float:left;
+font-family:'Microsoft Yahei',黑体;
+font-size:13px;
+font-weight:700;
+height:38px;
+line-height:38px;
+text-align:center;
+width:103px;
+}
+
+#pg-account-mails .loading {
+text-align:center;
+padding-top:30px;
+position:relative;
+top:70px;
+left:0;
+z-index:999;
+}
+
+#swicthRCon0 p a {
+padding:0 10px;
+}
+
+#pg-account-settings .tables {
+margin-bottom:40px;
+}
+
+#pg-account-settings .title {
+font-size:16px;
+color:#444;
+font-weight:700;
+}
+
+#pg-account-settings table tr td {
+height:30px;
+line-height:30px;
+padding-left:20px;
+}
+
+#pg-account-settings table tr.odd {
+background:#f5f5f5;
+}
+
+#pg-account-settings .bts {
+padding-left:320px;
+}
+
+#pg-account-auto .title {
+height:30px;
+line-height:30px;
+font-size:22px;
+padding-left:10px;
+}
+
+#pg-account-auto .status {
+height:30px;
+line-height:30px;
+font-size:22px;
+text-align:center;
+margin:20px 0;
+}
+
+#pg-account-auto .bts {
+text-align:center;
+margin:40px 0;
+}
+
+#pg-account-auto .bts .ui-button {
+margin:0 20px;
+}
+
+#pg-account-auto .notice ol li {
+list-style:decimal;
+margin-left:20px;
+}
+
+#selfTypeForm .bts,#oneKeyTypeForm .bts {
+margin-top:20px;
+margin-left:250px;
+}
+
+#selfTypeForm table tr {
+line-height:36px;
+}
+
+#selfTypeForm table tr th {
+font-weight:700;
+}
+
+#pg-account-loans .loans-return-link {
+margin-top:10px;
+float:right;
+}
+
+#pg-account-loans .transfer-op.TRANSFER_DISABLED {
+color:#ccc;
+}
+
+#pg-account-loans .summary-box {
+height:125px;
+}
+
+#pg-account-plan .summary .status-button {
+position:absolute;
+right:170px;
+top:30px;
+border-radius:4px;
+}
+
+#pg-account-plan .summary .status-button a {
+display:block;
+width:180px;
+height:30px;
+line-height:30px;
+font-size:18px;
+color:#690;
+padding:10px;
+}
+
+#pg-account-plan .summary .status-button a.quit-enabled:hover {
+color:#fff;
+background:#83a700;
+border-radius:4px;
+}
+
+#pg-account-plan .fee-summary .ui-poptip {
+position:absolute;
+top:-70px;
+left:-12px;
+width:180px;
+text-align:left;
+}
+
+#pg-account-plan .bank-column,#pg-account-plan .summary span {
+height:35px;
+line-height:35px;
+}
+
+#pg-account-plan .bank-column {
+margin-bottom:0;
+}
+
+#pg-account-plan .profit-change {
+height:23px;
+line-height:23px;
+}
+
+#pg-account-plan .back-link {
+line-height:30px;
+margin-right:10px;
+}
+
+#pg-account-plan .ui-list-item-box .ui-list {
+position:static;
+}
+
+#pg-account-plans .ui-final-amount .ui-poptip,#pg-account-plans .ui-interest-amount .ui-poptip {
+position:absolute;
+top:0;
+width:100px;
+text-align:left;
+}
+
+#pg-account-plans #holding-list .ui-final-amount .ui-poptip {
+left:125px;
+}
+
+#pg-account-plans #exited-list .ui-interest-amount .ui-poptip {
+left:95px;
+}
+
+#pg-account-returns .box-summary-right {
+height:60px;
+}
+
+#pg-account-transfer .summary-small-line {
+line-height:20px;
+}
+
+.ad-dimgray {
+background:#fce6bf;
+border:1px solid #fcda9f;
+border-radius:5px;
+padding:10px 20px;
+}
+
+.icon-hui {
+display:inline-block;
+width:21px;
+height:21px;
+margin-right:10px;
+background:url(../images/account/ad-dimgray.png?rrdversion=20131013b) no-repeat;
+vertical-align:middle;
+}
+
+.ui-side-item .icon-hui {
+margin-left:-26px;
+margin-right:5px;
+}
+
+.transfer-ad-dimgray {
+margin-left:50px;
+font-size:14px;
+}
+
+.pg-account .box,#pg-account-index .ui-list-item,#pg-account-withdraw .ui-poptip table tr th {
+background:#fff;
+}
+
+#pg-account-index,#pg-account-repayments .ui-list-item-box,#repayments-tab-content h4,#pg-account-repayments .ui-list-item-box h5,#pg-account-repayments .ui-list-item-box span.ul-list-title {
+color:#555;
+}
+
+#pg-account-index .container_12 .grid_10,#pg-account-index .grid_10,.safety_step .steps,.safety_step ul,#pg-account-mails .account-mails-tab,#pg-account-plan .summary,#pg-account-plan .fee-summary,#pg-account-plans .ui-final-amount,#pg-account-plans .ui-interest-amount {
+position:relative;
+}
+
+#pg-account-index .user-avatar-container img,#pg-account-user .userphoto img {
+width:96px;
+height:96px;
+}
+
+#pg-account-index .icons .man,#pg-account-security .security-ul .icon-cashpsw {
+background-position:0 0;
+}
+
+#pg-account-stat ul.stat span,#pg-account-stat .lh30,#pg-account-returns .query-item {
+height:30px;
+line-height:30px;
+}
+
+#pg-addcard .ui-form-item,#pg-account-auto .notice .more {
+padding-left:0;
+}
+
+#pg-addcard .bts,#pg-account-security .center,#pg-account-security .content h3,#pg-account-security .errortext,#pg-account-verify .tablebox table tr td.credit {
+text-align:center;
+}
+
+#pg-addcard .info,#pg-account-withdraw .info {
+color:gray;
+margin-left:20px;
+}
+
+#pg-addcard .bts input,#pg-account-bank .bankList ul li a.link {
+margin:0 30px;
+}
+
+#pg-addcard .notice,#pg-account-auto .notice {
+padding-bottom:10px;
+color:#969696;
+margin:0 10px;
+}
+
+#pg-addcard .notice .title,#pg-account-auto .notice .title {
+font-size:14px;
+padding-left:0;
+margin-bottom:10px;
+}
+
+#pg-addcard .bankSearch li,#pg-account-security .security-ul .update a,#pg-account-recharge .foldbox a,#pg-account-transactions #query-switch,#pg-account-withdraw .operateBank a,#pg-account-mails .viewSX a,#pg-account-mails .swicthRCon a {
+cursor:pointer;
+}
+
+#pg-account-bank .title,#pg-account-recharge .title,#pg-account-withdraw .title {
+font-size:22px;
+height:30px;
+line-height:30px;
+}
+
+#pg-account-bank .bankList ul li img,#pg-account-withdraw .bankList ul li img {
+margin-top:15px;
+}
+
+#pg-account-security .red,#pg-account-withdraw .red {
+color:red;
+}
+
+#pg-account-user .box,#pg-account-transfer .summary-row {
+padding:10px 0;
+}
+
+#pg-account-verify .tablebox,#afterSub,#selfTypeForm,#oneKeyTypeForm {
+padding:20px;
+}
+
+#pg-account-verify .tablebox table,#pg-account-settings table {
+width:100%;
+}
+
+#pg-account-repayments .ui-list-item:hover,#pg-account-repayments .ui-list-item.active,#pg-account-repayments .repayment-record {
+background:#f9f9f9;
+}
+
+#pg-account-recharge .inputbox .value,#pg-account-withdraw .value {
+font-size:22px;
+height:24px;
+line-height:24px;
+}
+
+#pg-account-recharge .ui-poptip-content ol li,#pg-account-recharge .notice ol li,#pg-account-withdraw .notice ol li {
+list-style-type:decimal;
+list-style-position:outside;
+margin-left:18px;
+}
+
+#pg-account-recharge .notice,#pg-account-withdraw .notice {
+margin-left:80px;
+padding-right:50px;
+}
+
+#pg-account-recharge .notice .title,#pg-account-withdraw .notice .title {
+font-size:14px;
+padding-left:0;
+}
+
+#pg-account-withdraw .box,#pg-account-auto .box {
+padding:20px 0;
+}
+
+#pg-account-withdraw .inputs,.ad-dimgray a {
+margin-left:60px;
+}
+
+#pg-account-withdraw .invisiblediv,#pg-account-mails .sxlist,#sxconDetail {
+padding-left:20px;
+}
+
+#pg-account-mails div.pagelist .bt-prev-disabled,#pg-account-mails div.pagelist .bt-next-disabled {
+background:none repeat scroll 0 0 #D8D7D4;
+color:#FFF;
+padding:2px 4px;
+}
+
+#pg-account-mails div.pagelist a.disabled:link,#pg-account-mails a.disabled:visited,#notif ul li .colorgray,#pg-account-plans a.quit-disabled,#pg-account-plans a.quit-disabled:hover {
+color:gray;
+}
+
+#pg-account-mails .shixing .sendBox #sendSX .rightPhoto,#pg-account-mails .sxlist .leftList .leftPhoto,#pg-account-mails .sxlist .rightList .rightPhoto {
+border:1px solid #CCC;
+float:left;
+height:60px;
+margin-top:3px;
+width:60px;
+padding:2px;
+}
+
+#pg-account-mails .sxlist .leftList .conTxt .date,#pg-account-mails .sxlist .rightList .conTxt .date {
+color:#CCC;
+line-height:1.5;
+text-align:right;
+}
+
+#pg-account-plan a.iconfont,#pg-account-plans a.iconfont {
+cursor:pointer;
+color:#7fd4f3;
+}
+
+#pg-account-plan a.iconfont:hover,#pg-account-plans a.iconfont:hover {
+color:#00a8e8;
+}
+
+#pg-account-plans #holding-list .ui-interest-amount .ui-poptip,#pg-account-plans #exited-list .ui-final-amount .ui-poptip {
+left:105px;
+}
+
+
+#pg-account-settings .tables{
+  margin-bottom:40px;
+}
+
+#pg-account-settings .title{
+  font-size:16px;
+  color:#444;	
+  font-weight:bold;
+
+}
+
+#pg-account-settings table{
+  width:100%;
+}
+
+#pg-account-settings table tr td{
+  height:30px;
+  line-height:30px;
+  padding-left:20px;
+}
+
+#pg-account-settings table tr.odd{
+  background:#f5f5f5;	
+}
+
+#pg-account-settings .bts{
+  padding-left:320px;
+}
+
+
+

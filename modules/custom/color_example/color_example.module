@@ -1,0 +1,85 @@
+<?php
+/**
+* @file
+* An example field using the Field API.
+*
+*/
+
+/**
+* Implements hook_field_info().
+*
+* Provides the description of the field.
+*/
+function color_example_field_info() {
+	return array(
+		'color_example_rgb' => array(
+		'label' => t('Example Color RGB'),
+		'description' => t('Demonstrates a field composed of an RGB color.'),
+		'default_widget' => 'color_example_3text',
+		'default_formatter' => 'color_example_simple_text',
+		),
+	)
+;}
+
+/**
+* Implements hook_field_schema().
+*/
+function color_example_field_schema($field) {
+	$columns = array(
+		'rgb' => array('type' => 'varchar', 'length' => 7, 'not null' => FALSE),
+	);
+	$indexes = array(
+		'rgb' => array('rgb'),
+	);
+	return array(
+		'columns' => $columns,
+		'indexes' => $indexes,
+	);
+}
+
+/**
+* Implements hook_field_validate().
+*
+* Verifies that the RGB field as combined is valid
+* (6 hex digits with a # at the beginning).
+*/
+function color_example_field_validate($entity_type, $entity, $field, $instance, $langcode,
+	$items, &$errors) {
+	foreach($items as $delta => $item) {
+		if(!empty($item['rgb'])) {
+			if(! preg_match('@^#[0-9a-f]{6}$@', $item['rgb'])) {
+				$errors[$field['field_name']][$langcode][$delta][] = array(
+					'error' => 'color_example_invalid',
+					'message' => t('Color must be in the HTML format #abcdef.'),
+				);
+			}
+		}
+	}
+}
+
+
+/**
+* Implements hook_field_is_empty().
+*/
+function color_example_field_is_empty($item, $field) {
+	return empty($item['rgb']);
+}
+
+/**
+* Implements hook_field_formatter_info().
+*/
+function color_example_field_formatter_info() {
+	return array(
+		// This formatter just displays the hex value in the color indicated.
+		'color_example_simple_text' => array(
+			'label' => t('Simple text-based formatter'),
+			'field types' => array('color_example_rgb'),
+		),
+		// This formatter changes the background color of the content region.
+		'color_example_color_background' => array(
+			'label' => t('Change the background of the output text'),
+			'field types' => array('color_example_rgb'),
+		),
+	);
+}
+

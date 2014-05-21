@@ -1,0 +1,1 @@
+var marital_status=[{"id":1,"name":"已婚"},{"id":2,"name":"未婚"},{"id":3,"name":"离异"},{"id":4,"name":"丧偶"}];

@@ -1,0 +1,1165 @@
+<?php
+
+/**
+ * Implements hook_permission().
+ */
+function easyloan_permission() {
+  return array(
+    'auditor permission' => array(
+      'title'       => t('注册用户借款审核员权限'),
+      'description' => t('注册用户借款审核员：网站初级管理员，负责审核网站新注册用户资料、抵押借款申请资料、浏览用户资料、获取应付款账户（投资用户）及金额列表，获取应还款账户（借款用户）及金额列表，浏览抵押借款欠款用户及金额列表'),
+    ),
+    'accountant permission' => array(
+      'title'       => t('财务人员权限'),
+      'description' => t('财务人员：网站中级管理员，除具备所有初级管理员的权限外，负责更新用户（借款、投资）账户资金状态，包括提现后资金状态、借款成功后资金状态等等'),
+    ),
+    'manager permission' => array(
+      'title'       => t('信息及用户管理员权限'),
+      'description' => t('信息及用户管理员：网站高级管理员，除具备所有中级管理员的权限外，负责管理网站信息（发布、修改、删除），管理投资产品（发布、修改、删除），最终审核用户、禁止用户'),
+    ),
+  );
+}
+
+/**
+* Implementation of hook_menu().
+*/
+function easyloan_menu() { 
+  $items['api/basic'] = array(
+    'page callback'   => 'account_info', 
+    'access callback' => true,  // should restrict visiting times 
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_info.php',
+  );
+  $items['phonexists'] = array(
+    'page callback'   => 'menu_phonexists', 
+    'access callback' => TRUE,  // should restrict visiting times 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['namexists'] = array(
+    'page callback'   => 'menu_namexists', 
+    'access callback' => TRUE,  // should restrict visiting times 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+
+  $items['lend'] = array(
+    'title'           => t('我要投资'), 
+    'page callback'   => 'menu_lend', 
+    'page arguments'  => array(1), // if of the lending page
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['borrow'] = array( 
+    'title'           => t('我要借款'), 
+    'page callback'   => 'menu_borrow', 
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['borrow/estate'] = array( 
+    'title'           => t('房屋商铺抵押'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('borrow_estate'), 
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['borrow/estate/apply'] = array(
+    'title'           => t('房屋商铺抵押申请'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('borrow_estate_apply'), 
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['borrow/car'] = array(
+    'title'           => t('机动车抵押'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('borrow_car'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['borrow/car/apply'] = array( 
+    'title'           => t('机动车抵押申请'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('borrow_car_apply'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['borrow/gold'] = array(
+    'title'           => t('黄金抵押'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('borrow_gold'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['borrow/gold/apply'] = array(
+    'title'           => t('黄金抵押申请'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('borrow_gold_apply'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['borrow/else'] = array(
+    'title'           => t('其他抵押'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('borrow_else'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['borrow/else/apply'] = array(
+    'title'           => t('其他抵押申请'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('borrow_else_apply'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['notfound'] = array( 
+    'title'           => t('找不到该页面'), 
+    'page callback'   => 'menu_notfound', 
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+
+  /*******************个人账户页面菜单 begin*************************/
+  $items['capital_management'] = array( 
+    'title'           => t('资金管理'), 
+    'page callback'   => 'drupal_goto', 
+    'page arguments'  => array('capital_management/deals', array()), 
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM,
+    'expanded'        => TRUE,
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '0'
+  );
+
+  $items['capital_management/deals'] = array( 
+    'title'           => t('交易记录'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_capital'),
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '10'
+  );
+  $items['capital_management/recharge'] = array( 
+    'title'           => t('充值'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_recharge'),
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '20'
+  );
+  $items['capital_management/withdraw'] = array( 
+    'title'           => t('提现'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_withdraw'),
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '30'
+  );
+  $items['invest_management'] = array(
+    'title'           => t('理财管理'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_investplan'),
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '10'
+  );
+  $items['loan_management'] = array( 
+    'title'           => t('借款管理'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_myloan'),
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '20'
+  );
+
+  $items['account_management'] = array( 
+    'title'           => t('账户管理'), 
+    'page callback'   => 'drupal_goto', 
+    'page arguments'  => array('account_management/basicinfo', array()), 
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'expanded'        => TRUE,
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '30'
+  );
+
+  $items['account_management/basicinfo'] = array( 
+    'title'           => t('个人基本信息'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_basicinfo'),
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '0'
+  );
+  $items['account_management/security'] = array( 
+    'title'           => t('安全信息'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_security'),
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '10'
+  );
+  $items['account_management/bankcard'] = array( 
+    'title'           => t('银行卡信息'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_bankcard'),
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '20'
+  );
+
+  $items['management'] = array( 
+    'title'           => t('好易贷管理'), 
+    'page callback'   => 'drupal_goto', 
+    'page arguments'  => array('management/users', array()), 
+    'access callback' => 'management_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'expanded'        => TRUE,
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '40'
+  );
+
+  $items['management/users'] = array( 
+    'title'           => t('用户管理'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_management', 2),
+    'access arguments' => array('auditor permission'),
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '0'
+  );
+  $items['management/%/capital'] = array(
+    'title'           => t('用户管理交易查看'), 
+    'page callback'   => 'menu_account_management_capital', 
+    'page arguments'  => array(1, 2, 3),
+    'access arguments' => array('auditor permission'),
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '5'
+  );
+  $items['management/applications'] = array(
+    'title'           => t('借款审核'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('management_applications'),
+    'access arguments' => array('auditor permission'),
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '10'
+  );
+  $items['management/accountsindebt'] = array( 
+    'title'           => t('欠款账户'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('management_accountsindebt', 2),
+    'access arguments' => array('auditor permission'),
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '15'
+  );
+  $items['management/readytolend'] = array( 
+    'title'           => t('审定放款'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('management_readytolend', 2),
+    'access arguments' => array('accountant permission'),
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '20'
+  );
+  $items['management/withdrawappl'] = array(
+    'title'           => t('提现申请'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('management_withdrawappl', 2),
+    'access arguments' => array('accountant permission'),
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '25'
+  );
+  $items['management/settings'] = array( 
+    'title'           => t('通知设置'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_settings'),
+    'access arguments' => array('accountant permission'),
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '30'
+  );
+  $items['management/createinvestplan'] = array( 
+    'title'           => t('投资产品管理'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('management_createinvestplan'),
+    'access arguments' => array('manager permission'),
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '35'
+  );
+  /*******************个人账户页面菜单 end*************************/
+
+  /*******************帮助中心 begin*************************/
+  /*
+  $items['help'] = array( 
+    'page callback'   => 'easyloan_goto', 
+    'page arguments'  => array('help/help'), 
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );*/
+  $items['help/help'] = array(
+    'title'           => t('名词解释'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('help_help'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_help',
+    'weight'          => '0'
+  );
+  $items['help/intro'] = array(
+    'title'           => t('平台介绍'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('help_intro'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_help',
+    'weight'          => '10'
+  );
+  $items['help/fee'] = array(
+    'title'           => t('利息和费用'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('help_fee'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_help',
+    'weight'          => '20'
+  );
+  $items['help/borrow'] = array(
+    'title'           => t('我要借款'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('help_borrow'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_help',
+    'weight'          => '30'
+  );
+  $items['help/invest'] = array(
+    'title'           => t('我要投资'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('help_invest'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_help',
+    'weight'          => '40'
+  );
+  $items['help/account'] = array(
+    'title'           => t('好易贷账户'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('help_account'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_help',
+    'weight'          => '50'
+  );
+
+  /*******************帮助中心 end*************************/
+
+  /*******************新手指引 begin***********************/
+  /*
+  $items['guide'] = array( 
+    'page callback'   => 'drupal_goto', 
+    'page arguments'  => array('guide/guide', array()), 
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );*/
+  $items['guide/guide'] = array(
+    'title'           => t('我要投资'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('guide_guide'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_guide',
+    'weight'          => '0'
+  );
+  $items['guide/borrow'] = array(
+    'title'           => t('我要借款'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('guide_borrow'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_guide',
+    'weight'          => '10'
+  );
+  $items['guide/security'] = array( 
+    'title'           => t('安全保障'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('guide_security'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM,
+    'menu_name'       => 'easyloan_guide', 
+    'weight'          => '20'
+  );
+  /*******************新手指引 end*************************/
+
+  /*******************关于我们 begin***********************/
+  /*
+  $items['about'] = array( 
+    'page callback'   => 'drupal_goto', 
+    'page arguments'  => array('about/company', array()), 
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );*/
+  $items['about/company'] = array(
+    'title'           => t('公司简介'),
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('about_about'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_about', 
+    'weight'          => '0'
+  );
+  $items['about/news'] = array( 
+    'title'           => t('最新动态'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('about_news', 2),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_about', 
+    'weight'          => '10'
+  );
+  $items['about/notices'] = array( 
+    'title'           => t('网站公告'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('about_notices'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_about', 
+    'weight'          => '20'
+  );
+  $items['about/invite'] = array( 
+    'title'           => t('招贤纳士'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('about_invite'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_about', 
+    'weight'          => '30'
+  );
+  $items['about/contact'] = array( 
+    'title'           => t('联系我们'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('about_contact'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_about', 
+    'weight'          => '40'
+  );
+  /*******************关于我们 end***********************/
+  return $items; 
+} 
+
+/*
+* Inplementation of the block_info hook
+*/
+function easyloan_block_info() {
+  $blocks['footer'] = array(
+    'info'   => t('好易贷的页脚上部'),
+    'cache'  => DRUPAL_CACHE_GLOBAL,
+    'status' => 1,
+    'region' => 'footer',
+  );
+  $blocks['bottom'] = array(
+    'info'   => t('好易贷的页脚底部'),
+    'cache'  => DRUPAL_CACHE_GLOBAL,
+    'status' => 1,
+    'region' => 'bottom',
+  );
+  $blocks['slide'] = array(
+    'info'   => t('好易贷的首页幻灯片'),
+    'cache'  => DRUPAL_CACHE_GLOBAL,
+    'status' => 1,
+    'region' => 'slide',
+  );
+  $blocks['intro'] = array(
+    'info'       => t('好易贷的首页的功能介绍'),
+    'cache'      => DRUPAL_NO_CACHE,
+    'status'     => 1,
+    'weight'     => 0,
+    'region'     => 'content_top',
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages'      => '<front>',
+  );
+  $blocks['topnotice'] = array(
+    'info'       => t('好易贷的首页的通知'),
+    'cache'      => DRUPAL_NO_CACHE,
+    'status'     => 1,
+    'weight'     => 5,
+    'region'     => 'content_top',
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages'      => '<front>',
+  );
+  $blocks['investlist'] = array(
+    'info'       => t('好易贷的首页的投资列表'),
+    'cache'      => DRUPAL_NO_CACHE,
+    'status'     => 1,
+    'weight'     => 10,
+    'region'     => 'content_top',
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages'      => '<front>',
+  );
+  $blocks['newslist'] = array(
+    'info'       => t('好易贷的首页的最新动态列表'),
+    'cache'      => DRUPAL_NO_CACHE,
+    'status'     => 1,
+    'weight'     => 15,
+    'region'     => 'content_top',
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages'      => '<front>',
+  );
+  $blocks['header'] = array(
+    'info'   => t('好易贷的页面头部'),
+    'cache'  => DRUPAL_NO_CACHE,
+    'status' => 1,
+    'region' => 'header',
+  );
+  return $blocks;
+}
+
+function easyloan_block_view($delta = ''){
+  $block = array();
+  switch($delta){
+    case 'footer':
+      //if(user_access('access content')){ //good idea to check user perms here
+      $block['subject'] = t('');
+      $block['content'] = array('#title' => '', );
+      return $block;
+    case 'header':
+      $block['subject'] = t('');
+      $block['content'] = array('#title' => '', );
+      return $block;
+    case 'bottom':
+      $block['subject'] = t('');
+      $block['content'] = array('#title' => '', );
+      return $block;
+    case 'slide':
+      $block['subject'] = t('');
+      $block['content'] = array('#title' => '', );
+      return $block;
+    case 'intro':
+      $block['subject'] = t('');
+      $block['content'] = array('#title' => '', );
+      return $block;
+    case 'topnotice':
+      $block['subject'] = t('');
+      $block['content'] = array('#title' => '', );
+      return $block;
+    case 'investlist':
+      $block['subject'] = t('');
+      $block['content'] = array('#title' => '', );
+      return $block;
+    case 'newslist':
+      $block['subject'] = t('asdfasdf');
+      $block['content'] = array('#title' => '', );
+      return $block;
+    case 'noticeslist':
+      $block['subject'] = t('hahah');
+      $block['content'] = array('#title' => '', );
+      return $block;
+    case 'menu-easyloan_account':
+        $block['subject'] = t('');
+        $block['content'] = '';
+        # code...
+        break;
+  }
+}
+
+function get_top_notice(){
+  return '<div>Notice</div>';
+}
+
+function menu_account_management_capital($arg1, $arg2, $arg3){
+  //return $arg1 . $arg2 . $arg3;
+  return theme('account-capital', $content);
+}
+
+function menu_phonexists(){
+  $phone = $_POST['phone'];
+  if($phone=="13574810441"){
+    echo 'false';
+  } else {
+    echo 'true';
+  }
+}
+function menu_namexists(){
+  $name = $_POST['name'];
+  if($name=="神鱼"){
+    echo 'false';
+  } else {
+    echo 'true';
+  }
+}
+
+function menu_empty(){
+  return 'hello';
+}
+
+function menu_callback($menu, $param = ''){
+  $content = array();
+
+  switch ($menu) {
+    case 'management_applications':
+      return theme('management-applications', $content);
+    case 'management_accountsindebt':
+      if (intval($param) > 0) {
+        return theme('management-accountsindebt-detail', $content);
+      } else {
+        return theme('management-accountsindebt', $content);
+      }
+    case 'management_readytolend':
+      if (intval($param) > 0) {
+        return theme('management-readytolend-detail', $content);
+      } else {
+        return theme('management-readytolend', $content);
+      }
+    case 'management_withdrawappl':
+      return theme('management-withdrawappl', $content);
+    case 'management_createinvestplan':
+      return theme('management-createinvestplan', $content);
+    case 'account_invest':
+      return theme('account-invest', $content);
+    case 'account_investplan':
+      return theme('account-investplan', $content);
+    case 'account_recharge':
+      return theme('account-recharge', $content);
+    case 'account_withdraw':
+      return theme('account-withdraw', $content);
+    case 'account_capital':
+      return theme('account-capital', $content);
+    case 'account_myloan':
+      return theme('account-myloan', $content);
+    case 'account_basicinfo':
+/*
+      db_set_active('hyd');
+      global $user;
+      $result = db_select('account_info_act_info', 'a')
+        ->fields('a')
+        ->condition('act_info_usr_id', $user->uid)
+        ->execute()
+        ->fetchAssoc();
+      $user->basic = $result; 
+      //$content['age'] = $result; 
+      var_dump($user);
+      db_set_active();
+*/
+      return theme('account-basicinfo', $content);
+    case 'account_security':
+      return theme('account-security', $content);
+    case 'account_bankcard':
+      return theme('account-bankcard', $content);
+    case 'account_settings':
+      return theme('account-settings', $content);
+    case 'account_management':
+      // check if param is a valid user id
+      if (intval($param) > 0){ // user id
+        // account/management/123456/capital
+        // return theme('account-capital', $content);
+        return theme('account-management-user', $content);
+      } else {
+        return theme('account-management', $content);
+      }
+      case 'account_management_capital':
+        //return $param; // id
+        return theme('account-capital', $content);
+
+    case 'about_news':
+      // check if param is a valid news id
+      /*if (intval($param) > 0){
+        return theme('about-news-detail', $content);
+      } else {*/
+        return theme('about-news', $content);
+      //}
+    case 'about_notices':
+      // check if param is a valid notice id
+      /*if (intval($param) > 0){
+        return theme('about-notices-detail', $content);
+      } else {*/
+        return theme('about-notices', $content);
+      //}
+
+    case 'about_invite':
+      return theme('about-invite', $content);
+    case 'about_contact':
+      return theme('about-contact', $content);
+    case 'about_about':
+      return theme('about', $content);
+
+    case 'guide_guide':
+      return theme('guide', $content);
+    case 'guide_borrow':
+      return theme('guide-borrow', $content);
+    case 'guide_security':
+      return theme('guide-security', $content);
+
+    case 'help_account':
+      return theme('help-account', $content);
+    case 'help_intro':
+      return theme('help-intro', $content);
+    case 'help_fee':
+      return theme('help-fee', $content);
+    case 'help_borrow':
+      return theme('help-borrow', $content);
+    case 'help_invest':
+      return theme('help-invest', $content);
+    case 'help_help':
+      return theme('helpcenter', $content);
+
+    case 'borrow':
+      return theme('borrow', $content);
+    case 'borrow_estate':
+      return theme('borrow-estate', $content);
+    case 'borrow_gold':
+      return theme('borrow-gold', $content);
+    case 'borrow_car':
+      return theme('borrow-car', $content);
+    case 'borrow_else':
+      return theme('borrow-else', $content); 
+
+    case 'borrow_estate_apply':
+      return theme('borrow-estate-apply', $content);
+    case 'borrow_gold_apply':
+      return theme('borrow-gold-apply', $content);
+    case 'borrow_car_apply':
+      return theme('borrow-car-apply', $content);
+    case 'borrow_else_apply':
+      return theme('borrow-else-apply', $content);
+  
+    default:
+      # code...
+      return theme('notfound', $content);
+      break;
+  }
+}
+
+function menu_borrow(){ return theme('borrow', array());}
+
+function menu_notfound(){ return theme('notfound', array());}
+
+function menu_lend($lendid = ''){ 
+  if (isset($lendid) && is_numeric($lendid)){
+    // $content['easyloan_id'] = $lendid; 
+    return theme('lend-detail', array());
+  }
+  return theme('lend', array());
+}
+
+function easyloan_menu_tree__menu_account_second($variables){
+  return '<ul class="ui-side-sub-list">' . $variables['tree'] . '</ul>';
+}
+
+function easyloan_menu_link($variables){ 
+
+  $element = $variables['element']; 
+  $sub_menu = ''; 
+  
+  $is_active = $element['#original_link']['in_active_trail']; 
+
+  $element['#localized_options']['attributes']['title'] = $element['#title']; 
+  
+  switch ($element['#theme']) {
+    case 'menu_link__easyloan_about':
+    case 'menu_link__easyloan_help':
+    case 'menu_link__easyloan_account':
+      $node = menu_get_object();
+      if ($node){
+        switch ($node->type){
+          case 'notice':
+            if ($element['#href']=='about/notices'){
+              $is_active = true;     
+            }
+            break;
+          case 'news':
+            if ($element['#href']=='about/news'){
+              $is_active = true;
+            }
+            break;
+
+          default:
+            break;
+        }
+      }
+
+      $depth = $element['#original_link']['depth'];
+      $li_class = 'ui-side-item';
+
+      if ($element['#below']) {
+        //var_dump($element['#below']);
+        $element['#below']['#theme_wrappers'] = array('menu_tree__menu_account_second');
+        $sub_menu = drupal_render($element['#below']);
+      }
+
+      $link_style = 'ui-side-item-link'; 
+      if ($depth!='1'){ 
+        // sub menu 
+        $link_style = 'ui-side-sub-item-link'; 
+        $li_class = 'ui-side-sub-item'; 
+      }
+
+      $element['#localized_options']['attributes']['class'][] = $link_style;  
+      
+      $output = l($element['#title'], $element['#href'], $element['#localized_options']);
+
+      // to fix the bug where $is_active set to false in 'user' page 
+      if ((preg_match('/^user\/?\d*/', request_path()) && $element['#href']=='user')) { 
+        $is_active = true; 
+      }
+      /*
+      if ($element['#href']=='management'
+        && preg_match('/^management\/\d+\/capital/', request_path())){
+        $is_active = true;
+      }*/
+      
+      $output = '<li class="' . $li_class . ' ' . ($is_active ? 'active' : '') . '">' . $output . $sub_menu . '</li>';
+      return $output;
+
+    case 'menu_link__easyloan_guide':
+      $element['#localized_options']['attributes']['class'][] = 'rrd-dimgray';
+      $output = l($element['#title'], $element['#href'], $element['#localized_options']);
+      return '<li ' . ($is_active ? 'class="active"' : '') . '>' . $output . '</li>';
+
+    case 'menu_link__easyloan_exchange':
+      $element['#localized_options']['attributes']['class'][] = 'gray';
+      $element['#localized_options']['attributes']['target'] = '_blank';
+      $output = l($element['#title'], $element['#href'], $element['#localized_options']);
+      return '<li class="fn-left">' . $output . '</li>';
+
+    default:
+      return theme_menu_link($variables);
+      break;
+  }
+}
+
+
+/*
+ * Steps of the wizard
+ */
+function easyloan_registration_steps() { 
+  return array( 
+            1 => array( 'form' => 'user_register_form', ), 
+            2 => array( 'form' => 'phone_validation_form', ), );
+}
+
+/*
+ * The registeration form 
+ */
+function form_easyloan_wizard($form, &$form_state) { 
+   // Initialize a description of the steps for the wizard.
+  if (empty($form_state['step'])) {
+    $form_state['step'] = 1;
+    // This array contains the function to be called at each step to get the
+    // relevant form elements. It will also store state information for each
+    // step.
+    $form_state['step_information'] = easyloan_registration_steps();
+  }
+
+  $step = &$form_state['step'];
+
+  drupal_set_title(t('注册新用户: 第 @step 步', array('@step' => $step)));
+ 
+  // Call the function named in $form_state['step_information'] to get the
+  // form elements to display for this step.
+  $form = $form_state['step_information'][$step]['form']($form, $form_state);
+ 
+  // Show the 'previous' button if appropriate. Note that #submit is set to
+  // a special submit handler, and that we use #limit_validation_errors to
+  // skip all complaints about validation when using the back button. The
+  // values entered will be discarded, but they will not be validated, which
+  // would be annoying in a "back" button.
+  if ($step > 1) {
+    $form['prev'] = array(
+      '#type' => 'submit',
+      '#value' => t('返回'),
+      '#name' => 'prev',
+      '#submit' => array('easyloan_wizard_previous_submit'),
+      '#limit_validation_errors' => array(),
+    );
+  }
+ 
+  // Show the Next button only if there are more steps defined.
+  if ($step < count($form_state['step_information'])) {
+    // The Next button should be included on every step
+    $form['next'] = array(
+      '#type' => 'submit',
+      '#value' => t('立即注册'), 
+      '#name' => 'next',
+      '#submit' => array('easyloan_wizard_next_submit', ), 
+    );
+  } else {
+    // Just in case there are no more steps, we use the default submit handler
+    // of the form wizard. When this button is clicked, the
+    // form_easyloan_wizard_submit handler will be called.
+    $form['finish'] = array(
+      '#type' => 'submit',
+      '#value' => t('完成'),
+      //'#submit' => array('form_easyloan_wizard_submit'),
+    );
+  }
+ 
+  $form['next']['#validate']   = array('easyloan_user_register_validation_callback');
+  $form['finish']['#validate'] = array('easyloan_user_register_validation_callback');
+  // Include each validation function defined for the different steps.
+  // First, look for functions that match the form_id_validate naming convention.
+  if (function_exists($form_state['step_information'][$step]['form'] . '_validate')) {
+    $form['next']['#validate'] = array($form_state['step_information'][$step]['form'] . '_validate');
+  }
+
+  // Next, merge in any other validate functions defined by child form.
+  if (isset($form['#validate'])) {
+    $form['next']['#validate'] = array_merge($form['next']['#validate'], $form['#validate']);
+    unset($form['#validate']);
+  }
+  
+  // It's important to merge in the form-specific handlers first, before 
+  // easyloan_registration_wizard_next_submit clears $form_state['values].
+  $form['finish']['#submit'] = array('form_easyloan_wizard_submit');;
+  unset($form['#submit']);
+  return $form;
+}
+
+/**
+ * Submit handler for the "previous" button.
+ * - Stores away $form_state['values']
+ * - Decrements the step counter
+ * - Replaces $form_state['values'] with the values from the previous state.
+ * - Forces form rebuild.
+ *
+ * You are not required to change this function.
+ *
+ * @ingroup form_example
+ */
+function easyloan_wizard_previous_submit($form, &$form_state) {
+  $current_step = &$form_state['step']; // print $current_step; // 2
+  
+  $form_state['step_information'][$current_step]['stored_values'] = $form_state['values'];
+  if ($current_step > 1) {
+    $current_step--;
+    $form_state['values'] = $form_state['step_information'][$current_step]['stored_values'];
+  }
+  $form_state['rebuild'] = TRUE;
+}
+ 
+/**
+ * Submit handler for the 'next' button.
+ * - Saves away $form_state['values']
+ * - Increments the step count.
+ * - Replace $form_state['values'] from the last time we were at this page
+ * or with array() if we haven't been here before.
+ * - Force form rebuild.
+ *
+ * You are not required to change this function.
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @ingroup form_example
+ */
+function easyloan_wizard_next_submit($form, &$form_state) {
+  // send validation code when step 1 was submitted
+  $phone = $form_state['values']['phone'];
+  
+  $code = rand(1000,9999);
+  // generate a random code
+  // call send_validation_code(phone, code)
+  variable_set("phonecode", $code); 
+  variable_set("phone", $phone); 
+
+  drupal_set_message("已发送验证码" . variable_get("phonecode") . "给" . $phone . "，请注意查收"); 
+
+  $current_step = &$form_state['step'];
+  $form_state['step_information'][$current_step]['stored_values'] = $form_state['values'];
+
+  if ($current_step < count($form_state['step_information'])) {
+    $current_step++;
+    if (!empty($form_state['step_information'][$current_step]['stored_values'])) {
+        $form_state['values'] = $form_state['step_information'][$current_step]['stored_values'];
+    }
+    else {
+        $form_state['values'] = array(); 
+    }
+    $form_state['rebuild'] = TRUE; // Force rebuild with next step.
+    return;
+  }
+}
+
+/**
+ * Build form elements for step 2.
+ */
+function phone_validation_form(&$form, &$form_state) {
+     // Allow users to create a new organic group upon registration.
+    $form['vcode'] = array(
+      '#type' => 'textfield',
+      '#title' => t('验证码'),
+      '#description' => t('请填写您收到的验证码'),
+      '#required' => TRUE,
+      '#weight' => -40,
+    );
+    return $form;
+}
+
+function easyloan_wizard_validation_callback($form, &$form_state){
+  if ($form_state['values']['vcode'] != variable_get("phonecode")){
+    form_set_error("Wrong code!" . $form_state['values']['vcode'] . " vs " . variable_get("phonecode"));  
+  }
+}
+
+
+// And now comes the magic of the wizard, the function that should handle all the
+// inputs from the user on each different step.
+/**
+ * Wizard form submit handler.
+ * - Saves away $form_state['values']
+ * - Process all the form values.
+ *
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @ingroup form_example
+ */
+function form_easyloan_wizard_submit($form, &$form_state) { 
+
+  $value = $form_state['step_information'][1]['stored_values']; 
+
+  $newUser = array(
+    'name' => $value['name'], 
+    'pass' => $value['pass'], // note: do not md5 the password
+    'mail' => $value['mail'], // the mail here is fake, must be replaced with a real mail later
+    'status' => 1, 
+    'init' => $value['mail'] 
+  ); 
+  $account = user_save(null, $newUser); 
+
+  drupal_set_message('user id: ' . $account->uid); 
+
+  $form_state['uid'] = $account->uid; 
+  user_login_submit(array(), $form_state); 
+}
+
+function easyloan_user_register_validation_callback($form, &$form_state){
+    if ($form_state['step'] == 1) {
+        // create a fake email for phone user
+        $form_state['values']['mail'] = $form_state['values']['phone'].'@easyloan.com';
+
+        drupal_set_message('Email created!');
+    } else if ($form_state['step'] == 2) {
+        if ($form_state['values']['vcode'] != variable_get("phonecode")){
+            form_set_error('验证码错误', '验证码错误');//$form_state['values']['vcode'] . ' vs ' . variable_get("phonecode"));
+        } else {
+            drupal_set_message('Phone code is correct!');
+        }
+    };
+}
+
+/**
+* Implements hook_user_logout
+*/
+function easyloan_user_logout($account) { 
+  // Destroy the current session, and reset $user to the anonymous user.
+  session_destroy();
+  drupal_goto(); 
+}
+
+/**
+* Implements hook_user_logout
+*/
+function easyloan_user_login(&$edit, $account) { 
+  // Destroy the current session, and reset $user to the anonymous user.
+
+  //drupal_get_destination();
+  //drupal_goto(); 
+}
+
+function easyloan_menu_alter(&$items) {
+  // the wizard registeration form menu
+  $items['user/register']['page arguments'] = array('form_easyloan_wizard');
+  
+  /*
+  // disable the user/%/edit page to all users 
+  $items['user/%/edit'] = array(
+    //'access callback' => FALSE,
+  );*/
+  return $items;
+}
+
+/*
+ * Only super admin get accessed 
+ */
+function super_admin_access(){  
+  global $user; 
+  return $user->uid == '1'; 
+} 
+
+/*
+ * Any easyloan manager can get accessed 
+ */
+function management_access() { 
+  global $user; 
+  $roles = array('auditor', 'accountant', 'manager',);
+
+  if ($user->uid ==1){
+    return TRUE;
+  }
+
+  foreach ($roles as $key => $role_name) {
+    if (in_array($role_name, $user->roles)) {
+        return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/*
+ * Any authenticated easyloan user can get accessed
+ */
+function authenticated_access() {
+  global $user;
+  return in_array("authenticated user", $user->roles);
+}
+
+
+function easyloan_block_list_alter(&$blocks){
+  // var_dump($blocks); 
+}
+
+function easyloan_goto($path = NULL){
+  drupal_goto($path);
+}
+
+
+function easyloan_block_view_alter(&$data, $block) {
+
+  if ($block->delta=='easyloan_about' && $block->module=='menu'){
+    $node = menu_get_object();
+
+    if ($node && $node->type=='notice') {
+      // You have a valid node to work with.
+      // print 'hahahahaha';
+
+    }
+  }
+  
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function easyloan_views_api() {
+  return array('api' => 3.0);
+}
+
+function easyloan_init(){
+  // Set theme's path
+  $themepath = drupal_get_path('theme', 'easyloan');
+  // add theme css in group CSS_SYSTEM
+  drupal_add_css($themepath . '/css/one.css', 
+    array('group' => CSS_SYSTEM, 'type' => 'file', 'weight' => -100));
+}

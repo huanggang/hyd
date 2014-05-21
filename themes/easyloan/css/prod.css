@@ -1,0 +1,21 @@
+#pg-borrow-prod .info-list{background:#fff;color:#555}
+#pg-borrow-prod .info-list div{margin:0 20px 14px;padding:0 40px 14px}
+#pg-borrow-prod .info-list h1{height:60px;line-height:60px;margin-bottom:34px;padding-left:60px;color:#fff}
+#pg-borrow-prod .info-list h2{font-weight:700}
+#pg-borrow-prod .info-list .bg-blue{background:#1bb8e2}
+#pg-borrow-prod .info-list .bg-green{background:#5cad22}
+#pg-borrow-prod .info-list .bg-orange{background:#fb5a00}
+#pg-borrow-prod .info-list ul li{margin-bottom:10px;font-size:16px}
+#pg-borrow-prod .info-list-way a{margin-top:-6px}
+#pg-borrow-prod .info-list-material a{font-size:12px}
+#pg-borrow-prod .info-list-fee table{margin:10px 0;font-size:14px}
+#pg-borrow-prod .info-list-fee table th{border-bottom:1px solid #c5c5c5}
+#pg-borrow-prod .info-list-fee table th,
+#pg-borrow-prod .info-list-fee table td{padding:6px 15px}
+#pg-borrow-prod .info-list-fee dl dt{margin-bottom:10px}
+#pg-borrow-prod .info-list-fee dl dd{width:620px;font-size:14px}
+#pg-borrow-prod .ui-form-item .verifystatus .con{width:auto}
+#pg-borrow-prod .info-list-condition{position:relative}
+#pg-borrow-prod .info-list-condition .review-button{position:absolute;top:60px;right:-30px}
+#pg-borrow-prod .ui-creditlevel-s{display:block;border-radius:18px;text-align:center;text-decoration:none;color:#fff}
+#pg-borrow-prod .review-button{text-align:center}

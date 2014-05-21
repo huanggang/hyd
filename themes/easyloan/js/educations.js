@@ -1,0 +1,1 @@
+var educations=[{"id":1,"name":"高中或以下"},{"id":2,"name":"大专"},{"id":3,"name":"本科"},{"id":4,"name":"硕士"},{"id":5,"name":"博士"}];
