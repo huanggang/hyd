@@ -1,0 +1,257 @@
+1) 前程无忧    www.51job.com		
+2) 智联招聘网   www.zhaopin.com		
+3) 中华英才网   www.chinahr.com		
+4) 中国人才热线  www.cjol.com		
+5) 湖南人才网    www.hnrcsc.com		
+6) 58同城 www.58.com			
+7) 卓博人才网    www.jobcn.com		
+8) 智通人才网    www.job5156.com	
+9) 广东人才网    www.gdrc.com		
++10) 伍亿人才招聘网 www.51rc.com	
+11) 猎聘网 www.lietou.com		
+12) 百才招聘网   www.baicai.com		
++13) 英才网联    www.800hr.com		
++14) 行业招聘网   www.36.cn		
+15) 南方人才网   www.job168.com		
+16) 中国俊才网   www.goodjob.cn		
+17) 芙蓉人才网	www.frrc.com.cn		
+18) 厦门人才网	www.xmrc.com.cn		
+19) 泉州人才网	www.qzrc.com		
+20) 苏北人才网	www.job51.com		
+21) 重庆人才网	www.cqjob.com		
+22) 河南九博人才网	www.jjoobb.cn	
+23) 天津易才网	www.job1998.com		
+24) 国际人才网	www.job001.cn		
+25) 广西人才网	www.gxrc.com		
+26) 江西人才网	www.jxrencai.com	
+27) 赶集网	www.ganji.com		
+*28) 百姓网	www.baixing.com		
++29) 一览英才网	www.job1001.com		
+30) 我的工作网	www.myjob.com		
+31) 528招聘网   www.528.com.cn		
+32) 纳杰人才网（湖北、江西、重庆）	www.333job.com
+33) 昆山人才网	www.kshr.com.cn
+34) 浙江人才网	www.zjrc.com
+35) 宁波人才网	www.nbrc.com.cn
+36) 上海公共招聘网	http://jobs.12333sh.gov.cn
+37) 山西人才网	www.sjrc.com.cn
+38) 苏州人才新干线	www.o-hr.cn
+39) 河北搜才网	www.hbsc.cn
+40) 天基人才网（河南郑州）	www.tianjihr.com
+41) 上海第一招聘网	www.01job.cn
+42) 新安人才网	www.goodjobs.cn
+43) 联英人才网	www.hrm.cn
+44) 西北人才网(甘肃)	www.xbrc.gov.cn
+45) 天府人才网	www.job20.com
+46) 新疆人才网	www.xjrc365.com
+47) 中国服装人才网	www.cfw.cn
++48) 中国专业人才网	www.djob.com
+49) 华尔街招聘网	www.workws.com
+50) 长沙人才网	www.0731job.com
+51) 长沙人才网	www.cshr.com.cn
+52) 12333人才网    www.12333.com
+53) 湖南招聘网   www.hnz.com
+54) 中华英才网   www.chinahr.com
+55）宁夏人才网    www.nxrc.com.cn
+﻿56）洛阳人才网   www.lyhero.com
+57）贵州人才信息网  www.gzrc.gov.cn
+58）内蒙古人才网   www.nmgrc.com
+
+59）辽宁省就业网   www.lnjob.gov.cn == www.jyw.gov.cn
+60)中部就业网    www.jiuyew.com
+61)河北人才网    www.hbrc.com.cn
+62）绍兴人才网    www.sxrc.com.cn/index.html
+63）东莞就业服务网  jyfw.dg.gov.cn/publicfiles/business/htmlfiles/dgjyfw/index.html
+64)中国西安人才网  www.xajob.com
+65)四川省人才网   www.scrc168.com
+*66）中国沈阳人才网  www.syrc.com.cn
+67）绵阳市人才网   www.myhm.org
+68）泰州人才网    www.tzjob.com
+69）扬州人力资源网  www.yz91.net
+70）华中人才网    www.111job.cn
+71）马鞍山人才网   www.masrc.com.cn
+72）合肥人才网    www.hfrc.cn
+73）西安市人才网   www.haorc.com
+74）大连人才市场   www.dl-hr.com
+75）云南人才网    www.ynhr.com
+76) 全国大学生就业一站式服务系统 job.ncss.org.cn/job/index
+77) 珠三角人才网  www.zsjjob.com
+
+18874230166
+15116248628
+15974188869
+18323795203 QQ: 147837334
+13787108265 QQ: 2383279876
+18774005552
+13077334031
+15200377596  weixin: xiaobai
+18315008690 QQ: 1260300674 2727710016
+QQ: 2457996100
+13477803575 QQ: 496549125
+18315008679 QQ: 2712282331
+15526431180 QQ: 109416488
+13875971352 QQ: 360707391
+18315008690 QQ: 329890722
+18672118275 QQ: 514988157
+18774935225 QQ: 1400438510
+15874189513 QQ: 1790972374
+13723891321 QQ: 438043629
+15971587516 QQ: 1872196138
+13007426287 QQ: 1453363341
+15023498268 QQ: 2748368966
+QQ: 280754990
+QQ: 2964921349
+QQ: 
+QQ: 
+QQ: 
+QQ: 
+
+---------
+
+-- open jobs 
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb WHERE jb_last_found >= '2012-04-16' AND jb_first_found <= '2012-05-15';
+-- 1,602,238
+
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY);
+-- 10,005,080 
+
+-- open full-time jobs
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_last_found >= '2012-04-16' AND jb_first_found <= '2012-05-15' AND jbwrktyp_wrktyp_id = 1;
+-- 1,575,579
+
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jbwrktyp_wrktyp_id = 1;
+-- 9,728,002
+
+-- new jobs
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb WHERE jb_first_found >= '2012-04-16' AND jb_first_found <= '2012-05-15';
+-- 1,564,840
+
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb WHERE jb_first_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY);
+-- 3,783,690
+
+-- new full-time jobs
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_first_found >= '2012-04-16' AND jb_first_found <= '2012-05-15' AND jbwrktyp_wrktyp_id = 1;
+-- 1,538,620
+
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_first_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jbwrktyp_wrktyp_id = 1;
+-- 3,598,772
+
+-- open full-time jobs for fresh-graduate (above college)
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_last_found >= '2012-04-16' AND jb_first_found <= '2012-05-15' AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1;
+-- 181,882
+
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1;
+-- 1,028,774
+
+-- new full-time jobs for fresh-graduate (above college)
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_first_found >= '2012-04-16' AND jb_first_found <= '2012-05-15' AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1;
+-- 178,351
+
+SELECT COUNT(*) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_first_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1;
+-- 398,670
+
+-- average salary for open full-time jobs
+SELECT AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_last_found >= '2012-04-16' AND jb_first_found <= '2012-05-15' AND jbwrktyp_wrktyp_id = 1;
+-- 5196.2809	12549.7600
+
+SELECT AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jbwrktyp_wrktyp_id = 1;
+-- 4742.5634	10938.6498
+
+-- average salary for open full-time jobs of fresh-graudate (above college)
+SELECT AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_last_found >= '2012-04-16' AND jb_first_found <= '2012-05-15' AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1;
+-- 2817.7230	9368.7811
+
+SELECT AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_last_found >= '2012-04-16' AND jb_first_found <= '2012-05-15' AND jb_edu_id >= 3 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1;
+-- 3193.9557	8313.4950
+
+SELECT AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1;
+-- 3193.8008	8310.8089
+
+SELECT AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1;
+-- 2719.1747	10411.0946
+
+SELECT * FROM `locations_lct` WHERE lct_parent_id = 1440000000000000
+1110000000000000 北京
+1310000000000000 上海
+1440000000000000 广东
+1330000000000000 浙江
+1320000000000000 江苏
+1430000000000000 湖南
+
+-- Changsha full-time fresh-graduate college
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1430100000000000 AND jblct_lct_id < 1430200000000000;
+-- 1,575	2207.3933	6767.1205
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1430100000000000 AND jblct_lct_id < 1430200000000000;
+-- 18,131	2614.0119	5466.2701
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_edu_id <= 4 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1430100000000000 AND jblct_lct_id < 1430200000000000;
+-- 1,567	2207.6702	6774.0816
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_edu_id <= 4 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1430100000000000 AND jblct_lct_id < 1430200000000000;
+-- 17,921	2607.2099	5468.1999
+
+-- Beijing full-time fresh-graduate college
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1110000000000000 AND jblct_lct_id < 1120000000000000;
+-- 14,834	3566.5677	14289.7985
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1110000000000000 AND jblct_lct_id < 1120000000000000;
+-- 158,315	3943.0378	9875.3255
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_edu_id <= 4 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1110000000000000 AND jblct_lct_id < 1120000000000000;
+-- 14353	3535.0277	14303.9439
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_edu_id <= 4 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1110000000000000 AND jblct_lct_id < 1120000000000000;
+-- 154,026	3931.9458	9842.3999
+
+-- Shanghai full-time fresh-graduate college
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1310000000000000 AND jblct_lct_id < 1320000000000000;
+-- 18,162	2749.8590	25419.1207
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1310000000000000 AND jblct_lct_id < 1320000000000000;
+-- 98,764	3360.4689	21722.4870
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_edu_id <= 4 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1310000000000000 AND jblct_lct_id < 1320000000000000;
+-- 17,768	2723.6193	25504.8063
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_edu_id <= 4 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1310000000000000 AND jblct_lct_id < 1320000000000000;
+-- 95,998	3336.7242	21788.5935
+
+-- Guangzhou full-time fresh-graduate college
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1440100000000000 AND jblct_lct_id < 1440200000000000;
+-- 5,048	3178.9908	5350.3144
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1440100000000000 AND jblct_lct_id < 1440200000000000;
+-- 41,803	3433.2274	6836.1251
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_edu_id <= 4 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1440100000000000 AND jblct_lct_id < 1440200000000000;
+-- 4,874	3040.8914	5172.5550
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_edu_id <= 4 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1440100000000000 AND jblct_lct_id < 1440200000000000;
+-- 40,809	3360.6676	6714.3572
+
+-- Shenzhen full-time fresh-graduate college
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1440300000000000 AND jblct_lct_id < 1440400000000000;
+-- 5,582	3285.5132	6724.0842
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1440300000000000 AND jblct_lct_id < 1440400000000000;
+-- 43,061	3410.0584	14982.1252
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_edu_id <= 4 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1440300000000000 AND jblct_lct_id < 1440400000000000;
+-- 5,484	3254.6885	6634.4872
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_edu_id <= 4 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1440300000000000 AND jblct_lct_id < 1440400000000000;
+-- 42,186	3384.3960	15026.0348
+
+-- Hunan full-time fresh-graduate college
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1430000000000000 AND jblct_lct_id < 1440000000000000;
+-- 2,160	2210.9390	5917.6833
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1430000000000000 AND jblct_lct_id < 1440000000000000;
+-- 25,407	2713.8787	5336.8968
+
+-- Guangdong full-time fresh-graduate college
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1440000000000000 AND jblct_lct_id < 1450000000000000;
+-- 15,876	2911.0102	5333.6969
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1440000000000000 AND jblct_lct_id < 1450000000000000;
+-- 121,626	3361.3560	9236.9933
+
+-- Jiangshu full-time fresh-graduate college
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1320000000000000 AND jblct_lct_id < 1330000000000000;
+-- 7,152	2687.1434	4819.5535
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1320000000000000 AND jblct_lct_id < 1330000000000000;
+-- 63,514	3077.4924	5871.3330
+
+-- Zhejiang full-time fresh-graduate college
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND jb_experience = 0 AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1330000000000000 AND jblct_lct_id < 1340000000000000;
+-- 7,499	2861.9489	5102.6759
+SELECT COUNT(*), AVG(jb_salary_low), AVG(jb_salary_high) FROM boryi_01_jobs.jobs_jb LEFT JOIN boryi_01_jobs.job_work_types_jbwrktyp ON jbwrktyp_jb_id = jb_id LEFT JOIN boryi_01_jobs.job_locations_jblct ON jblct_jb_id = jb_id WHERE jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY) AND jb_edu_id >= 3 AND (jb_experience = 0 OR jb_experience IS NULL) AND jbwrktyp_wrktyp_id = 1 AND jblct_lct_id >= 1330000000000000 AND jblct_lct_id < 1340000000000000;
+-- 57,950	3204.0195	6728.7537
+
+
+SELECT COUNT(*) FROM jobs_jb WHERE jb_title LIKE '%销售%' AND jb_last_found >= DATE_ADD(current_date, INTERVAL -31 DAY) AND jb_first_found <= DATE_ADD(current_date, INTERVAL -1 DAY);
+
