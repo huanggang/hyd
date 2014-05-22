@@ -19,21 +19,21 @@
   width:100%;
 }
 
-#pg-account-user .userphoto{
+#pg-account-user .user-picture{
   position:absolute;
   top:0;
   left:30px;
   cursor:pointer;
 }
 
-#pg-account-user .userphoto .photo{
+#pg-account-user .user-picture .photo{
   width:96px;
   height:96px;
   display:block;
   border:1px solid #ddd;
 }
 
-#pg-account-user .userphoto img{
+#pg-account-user .user-picture img{
   width:96px;
   height:96px;
 }
