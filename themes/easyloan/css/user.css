@@ -24,6 +24,11 @@
   top:0;
   left:30px;
   cursor:pointer;
+  z-index: 99; /* has to be larger than its wrapper and less than the modal window*/
+}
+
+.user-picture-wrapper{
+  position: relative;
 }
 
 #pg-account-user .user-picture .photo{
@@ -31,6 +36,7 @@
   height:96px;
   display:block;
   border:1px solid #ddd;
+    border: 1px solid red;
 }
 
 #pg-account-user .user-picture img{

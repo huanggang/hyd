@@ -42,9 +42,7 @@ Drupal.behaviors.userbasic = {
       ///  provinceid - the id of the province
       ///  value      - the default city value
       function setCities(provinceid, value, async){ 
-
         if (async == undefined) { async = true; } 
-
         var url = js_path + 'city/cities_' + provinceid + '.js'; 
 
         $.cachedScript(url, {async:async}).done(function(data, textStatus) { 
@@ -96,17 +94,22 @@ Drupal.behaviors.userbasic = {
         // use 'false' to make sure that all cities have been loaded before 'done()' 
         setCities(d.province, d.city, false); 
       })
-    .done(function(){
-        // we have to clone the form here, must before the cities are loaded 
-        c = a.clone();
+    .done(function(){ 
+          if ($('form').size() < 3){ 
+            // 3 is for one image upload form, and two info forms
+            // to prevent from adding much more forms caused by ctools modal's bug.
 
-        c.find("input,select,a.photo").each(function () {
-          if ("submit" == this.type || "hidden" == this.type) $(this).remove();
-          else if ("A" == this.tagName.toUpperCase() && "modUserPhoto" == this.id) $(this).attr("href", "#");
-          else if ("text" == this.type) {var a = $(this).val(); $(this).after(a).remove();}
-          else {var a = $(this).find("option:selected").text(); $(this).after(a).remove();}
-        });
-        a.hide().after(c);
+            // we have to clone the form here, must before the cities are loaded 
+            c = a.clone();
+
+            c.find("input,select,a.photo").each(function () {
+              if ("submit" == this.type || "hidden" == this.type) $(this).remove();
+              //else if ("A" == this.tagName.toUpperCase() && "modUserPhoto" == this.id) $(this).attr("href", "#");
+              else if ("text" == this.type) {var a = $(this).val(); $(this).after(a).remove();}
+              else {var a = $(this).find("option:selected").text(); $(this).after(a).remove();}
+            });
+            a.hide().after(c);
+        }
     })
     .fail(function() {
       alert( "网络出现问题，请重新刷新页面" );
@@ -118,7 +121,7 @@ Drupal.behaviors.userbasic = {
 
 
     $('#savebt').click(function(event) {
-        //$('#savebt').prop('disabled', true).removeClass('.ui-button-green:hover');
+        $('#savebt').prop('disabled', true).removeClass('.ui-button-green:hover');
         $.post(Drupal.settings.basePath + "/api/basic", 
               {
                 education: $('#education').val(),
@@ -131,10 +134,12 @@ Drupal.behaviors.userbasic = {
                 if (d.result==1) {
                   var msg = $('<span class="ui-form-required pl5">成功保存用户消息</span>');
                   $('#savebt').after(msg.show().delay(1000).fadeOut().queue(function() { $(this).remove(); location.reload();}));
+                  $('#savebt').prop('enabled', true);
                 }
             }, "json") 
         .fail(function() {
           alert( "网络出现问题，请重新刷新页面" );
+          $('#savebt').prop('enabled', true);
         });
     });
   }

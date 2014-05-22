@@ -20,7 +20,9 @@ dependencies[] = pagerer
 dependencies[] = jquery_update
 dependencies[] = link
 dependencies[] = pagerer
+dependencies[] = profile_pic_changer
 dependencies[] = views
+
 
 
 

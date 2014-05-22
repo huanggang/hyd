@@ -3,9 +3,9 @@
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/account.css');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/common.css');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/iconfont.css');
-drupal_add_css(drupal_get_path('theme','easyloan') . '/css/jquery.powertip.min.css');
+//drupal_add_css(drupal_get_path('theme','easyloan') . '/css/jquery.powertip.min.css');
 
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.powertip.min.js');
+//drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.powertip.min.js');
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
 
 global $base_url;
@@ -13,9 +13,11 @@ $img_path = $base_url . '/' . drupal_get_path('theme','easyloan') . '/images/';
 
 global $user;
 $current_user = $variables["elements"]["#account"];
-
+$markup = $variables["elements"]["user_picture"];
 ?>
 <script>
+
+
 (function ($, Drupal, window, document, undefined) {
 // To understand behaviors, see https://drupal.org/node/756722#behaviors 
 Drupal.behaviors.tip = {
@@ -43,9 +45,7 @@ Drupal.behaviors.tip = {
 
 <div class="box box-user-info">
 <div class="user-avatar-container">
-  <a href="/account/info!basicInfo.action">
-    <?php print render($variables["elements"]['user_picture']["#markup"]); ?>
-  </a>
+    <?php print render($markup); ?>
 </div>
 <div class="user-info-container">
   <h3 title="<?php print $current_user->name; ?>"><?php print $current_user->name; ?></h3>
