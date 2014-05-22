@@ -1,0 +1,1 @@
+var investment_status=[{"id":1,"name":"招标中"},{"id":2,"name":"已满标"},{"id":3,"name":"还款中"},{"id":4,"name":"结束"}];

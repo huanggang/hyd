@@ -1,0 +1,1 @@
+var transaction_time_ranges=[{"id":1,"name":"三天以内"},{"id":2,"name":"一周以内"},{"id":3,"name":"一个月以内"},{"id":4,"name":"三个月以内"},{"id":5,"name":"一年以内"}];

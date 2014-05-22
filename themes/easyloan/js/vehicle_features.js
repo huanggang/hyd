@@ -1,0 +1,1 @@
+var vehicle_features=[{"id":1,"name":"手动"},{"id":2,"name":"自动"},{"id":3,"name":"天窗"},{"id":4,"name":"底盘升降"},{"id":5,"name":"倒车雷达"},{"id":6,"name":"导航"},{"id":7,"name":"夜视系统"},{"id":8,"name":"涡轮增压"}];

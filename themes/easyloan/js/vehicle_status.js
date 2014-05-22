@@ -1,0 +1,1 @@
+var vehicle_status=[{"id":1,"name":"良好"},{"id":2,"name":"事故"},{"id":3,"name":"轻伤"}];

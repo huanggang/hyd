@@ -1,0 +1,1 @@
+var repayment_methods=[{"id":1,"name":"一次性还本付息"},{"id":2,"name":"先息后本月尾支付"},{"id":3,"name":"先息后本月头支付"},{"id":4,"name":"等额本息"},{"id":5,"name":"等额本金"}];

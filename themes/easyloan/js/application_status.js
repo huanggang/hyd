@@ -1,0 +1,1 @@
+var application_status=[{"id":1,"name":"申请"},{"id":2,"name":"初审"},{"id":3,"name":"预约"},{"id":4,"name":"面签"},{"id":5,"name":"拒绝"},{"id":6,"name":"通过"}];

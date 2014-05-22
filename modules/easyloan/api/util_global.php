@@ -145,11 +145,16 @@ function compute_saving_fee($amount)
   $fee = 0;
   if (!is_null($amount) && $amount > 0)
   {
-    $fee = round($amount * 0.005, 2);
-    if ($fee > 100)
+    $fee = $amount * 0.5;
+    if ($fee > 10000)
     {
-      $fee = 100;
+      $fee = 10000;
     }
+    else 
+    {
+      $fee = ceil($fee);
+    }
+    $fee = $fee * 0.01;
   }
   return $fee;
 }
