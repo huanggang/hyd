@@ -69,19 +69,17 @@ Drupal.behaviors.userbasic = {
       function(d) { 
         $("span#nickname").html(d.nick); 
 
-        if (d.name){
+        if (d.ssn_status == 1){
           $("span#name").html(d.name).parent().find('span.pass').addClass('icon-status').end()
                                               .find('span.noauth').removeClass('icon-status');
-        }
-        if (d.ssn){
           $("span#ssn").html(d.ssn).parent().find('span.pass').addClass('icon-status').end()
                                               .find('span.noauth').removeClass('icon-status');
         }
-        if (d.mobile){
+        if (d.mobile_status == 1){
           $("span#mobile").html(d.mobile).parent().find('span.pass').addClass('icon-status').end()
                                               .find('span.noauth').removeClass('icon-status');
         }
-        if (d.email){
+        if (d.email_status == 1){
           $("span#email").html(d.email).parent().find('span.pass').addClass('icon-status').end()
                                               .find('span.noauth').removeClass('icon-status');
         }

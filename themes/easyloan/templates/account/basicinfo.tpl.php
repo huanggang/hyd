@@ -30,24 +30,24 @@ drupal_add_js($theme_path . '/js/userbasic.js');
       <label class="ui-label"><span class="ui-form-required">*</span>真实姓名</label>
       <span id='name'></span>
       <span class="pass fn-hide">已认证</span>
-      <span class="icon-status noauth fn-hide"><a href="<?php print $base_url;?>/account_management/security">去绑定</a></span>
+      <span class="icon-status noauth fn-hide"><a href="<?php print $base_url;?>/account_management/security">去认证</a></span>
     </div>
     <div class="ui-form-item">
       <label class="ui-label"><span class="ui-form-required">*</span>身份证号</label>
       <span id='ssn'></span>
       <span class="pass fn-hide">已认证</span>
-      <span class="icon-status noauth fn-hide"><a href="<?php print $base_url;?>/account_management/security">去绑定</a></span>
+      <span class="icon-status noauth fn-hide"><a href="<?php print $base_url;?>/account_management/security">去认证</a></span>
     </div>
     <div class="ui-form-item">
       <label class="ui-label"><span class="ui-form-required">*</span>手机号码</label>
       <span id='mobile'></span>
-      <span class="pass fn-hide">已认证</span>
+      <span class="pass fn-hide">已绑定</span>
       <span class="icon-status noauth fn-hide"><a href="<?php print $base_url;?>/account_management/security">去绑定</a></span>
     </div>
     <div class="ui-form-item">
       <label class="ui-label"><span class="ui-form-required">*</span>邮箱地址</label>
       <span id='email'></span>
-      <span class="pass fn-hide">已认证</span>
+      <span class="pass fn-hide">已绑定</span>
       <span class="icon-status noauth fn-hide"><a href="<?php print $base_url;?>/account_management/security">去绑定</a></span>
     </div>
     <div class="ui-form-item">
