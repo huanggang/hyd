@@ -66,7 +66,7 @@ function refresh()
     }
     mysqli_free_result($result1);
     $cities = substr($cities, 1);
-    $cities = "var cities[".strval($prv_id)."]=[".$cities."];";
+    $cities = "var cities_".strval($prv_id)."=[".$cities."];";
     file_put_contents($site_js."cities_".strval($prv_id).".js", $cities);
   }
   mysqli_query($con, "UNLOCK TABLES");

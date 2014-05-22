@@ -14,9 +14,8 @@ $site_js = "/var/www/js/";
 
 // database
 $db_host = "localhost";
-$db_user = "root";
-//$db_pwd = "P@ssw0rd#2014";
-$db_pwd = "";
+$db_user = "hyd";
+$db_pwd = "P@ssw0rd#2014";
 $db_name = "hyd";
 
 // products displaying / listing

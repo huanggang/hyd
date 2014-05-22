@@ -23,16 +23,6 @@ mysqli_set_charset($con, "UTF8");
 $json = "{\"result\":0}";
 if ($method == 'POST')
 {
-  $gender = str2int($_POST['gender'], -1);
-  if ($gender < 0 || $gender > 1)
-  {
-    $gender = null;
-  }
-  $dob = str2datetime($_POST['dob']);
-  if (!is_null($dob))
-  {
-    $dob = $dob->format("Y-m-d");
-  }
   $education = str2int($_POST['education']);
   if ($education <= 0)
   {
@@ -59,11 +49,11 @@ if ($method == 'POST')
     $address = null;
   }
 
-  $query = "UPDATE account_info_act_info SET act_info_gender=?, act_info_dob=?, act_info_edu=?, act_info_marital=?, act_info_province=?, act_info_city=?, act_info_address=? WHERE act_info_usr_id=?";
+  $query = "UPDATE account_info_act_info SET act_info_edu=?, act_info_marital=?, act_info_province=?, act_info_city=?, act_info_address=? WHERE act_info_usr_id=?";
   mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
   if ($stmt = mysqli_prepare($con, $query))
   {
-    mysqli_stmt_bind_param($stmt, "isiiiisi", $gender, $dob, $education, $marital, $province, $city, $address, $usr_id);
+    mysqli_stmt_bind_param($stmt, "iiiisi", $education, $marital, $province, $city, $address, $usr_id);
 
     $flag = mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
