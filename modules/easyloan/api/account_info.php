@@ -1,7 +1,7 @@
 <?php
 
 function account_info(){
-  
+
   include_once 'util_global.php';
 
   if ($user->uid <= 0)
@@ -52,9 +52,6 @@ function account_info(){
     }
 
     $query = "UPDATE account_info_act_info SET act_info_edu=?, act_info_marital=?, act_info_province=?, act_info_city=?, act_info_address=? WHERE act_info_usr_id=?";
-
-
-
     mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
     if ($stmt = mysqli_prepare($con, $query))
     {
