@@ -1,6 +1,7 @@
 <?php
 
 function account_info(){
+  
   include_once 'util_global.php';
 
   if ($user->uid <= 0)
