@@ -20,11 +20,11 @@ drupal_add_js($theme_path . '/js/account.js');
 drupal_add_js($theme_path . '/js/recharge.js');
 ?>
 <div class="p20bs color-white-bg fn-clear" id="pg-account-recharge">
-  <form class="ui-form" method="post" id="regchargeForm" name="checkinForm" target="_blank"  action="/account/userCheckin.action">
+  <form class="ui-form" method="post" id="regchargeForm" name="checkinForm">
     <div class="bankList" id="bankList">
       <div class="title mb20">选择充值方式</div>
       <dl class="clearfix" id="banks"></dl>
-      <label for="bank" class="error errorforbank" style="display:none"></label>
+      <label for="bank" class="error errorforbank" style="display:none">请选择充值方式</label>
     </div>
 
     <div class="inputbox">
@@ -37,6 +37,7 @@ drupal_add_js($theme_path . '/js/recharge.js');
         <div class="ui-form-item">
           <label class="ui-label"><span class="ui-form-required">*</span>充值金额</label>
           <input class="ui-input" type="text" name="amount" id="rechargeAmount" value="">元
+          <label class="error" for="rechargeAmount" style="display: none;"></label>
         </div>
         <div class="ui-form-item">
           <label class="ui-label">充值费用</label>
@@ -62,8 +63,9 @@ drupal_add_js($theme_path . '/js/recharge.js');
           <em class="value" id="rechargePay">0.00</em>元
         </div>
         <input type="hidden" name="bankId" id="bankId">
+        <input type="hidden" name="amountModified" id="amountModified" value="0">
         <div class="ui-form-item">
-          <input id="sub-recharge" type="submit" class="ui-button ui-button-mid ui-button-green" value="充 值">
+          <input id="sub-recharge" type="button" class="ui-button ui-button-mid ui-button-green" value="充 值">
         </div>
       </div>
     </div>

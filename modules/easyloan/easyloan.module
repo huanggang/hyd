@@ -24,23 +24,21 @@ function easyloan_permission() {
 * Implementation of hook_menu().
 */
 function easyloan_menu() { 
+  // api function calls
+  $items['api/recharge'] = array(
+    'page callback'   => 'account_recharge', 
+    'access callback' => true,
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_recharge.php',
+  );
   $items['api/basic'] = array(
     'page callback'   => 'account_info', 
-    'access callback' => true,  // should restrict visiting times 
+    'access callback' => true,
     'type'            => MENU_NORMAL_ITEM, 
     'file'            => 'api/account_info.php',
   );
-  $items['phonexists'] = array(
-    'page callback'   => 'menu_phonexists', 
-    'access callback' => TRUE,  // should restrict visiting times 
-    'type'            => MENU_NORMAL_ITEM, 
-  );
-  $items['namexists'] = array(
-    'page callback'   => 'menu_namexists', 
-    'access callback' => TRUE,  // should restrict visiting times 
-    'type'            => MENU_NORMAL_ITEM, 
-  );
 
+  // real menus
   $items['lend'] = array(
     'title'           => t('我要投资'), 
     'page callback'   => 'menu_lend', 
@@ -573,34 +571,9 @@ function easyloan_block_view($delta = ''){
   }
 }
 
-function get_top_notice(){
-  return '<div>Notice</div>';
-}
-
 function menu_account_management_capital($arg1, $arg2, $arg3){
   //return $arg1 . $arg2 . $arg3;
   return theme('account-capital', $content);
-}
-
-function menu_phonexists(){
-  $phone = $_POST['phone'];
-  if($phone=="13574810441"){
-    echo 'false';
-  } else {
-    echo 'true';
-  }
-}
-function menu_namexists(){
-  $name = $_POST['name'];
-  if($name=="神鱼"){
-    echo 'false';
-  } else {
-    echo 'true';
-  }
-}
-
-function menu_empty(){
-  return 'hello';
 }
 
 function menu_callback($menu, $param = ''){

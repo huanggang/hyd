@@ -12,6 +12,11 @@
         $('#banks').append(dd);
       }
       
+      var bankid = $('#bankId').val();
+      if (Number(bankid) > 0){
+        $('#bank_'+bankid).prop('checked', true);
+      }
+
       $('#tips').hover(function(event){
         $('#tipCon').show();
       }, function(event){
@@ -20,11 +25,42 @@
 
       $("input[name='bank']").click(function(event){
         $('#bankId').val($(this).val());
+        $("label[for='bank']").hide();
       });
 
-      $('#rechargeAmount').ready(updateAmount).keyup(updateAmount).focusout(updateAmount);
+      $('#rechargeAmount').ready(updateAmount).keyup(updateAmount2).focusout(updateAmount);
 
       $('#sub-recharge').click(function(event){
+        var flag = true;
+        var bankid = $('#bankId').val();
+        if (!(Number(bankid) > 0)){
+          $("label[for='bank']").show();
+          flag = false;
+        }
+        var amount = $('#rechargeAmount').val();
+        if (!(Number(amount) > 0)){
+          showAmountError();
+          flag = false;
+        }
+        var fee = $('#rechargePoundage').text();
+        if (!(Number(fee) > 0)){
+          flag = false;
+        }
+        if (!flag) return;
+
+        $.getJSON(Drupal.settings.basePath + "api/recharge?type=2&bank="+bankid+"&amount="+amount+"&fee="+fee,
+          function(d) {
+            if (d.result==1) {
+              alert( "result: 1" );
+            }
+            else {
+              alert( "result: 0" );
+            }
+          }, "json"
+        )
+        .fail(function() {
+          alert( "后台验证出现问题，请重新刷新页面" );
+        });
 
       });
 
@@ -45,7 +81,7 @@
           }
           else
           {
-            $('#rechargeRemain').text(d.available.toFixed(2));
+            $('#rechargeRemain').text(d.available.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
           }
       })
       .fail(function() {
@@ -53,12 +89,14 @@
       });
 
 
+      function updateAmount2(event){
+        $('#amountModified').val("1");
+        updateAmount(event);
+      }
+
       function updateAmount(event){
         var value = $('#rechargeAmount').val();
-        if (value.length == 0) {
-          var error = "充值金额不能为空";
-        }
-        else if (Number(value) > 0) {
+        if (Number(value) > 0) {
           value = Number(value);
           var fee = value * 0.5;
           if (fee > 10000) fee = 10000;
@@ -67,10 +105,29 @@
           $('#rechargePoundage').text(fee.toFixed(2));
           var num = value + fee;
           $('#rechargePay').text(num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+          $("label[for='rechargeAmount']").hide();
         }
         else {
-          var error = "请输入正确的金额";
+          var amountModified = $('#amountModified').val();
+          if (Number(amountModified) == 0) {
+            $("label[for='rechargeAmount']").hide();
+          }
+          else {
+            showAmountError();
+          }
         }
+      }
+
+      function showAmountError(){
+        var value = $('#rechargeAmount').val();
+        var error = "";
+        if (value.length == 0) {
+          error = "充值金额不能为空";
+        }
+        else if (!(Number(value) > 0)) {
+          error = "请输入正确的金额";
+        }
+        $("label[for='rechargeAmount']").show().text(error);
       }
 
 
