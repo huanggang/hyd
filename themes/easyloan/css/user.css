@@ -44,36 +44,36 @@
   height:96px;
 }
 
-#pg-account-user .uploadPhoto{
+.uploadPhoto{
   width:550px;
 }
 
-#pg-account-user .uploadPhoto .inputs{
+.uploadPhoto .inputs{
   margin:30px 50px;
 }
 
-#pg-account-user .uploadPhoto .bts{
+.uploadPhoto .bts{
   margin-top:20px;
-  text-align:right;
+  text-align:center;
 }
 
-#pg-account-user .uploadPhoto .bts input{
+.uploadPhoto .bts input{
   margin:0 10px;
 }
 
 
-#pg-account-user .uploadPhoto .title{
+.uploadPhoto .title{
   line-height:40px;
   padding-left:20px;
   background:#e1e1e1;
   font-size:16px;
 }
 
-#pg-account-user .uploadPhoto .selectFile{
+.uploadPhoto .selectFile{
  margin-bottom:10px;
  position:relative;
 }
-#pg-account-user .uploadPhoto .selectFile input{
+.uploadPhoto .selectFile input{
  position:absolute;
  top:0;
  right:0;
@@ -86,7 +86,7 @@
 }
 
 
-#pg-account-user .uploadPhoto .selectFile .fileInput{
+.uploadPhoto .selectFile .fileInput{
   width:350px;
   height:28px;
   line-height:28px;
@@ -94,7 +94,7 @@
   cursor:text;
 }
 
-#pg-account-user .uploadPhoto .selectFile .fileBt{
+.uploadPhoto .selectFile .fileBt{
   padding:0 15px;
   height:30px;
   line-height:30px;
@@ -126,4 +126,15 @@
 
 label {
   font-weight: normal;
+}
+
+#pg-account-user .ui-button {
+  display:inline;
+  text-align:center;
+  text-decoration:none;
+  vertical-align:middle;
+  cursor:pointer;
+  zoom:1;
+  overflow:visible;
+  padding:0 15px;
 }

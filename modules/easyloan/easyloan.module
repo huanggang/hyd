@@ -1163,3 +1163,80 @@ function easyloan_init(){
   drupal_add_css($themepath . '/css/one.css', 
     array('group' => CSS_SYSTEM, 'type' => 'file', 'weight' => -100));
 }
+
+
+function easyloan_changeimg_form($form, $form_state) {
+  global $user;
+  if (!$user->uid) {
+    return array();
+  }
+
+  module_load_include('inc', 'user', 'user.pages');
+
+  // get the default user form so we can reuse
+  // the validation and submit stuff
+  // then use hook_form_FORM_ID_alter to remove everything
+  // but the picture field
+  $form = user_profile_form($form, $form_state, $user);
+
+  // grab the picture field (which may have been nested if field_group is installed)
+  $fpic = easyloan_picture_field($form);
+  if (!$fpic) {
+    // no picture field here
+    watchdog('profile_pic_changer', 'Error finding picture field in the profile form.', WATCHDOG_ERROR);
+    return array();
+  }
+
+  // unset anything that isn't the Save button
+  foreach ($form as $k => $v) {
+    // internal keys
+    if (substr($k, 0, 1) == '#') {
+      continue;
+    }
+
+    // the save button
+    if ($k == 'actions') {
+      continue;
+    }
+
+    // other important fields
+    if (substr($k, 0, 4) == 'form') {
+      continue;
+    }
+
+    unset($form[$k]);
+  }
+
+  // add the pic field back
+  $form['picture'] = $fpic;
+
+  // pull validation on everything except our picture field
+  $form['#validate'] = array('user_validate_picture');
+
+  return $form;
+}
+
+/**
+ * Retrieve the picture field only
+ *
+ * @param $element
+ *
+ * @return
+ * An array describing the picture field
+ */
+function easyloan_picture_field($element) {
+  foreach ($element as $k => $v) {
+    if ($k == 'picture' && is_array($v)) {
+      return $element[$k];
+    }
+
+    if (is_array($element[$k])) {
+      $test = easyloan_picture_field($element[$k]);
+      if ($test) {
+        return $test;
+      }
+    }
+  }
+
+  return NULL;
+}

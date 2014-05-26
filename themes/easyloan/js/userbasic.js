@@ -102,9 +102,8 @@ Drupal.behaviors.userbasic = {
             // we have to clone the form here, must before the cities are loaded 
             c = a.clone();
 
-            c.find("input,select,a.photo").each(function () {
+            c.find("input,select").each(function () {
               if ("submit" == this.type || "hidden" == this.type) $(this).remove();
-              //else if ("A" == this.tagName.toUpperCase() && "modUserPhoto" == this.id) $(this).attr("href", "#");
               else if ("text" == this.type) {var a = $(this).val(); $(this).after(a).remove();}
               else {var a = $(this).find("option:selected").text(); $(this).after(a).remove();}
             });
@@ -112,15 +111,19 @@ Drupal.behaviors.userbasic = {
         }
     })
     .fail(function() {
-      alert( "网络出现问题，请重新刷新页面" );
+      alert( "加载基本信息出现问题，请重新刷新页面" );
     });
    
     $("#modiForm").click(function () {
-        "修改信息" != $(this).text() ? (c.show(), a.hide(), $(this).html("修改信息")) : (c.hide(), a.show(), $(this).html("取消修改"))
+        var imglink = $('.user-picture a');
+        "修改信息" != $(this).text() ? 
+            (c.show(), a.hide(), $(this).html("修改信息"), imglink.prop("href", imglink.prop("data")))
+          : (c.hide(), a.show(), $(this).html("取消修改"),  imglink.prop('data', imglink.prop("href")), imglink.prop("href", '#'))
     });
 
 
     $('#savebt').click(function(event) {
+
         $('#savebt').prop('disabled', true).removeClass('.ui-button-green:hover');
         $.post(Drupal.settings.basePath + "/api/basic", 
               {
@@ -138,9 +141,47 @@ Drupal.behaviors.userbasic = {
                 }
             }, "json") 
         .fail(function() {
-          alert( "网络出现问题，请重新刷新页面" );
+          alert( "保存信息出现问题，请重新刷新页面" );
           $('#savebt').prop('enabled', true);
         });
+    });
+
+
+    $('.user-picture a').click(function(){
+        if ($(this).prop('href').indexOf('#') !== -1){
+          $("#uploadPhoto").dialog({
+            modal: true,
+            title: '更换用户照片',
+            width: 585,
+            height: 230,
+            minHeight: 220,
+            autoResize:false,
+          }).css('overflow', 'hidden');
+        }
+    }); 
+
+    $('#edit-picture-upload').change(function(e){
+      $('#filevalue').text($(this).val());
+    });
+
+    $('#buttonClose').click(function(event) {
+      /* Act on the event */
+      $("#uploadPhoto").dialog("close");
+      $('#filevalue').text('');
+    });
+    $('#edit-submit').click(function(event) {
+      var filename = $('#edit-picture-upload').val();
+      
+      if (filename == ''){
+        alert('请选择图片');
+      } else {
+        var ext = filename.split('.').pop().toLowerCase();
+        if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+            alert('请上传JPG、GIF或PNG格式的图片!');
+            return;
+        }
+        $("#easyloan_changeimg_form").submit();
+      }
     });
   }
 };
