@@ -589,6 +589,8 @@ function easyloan_uninstall() {
 	_remove_node_type('notice');
 	_remove_node_type('news');
 	_remove_node_type('explanation');
+	_remove_node_type('slideshow');
+	_remove_node_type('guide');
 
 	// remove the flippy settings for content types 
 	_remove_flippy_variables('notice');
