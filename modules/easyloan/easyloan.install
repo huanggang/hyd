@@ -243,7 +243,7 @@ function _installed_fields($type) {
 	      'field_name'   => 'field_link',
 	      'label'        => $t('链接'),
 	      'cardinality'  => 1,
-	      'type'         => 'link', // link_field
+	      'type'         => 'link_field', // link_field
 	    ),
 	  );
 	  return $fields;
