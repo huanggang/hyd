@@ -1,186 +1,188 @@
 <?php
+function account_security(){
 
-include_once 'util_global.php';
+  include_once 'util_global.php';
+  
+  $name = null; $ssn = null;
+  $password = null; $new_password = null;
+  $email = null;
+  $mobile = null; $code = null;
+  $cash_pass = null; $new_cash_pass = null;
 
-$name = null; $ssn = null;
-$password = null; $new_password = null;
-$email = null;
-$mobile = null; $code = null;
-$cash_pass = null; $new_cash_pass = null;
-
-$type = 0;
-$method = $_SERVER['REQUEST_METHOD'];
-if ($method == 'POST')
-{
-  $type = str2int($_POST['type']);
-}
-else
-{
-  $type = str2int($_GET['type']);
-}
-if ($type < 1 || $type > 10)
-{
-  echo "{\"result\":0}";
-  exit;
-}
-switch ($type)
-{
-  case 1: // verify name and ssn
-    $name = $_POST['name'];
-    $ssn = $_POST['ssn'];
-    if (is_null($name) || strlen($name) < 2 || !is_valid_ssn($ssn))
-    {
-      echo "{\"result\":0}";
-      exit;
-    }
-    break;
-  case 2: // change password
-    $password = $_POST['password'];
-    $new_password = $_POST['new_password'];
-    if (!(is_valid_password($password) && is_valid_password($new_password)))
-    {
-      echo "{\"result\":0}";
-      exit;
-    }
-    break;
-  case 3: // set email
-    $email = $_POST['email'];
-    if (is_null($email) || !filter_var($email, FILTER_VALIDATE_EMAIL))
-    {
-      echo "{\"result\":0}";
-      exit;
-    }
-    break;
-  case 4: // verify email address
-    $usr_id = str2int($_GET['usr_id']);
-    $code = $_GET['code'];
-    if ($usr_id <= 0 || is_null($code) || strlen($code) != 6)
-    {
-      echo "{\"result\":0}";
-      exit;
-    }
-    break;
-  case 5: // send mobile code
-    $mobile = $_POST['mobile'];
-    if (!is_valid_mobile($mobile))
-    {
-      echo "{\"result\":0}";
-      exit;
-    }
-    break;
-  case 6: // bind mobile
-  case 7: // unbind mobile
-    $mobile = $_POST['mobile'];
-    $code = $_POST['code'];
-    if (!is_valid_mobile($mobile) || is_null($code) || strlen($code) != 6)
-    {
-      echo "{\"result\":0}";
-      exit;
-    }
-    break;
-  case 8: // set cash password
-    $cash_pass = $_POST['cash_pass'];
-    if (!is_valid_password($cash_pass))
-    {
-      echo "{\"result\":0}";
-      exit;
-    }
-    break;
-  case 9: // change cash password
-    $cash_pass = $_POST['cash_pass'];
-    $new_cash_pass = $_POST['new_cash_pass'];
-    if (!(is_valid_password($cash_pass) && is_valid_password($new_cash_pass)))
-    {
-      echo "{\"result\":0}";
-      exit;
-    }
-    break;
-  case 10: // reset cash password
-    $code = $_POST['code'];
-    $new_cash_pass = $_POST['new_cash_pass'];
-    if (!is_valid_password($new_cash_pass) || is_null($code) || strlen($code) != 6)
-    {
-      echo "{\"result\":0}";
-      exit;
-    }
-    break;
-}
-if ($type != 4)
-{
-  if ($user->uid <= 0) // except verify email address
+  $type = 0;
+  $method = $_SERVER['REQUEST_METHOD'];
+  if ($method == 'POST')
+  {
+    $type = str2int($_POST['type']);
+  }
+  else
+  {
+    $type = str2int($_GET['type']);
+  }
+  if ($type < 1 || $type > 10)
   {
     echo "{\"result\":0}";
     exit;
   }
-  $usr_id = $user->uid;
-}
-
-$con=mysqli_connect($db_host, $db_user, $db_pwd, $db_name);
-// Check connection
-if (mysqli_connect_errno())
-{
-  echo "{\"result\":0}";
-  exit;
-}
-mysqli_set_charset($con, "UTF8");
-
-$flag = false;
-$times = 0;
-switch ($type)
-{
-  case 1:
-    $flag = verify_name_ssn($con, $usr_id, $name, $ssn, &$times);
-    break;
-  case 2:
-    $flag = change_password($con, $usr_id, $password, $new_password);
-    break;
-  case 3:
-    $flag = set_email($con, $usr_id, $email);
-    break;
-  case 4:
-    $flag = bind_email($con, $usr_id, $code);
-    break;
-  case 5:
-    $flag = send_mobile_code($con, $usr_id, $mobile);
-    break;
-  case 6:
-    $flag = bind_mobile($con, $usr_id, $mobile, $code);
-    break;
-  case 7:
-    $flag = unbind_mobile($con, $usr_id, $mobile, $code);
-    break;
-  case 8:
-    $flag = set_cash_password($con, $usr_id, $cash_pass);
-    break;
-  case 9:
-    $flag = change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass);
-    break;
-  case 10:
-    $flag = reset_cash_password($con, $usr_id, $new_cash_pass, $code);
-    break;
-}
-mysqli_kill($con, mysqli_thread_id($con));
-mysqli_close($con);
-
-if ($type == 1)
-{
-  if ($flag)
+  switch ($type)
   {
-    echo "{\"result\":1,\"verified\":".jsonstrval($times)."}";
+    case 1: // verify name and ssn
+      $name = $_POST['name'];
+      $ssn = $_POST['ssn'];
+      if (is_null($name) || strlen($name) < 2 || !is_valid_ssn($ssn))
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      break;
+    case 2: // change password
+      $password = $_POST['password'];
+      $new_password = $_POST['new_password'];
+      if (!(is_valid_password($password) && is_valid_password($new_password)))
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      break;
+    case 3: // set email
+      $email = $_POST['email'];
+      if (is_null($email) || !filter_var($email, FILTER_VALIDATE_EMAIL))
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      break;
+    case 4: // verify email address
+      $usr_id = str2int($_GET['usr_id']);
+      $code = $_GET['code'];
+      if ($usr_id <= 0 || is_null($code) || strlen($code) != 6)
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      break;
+    case 5: // send mobile code
+      $mobile = $_POST['mobile'];
+      if (!is_valid_mobile($mobile))
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      break;
+    case 6: // bind mobile
+    case 7: // unbind mobile
+      $mobile = $_POST['mobile'];
+      $code = $_POST['code'];
+      if (!is_valid_mobile($mobile) || is_null($code) || strlen($code) != 6)
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      break;
+    case 8: // set cash password
+      $cash_pass = $_POST['cash_pass'];
+      if (!is_valid_password($cash_pass))
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      break;
+    case 9: // change cash password
+      $cash_pass = $_POST['cash_pass'];
+      $new_cash_pass = $_POST['new_cash_pass'];
+      if (!(is_valid_password($cash_pass) && is_valid_password($new_cash_pass)))
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      break;
+    case 10: // reset cash password
+      $code = $_POST['code'];
+      $new_cash_pass = $_POST['new_cash_pass'];
+      if (!is_valid_password($new_cash_pass) || is_null($code) || strlen($code) != 6)
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      break;
   }
-  else
+
+  if ($type != 4)
   {
-    echo "{\"result\":0,\"verified\":".jsonstrval($times)."}";
+    if ($user->uid <= 0) // except verify email address
+    {
+      echo "{\"result\":0}";
+      exit;
+    }
+    $usr_id = $user->uid;
   }
-}
-else {
-  if ($flag)
-  {
-    echo "{\"result\":1}";
-  }
-  else
+
+  $con=mysqli_connect($db_host, $db_user, $db_pwd, $db_name);
+  // Check connection
+  if (mysqli_connect_errno())
   {
     echo "{\"result\":0}";
+    exit;
+  }
+  mysqli_set_charset($con, "UTF8");
+  $flag = false;
+  $times = 0;
+  switch ($type)
+  {
+    case 1:
+      $flag = verify_name_ssn($con, $usr_id, $name, $ssn, &$times);
+      break;
+    case 2:
+      $flag = change_password($con, $usr_id, $password, $new_password);
+      break;
+    case 3:
+      $flag = set_email($con, $usr_id, $email);
+      break;
+    case 4:
+      $flag = bind_email($con, $usr_id, $code);
+      break;
+    case 5:
+      $flag = send_mobile_code($con, $usr_id, $mobile);
+      break;
+    case 6:
+      $flag = bind_mobile($con, $usr_id, $mobile, $code);
+      break;
+    case 7:
+      $flag = unbind_mobile($con, $usr_id, $mobile, $code);
+      break;
+    case 8:
+      $flag = set_cash_password($con, $usr_id, $cash_pass);
+      break;
+    case 9:
+      $flag = change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass);
+      break;
+    case 10:
+      $flag = reset_cash_password($con, $usr_id, $new_cash_pass, $code);
+      break;
+  }
+  mysqli_kill($con, mysqli_thread_id($con));
+  mysqli_close($con);
+
+  if ($type == 1)
+  {
+    if ($flag)
+    {
+      echo "{\"result\":1,\"verified\":".jsonstrval($times)."}";
+    }
+    else
+    {
+      echo "{\"result\":0,\"verified\":".jsonstrval($times)."}";
+    }
+  }
+  else {
+    if ($flag)
+    {
+      echo "{\"result\":1}";
+    }
+    else
+    {
+      echo "{\"result\":0}";
+    }
   }
 }
 

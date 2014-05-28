@@ -33,9 +33,15 @@ function easyloan_menu() {
   );
   $items['api/basic'] = array(
     'page callback'   => 'account_info', 
-    'access callback' => true,
+    'access callback' => 'authenticated_access',
     'type'            => MENU_NORMAL_ITEM, 
     'file'            => 'api/account_info.php',
+  );
+  $items['api/security'] = array(
+    'page callback'   => 'account_security', 
+    'access callback' => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_security.php',
   );
 
   // real menus

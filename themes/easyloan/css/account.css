@@ -435,6 +435,10 @@ border-bottom:1px solid #eee;
 padding:20px 0;
 }
 
+#pg-account-security .security-ul .safety_step li {
+border-bottom:none;
+}
+
 #pg-account-security .security-ul .icon {
 background:url(../images/securityall.png?rrdversion=20131013b);
 width:32px;
@@ -473,6 +477,10 @@ font-size:18px;
 #pg-account-security .security-ul p {
 float:left;
 width:250px;
+}
+#pg-account-security .security-ul p.info {
+float:none;
+width:auto;
 }
 
 #pg-account-security .security-ul .update {
@@ -550,7 +558,7 @@ float:left;
 text-align:center;
 background-image:url(../images/safety-step.png?rrdversion=20131013b);
 background-repeat:no-repeat;
-padding-top:40px;
+padding-top:40px!important;
 }
 
 .safety_step .fourStep ul li,.safety_step .threeStep ul li {
