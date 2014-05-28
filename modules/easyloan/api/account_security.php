@@ -125,10 +125,11 @@ if (mysqli_connect_errno())
 mysqli_set_charset($con, "UTF8");
 
 $flag = false;
+$times = 0;
 switch ($type)
 {
   case 1:
-    $flag = verify_name_ssn($con, $usr_id, $name, $ssn);
+    $flag = verify_name_ssn($con, $usr_id, $name, $ssn, &$times);
     break;
   case 2:
     $flag = change_password($con, $usr_id, $password, $new_password);
@@ -161,18 +162,31 @@ switch ($type)
 mysqli_kill($con, mysqli_thread_id($con));
 mysqli_close($con);
 
-if ($flag)
+if ($type == 1)
 {
-  echo "{\"result\":1}";
+  if ($flag)
+  {
+    echo "{\"result\":1,\"verified\":".jsonstrval($times)."}";
+  }
+  else
+  {
+    echo "{\"result\":0,\"verified\":".jsonstrval($times)."}";
+  }
 }
-else
-{
-  echo "{\"result\":0}";
+else {
+  if ($flag)
+  {
+    echo "{\"result\":1}";
+  }
+  else
+  {
+    echo "{\"result\":0}";
+  }
 }
 
-
-function verify_name_ssn($con, $usr_id, $name, $ssn)
+function verify_name_ssn($con, $usr_id, $name, $ssn, $act_info_ssn_times)
 {
+  $act_info_ssn_times = 0;
   $query = "SELECT act_info_ssn_times FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_ssn_status = 0";
   mysqli_query($con, "LOCK TABLES account_info_act_info READ");
   $result = mysqli_query($con, $query);
