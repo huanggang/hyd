@@ -11,7 +11,7 @@ $usr_id = $user->uid;
 // check current time between 9am - 11pm
 if (!is_now_valid($time_user_start, $time_user_end))
 {
-  echo "{\"result\":0}";
+  echo "{\"result\":0,\"message\":\"Overtime\"}";
   exit;
 }
 

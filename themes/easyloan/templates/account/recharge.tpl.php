@@ -1,5 +1,4 @@
 <?php
-global $user;
 global $base_url;
 
 $theme_path = drupal_get_path('theme','easyloan');
@@ -36,7 +35,7 @@ drupal_add_js($theme_path . '/js/recharge.js');
         </div>
         <div class="ui-form-item">
           <label class="ui-label"><span class="ui-form-required">*</span>充值金额</label>
-          <input class="ui-input" type="text" name="amount" id="rechargeAmount" value="">元
+          <input class="ui-input" type="text" name="amount" id="rechargeAmount" value="" autocomplete="off" disableautocomplete="">元
           <label class="error" for="rechargeAmount" style="display: none;"></label>
         </div>
         <div class="ui-form-item">
@@ -72,20 +71,13 @@ drupal_add_js($theme_path . '/js/recharge.js');
     <div class="notice">
       <div class="title">温馨提示</div>
       <ol>
-        <li>为了您的账户安全，请在充值前进行身份认证、手机绑定以及提现密码设置。</li>
+        <li>为了您的账户安全，请在充值前认证身份、绑定手机以及设置提现密码。</li>
         <li>您的账户资金将由第三方平台托管。 </li>
         <li>请注意您的银行卡充值限制，以免造成不便。 </li>
-        <li>禁止洗钱、信用卡套现、虚假交易等行为，一经发现并确认，将终止该账户的使用。</li>
+        <li>禁止洗钱、信用卡套现、虚假交易等行为，一经确认，将终止该账户的使用。</li>
         <li>如果充值金额没有及时到账，请联系客服。</li>
       </ol>
     </div>
   </form>
-  <div class="hide">
-    <div id="afterSub" class="afterSub">
-      <h3>请您在新打开的网上银行页面上完成付款</h3>
-      <p>付款完成前请不要关闭此窗口。</p>
-      <p>完成付款后请根据您的情况点击下面的按钮：</p>
-      <a class="ui-button ui-button-mid ui-button-green" id="finishRecharge">已完成付款</a> <a class="ui-button ui-button-mid ui-button-green" id="troubleRecharge">付款遇到问题</a>
-    </div>
-  </div>
+  
 </div>
