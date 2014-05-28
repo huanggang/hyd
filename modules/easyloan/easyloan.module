@@ -25,9 +25,21 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/banks'] = array(
+    'page callback'   => 'account_banks', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_banks.php',
+  );
+  $items['api/withdraw'] = array(
+    'page callback'   => 'account_withdraw', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_withdraw.php',
+  );
   $items['api/recharge'] = array(
     'page callback'   => 'account_recharge', 
-    'access callback' => true,
+    'access callback' => 'authenticated_access',
     'type'            => MENU_NORMAL_ITEM, 
     'file'            => 'api/account_recharge.php',
   );

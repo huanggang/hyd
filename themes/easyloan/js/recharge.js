@@ -3,6 +3,9 @@
   Drupal.behaviors.recharge = {
     attach: function(context, settings){
 
+      $('#bankId').val('');
+      $('#amountModified').val('0');
+
       $('#banks').empty().append('<dt>充值银行</dt>');
       var len = banks.length;
       for (var i = 0; i < len; i++){
@@ -12,11 +15,6 @@
         $('#banks').append(dd);
       }
       
-      var bankid = $('#bankId').val();
-      if (Number(bankid) > 0){
-        $('#bank_'+bankid).prop('checked', true);
-      }
-
       $('#tips').hover(function(event){
         $('#tipCon').show();
       }, function(event){
@@ -57,7 +55,8 @@
             }
           }, "json"
         )
-        .fail(function() {
+        .fail(function( jqxhr, textStatus, error ) {
+          var err = textStatus + ", " + error;
           alert( "后台验证出现问题，请重新刷新页面" );
         });
 
@@ -77,7 +76,8 @@
             $('#rechargeRemain').text(d.available.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
           }
       })
-      .fail(function() {
+      .fail(function( jqxhr, textStatus, error ) {
+        var err = textStatus + ", " + error;
         alert( "网络出现问题，请重新刷新页面。" );
       });
 

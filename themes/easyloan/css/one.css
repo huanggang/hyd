@@ -1101,7 +1101,7 @@ z-index:999;
 width:14px;
 height:14px;
 margin-left:6px;
-background:url(../images/icon-box.png?rrdversion=20131013b) no-repeat;
+background:url(../images/icon-box.png) no-repeat;
 vertical-align:middle;
 display:block;
 }
@@ -1355,7 +1355,7 @@ margin-top:100px;
 
 .ui-confirm-loading-text p.loading {
 height:50px;
-background:url(../images/loading.gif?rrdversion=20131013b) no-repeat center center;
+background:url(../images/loading.gif) no-repeat center center;
 }
 
 .ui-form {
@@ -1390,7 +1390,7 @@ padding:0 5px 20px 170px;
 
 .ui-form-item textarea {
 border:1px solid #c5c5c5;
-background:url(../images/input_inner.png?rrdversion=20131013b) repeat-x;
+background:url(../images/input_inner.png) repeat-x;
 }
 
 .ui-form-item .placeholder {
@@ -1404,7 +1404,7 @@ color:#ababab;
 .ui-form-item .icon {
 width:20px;
 height:25px;
-background:url(../images/input-all.png?rrdversion=20131013b) no-repeat;
+background:url(../images/input-all.png) no-repeat;
 position:absolute;
 top:3px;
 left:10px;
@@ -1441,7 +1441,7 @@ line-height:22px;
 color:#595959;
 font-size:14px;
 border-radius:2px;
-background:url(../images/input_inner.png?rrdversion=20131013b) repeat-x;
+background:url(../images/input_inner.png) repeat-x;
 border:1px solid #c5c5c5;
 padding:4px 5px;
 }
@@ -1586,7 +1586,7 @@ box-shadow:inset 0 0 5px #666;
 
 @font-face {
 font-family:rei;
-src:url(/static/fonts/rei.eot?#iefix?rrdversion=20131013b) format(embedded-opentype),url(/static/fonts/rei.woff?rrdversion=20131013b) format(woff),url(/static/fonts/rei.ttf?rrdversion=20131013b) format(truetype),url(/static/fonts/rei.svg#rei?rrdversion=20131013b) format(svg);
+src:url(/static/fonts/rei.eot?#iefix) format(embedded-opentype),url(/static/fonts/rei.woff) format(woff),url(/static/fonts/rei.ttf) format(truetype),url(/static/fonts/rei.svg#rei) format(svg);
 font-weight:400;
 font-style:normal;
 }
@@ -1726,19 +1726,19 @@ height:20px;
 }
 
 .ui-icon-check-checked {
-background:url(../images/icon-checked-blue-small.png?rrdversion=20131013b) no-repeat center center;
+background:url(../images/icon-checked-blue-small.png) no-repeat center center;
 }
 
 .ui-icon-check-unchecked {
-background:url(../images/icon-unchecked-small.png?rrdversion=20131013b) no-repeat center center;
+background:url(../images/icon-unchecked-small.png) no-repeat center center;
 }
 
 .ui-icon-gender-male {
-background:url(../images/icon-male.png?rrdversion=20131013b) no-repeat center center;
+background:url(../images/icon-male.png) no-repeat center center;
 }
 
 .ui-icon-gender-female {
-background:url(../images/icon-female.png?rrdversion=20131013b) no-repeat center center;
+background:url(../images/icon-female.png) no-repeat center center;
 }
 
 .ui-loantype {
@@ -1746,7 +1746,7 @@ display:block;
 width:30px;
 height:30px;
 line-height:30px;
-background:url(../images/loantypes.png?rrdversion=20131013b) no-repeat scroll left top transparent;
+background:url(../images/loantypes.png) no-repeat scroll left top transparent;
 }
 
 .ui-loantype.SDRZ {
@@ -1767,7 +1767,7 @@ width:18px;
 height:18px;
 line-height:18px;
 margin-right:3px;
-background:url(../images/loantypes-s.png?rrdversion=20131013b) no-repeat scroll left top transparent;
+background:url(../images/loantypes-s.png) no-repeat scroll left top transparent;
 vertical-align:middle;
 }
 
@@ -1853,7 +1853,7 @@ cursor:default;
 .ui-breadcrumb-separator {
 width:9px;
 height:14px;
-background:url(../images/breadcrumb-angle-right.png?rrdversion=20131013b) no-repeat center center;
+background:url(../images/breadcrumb-angle-right.png) no-repeat center center;
 margin:6px 12px 2px;
 }
 
@@ -1864,7 +1864,7 @@ height:44px;
 line-height:44px;
 font-size:8px;
 text-align:center;
-background:url(../images/progressbar_mid.png?rrdversion=20131013b);
+background:url(../images/progressbar_mid.png);
 }
 
 .ui-progressbar-mid-1 {
@@ -2259,7 +2259,7 @@ height:34px;
 line-height:34px;
 text-align:center;
 font-size:8px;
-background:url(../images/progressbar_small.png?rrdversion=20131013b);
+background:url(../images/progressbar_small.png);
 margin:8px auto;
 }
 
@@ -2714,7 +2714,7 @@ height:96px;
 line-height:96px;
 text-align:center;
 font-size:16px;
-background:url(../images/progressbar_large.png?rrdversion=20131013b);
+background:url(../images/progressbar_large.png);
 }
 
 .ui-progressbar-large em {
@@ -3120,7 +3120,7 @@ left:20px;
 display:block;
 width:24px;
 height:24px;
-background:url(../images/icon-performace.png?rrdversion=20131013b) no-repeat scroll 0 0;
+background:url(../images/icon-performace.png) no-repeat scroll 0 0;
 }
 
 .ui-icon-performace.count {
@@ -3249,25 +3249,25 @@ background-color:#e5e4e2;
 }
 
 .ui-pagination li a.page-link.prev {
-background-image:url(../images/prev-gray.png?rrdversion=20131013b);
+background-image:url(../images/prev-gray.png);
 background-position:center center;
 background-repeat:no-repeat;
 }
 
 .ui-pagination li a.page-link.next {
-background-image:url(../images/next-gray.png?rrdversion=20131013b);
+background-image:url(../images/next-gray.png);
 background-position:center center;
 background-repeat:no-repeat;
 }
 
 .ui-pagination li span.prev,.ui-pagination li a.page-link.prev:hover {
-background-image:url(../images/prev-white.png?rrdversion=20131013b);
+background-image:url(../images/prev-white.png);
 background-position:center center;
 background-repeat:no-repeat;
 }
 
 .ui-pagination li span.next,.ui-pagination li a.page-link.next:hover {
-background-image:url(../images/next-white.png?rrdversion=20131013b);
+background-image:url(../images/next-white.png);
 background-position:center center;
 background-repeat:no-repeat;
 }
@@ -3286,7 +3286,7 @@ background:#00a8e8;
 .ui-slides {
 height:376px;
 width:100%;
-background:url(../images/slides-bg.png?rrdversion=20131013b) no-repeat center bottom;
+background:url(../images/slides-bg.png) no-repeat center bottom;
 position:relative;
 margin:0 auto;
 }
@@ -3353,22 +3353,22 @@ width:115px;
 .ui-slides .ui-slide01-icons-item-img01 {
 width:110px;
 height:81px;
-background:url(../images/slide-intro/slide01-icons-item-img01.png?rrdversion=20131013b);
-_background:url(../images/slide-intro/slide01-icons-item-img01.gif?rrdversion=20131013b);
+background:url(../images/slide-intro/slide01-icons-item-img01.png);
+_background:url(../images/slide-intro/slide01-icons-item-img01.gif);
 }
 
 .ui-slides .ui-slide01-icons-item-img02 {
 width:110px;
 height:81px;
-background:url(../images/slide-intro/slide01-icons-item-img02.png?rrdversion=20131013b);
-_background:url(../images/slide-intro/slide01-icons-item-img02.gif?rrdversion=20131013b);
+background:url(../images/slide-intro/slide01-icons-item-img02.png);
+_background:url(../images/slide-intro/slide01-icons-item-img02.gif);
 }
 
 .ui-slides .ui-slide01-icons-item-img03 {
 width:110px;
 height:81px;
-background:url(../images/slide-intro/slide01-icons-item-img03.png?rrdversion=20131013b);
-_background:url(../images/slide-intro/slide01-icons-item-img03.gif?rrdversion=20131013b);
+background:url(../images/slide-intro/slide01-icons-item-img03.png);
+_background:url(../images/slide-intro/slide01-icons-item-img03.gif);
 }
 
 .ui-slides .ui-slide01-icons-item-b b {
@@ -3377,7 +3377,7 @@ margin-right:5px;
 }
 
 .ui-slides .ui-slide01-button {
-background:url(../images/slide-intro/ui-slide01-button.png?rrdversion=20131013b) no-repeat scroll 111px 3px #83A700;
+background:url(../images/slide-intro/ui-slide01-button.png) no-repeat scroll 111px 3px #83A700;
 border-radius:20px;
 border:medium none;
 color:#FFF;
@@ -3769,7 +3769,7 @@ left:46px;
 display:block;
 width:9px;
 height:5px;
-background:url(../images/nav-angle-up.png?rrdversion=20131013b) no-repeat center center;
+background:url(../images/nav-angle-up.png) no-repeat center center;
 }
 
 .ui-header-main .ui-nav-dropdown .ui-nav-dropdown-separator {
@@ -3886,13 +3886,13 @@ border-left:1px solid gray;
 }
 
 .ui-footer-contact-link.qq {
-background:url(../images/logos/weibo-qq.png?rrdversion=20131013b) no-repeat center center;
+background:url(../images/logos/weibo-qq.png) no-repeat center center;
 height:25px;
 width:25px;
 }
 
 .ui-footer-contact-link.sina {
-background:url(../images/logos/weibo-sina.png?rrdversion=20131013b) no-repeat center center;
+background:url(../images/logos/weibo-sina.png) no-repeat center center;
 height:25px;
 width:25px;
 }
@@ -3927,7 +3927,7 @@ margin:0 auto;
 .ui-footer-verification-item {
 display:block;
 height:50px;
-background:url(../images/footer-icons.png?rrdversion=20131013b) no-repeat 0 0;
+background:url(../images/footer-icons.png) no-repeat 0 0;
 margin:0 10px;
 }
 
@@ -4010,51 +4010,51 @@ margin-right:8px;
 }
 
 .ui-side-item-link .ui-icon-mid.index {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat 0 0;
+background:url(../images/sidebar-icons.png) no-repeat 0 0;
 }
 
 .ui-side-item-link .ui-icon-mid.capital {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat 0 -20px;
+background:url(../images/sidebar-icons.png) no-repeat 0 -20px;
 }
 
 .ui-side-item-link .ui-icon-mid.invest {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat 0 -40px;
+background:url(../images/sidebar-icons.png) no-repeat 0 -40px;
 }
 
 .ui-side-item-link .ui-icon-mid.borrow {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat 0 -60px;
+background:url(../images/sidebar-icons.png) no-repeat 0 -60px;
 }
 
 .ui-side-item-link .ui-icon-mid.account {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat 0 -80px;
+background:url(../images/sidebar-icons.png) no-repeat 0 -80px;
 }
 
 .ui-side-item-link .ui-icon-mid.comm {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat 0 -100px;
+background:url(../images/sidebar-icons.png) no-repeat 0 -100px;
 }
 
 .ui-side-item-link:hover .ui-icon-mid.index,.ui-side-item.active .ui-icon-mid.index {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat -20px 0;
+background:url(../images/sidebar-icons.png) no-repeat -20px 0;
 }
 
 .ui-side-item-link:hover .ui-icon-mid.capital,.ui-side-item.active .ui-icon-mid.capital {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat -20px -20px;
+background:url(../images/sidebar-icons.png) no-repeat -20px -20px;
 }
 
 .ui-side-item-link:hover .ui-icon-mid.invest,.ui-side-item.active .ui-icon-mid.invest {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat -20px -40px;
+background:url(../images/sidebar-icons.png) no-repeat -20px -40px;
 }
 
 .ui-side-item-link:hover .ui-icon-mid.borrow,.ui-side-item.active .ui-icon-mid.borrow {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat -20px -60px;
+background:url(../images/sidebar-icons.png) no-repeat -20px -60px;
 }
 
 .ui-side-item-link:hover .ui-icon-mid.account,.ui-side-item.active .ui-icon-mid.account {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat -20px -80px;
+background:url(../images/sidebar-icons.png) no-repeat -20px -80px;
 }
 
 .ui-side-item-link:hover .ui-icon-mid.comm,.ui-side-item.active .ui-icon-mid.comm {
-background:url(../images/sidebar-icons.png?rrdversion=20131013b) no-repeat -20px -100px;
+background:url(../images/sidebar-icons.png) no-repeat -20px -100px;
 }
 
 .ui-side-item.active .ui-side-item-link,.ui-side-item.active .ui-side-item-link:hover {
@@ -4180,12 +4180,12 @@ padding:12px 22px;
 .ui-plan-latest {
 padding-top:30px;
 height:170px;
-background:url(../images/plan/plan-bg.jpg?rrdversion=20131013b) center center no-repeat;
+background:url(../images/plan/plan-bg.jpg) center center no-repeat;
 }
 
 .ui-plan-latest.gray {
 padding-bottom:15px;
-background:url(../images/plan/plan-bg-gray.png?rrdversion=20131013b) center center no-repeat;
+background:url(../images/plan/plan-bg-gray.png) center center no-repeat;
 }
 
 .ui-plan-latest .plan-title {
@@ -4565,7 +4565,7 @@ width:200px;
 height:200px;
 color:#fff;
 background-color:rgba(255,255,255,.7);
-background-image:url(../images/loading.gif?rrdversion=20131013b);
+background-image:url(../images/loading.gif);
 background-repeat:no-repeat;
 background-position:center center;
 border-radius:5px;

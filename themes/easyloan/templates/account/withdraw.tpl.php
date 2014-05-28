@@ -19,11 +19,6 @@ drupal_add_js($theme_path . '/js/withdraw.js');
     <div id="bankList" class="bankList">
       <div class="title">选择提现银行卡</div>
       <div id="banklis">
-        <ul class="fn-clear">
-          <li class="bankli" data-bank="92585">
-            <img alt="" title="" src="<?php print $image_path; ?>bank_3.jpg"><div class="card">6247 **** **** 6247</div><em></em>
-          </li>
-        </ul>
       </div>
 
       <div class="fn-clear invisiblediv">
@@ -32,6 +27,7 @@ drupal_add_js($theme_path . '/js/withdraw.js');
         <label for="bankId" class="error" style="display: none;">请选择提现银行卡</label>
       </div>
       <div class="operateBank fn-clear">
+        <a data-toggle="更多银行卡 隐藏部分银行卡" id="moreBank" class="fn-left more-hide">更多银行卡</a>
         <a class="mgmtBank fn-right" id="mgmtBank" href="/account_management/bankcard">管理银行卡</a>
         <a class="addBank fn-right" href="" tabindex="-1">添加银行卡</a>
       </div>
@@ -98,6 +94,7 @@ drupal_add_js($theme_path . '/js/withdraw.js');
           <label for="cashPassword" class="error" style="display: none;">提现密码不能为空</label>
         </div>
         <input type="hidden" name="amountModified" id="amountModified" value="0">
+        <input type="hidden" name="cashPassModified" id="cashPassModified" value="0">
         <div class="ui-form-item widthdrawBtBox">
           <input type="button" id="subWithdraw" class="ui-button ui-button-mid ui-button-green" value="提 现">
         </div>
