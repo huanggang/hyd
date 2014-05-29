@@ -73,10 +73,10 @@
         $.getJSON(Drupal.settings.basePath + "api/withdraw?number="+number+"&amount="+amount+"&fee="+fee+"&cash_pass="+cash_pass,
           function(d) {
             if (d.result==1) {
-
+            	location.reload();
             }
             else {
-
+            	alert("后台验证出现问题，请稍后重试");
             }
           }, "json"
         )
