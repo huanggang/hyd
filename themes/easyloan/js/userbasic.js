@@ -125,7 +125,7 @@ Drupal.behaviors.userbasic = {
     $('#savebt').click(function(event) {
 
         $('#savebt').prop('disabled', true).removeClass('.ui-button-green:hover');
-        $.post(Drupal.settings.basePath + "/api/basic", 
+        $.post(Drupal.settings.basePath + "api/basic", 
               {
                 education: $('#education').val(),
                 marital: $('#marital').val(),

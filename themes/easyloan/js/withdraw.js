@@ -110,7 +110,7 @@
         function(d) {
           var html = '<ul class="fn-clear">';
           if (d.total == 0) {
-            html += '<li><a class="openLink addBank" href="" tabindex="-1"><img src="' + image_path + 'add.jpg"></a><div class="card"><a class="openLink addBank" href="" tabindex="-1">新增银行卡</a></div></li>';
+            html += '<li><a class="openLink addBank" tabindex="-1"><img src="' + image_path + 'add.jpg"></a><div class="card"><a class="openLink addBank" tabindex="-1">新增银行卡</a></div></li>';
           } else {
             for (var i = 0; i < d.total; i++) {
               var card = d.numbers[i];

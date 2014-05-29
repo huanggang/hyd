@@ -8,10 +8,15 @@ $image_path = $base_url . '/' . $theme_path . '/images/';
 
 drupal_add_css($theme_path . '/css/iconfont.css');
 drupal_add_css($theme_path . '/css/account.css');
+drupal_add_css($theme_path . '/css/dialog.css');
 drupal_add_css($theme_path . '/css/popuptip.css');
 
+drupal_add_library('system', 'ui.dialog');
+
 drupal_add_js('var js_path=\'' . $js_path . '\';var image_path=\'' . $image_path . '\';', 'inline');
+drupal_add_js($theme_path . '/js/banks.js');
 drupal_add_js($theme_path . '/js/account.js');
+drupal_add_js($theme_path . '/js/bankcard.js');
 drupal_add_js($theme_path . '/js/withdraw.js');
 ?>
 <div class="p20bs color-white-bg fn-clear" id="pg-account-withdraw">
@@ -29,7 +34,7 @@ drupal_add_js($theme_path . '/js/withdraw.js');
       <div class="operateBank fn-clear">
         <a data-toggle="更多银行卡 隐藏部分银行卡" id="moreBank" class="fn-left more-hide">更多银行卡</a>
         <a class="mgmtBank fn-right" id="mgmtBank" href="/account_management/bankcard">管理银行卡</a>
-        <a class="addBank fn-right" href="" tabindex="-1">添加银行卡</a>
+        <a class="addBank fn-right" tabindex="-1">添加银行卡</a>
       </div>
     </div>
     <div class="withdrawInputs mt20">
