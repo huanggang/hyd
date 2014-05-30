@@ -3,8 +3,10 @@
   Drupal.behaviors.bankcard = {
     attach: function(context, settings){
 
+      var account_name = null;
+
       $('.addBank').click(function addCard(event) {
-        var html = '<div data-widget-cid="widget-0" class="ui-mask" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 99998; opacity: 0.85; background-color: rgb(255, 255, 255);"></div><div class="ui-dialog" tabindex="-1" data-widget-cid="widget-1" style="height: 468px; width: 650px; z-index: 99999; position: absolute; left: 0x; top: 0px;"><div data-role="close" title="关闭本框" class="ui-dialog-close" style="display: block;">×</div><div style="border: medium none; width: 100%; display: block; height: 100%; overflow: hidden;"><div data-role="content" class="ui-dialog-content" style="background: none repeat scroll 0% 0% rgb(255, 255, 255); height: 100%; overflow: hidden"><div class="ui-confirm" id="pg-addcard"><form id="addcardForm" method="post" class="ui-form" data-name="addcard" novalidate="novalidate"><h3 class="ui-confirm-title" style="margin-top: -10px">添加银行卡</h3><div class="inputs"><div class="ui-form-item"><label class="ui-label"><span class="ui-form-required">*</span>开户名</label><em></em> <span class="info">请添加相同开户名的银行卡</span></div><div class="ui-form-item"><label class="ui-label"><span class="ui-form-required">*</span>选择银行</label><select name="bankDataId" style="width:160px" id="selBankType"><option value="-1">请选择</option>';
+        var html = '<div data-widget-cid="widget-0" class="ui-mask" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 99998; opacity: 0.85; background-color: rgb(255, 255, 255);"></div><div class="ui-dialog" tabindex="-1" data-widget-cid="widget-1" style="height: 468px; width: 650px; z-index: 99999; position: absolute; left: 0x; top: 0px;"><div data-role="close" title="关闭本框" class="ui-dialog-close" style="display: block;">×</div><div style="border: medium none; width: 100%; display: block; height: 100%; overflow: hidden;"><div data-role="content" class="ui-dialog-content" style="background: none repeat scroll 0% 0% rgb(255, 255, 255); height: 100%; overflow: hidden"><div class="ui-confirm" id="pg-addcard"><form id="addcardForm" method="post" class="ui-form" data-name="addcard" novalidate="novalidate"><h3 class="ui-confirm-title" style="margin-top: -10px">添加银行卡</h3><div class="inputs"><div class="ui-form-item"><label class="ui-label"><span class="ui-form-required">*</span>开户名</label><em id="account_name"></em> <span class="info">请添加相同开户名的银行卡</span></div><div class="ui-form-item"><label class="ui-label"><span class="ui-form-required">*</span>选择银行</label><select name="bankDataId" style="width:160px" id="selBankType"><option value="-1">请选择</option>';
         var options = '';
         for (var i = 0; i < banks.length; i++){
           options += '<option value="' + banks[i].id + '">' + banks[i].name + '</option>';
@@ -100,6 +102,20 @@
 
           }
         });
+
+        // get card holder's name
+        if (account_name == null){
+          $.getJSON(Drupal.settings.basePath + "api/basic",
+            function(d) {
+              if (d.name != null) {
+                account_name = d.name;
+                $('#account_name').text(account_name);
+              }
+            }, "json");
+        }
+        else {
+          $('#account_name').text(account_name);
+        }
 
       });
 
