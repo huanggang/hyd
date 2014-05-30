@@ -1,8 +1,10 @@
 <?php
+
+include_once 'util_global.php';
+include_once 'sys_contact.php';
+
 function account_security(){
 
-  include_once 'util_global.php';
-  
   $name = null; $ssn = null;
   $password = null; $new_password = null;
   $email = null;
@@ -49,6 +51,11 @@ function account_security(){
       if (is_null($email) || !filter_var($email, FILTER_VALIDATE_EMAIL))
       {
         echo "{\"result\":0}";
+        exit;
+      } 
+      else if (does_contact_exist(2, $email))
+      {
+        echo "{\"result\":0, \"exists\": 1}";
         exit;
       }
       break;
@@ -242,6 +249,11 @@ function change_password($con, $usr_id, $password, $new_password)
     mysqli_query($con, "LOCK TABLES users_usr WRITE");
     $flag = mysqli_query($con, $query) != false;
     mysqli_query($con, "UNLOCK TABLES");
+
+    if ($flag){
+      global $user;
+      user_save($user, array('pass' => $new_password));
+    }
 
     return $flag;
   }

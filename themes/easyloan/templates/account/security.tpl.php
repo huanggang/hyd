@@ -42,10 +42,6 @@ global $user;
             </div>
           </form>
           </div>
-          <div class="fn-hide success">
-            <h3 class="info">实名认证设置成功!</h3>
-            <a class="ui-button ui-button-mid ui-button-blue backBt" >返回</a>
-          </div>
         </div>  
       </div>
     </li>
@@ -58,7 +54,7 @@ global $user;
         <div id="pg-account-security-pass" style="height:300px;clear:both;" class="fn-clear fn-hide">
           <div class="content">
             <p class="info">为了您的账户安全，请定期更换登录密码，并确保登录密码设置与提现密码不同。</p>
-            <form data-name="modpsw" action="/account/resetPassword!doModify.action" class="ui-form" method="post" id="modPswForm" novalidate="novalidate">
+            <form class="ui-form" method="post" id="modPswForm">
               <div class="inputs">
                 <div class="ui-form-item">
                   <label class="ui-label"><span class="ui-form-required">*</span>原密码</label>
@@ -66,7 +62,7 @@ global $user;
                 </div>
                 <div class="ui-form-item">
                   <label class="ui-label"><span class="ui-form-required">*</span>新密码</label>
-                  <input type="password" id="newPassword" name="newPassword" class="ui-input" placeholder="6-12位字母、数字和符号(不包括空格)" data-is="isPassWord">
+                  <input type="password" id="newPassword" name="newPassword" class="ui-input" placeholder="6-16位字母、数字和符号(不包括空格)">
                 </div>
                 <div class="ui-form-item">
                   <label class="ui-label"><span class="ui-form-required">*</span>确认新密码</label>
@@ -89,16 +85,16 @@ global $user;
       <div class="fn-clear">
         <div class="icon icon-email"></div>
         <h3>绑定邮箱</h3>
-        <p id="email" class='red'>未设置</p>
+        <p class='red'>未设置</p>
         <div class="update"><a id="setemail">设置</a></div>
         <div id="pg-account-security-email" style="height:200px;clear:both;" class="fn-clear fn-hide">
           <div>
             <div class="content setFormBox">
-              <form data-name="setEmail" action="/account/bindRole!sendEmail.action" class="ui-form" method="post" id="setEmailForm" novalidate="novalidate">
+              <form class="ui-form" method="post" id="setEmailForm">
                 <div class="inputs">
                   <div class="ui-form-item">
                     <label class="ui-label"><span class="ui-form-required">*</span>邮箱</label>
-                    <input type="text" name="email" class="ui-input" data-is="isEmail">
+                    <input type="text" name="email" id="email" class="ui-input">
                   </div>
                   <div class="ui-form-item">
                     <input type="submit" id="subSetEmailBt" value="提 交" class="ui-button ui-button-mid ui-button-green">

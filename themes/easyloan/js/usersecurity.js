@@ -18,7 +18,8 @@ Drupal.behaviors.usersecurity = {
             $("#email").html(d.email).removeClass('red');
           } 
         })
-      .fail(function() {
+      .fail(function( jqxhr, textStatus, error ) {
+        var err = textStatus + ", " + error;
         alert( "加载基本信息出现问题，请重新刷新页面" );
       });  
     }
@@ -96,10 +97,16 @@ Drupal.behaviors.usersecurity = {
 
     }, "请输入正确的二代身份证号码");
 
-    $("#setIdForm").validate({
-      errorPlacement: function(error, element) {
+    $.validator.addMethod("isEmail", function (value, element) {
+        return /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i.test(value);
+    }, "包含非法字符");
+
+    var errPlace = function(error, element) {
         element.parent().append(error); // default function
-      },
+    }
+
+    $("#setIdForm").validate({
+      errorPlacement: errPlace,
       submitHandler: function(form) {
         $('#subSetIdBt').prop('disabled', true);
 
@@ -134,7 +141,8 @@ Drupal.behaviors.usersecurity = {
           }, 
           "json"
         )
-        .fail(function() {
+        .fail(function( jqxhr, textStatus, error ) {
+          var err = textStatus + ", " + error;
           alert( "加载基本信息出现问题，请重新刷新页面" );
           $('#subSetIdBt').prop('enabled', true);
         });
@@ -163,13 +171,138 @@ Drupal.behaviors.usersecurity = {
       },
     });
 
+    $.validator.addMethod("isPassWord", function (value, element) {
+        return /^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{1,}$/.test(value);
+    }, "包含非法字符");
+
+    $("#modPswForm").validate({
+      errorPlacement: errPlace,
+      submitHandler: function(form) {
+
+        $.post(
+          Drupal.settings.basePath + 'api/security', 
+          {
+            password: $('#oldPassword').val(),
+            new_password: $('#newPassword').val(),
+            type: 2,
+          },
+          function(d) {
+            var setModPswBtn = $('#subModPswBt');
+            if (d.result==1) {
+              var msg = $('<span class="ui-form-required pl5">成功修改密码</span>');
+              setModPswBtn.after(msg.delay(1000).fadeOut().queue(
+                  function() { 
+                    $(this).remove();
+                    $('#setpass').trigger('click'); 
+                    $('#oldPassword, #newPassword, #newPassword2').val('');
+                  }
+                )
+              )
+            } else {
+              var msg = $('<span class="ui-form-required pl5">密码修改失败，请重试</span>');  
+              setModPswBtn.after(msg.delay(1000).fadeOut());
+            }
+          }, 
+          "json"
+        )
+        .fail(function( jqxhr, textStatus, error ) {
+          var err = textStatus + ", " + error;
+          alert( "修改密码请求出现问题，请重试" );
+        });
+      },
+      rules: {
+        oldPassword: {
+          isPassWord: !0,
+          required: !0,
+          minlength: 6,
+          maxlength: 16,
+        },
+        newPassword: {
+          isPassWord: !0,
+          required: !0,
+          minlength: 6,
+          maxlength: 16,
+        },
+        newPassword2: {
+          required: !0,
+          equalTo: '#newPassword',
+        },
+      },
+      messages: {
+        oldPassword: {
+          isPassWord: "包含非法字符",
+          required: "密码不能为空",
+          minlength: "密码长度为6-16位字符",
+          maxlength: "密码长度为6-16位字符",
+        },
+        newPassword: {
+          isPassWord: "包含非法字符",
+          required: "新密码不能为空",
+          minlength: "密码长度为6-16位字符",
+          maxlength: "密码长度为6-16位字符",
+        },
+        newPassword2: {
+          required: "确认新密码不能为空",
+          equalTo: "您输入的密码不一致",
+        },
+      },
+    });
 
 
 
-
-
-
-
+    $("#setEmailForm").validate({
+      errorPlacement: errPlace,
+      submitHandler: function(form) {
+        $.post(
+          Drupal.settings.basePath + 'api/security', 
+          {
+            email: $('#email').val(), 
+            type: 3,
+          },
+          function(d) {
+            var setEmailBtn = $('#subSetEmailBt');
+            if (d.result==1) {
+              var msg = $('<span class="ui-form-required pl5">恭喜您，邮件设置成功</span>');
+              setEmailBtn.after(msg.delay(1000).fadeOut().queue(
+                  function() { 
+                    $(this).remove(); 
+                    $('#setemail').trigger('click'); 
+                    $('#email').val('');
+                    $('#pg-account-security-email div.success').slideUp();
+                  }
+                )
+              )
+            } else {
+              var msg;
+              if (d.exists){
+                msg = $('<span class="ui-form-required pl5">邮箱已经被注册</span>');  
+              } else {
+                msg = $('<span class="ui-form-required pl5">绑定邮箱失败，请重试</span>');  
+              }
+              setEmailBtn.after(msg.delay(1000).fadeOut());
+            }
+          }, 
+          "json"
+        )
+        .fail(function( jqxhr, textStatus, error ) {
+          var err = textStatus + ", " + error;
+          alert( "绑定邮箱失败" ); 
+          $('#subSetEmailBt').prop('enabled', true); 
+        });
+      },
+      rules: {
+        email: {
+          isEmail: !0,
+          required: !0, 
+        },
+      },
+      messages: {
+        email: {
+          isEmail: "请输入有效的邮箱地址",
+          required: "邮箱地址不能为空",
+        },
+      },
+    });
 
 
 

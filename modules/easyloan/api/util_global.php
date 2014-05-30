@@ -1,6 +1,8 @@
 <?php
 global $user;
 
+global $db_host, $db_user, $db_pwd, $db_name;
+
 $site_name = "清远好易贷";
 
 // web site url
