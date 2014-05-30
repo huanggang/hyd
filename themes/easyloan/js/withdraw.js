@@ -73,10 +73,10 @@
         $.getJSON(Drupal.settings.basePath + "api/withdraw?number="+number+"&amount="+amount+"&fee="+fee+"&cash_pass="+cash_pass,
           function(d) {
             if (d.result==1) {
-            	location.reload();
+              location.reload();
             }
             else {
-            	alert("后台验证出现问题，请稍后重试");
+              alert("后台验证出现问题，请稍后重试");
             }
           }, "json"
         )
@@ -108,10 +108,8 @@
 
       $.getJSON( Drupal.settings.basePath + "api/banks", 
         function(d) {
-          var html = '<ul class="fn-clear">';
-          if (d.total == 0) {
-            html += '<li><a class="openLink addBank" tabindex="-1"><img src="' + image_path + 'add.jpg"></a><div class="card"><a class="openLink addBank" tabindex="-1">新增银行卡</a></div></li>';
-          } else {
+          var html = '';
+          if (d.total > 0) {
             for (var i = 0; i < d.total; i++) {
               var card = d.numbers[i];
               var bankId = card.bank;
@@ -119,8 +117,8 @@
               html += '<li class="bankli" data-bank="' + bankId + '" data-number="' + number + '"><img alt="" title="" src="' + image_path + 'bank_' + bankId + '.jpg"><div class="card">' + number + '</div><em></em></li>';
             }
           }
-          html += '</ul>';
-          $('#banklis').html(html);
+          $('#banklis ul').html(html);
+          
           $('.bankli').click(function(event) {
             $("label[for='bankId']").hide();
             $('.bankli').removeClass('checked');

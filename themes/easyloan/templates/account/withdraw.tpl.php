@@ -13,10 +13,10 @@ drupal_add_css($theme_path . '/css/popuptip.css');
 
 drupal_add_library('system', 'ui.dialog');
 
-drupal_add_js('var js_path=\'' . $js_path . '\';var image_path=\'' . $image_path . '\';', 'inline');
+drupal_add_js('var js_path=\'' . $js_path . '\';var image_path=\'' . $image_path . '\';var account_name=null;', 'inline');
 drupal_add_js($theme_path . '/js/banks.js');
 drupal_add_js($theme_path . '/js/account.js');
-drupal_add_js($theme_path . '/js/bankcard.js');
+drupal_add_js($theme_path . '/js/bankcardadd.js');
 drupal_add_js($theme_path . '/js/withdraw.js');
 ?>
 <div class="p20bs color-white-bg fn-clear" id="pg-account-withdraw">
@@ -24,6 +24,14 @@ drupal_add_js($theme_path . '/js/withdraw.js');
     <div id="bankList" class="bankList">
       <div class="title">选择提现银行卡</div>
       <div id="banklis">
+        <ul class="fn-clear">
+          <li>
+            <a class="openLink addBank" tabindex="-1">
+              <img src="<?php print $image_path; ?>add.jpg">
+            </a>
+            <div class="card"><a class="openLink addBank" tabindex="-1">新增银行卡</a></div>
+          </li>
+        </ul>
       </div>
 
       <div class="fn-clear invisiblediv">

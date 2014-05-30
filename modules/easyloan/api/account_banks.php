@@ -118,8 +118,8 @@ function account_banks(){
     $result = mysqli_query($con, $query);
     if ($row = mysqli_fetch_array($result))
     {
-    	$total = $row['cnt'];
-    	mysqli_free_result($result);
+      $total = $row['cnt'];
+      mysqli_free_result($result);
     }
 
     $json = "";
