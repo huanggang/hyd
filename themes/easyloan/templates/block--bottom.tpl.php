@@ -53,4 +53,3 @@ global $base_url;
       <a class="ui-footer-verification-item fn-left gongshang" title="好易贷已经完成在北京市工商局网站备案，您可了解网站相关备案信息。" href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202013052900002" target="_blank"></a>
     </div>
   </div>
-</div>
