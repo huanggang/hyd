@@ -97,11 +97,7 @@ function account_info(){
 
       if ($act_info_ssn_status == 1)
       {
-        $act_info_ssn = substr_replace($act_info_ssn, " **** **** **** ****", 2, 16);;
-      }
-      if ($act_info_mobile_status == 1)
-      {
-        $act_info_mobile = substr_replace($act_info_mobile, " **** ", 3, 4);;
+        $act_info_ssn = substr_replace($act_info_ssn, " **** **** **** ****", 2, 16);
       }
 
       $json = "{\"nick\":".jsonstr($act_info_nick).",\"ssn_status\":".jsonstrval($act_info_ssn_status).",\"name\":".jsonstr($act_info_name).",\"ssn\":".jsonstr($act_info_ssn).",\"mobile_status\":".jsonstrval($act_info_mobile_status).",\"mobile\":".jsonstr($act_info_mobile).",\"email_status\":".jsonstrval($act_info_email_status).",\"email\":".jsonstr($act_info_email).",\"gender\":".jsonstrval($act_info_gender).",\"dob\":".jsonstr($act_info_dob).",\"education\":".jsonstrval($act_info_edu).",\"marital\":".jsonstrval($act_info_marital).",\"province\":".jsonstrval($act_info_province).",\"city\":".jsonstrval($act_info_city).",\"address\":".jsonstr($act_info_address)."}";
