@@ -190,19 +190,19 @@ function is_auditor($user)
 }
 
 // check if the user is an accountant
-function is_accountant()
+function is_accountant($user)
 {
   return is_array($user->roles) && in_array('accountant', $user->roles);
 }
 
 // check if the user is a manager
-function is_manager()
+function is_manager($user)
 {
   return is_array($user->roles) && in_array('manager', $user->roles);
 }
 
 // check if the user is the super-administrator
-function is_administrator()
+function is_administrator($user)
 {
   return is_array($user->roles) && in_array('administrator', $user->roles);
 }

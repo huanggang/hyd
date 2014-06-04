@@ -25,6 +25,18 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/m_set_withdraw'] = array(
+    'page callback'   => 'manage_set_withdraw', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_set_withdraw.php',
+  );
+  $items['api/m_withdraws'] = array(
+    'page callback'   => 'manage_withdraws', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_withdraws.php',
+  );
   $items['api/banks'] = array(
     'page callback'   => 'account_banks', 
     'access callback' => 'authenticated_access',
