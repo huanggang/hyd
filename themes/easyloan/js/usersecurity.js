@@ -15,13 +15,20 @@ Drupal.behaviors.usersecurity = {
             $("#mobile").html(d.mobile).removeClass('red');
           } 
           if (d.email_status == 1){
-            $("#email").html(d.email).removeClass('red');
-          } 
+            //$("#validemail").html('已设置').removeClass('red');
+            $("#validemail").html(d.email).removeClass('red');
+            $("#setemail").unbind('click').text('修改');
+            $("#emailbinding").text(d.email);
+            
+            toggleForm("setemail", "pg-account-security-email", "取消修改", "修改");
+            //$('#emailSettingForm').hide();
+            //$('#emailResettingForm').show();
+          }
         })
       .fail(function( jqxhr, textStatus, error ) {
         var err = textStatus + ", " + error;
         alert( "加载基本信息出现问题，请重新刷新页面" );
-      });  
+      });
     }
     
     loadInfo();
@@ -248,8 +255,6 @@ Drupal.behaviors.usersecurity = {
       },
     });
 
-
-
     $("#setEmailForm").validate({
       errorPlacement: errPlace,
       submitHandler: function(form) {
@@ -262,7 +267,10 @@ Drupal.behaviors.usersecurity = {
           function(d) {
             var setEmailBtn = $('#subSetEmailBt');
             if (d.result==1) {
-              var msg = $('<span class="ui-form-required pl5">恭喜您，邮件设置成功</span>');
+              var msg = $('<span class="ui-form-required pl5">验证信息已发送,请前往验证!</span>');
+              $("#validemail").html('未设置').addClass('red');
+              $("#setemail").unbind('click').text('取消设置');
+              toggleForm("setemail", "pg-account-security-email", "取消设置", "设置");
               setEmailBtn.after(msg.delay(1000).fadeOut().queue(
                   function() { 
                     $(this).remove(); 
@@ -275,7 +283,7 @@ Drupal.behaviors.usersecurity = {
             } else {
               var msg;
               if (d.exists){
-                msg = $('<span class="ui-form-required pl5">邮箱已经被注册</span>');  
+                msg = $('<span class="ui-form-required pl5">邮箱地址已存在，请选择其它邮箱。</span>');  
               } else {
                 msg = $('<span class="ui-form-required pl5">绑定邮箱失败，请重试</span>');  
               }

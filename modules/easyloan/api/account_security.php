@@ -64,7 +64,8 @@ function account_security(){
       $code = $_GET['code'];
       if ($usr_id <= 0 || is_null($code) || strlen($code) != 6)
       {
-        echo "{\"result\":0}";
+        //echo "{\"result\":0}";
+        drupal_goto('notfound');
         exit;
       }
       break;
@@ -116,6 +117,7 @@ function account_security(){
 
   if ($type != 4)
   {
+    global $user;
     if ($user->uid <= 0) // except verify email address
     {
       echo "{\"result\":0}";
@@ -124,6 +126,7 @@ function account_security(){
     $usr_id = $user->uid;
   }
 
+  global $db_host, $db_user, $db_pwd, $db_name;
   $con=mysqli_connect($db_host, $db_user, $db_pwd, $db_name);
   // Check connection
   if (mysqli_connect_errno())
@@ -179,6 +182,17 @@ function account_security(){
     else
     {
       echo "{\"result\":0,\"verified\":".jsonstrval($times)."}";
+    }
+  }
+  else if ($type == 4)
+  {
+    if ($flag)
+    {
+      drupal_goto('account_management/security');
+    }
+    else
+    {
+      drupal_goto('notfound');
     }
   }
   else {

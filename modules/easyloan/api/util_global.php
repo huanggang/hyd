@@ -66,7 +66,7 @@ $sms_text_withdraw = "[{NAME}][{GENDER}], 银行卡号: [{NUMBER}], 提现金额
 
 // email verification message
 $email_subject_verification = $site_name."邮箱认证";
-$email_url_verification = $http_scheme."://".$host."/account_security.php?type=4&usr_id=[{ID}]&code=[{CODE}]";
+$email_url_verification = $http_scheme."://".$host."/api/security?type=4&usr_id=[{ID}]&code=[{CODE}]";
 $email_content_verification = "请点击下面链接激活帐户，完成邮箱认证。<br />\r\n<a href='".$email_url_verification."'>".$email_url_verification."</a><br /><br />\r\n\r\n如果该链接无法点击，请直接拷贝以上网址到浏览器地址栏中访问。<br />\r\n".$email_url_verification."<br /><br />\r\n\r\n此信是由".$site_name."系统发出，系统不接受回信，请勿直接回复。<br /><br />\r\n\r\n如有任何疑问，请联系我们。";
 
 // mobile security code sms-message

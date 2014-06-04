@@ -1,9 +1,17 @@
 <?php
-drupal_add_css(drupal_get_path('theme','easyloan') . '/css/account.css');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
 
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.validate.min.js');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/usersecurity.js');
+global $base_url;
+
+$theme_path = drupal_get_path('theme','easyloan');
+
+drupal_add_css($theme_path . '/css/account.css');
+drupal_add_js($theme_path . '/js/account.js');
+
+drupal_add_js($theme_path . '/js/jquery.validate.min.js');
+drupal_add_js($theme_path . '/js/usersecurity.js');
+
+$img_path = $base_url . '/' . $theme_path . '/images/';
+
 global $user;
 ?> 
 <div class="p20bs color-white-bg fn-clear" id="pg-account-security">
@@ -85,11 +93,12 @@ global $user;
       <div class="fn-clear">
         <div class="icon icon-email"></div>
         <h3>绑定邮箱</h3>
-        <p class='red'>未设置</p>
+        <p id="validemail" class='red'>未设置</p>
         <div class="update"><a id="setemail">设置</a></div>
-        <div id="pg-account-security-email" style="height:200px;clear:both;" class="fn-clear fn-hide">
+        <div id="pg-account-security-email" style="height:300px;clear:both;" class="fn-clear fn-hide">
           <div>
-            <div class="content setFormBox">
+            
+            <div id="emailSettingForm" class="content setFormBox">
               <form class="ui-form" method="post" id="setEmailForm">
                 <div class="inputs">
                   <div class="ui-form-item">
@@ -102,12 +111,22 @@ global $user;
                 </div>
               </form>
             </div>
-            <div class="fn-hide success">
-              <h3 class="info">验证信息已发往你的邮箱,请前往验证!</h3>
-              <a class="ui-button ui-button-mid ui-button-blue backBt">返回</a>
-            </div>
-          </div>
 
+            <!--div id="emailResettingForm" class="content fn-hide mb20">
+              <p class="info">
+                您正在修改的绑定邮箱是<span id="emailbinding" class="red">w********@163.com</span>
+              </p>
+              <div> 
+                <img src="<?php print $img_path; ?>safety_modemail.jpg" border="0" usemap="#Map2">
+                <map name="Map2" id="Map2">
+                  <area id="checkOldEmailInput" shape="rect" coords="147,7,288,177" href="emailCodeInfo!checkOldEmailInput.action" target="_self">
+                  <area id="checkEmailByMobileInput" shape="rect" coords="453,7,586,179" href="emailCodeInfo!checkEmailByMobileInput.action" target="_self">
+                </map>
+              </div>
+              <p class="info">如果您在操作过程中出现问题，请占击页面右侧在线客服，或拨打好易贷客服电话：400-XXX-XXXX</p>
+            </div--> 
+
+          </div>
         </div>
       </div>
     </li>
@@ -117,13 +136,12 @@ global $user;
         <h3>绑定手机</h3>
         <p id="mobile" class='red'>未设置</p>
         <div class="update"><a id="setmobile">修改</a></div>
-
         <div id="pg-account-security-mobile" style="height:400px;clear:both;" class="fn-clear fn-hide">
           <div class="content">
             <div class="safety_step">
               <div class="bgline"></div>
-              <div class="fourStep steps">
-                <ul class="fn-clear">
+              <div class="fourStep steps"> 
+                <ul class="fn-clear"> 
                   <li class="one">验证原手机号码</li>
                   <li class="no">验证新手机号码</li>
                   <li class="no">成功</li>
