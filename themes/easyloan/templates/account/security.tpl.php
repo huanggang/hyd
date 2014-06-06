@@ -8,6 +8,7 @@ drupal_add_css($theme_path . '/css/account.css');
 drupal_add_js($theme_path . '/js/account.js');
 
 drupal_add_js($theme_path . '/js/jquery.validate.min.js');
+drupal_add_js($theme_path . '/js/valid_methods.js');
 drupal_add_js($theme_path . '/js/usersecurity.js');
 
 $img_path = $base_url . '/' . $theme_path . '/images/';
@@ -111,21 +112,6 @@ global $user;
                 </div>
               </form>
             </div>
-
-            <!--div id="emailResettingForm" class="content fn-hide mb20">
-              <p class="info">
-                您正在修改的绑定邮箱是<span id="emailbinding" class="red">w********@163.com</span>
-              </p>
-              <div> 
-                <img src="<?php print $img_path; ?>safety_modemail.jpg" border="0" usemap="#Map2">
-                <map name="Map2" id="Map2">
-                  <area id="checkOldEmailInput" shape="rect" coords="147,7,288,177" href="emailCodeInfo!checkOldEmailInput.action" target="_self">
-                  <area id="checkEmailByMobileInput" shape="rect" coords="453,7,586,179" href="emailCodeInfo!checkEmailByMobileInput.action" target="_self">
-                </map>
-              </div>
-              <p class="info">如果您在操作过程中出现问题，请占击页面右侧在线客服，或拨打好易贷客服电话：400-XXX-XXXX</p>
-            </div--> 
-
           </div>
         </div>
       </div>
@@ -137,44 +123,67 @@ global $user;
         <p id="mobile" class='red'>未设置</p>
         <div class="update"><a id="setmobile">修改</a></div>
         <div id="pg-account-security-mobile" style="height:400px;clear:both;" class="fn-clear fn-hide">
-          <div class="content">
+
+          <div id='mobileStep1' class="content">
             <div class="safety_step">
               <div class="bgline"></div>
               <div class="fourStep steps"> 
                 <ul class="fn-clear"> 
-                  <li class="one">验证原手机号码</li>
+                  <li class="one">解除原手机号码绑定</li>
                   <li class="no">验证新手机号码</li>
                   <li class="no">成功</li>
                 </ul>
               </div>
             </div>
-            <form data-name="modMobileByPhoneStepOne" id="modMobileByPhoneStepOneForm" class="ui-form" method="post" action="/account/bindMobile!verifyOrigionalPhone.action">
+            <form id="modMobileByPhoneStepOneForm" class="ui-form">
               <div class="inputs">
                 <div class="ui-form-item">
                   <label class="ui-label"><span class="ui-form-required">*</span>原手机号码</label>
-                  <span>153****0002</span>
+                  <span id='oldMobile'></span>
                 </div>
                 <div class="ui-form-item">
                   <label class="ui-label"><span class="ui-form-required">*</span>手机验证码</label>
                   <input class="ui-input" name="validateCode" id="validateCode" type="text" value=""/>
-                  <button id="getMobileCodeWithoutMobile" class="ui-button ui-button-green ui-button-small" >获取验证码</button>
-                </div>
-                <div class="ui-form-item fn-hide voice">
-                          没收到短信？使用语音验证码进行手机验证。<br/>
-                          来电号码 010-52278080 <button class="getVoiceCode ui-button ui-button-green ui-button-small" id="getVoiceCode">获取语音验证码</button>
-                </div>
-                <div class="ui-form-item">
-                  <label class="ui-label"><span class="ui-form-required">*</span>提现密码</label>
-                  <input class="ui-input" type="password" name="cashPassword" id="cashPassword" />
+                  <input type="button" id="getMobileCodeWithoutMobile" class="ui-button ui-button-green ui-button-small" value="获取验证码" />
                 </div>
                 <div class="ui-form-item">
                   <input type="submit" value="下一步" id="subModMobileByPhoneStepOneBt" class="ui-button ui-button-mid ui-button-green" />
                 </div> 
-              </div>  
+              </div>
             </form>
           </div>  
-        </div>
 
+          <div id='mobileStep2' class="content fn-hide">
+            <div class="safety_step">
+              <div class="bgline"></div>
+              <div class="fourStep steps"> 
+                <ul class="fn-clear"> 
+                  <li class="one">解除原手机号码绑定</li>
+                  <li class="two">验证新手机号码</li>
+                  <li class="no">成功</li>
+                </ul>
+              </div>
+            </div>
+            <form id="modMobileByPhoneStepTwoForm" class="ui-form" >
+            <p class="info">原手机号码验证通过，请填写您的新手机号码。</p>
+              <div class="inputs">
+                <div class="ui-form-item">
+                  <label class="ui-label">新手机号码</label> 
+                  <input type="text" id="phone" class="ui-input" name="phone">
+                </div>
+                <div class="ui-form-item">
+                  <label class="ui-label">手机验证码</label>
+                  <input type="text" class="ui-input" name="validateCode2" id="validateCode2">
+                  <input type="button" id="getMobileCode" class="ui-button ui-button-green ui-button-small" value="获取验证码" />
+                </div>
+                <div class="ui-form-item">
+                  <input type="submit" value="下一步" id="subModMobileByPhoneStepTwoBt" class="ui-button ui-button-mid ui-button-green">
+                </div>  
+              </div>
+            </form>
+
+          </div>  
+        </div>
       </div>
     </li>
     <li>
@@ -249,8 +258,6 @@ global $user;
             </form>
           </div>  
         </div>
-
-
 
       </div>
     </li>
