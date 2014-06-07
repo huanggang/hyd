@@ -51,11 +51,10 @@ drupal_add_js($theme_path . '/js/borrow_else.js');
             </div>
             <div class="ui-form-item">
               <label class="ui-label"><span class="ui-form-required">*</span>抵押资产说明</label>
-              <textarea class="ui-textarea" name="description" id="description" rows="6"></textarea>
+              <textarea class="ui-textarea" name="asset_description" id="asset_description" rows="6"></textarea>
             </div>
             </div>
             <div class="ui-form-item">
-              <input name="category" id="category" type="hidden" value="ELSE">
               <input type="submit" class="ui-button ui-button-blue ui-button-mid" value="立即申请" id="apply">
             </div>
           </fieldset>

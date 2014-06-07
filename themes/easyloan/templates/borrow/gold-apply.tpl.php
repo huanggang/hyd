@@ -12,7 +12,7 @@ drupal_add_js($theme_path . '/js/borrow_gold.js');
   <div class="container_12 mt10">
     <div class="grid_12">
       <div class="loanapp loanapp p20bs color-white-bg">
-        <form enctype="multipart/form-data" class="ui-form" method="post" id="borrowForm" action="apply">
+        <form class="ui-form" method="post" id="borrowForm">
           <fieldset>
             <div class="loanboder">
             <legend>黄金抵押借款申请</legend>
@@ -51,7 +51,7 @@ drupal_add_js($theme_path . '/js/borrow_gold.js');
             </div>
             <div class="ui-form-item">
               <label class="ui-label"><span class="ui-form-required">*</span>抵押资产说明</label>
-              <textarea class="ui-textarea" name="description" id="description" rows="6"></textarea>
+              <textarea class="ui-textarea" name="asset_description" id="asset_description" rows="6"></textarea>
             </div>
             </div>
             <div class="ui-form-item">

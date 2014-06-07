@@ -20,7 +20,7 @@
           asset_description: {required: true, minlength:8, maxlength:1024},
           name: {required: true, minlength:2, maxlength:32},
           bought: {required: true, date: true},
-          price: {required: true, digits: true, min:1000, max:99999999},
+          price: {required: true, number: true, min:1000, max:99999999},
         },
         messages: {
           title: {
@@ -63,9 +63,11 @@
             date: "日期格式错误"
           },
           price: {
+          	required: "请填写购买价格",
             number: "含非法字符，必须输入数字",
             min: "价格不低于1,000元", 
             max: "价格不高于99,999,999元"
+          },
         }
       });
 
