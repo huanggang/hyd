@@ -25,6 +25,18 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/loan'] = array(
+    'page callback'   => 'loan', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_loan.php',
+  );
+  $items['api/loans'] = array(
+    'page callback'   => 'loans', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_loans.php',
+  );
   $items['api/apply'] = array(
     'page callback'   => 'apply', 
     'access callback' => 'authenticated_access',
@@ -207,6 +219,12 @@ function easyloan_menu() {
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
     'weight'          => '20'
+  );
+  $items['loan_view'] = array( 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_myloanview'),
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
   );
 
   $items['account_management'] = array( 
@@ -646,6 +664,8 @@ function menu_callback($menu, $param = ''){
       return theme('account-capital', $content);
     case 'account_myloan':
       return theme('account-myloan', $content);
+    case 'account_myloanview':
+      return theme('account-myloanview', $content);
     case 'account_basicinfo':
 /*
       db_set_active('hyd');

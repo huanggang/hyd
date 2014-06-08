@@ -9,7 +9,10 @@
       var show_pages = 11;
       var show_pages_mid = 7; // show_pages == (show_pages_mid + 4)
 
-      var total_pages = 0;
+      var total_1 = 0;
+      var total_pages_1 = 0;
+      var total_2 = 0;
+      var total_pages_2 = 0;
 
       $(window).bind('hashchange', function(){
         var hash = window.location.hash;
@@ -49,12 +52,21 @@
             var list = '';
             var pagination = '<ul>';
             if (page == 1){
-              if (d.total == 0){
-                list += '<li class="ui-list-status"><p class="color-gray-text">没有记录</p></li>';
-                total_pages = 0;
+              var total = d.total;
+              var total_pages = total == 0 ? 0 : Math.round(total / per_page) + 1;
+              if (type == 1){
+                total_1 = total;
+                total_pages_1 = total_pages;
               }
               else{
-                total_pages = Math.round(d.total / per_page) + 1;
+                total_2 = total;
+                total_pages_2 = total_pages;
+              }
+
+              if (total == 0){
+                list += '<li class="ui-list-status"><p class="color-gray-text">没有记录</p></li>';
+              }
+              else{
                 if (total_pages > max_pages) {
                   total_pages = max_pages;
                 }
@@ -79,6 +91,16 @@
               }
             }
             else{ // page > 1
+              var total = 0;
+              var total_pages = 0;
+              if (type == 1){
+                total = total_1;
+                total_pages = total_pages_1;
+              }
+              else{
+                total = total_2;
+                total_pages = total_pages_2;
+              }
               if (total_pages <= show_pages){
                 for (var i = 1; i < page; i++){
                   pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
@@ -134,6 +156,7 @@
             }
             pagination += '</ul>';
             $('#repaid-list-pagination-'+ type).html(pagination);
+            $('#repaid-total-'+type).html("共"+total+"条");
 
             if (type == 1){ // checking
               list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w50 ph5 fn-left title">开户名</span><span class="ui-list-title w90 ph5 fn-left">提现金额</span><span class="ui-list-title w40 ph5 fn-left">费用</span><span class="ui-list-title w100 ph5 fn-left">银行</span><span class="ui-list-title w180 ph5 fn-left">卡号</span><span class="ui-list-title w80 ph5 fn-left">申请日期</span><span class="ui-list-title w60 ph5 fn-left last">转账</span><span class="ui-list-title w60 ph5 fn-left last">拒绝</span></li>';

@@ -32,14 +32,16 @@ drupal_add_js($theme_path . '/js/withdrawappl.js');
   <div class="p20bs color-white-bg">
     <div id="repayments-tab-content">
       <div class="ui-tab-content ui-tab-content-current fn-clear" data-name="checking">
-        <ul class="ui-list ui-list-s repaid" id="repaid-list-1">
+        <ul class="ui-list ui-list-s" id="repaid-list-1">
         </ul>
+        <div class="fn-left mt10" id="repaid-total-1"></div>
         <div class="fn-right mt10 ui-pagination simple-pagination" id="repaid-list-pagination-1">
         </div>
       </div>
       <div class="ui-tab-content fn-clear" data-name="checked">
-        <ul class="ui-list ui-list-s repaid" id="repaid-list-2">
+        <ul class="ui-list ui-list-s" id="repaid-list-2">
         </ul>
+        <div class="fn-left mt10" id="repaid-total-2"></div>
         <div class="fn-right mt10 ui-pagination simple-pagination" id="repaid-list-pagination-2">
         </div>
       </div>

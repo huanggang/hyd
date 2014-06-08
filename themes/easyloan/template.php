@@ -145,6 +145,9 @@ function easyloan_theme() {
     'account-myloan' => array(
         'path'     => $path . '/account',
         'template' => 'myloan',),
+    'account-myloanview' => array(
+        'path'     => $path . '/account',
+        'template' => 'myloanview',),
     'account-basicinfo' => array(
         'path'     => $path . '/account',
         'template' => 'basicinfo',),
