@@ -35,13 +35,16 @@ Drupal.behaviors.usersecurity = {
           } 
           if (d.mobile_status == 1){
             $("#mobile").html(d.mobile).removeClass('red');
-            $("#oldMobile").html(d.mobile);
+            $("#oldMobile, #cashcodephone").html(d.mobile);
+
           } else {
             $("#setmobile").unbind('click').text('设置');
             toggleForm("setmobile", "pg-account-security-mobile", "设置");
+
+            $("#mobileStep1").addClass('fn-hide');
+            $("#mobileStep3").removeClass('fn-hide');
           }
           if (d.email_status == 1){
-            //$("#validemail").html('已设置').removeClass('red');
             $("#validemail").html(d.email).removeClass('red');
             $("#setemail").unbind('click').text('修改');
             $("#emailbinding").text(d.email);
@@ -49,6 +52,32 @@ Drupal.behaviors.usersecurity = {
             toggleForm("setemail", "pg-account-security-email", "修改");
             //$('#emailSettingForm').hide();
             //$('#emailResettingForm').show();
+          }
+          if (d.act_info_cash_pass== 1) {
+			$("#cash_pass").html('已设置').removeClass('red');
+
+          	$("#spModCashPswLink, #modCachePassDiv").removeClass('fn-hide');
+          	$("#spSetCashPswLink, #setCachePassDiv").addClass('fn-hide');
+
+          	$("#modCashPswLink").click(function(){
+			  "取消修改" != $(this).text() ? $(this).text("取消修改"): $(this).text("修改");
+			  if ("找回" != $("#findCashPswLink").text()){
+			    $("#pg-account-security-find-cash-pass").hide("slow");  
+			    $("#findCashPswLink").text("找回");
+			  }
+			  $("#pg-account-security-cash-pass").slideToggle("slow");
+			}); 
+
+			$("#findCashPswLink").click(function(){
+			  "取消找回" != $(this).text() ? $(this).text("取消找回"): $(this).text("找回");
+			  if ("修改" != $("#modCashPswLink").text()){
+			    $("#pg-account-security-cash-pass").hide( "slow" );  
+			    $("#modCashPswLink").text("修改");
+			  }
+			  $("#pg-account-security-find-cash-pass").slideToggle( "slow" );
+			});
+          } else {
+			toggleForm("setCashPswLink", "pg-account-security-cash-pass", "设置");
           }
         })
       .fail(function( jqxhr, textStatus, error ) {
@@ -65,7 +94,7 @@ Drupal.behaviors.usersecurity = {
     function toggleForm(trigger, target, showText){
       var hideText = "取消" + showText;
       $("#" + trigger).click(function(){
-        showText != $(this).text() ? $(this).text(showText): $(this).text(hideText);
+        showText != $(this).text() ? ($(this).text(showText),$("#" + target + " input:text, " + "#" + target + " input:password ").val("")): $(this).text(hideText);
         $("#" + target).slideToggle( "slow" );
       });
     }
@@ -74,24 +103,6 @@ Drupal.behaviors.usersecurity = {
     toggleForm("setemail", "pg-account-security-email", "设置");
     toggleForm("setmobile", "pg-account-security-mobile", "修改");
     toggleForm("setpass", "pg-account-security-pass", "修改");
-
-    $("#modCashPswLink").click(function(){
-      "取消修改" != $(this).text() ? $(this).text("取消修改"): $(this).text("修改");
-      if ("找回" != $("#findCashPswLink").text()){
-        $("#pg-account-security-find-cash-pass").hide("slow");  
-        $("#findCashPswLink").text("找回");
-      }
-      $("#pg-account-security-cash-pass").slideToggle("slow");
-    }); 
-
-    $("#findCashPswLink").click(function(){
-      "取消找回" != $(this).text() ? $(this).text("取消找回"): $(this).text("找回");
-      if ("修改" != $("#modCashPswLink").text()){
-        $("#pg-account-security-cash-pass").hide( "slow" );  
-        $("#modCashPswLink").text("修改");
-      }
-      $("#pg-account-security-find-cash-pass").slideToggle( "slow" );
-    }); 
 
     var errPlace = function(error, element) {
         element.parent().append(error); // default function
@@ -120,7 +131,6 @@ Drupal.behaviors.usersecurity = {
                   }
                 )
               );
-
             } else {
               if (d.verified < 2) {
                 var msg = $('<span class="ui-form-required pl5">认证失败，您还可以免费认证' + (2 - d.verified) + '次</span>');  
@@ -403,13 +413,18 @@ Drupal.behaviors.usersecurity = {
               var setMobileCodeBtn = $("#subModMobileByPhoneStepTwoBt");
               if (d.result==1) {
                 var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功绑定</span>');
-                setMobileCodeBtn.after(msg.delay(1000).fadeOut().queue(
+                
+                $("#mobile").html($('#phone').val()).removeClass('red');
+                
+                setMobileCodeBtn.after(msg.delay(2000).fadeOut().queue(
                     function() { 
                       $(this).remove();
+
+                      location.reload();
                     }
                   )
                 )
-                $('#setmobile').trigger('click');
+                // $('#setmobile').trigger('click');
               } else {
                 var msg = $('<span class="ui-form-required pl5">绑定手机失败，请重试</span>');
                 setMobileCodeBtn.after(msg.delay(1000).fadeOut());
@@ -493,6 +508,447 @@ Drupal.behaviors.usersecurity = {
       });
 
     })
+
+    $("#modMobileByPhoneStepThreeForm").validate({ 
+      errorPlacement: errPlace, 
+      submitHandler: function(form) { 
+          $('#subModMobileByPhoneStepThreeBt').prop('disabled', true).addClass('ui-button-disabled');
+
+          $.post(
+            Drupal.settings.basePath + 'api/security', 
+            {
+              mobile: $('#newphone').val(), 
+              code: $('#validateCode3').val(), 
+              type: 6,
+            },
+            function(d) {
+              var setMobileCodeBtn = $("#subModMobileByPhoneStepThreeBt");
+              if (d.result==1) {
+                var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功绑定</span>');
+                
+                $("#mobile").html($('#newphone').val()).removeClass('red');
+                $("#setmobile").unbind('click').text('修改');
+                toggleForm("setmobile", "pg-account-security-mobile", "修改");
+
+
+                setMobileCodeBtn.after(msg.delay(1000).fadeOut().queue(
+                    function() { 
+                      $(this).remove();
+                      //$('#setmobile').trigger('click');
+                      location.reload();
+                    }
+                  )
+                )
+
+              } else {
+                var msg = $('<span class="ui-form-required pl5">绑定手机失败，请重试</span>');
+                setMobileCodeBtn.after(msg.delay(1000).fadeOut());
+                setMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
+              } 
+            }, 
+            "json"
+          )
+          .fail(function( jqxhr, textStatus, error) {
+            var err = textStatus + ", " + error;
+            alert( "绑定手机请求出现问题，请重试" );
+            $('#subModMobileByPhoneStepThreeBt').prop('disabled', false).removeClass('ui-button-disabled');
+          });
+      },
+      rules: {
+        newphone: {
+          isMobile: !0,
+          required: !0,
+        },
+        validateCode3:{
+          number:!0,
+          required: !0,
+          minlength: 6,
+          maxlength: 6,
+        }
+      },
+      messages: {
+        newphone: {
+          isMobile: "请正确填写您的手机号码",
+          required: "手机号码不能为空",
+        },
+        validateCode3:{
+          number: "验证码只能为数字",
+          required: "验证码不能为空",
+          minlength: "验证码长度为6位",
+          maxlength: "验证码长度为6位",
+        }
+      },
+    });
+
+    $('#getNewMobileCode').click(function(){
+      var phone = $('#newphone').val(); 
+      if (!/^1[3458]\d{9}$/.test(phone) || phone.length!==11){
+        // invalid phone number, trigger form submit to display errors
+        $("#modMobileByPhoneStepThreeForm").submit();
+        return; 
+      }
+
+      $('#getNewMobileCode').prop('disabled', true).addClass('ui-button-disabled');
+      $.post(
+        Drupal.settings.basePath + 'api/security', 
+        {
+          mobile: phone, 
+          type: 5,
+        },
+        function(d) {
+          var getMobileCodeBtn = $("#getNewMobileCode");
+          if (d.result==1) {
+            var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功发送，请注意查收验证码。</span>');
+            getMobileCodeBtn.after(msg.delay(1000).fadeOut().queue(
+                function() { 
+                  $(this).remove();
+                }
+              )
+            )
+            btnCountDown("getNewMobileCode", 29);
+          } else {
+            var msg = $('<span class="ui-form-required pl5">验证码发送失败，请重试</span>');
+            getMobileCodeBtn.after(msg.delay(1000).fadeOut());
+            getMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
+          } 
+        }, 
+        "json"
+      )
+      .fail(function( jqxhr, textStatus, error) {
+        var err = textStatus + ", " + error;
+        alert( "绑定手机请求出现问题，请重试" );
+        getMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
+      });
+
+    })
+
+
+    $("#setCashPswForm").validate({ 
+      errorPlacement: errPlace, 
+      submitHandler: function(form) { 
+          $('#subSetCashPswBt').prop('disabled', true).addClass('ui-button-disabled');
+
+          $.post(
+            Drupal.settings.basePath + 'api/security', 
+            {
+              cash_pass: $('#cashPassword').val(), 
+              type: 8,
+            },
+            function(d) {
+              var setCashPassBtn = $("#subSetCashPswBt");
+              if (d.result==1) {
+                var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的提现密码已成功设置</span>');
+                
+                $("#cash_pass").html("已设置").removeClass('red');
+            	$("#spSetCashPswLink").hide();
+            	$("#spModCashPswLink").show();
+
+                setCashPassBtn.after(msg.delay(1000).fadeOut().queue(
+                    function() { 
+                      $(this).remove();
+                      //$('#setmobile').trigger('click');
+                      location.reload();
+                    }
+                  )
+                )
+
+              } else {
+                var msg = $('<span class="ui-form-required pl5">设置取现密码失败，请重试</span>');
+                setCashPassBtn.after(msg.delay(1000).fadeOut());
+                setCashPassBtn.prop('disabled', false).removeClass('ui-button-disabled');
+              } 
+            }, 
+            "json"
+          )
+          .fail(function( jqxhr, textStatus, error) {
+            var err = textStatus + ", " + error;
+            alert( "设置取现密码出现问题，请重试" );
+
+            $('#subSetCashPswBt').prop('disabled', false).removeClass('ui-button-disabled');
+          });
+      },
+      rules: {
+        cashPassword: {
+          required: !0,
+        },
+        cashPassword2:{
+          equalTo: '#cashPassword'
+        }
+      },
+      messages: {
+        cashPassword: {
+			required: "提现密码不能为空",
+        },
+        cashPassword2:{
+    		equalTo: "您输入的密码不一致"
+        }
+      },
+    });
+
+    $("#modCashPswForm").validate({ 
+      errorPlacement: errPlace, 
+      submitHandler: function(form) { 
+          $('#subModCashPswBt').prop('disabled', true).addClass('ui-button-disabled');
+
+          $.post(
+            Drupal.settings.basePath + 'api/security', 
+            {
+              cash_pass: $('#cashPasswordOld').val(), 
+              new_cash_pass: $('#newCashPwd').val(), 
+              type: 9,
+            },
+            function(d) {
+              var setCashPassBtn = $("#subModCashPswBt");
+              if (d.result==1) {
+                var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的提现密码已成功设置</span>');
+                
+                $("#cash_pass").html("已设置").removeClass('red');
+            	$("#spSetCashPswLink").hide();
+            	$("#spModCashPswLink").show();
+
+                setCashPassBtn.after(msg.delay(1000).fadeOut().queue(
+                    function() { 
+                      $(this).remove();
+                      //$('#setmobile').trigger('click');
+                      location.reload();
+                    }
+                  )
+                )
+
+              } else {
+                var msg = $('<span class="ui-form-required pl5">设置取现密码失败，请重试</span>');
+                setCashPassBtn.after(msg.delay(1000).fadeOut());
+                setCashPassBtn.prop('disabled', false).removeClass('ui-button-disabled');
+              } 
+            }, 
+            "json"
+          )
+          .fail(function( jqxhr, textStatus, error) {
+            var err = textStatus + ", " + error;
+            alert( "设置取现密码出现问题，请重试" );
+
+            $('#subModCashPswBt').prop('disabled', false).removeClass('ui-button-disabled');
+          });
+      },
+      rules: {
+      	cashPasswordOld:{
+			required: !0,
+			minlength: 6,
+			maxlength: 16,
+      	},
+        newCashPwd: {
+          	required: !0,
+			minlength: 6,
+			maxlength: 16,
+        },
+        newCashPwd2:{
+          	equalTo: '#newCashPwd'
+        }
+      },
+      messages: {
+        cashPasswordOld: {
+			required: "密码须为6-16位英文字母、数字和符号(不包括空格)",
+			minlength: "密码长度至少为6个字符",
+			maxlength: "密码长度至少为16个字符",
+        },
+        newCashPwd: {
+			required: "密码须为6-16位英文字母、数字和符号(不包括空格)",
+			minlength: "密码长度至少为6个字符",
+			maxlength: "密码长度至少为16个字符",
+        },
+        newCashPwd2:{
+    		equalTo: "您输入的密码不一致"
+        }
+      },
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	$('#getMobileCodeFindCashPass').click(function(){
+      $('#getMobileCodeFindCashPass').prop('disabled', true).addClass('ui-button-disabled');
+
+      $.post(
+          Drupal.settings.basePath + 'api/security', 
+          {
+            mobile: $('#oldMobile').text(), 
+            type: 5,
+          },
+          function(d) {
+            var getMobileCodeWithoutMobile = $('#getMobileCodeFindCashPass');
+
+            if (d.result==1) {
+              var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功发送，请注意查收验证码。</span>');
+
+              getMobileCodeWithoutMobile.after(msg.delay(1000).fadeOut().queue(
+                  function() { 
+                    $(this).remove(); 
+                  }
+                )
+              )
+
+              btnCountDown("getMobileCodeFindCashPass", 29);
+
+            } else {
+              var msg;
+              msg = $('<br /><span class="ui-form-required pl5">发送验证码失败，请重试</span>');  
+              getMobileCodeWithoutMobile.after(msg.delay(1000).fadeOut());
+              $('#getMobileCodeFindCashPass').prop('disabled', false).removeClass('ui-button-disabled');
+            }
+          }, 
+          "json"
+        )
+        .fail(function( jqxhr, textStatus, error ) {
+          var err = textStatus + ", " + error;
+          alert( "发送验证码失败，请重试" ); 
+          $('#getMobileCodeFindCashPass').prop('disabled', false).removeClass('ui-button-disabled'); 
+        });
+    })
+
+    $("#findCashPswFormStepOneForm").validate({
+      errorPlacement: errPlace,
+      submitHandler: function(form) {
+        $.post(
+          Drupal.settings.basePath + 'api/security', 
+          {
+            code: $('#validateCode4').val(),
+            mobile: $('#cashcodephone').text(), 
+            type: 5,
+          },
+          function(d) {
+            var setModPswBtn = $('#subFindCashPswStepOneBt');
+            if (d.result==1) {
+              var msg = $('<span class="ui-form-required pl5">成功验证手机</span>');
+              setModPswBtn.after(msg.delay(1000).fadeOut().queue(
+                  function() { 
+                    $(this).remove();
+                    $('#mobileCashPassStep1').hide();
+                    $('#mobileCashPassStep2').show();
+                  }
+                )
+              )
+            } else {
+              var msg = $('<span class="ui-form-required pl5">解绑定失败，请重试</span>');
+              setModPswBtn.after(msg.delay(1000).fadeOut());
+            } 
+          }, 
+          "json"
+        )
+        .fail(function( jqxhr, textStatus, error ) {
+          var err = textStatus + ", " + error;
+          alert( "验证手机请求出现问题，请重试" );
+        });
+      },
+      rules: {
+        validateCode4: {
+          number: !0,
+          required: !0,
+          minlength: 6,
+          maxlength: 6,
+        },
+      },
+      messages: {
+        validateCode4: {
+          number: "验证码只能为数字",
+          required: "验证码不能为空",
+          minlength: "验证码长度为6位",
+          maxlength: "验证码长度为6位",
+        }, 
+      }, 
+    });
+
+
+
+
+	$("#findCashPswFormStepTwoForm").validate({ 
+      errorPlacement: errPlace, 
+      submitHandler: function(form) { 
+          $('#subFindCashPswStepTwoBt').prop('disabled', true).addClass('ui-button-disabled');
+
+          $.post(
+            Drupal.settings.basePath + 'api/security', 
+            {
+              mobile: $('#newphone').val(), 
+              code: $('#validateCode3').val(), 
+              type: 6,
+            },
+            function(d) {
+              var setMobileCodeBtn = $("#subModMobileByPhoneStepThreeBt");
+              if (d.result==1) {
+                var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功绑定</span>');
+                
+                $("#mobile").html($('#newphone').val()).removeClass('red');
+                $("#setmobile").unbind('click').text('修改');
+                toggleForm("setmobile", "pg-account-security-mobile", "修改");
+
+
+                setMobileCodeBtn.after(msg.delay(1000).fadeOut().queue(
+                    function() { 
+                      $(this).remove();
+                      //$('#setmobile').trigger('click');
+                      location.reload();
+                    }
+                  )
+                )
+
+              } else {
+                var msg = $('<span class="ui-form-required pl5">绑定手机失败，请重试</span>');
+                setMobileCodeBtn.after(msg.delay(1000).fadeOut());
+                setMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
+              } 
+            }, 
+            "json"
+          )
+          .fail(function( jqxhr, textStatus, error) {
+            var err = textStatus + ", " + error;
+            alert( "绑定手机请求出现问题，请重试" );
+            $('#subModMobileByPhoneStepThreeBt').prop('disabled', false).removeClass('ui-button-disabled');
+          });
+      },
+      rules: {
+        newphone: {
+          isMobile: !0,
+          required: !0,
+        },
+        validateCode3:{
+          number:!0,
+          required: !0,
+          minlength: 6,
+          maxlength: 6,
+        }
+      },
+      messages: {
+        newphone: {
+          isMobile: "请正确填写您的手机号码",
+          required: "手机号码不能为空",
+        },
+        validateCode3:{
+          number: "验证码只能为数字",
+          required: "验证码不能为空",
+          minlength: "验证码长度为6位",
+          maxlength: "验证码长度为6位",
+        }
+      },
+    });
+
+
+
   }
 };
 })(jQuery, Drupal, this, this.document);

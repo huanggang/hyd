@@ -181,84 +181,126 @@ global $user;
                 </div>  
               </div>
             </form>
-
           </div>  
+
+          <div id='mobileStep3' class="content fn-hide">
+            <div class="safety_step">
+              <div class="bgline"></div>
+              <div class="fourStep steps"> 
+                <ul class="fn-clear"> 
+                  <li class="one">验证手机号码</li>
+                  <li class="no">成功</li>
+                </ul>
+              </div>
+            </div>
+            <form id="modMobileByPhoneStepThreeForm" class="ui-form" >
+            <p class="info">请填写您要绑定的手机号码。</p>
+              <div class="inputs">
+                <div class="ui-form-item">
+                  <label class="ui-label">手机号码</label> 
+                  <input type="text" id="newphone" class="ui-input" name="newphone">
+                </div>
+                <div class="ui-form-item">
+                  <label class="ui-label">手机验证码</label>
+                  <input type="text" class="ui-input" name="validateCode3" id="validateCode3">
+                  <input type="button" id="getNewMobileCode" class="ui-button ui-button-green ui-button-small" value="获取验证码" />
+                </div>
+                <div class="ui-form-item">
+                  <input type="submit" value="绑定号码" id="subModMobileByPhoneStepThreeBt" class="ui-button ui-button-mid ui-button-green">
+                </div>  
+              </div>
+            </form>
+          </div>
+
         </div>
       </div>
     </li>
+
     <li>
       <div class="fn-clear">
         <div class="icon icon-cashpsw"></div>
         <h3>提现密码</h3>
         <p id="cash_pass" class='red'>未设置</p>
         <div class="update">
-          <a id="modCashPswLink">修改</a> | <a id="findCashPswLink">找回</a>
+          <span id="spSetCashPswLink"><a id="setCashPswLink">设置</a></span>
+          <span id="spModCashPswLink" class="fn-hide"><a id="modCashPswLink">修改</a> | <a id="findCashPswLink">找回</a></span>
         </div>
         <div id="pg-account-security-cash-pass" style="height:400px;clear:both;" class="fn-clear fn-hide">
-          <div class="content">
+
+          <div id="setCachePassDiv" class="content">
             <p class="info">为了您的账户安全，请定期更换提现密码，并确保提现密码设置与登录密码不同。</p>
-            <form data-name="modCashPsw" id="modCashPswForm" method="post" class="ui-form" action="/account/cashPwd!doModify.action" novalidate="novalidate">
+            <form id="setCashPswForm" class="ui-form">
               <div class="inputs">
                 <div class="ui-form-item">
-                  <label class="ui-label"><span class="ui-form-required">*</span>原提现密码</label>
-                  <input class="ui-input" name="cashPassword" type="password" id="cashPassword" placeholder="请输入原提现密码">
-                </div>
-                <div class="ui-form-item">
-                  <label class="ui-label"><span class="ui-form-required">*</span>新提现密码</label>
-                  <input class="ui-input" name="newCashPwd" id="newCashPwd" type="password" placeholder="6-12位字母、数字和符号(不包括空格)" data-is="isPassWord">
+                  <label class="ui-label"><span class="ui-form-required">*</span>提现密码</label>
+                  <input class="ui-input" name="cashPassword" type="password" id="cashPassword" placeholder="请输入提现密码">
                 </div>
                 <div class="ui-form-item">
                   <label class="ui-label"><span class="ui-form-required">*</span>确认提现密码</label>
-                  <input class="ui-input" name="newCashPwd2" id="newCashPwd2" type="password">
+                  <input class="ui-input" name="cashPassword2" id="cashPassword2" type="password" placeholder="请再次输入提现密码">
+                </div>
+                <div class="ui-form-item">
+                  <input type="submit" value="提 交" id="subSetCashPswBt" class="ui-button ui-button-mid ui-button-green">
+                </div>  
+              </div>
+            </form>
+          </div>
+
+          <div id="modCachePassDiv" class="content fn-hide"> 
+            <p class="info">为了您的账户安全，请定期更换提现密码，并确保提现密码设置与登录密码不同。</p>
+            <form id="modCashPswForm" class="ui-form">
+              <div class="inputs">
+                <div class="ui-form-item">
+                  <label class="ui-label"><span class="ui-form-required">*</span>原提现密码</label>
+                  <input class="ui-input" name="cashPasswordOld" type="password" id="cashPasswordOld" placeholder="请输入原提现密码">
+                </div>
+                <div class="ui-form-item">
+                  <label class="ui-label"><span class="ui-form-required">*</span>新提现密码</label>
+                  <input class="ui-input" name="newCashPwd" id="newCashPwd" type="password" placeholder="6-16位字母、数字和符号(不包括空格)">
+                </div>
+                <div class="ui-form-item">
+                  <label class="ui-label"><span class="ui-form-required">*</span>确认提现密码</label>
+                  <input class="ui-input" name="newCashPwd2" id="newCashPwd2" type="password" placeholder="请再次输入新提现密码">
                 </div>
                 <div class="ui-form-item">
                   <input type="submit" value="提 交" id="subModCashPswBt" class="ui-button ui-button-mid ui-button-green">
                 </div>  
               </div>
             </form>
-            <p class="info">如果您在操作过程中出现问题，请点击页面右侧在线客服，或拨打好易贷客服电话：400-027-8080</p>
-          </div>  
-          <div class="fn-hide success">
-            <h3 class="info">提现密码修改成功</h3>
-            <a class="ui-button ui-button-mid ui-button-blue backBt">返回</a>
           </div>
         </div>
+
+
+
+
+
         <div id="pg-account-security-find-cash-pass" style="height:400px;clear:both;" class="fn-clear fn-hide">
-          <div class="content">
-            <div style="height: 100px;">
-              <div class="safety_step">
-                <div class="bgline"></div>
-                <div class="threeStep steps">
-                  <ul class="fn-clear">
-                    <li class="one">验证手机号码</li>
-                    <li class="no">重设提现密码</li>
-                    <li class="no">成功</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <form data-name="findCashPswStepOne" id="findCashPswFormStepOneForm" method="post" action="/account/bindMobile!verifyOrigionalPhone.action?go=cashPwd2" class="ui-form" novalidate="novalidate">
+          <div class="content p20" id="mobileCashPassStep1">
+            <form id="findCashPswFormStepOneForm" class="ui-form">
               <div class="inputs">
                 <div class="ui-form-item clearboth">
-                  <label class="ui-label">绑定的手机号码</label> <span>153****0002</span>
+                  <label class="ui-label">绑定的手机号码</label> <span id="cashcodephone"></span>
                 </div>
-                  <div class="ui-form-item">
+                <div class="ui-form-item">
                   <label class="ui-label"><span class="ui-form-required">*</span>手机验证码</label>
-                  <input type="text" class="ui-input code" name="validateCode" id="validateCode" value="">
-                  <button id="getMobileCodeWithoutMobile" class="ui-button ui-button-green ui-button-small">获取验证码</button>
-                  </div>
-                  <div class="ui-form-item fn-hide voice">
-                          没收到短信？使用语音验证码进行手机验证。<br>
-                          来电号码 010-52278080 <button class="getVoiceCode ui-button ui-button-green ui-button-small" id="getVoiceCode">获取语音验证码</button>
-                    </div>
-                  <div class="ui-form-item">
-                  <input type="submit" value="下一步" id="subFindCashPswStepOneBt" class="ui-button ui-button-mid ui-button-green">
+                  <input type="text" class="ui-input code" name="validateCode4" id="validateCode4" value="">
+                  <button id="getMobileCodeFindCashPass" class="ui-button ui-button-green ui-button-small">获取验证码</button>
+                </div>
+                <div class="ui-form-item">
+                   <label class="ui-label"><span class="ui-form-required">*</span>输入新提现密码</label>
+                   <input type="password" class="ui-input" name="newCashPwd" id="newCashPwd">
+                 </div>
+                 <div class="ui-form-item">
+                   <label class="ui-label"><span class="ui-form-required">*</span>再次输入新提现密码</label>
+                   <input type="password" class="ui-input" name="newCashPwd2" id="newCashPwd2">
+                 </div>
+                <div class="ui-form-item">
+                  <input type="submit" value="重设密码" id="subFindCashPswStepOneBt" class="ui-button ui-button-mid ui-button-green">
                 </div>  
               </div>
             </form>
           </div>  
         </div>
-
       </div>
     </li>
   </ul>

@@ -72,7 +72,7 @@ function account_info(){
   }
   else // default GET
   {
-    $query = "SELECT act_info_nick, act_info_ssn_status, act_info_name, act_info_ssn, act_info_mobile_status, act_info_mobile, act_info_email_status, act_info_email, act_info_gender, act_info_dob, act_info_edu, act_info_marital, act_info_province, act_info_city, act_info_address FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id);
+    $query = "SELECT act_info_nick, act_info_ssn_status, act_info_name, act_info_ssn, act_info_mobile_status, act_info_mobile, act_info_email_status, act_info_email, act_info_gender, act_info_dob, act_info_edu, act_info_marital, act_info_province, act_info_city, act_info_address, !ISNULL(`act_info_cash_pass`) as act_info_cash_pass  FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id);
     mysqli_query($con, "LOCK TABLES account_info_act_info READ");
     $result = mysqli_query($con, $query);
     mysqli_query($con, "UNLOCK TABLES");
@@ -93,6 +93,7 @@ function account_info(){
       $act_info_province = $row['act_info_province'];
       $act_info_city = $row['act_info_city'];
       $act_info_address = $row['act_info_address'];
+      $act_info_cash_pass = $row['act_info_cash_pass'];
       mysqli_free_result($result);
 
       if ($act_info_ssn_status == 1)
@@ -100,7 +101,7 @@ function account_info(){
         $act_info_ssn = substr_replace($act_info_ssn, " **** **** **** ****", 2, 16);
       }
 
-      $json = "{\"nick\":".jsonstr($act_info_nick).",\"ssn_status\":".jsonstrval($act_info_ssn_status).",\"name\":".jsonstr($act_info_name).",\"ssn\":".jsonstr($act_info_ssn).",\"mobile_status\":".jsonstrval($act_info_mobile_status).",\"mobile\":".jsonstr($act_info_mobile).",\"email_status\":".jsonstrval($act_info_email_status).",\"email\":".jsonstr($act_info_email).",\"gender\":".jsonstrval($act_info_gender).",\"dob\":".jsonstr($act_info_dob).",\"education\":".jsonstrval($act_info_edu).",\"marital\":".jsonstrval($act_info_marital).",\"province\":".jsonstrval($act_info_province).",\"city\":".jsonstrval($act_info_city).",\"address\":".jsonstr($act_info_address)."}";
+      $json = "{\"nick\":".jsonstr($act_info_nick).",\"ssn_status\":".jsonstrval($act_info_ssn_status).",\"name\":".jsonstr($act_info_name).",\"ssn\":".jsonstr($act_info_ssn).",\"mobile_status\":".jsonstrval($act_info_mobile_status).",\"mobile\":".jsonstr($act_info_mobile).",\"email_status\":".jsonstrval($act_info_email_status).",\"email\":".jsonstr($act_info_email).",\"gender\":".jsonstrval($act_info_gender).",\"dob\":".jsonstr($act_info_dob).",\"education\":".jsonstrval($act_info_edu).",\"marital\":".jsonstrval($act_info_marital).",\"province\":".jsonstrval($act_info_province).",\"city\":".jsonstrval($act_info_city).",\"address\":".jsonstr($act_info_address).",\"act_info_cash_pass\":".jsonstr($act_info_cash_pass)."}";
     }
   }
 
