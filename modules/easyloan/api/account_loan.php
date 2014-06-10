@@ -61,7 +61,7 @@ function loan(){
 
     if ($lns_is_done != 1)
     {
-      $query = "SELECT act_ln_w_amount, act_ln_w_interest FROM account_loan_act_ln WHERE act_ln_usr_id = ".strval($lns_usr_id);
+      $query = "SELECT act_ln_w_amount, act_ln_w_interest, act_ln_w_owned, act_ln_w_fine FROM account_loan_act_ln WHERE act_ln_usr_id = ".strval($lns_usr_id);
       mysqli_query($con, "LOCK TABLES account_loan_act_ln READ");
       $result = mysqli_query($con, $query);
       mysqli_query($con, "UNLOCK TABLES");
@@ -69,9 +69,11 @@ function loan(){
       {
         $act_ln_w_amount = $row['act_ln_w_amount'];
         $act_ln_w_interest = $row['act_ln_w_interest'];
+        $act_ln_w_owned = $row['act_ln_w_owned'];
+        $act_ln_w_fine = $row['act_ln_w_fine'];
         mysqli_free_result($result);
 
-        $json = $json.",\"w_amount\":".jsonstrval($act_ln_w_amount).",\"w_interest\":".jsonstrval($act_ln_w_interest);
+        $json = $json.",\"w_amount\":".jsonstrval($act_ln_w_amount).",\"w_interest\":".jsonstrval($act_ln_w_interest).",\"w_owned\":".jsonstrval($act_ln_w_owned).",\"w_fine\":".jsonstrval($act_ln_w_fine);
       }
     }
     

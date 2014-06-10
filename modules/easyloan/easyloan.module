@@ -25,6 +25,12 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/loanapp'] = array(
+    'page callback'   => 'loanapp', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_loan_application.php',
+  );
   $items['api/loan'] = array(
     'page callback'   => 'loan', 
     'access callback' => 'authenticated_access',
@@ -222,7 +228,13 @@ function easyloan_menu() {
   );
   $items['loan_view'] = array( 
     'page callback'   => 'menu_callback', 
-    'page arguments'  => array('account_myloanview'),
+    'page arguments'  => array('account_loanview'),
+    'access callback'   => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['loanapp_view'] = array( 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('account_loanappview'),
     'access callback'   => 'authenticated_access', 
     'type'            => MENU_NORMAL_ITEM, 
   );
@@ -295,19 +307,19 @@ function easyloan_menu() {
     'menu_name'       => 'easyloan_account',
     'weight'          => '5'
   );
-  $items['management/applications'] = array(
-    'title'           => t('借款审核'), 
+  $items['management/accountsindebt'] = array( 
+    'title'           => t('欠款账户'), 
     'page callback'   => 'menu_callback', 
-    'page arguments'  => array('management_applications'),
+    'page arguments'  => array('management_accountsindebt', 2),
     'access arguments' => array('auditor permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
     'weight'          => '10'
   );
-  $items['management/accountsindebt'] = array( 
-    'title'           => t('欠款账户'), 
+  $items['management/applications'] = array(
+    'title'           => t('借款审核'), 
     'page callback'   => 'menu_callback', 
-    'page arguments'  => array('management_accountsindebt', 2),
+    'page arguments'  => array('management_applications'),
     'access arguments' => array('auditor permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
@@ -322,6 +334,15 @@ function easyloan_menu() {
     'menu_name'       => 'easyloan_account',
     'weight'          => '20'
   );
+  $items['management/createinvestplan'] = array( 
+    'title'           => t('投资产品管理'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('management_createinvestplan'),
+    'access arguments' => array('manager permission'),
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_account',
+    'weight'          => '25'
+  );
   $items['management/withdrawappl'] = array(
     'title'           => t('提现申请'), 
     'page callback'   => 'menu_callback', 
@@ -329,22 +350,13 @@ function easyloan_menu() {
     'access arguments' => array('accountant permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
-    'weight'          => '25'
+    'weight'          => '30'
   );
   $items['management/settings'] = array( 
     'title'           => t('通知设置'), 
     'page callback'   => 'menu_callback', 
     'page arguments'  => array('account_settings'),
     'access arguments' => array('accountant permission'),
-    'type'            => MENU_NORMAL_ITEM, 
-    'menu_name'       => 'easyloan_account',
-    'weight'          => '30'
-  );
-  $items['management/createinvestplan'] = array( 
-    'title'           => t('投资产品管理'), 
-    'page callback'   => 'menu_callback', 
-    'page arguments'  => array('management_createinvestplan'),
-    'access arguments' => array('manager permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
     'weight'          => '35'
@@ -664,8 +676,10 @@ function menu_callback($menu, $param = ''){
       return theme('account-capital', $content);
     case 'account_myloan':
       return theme('account-myloan', $content);
-    case 'account_myloanview':
-      return theme('account-myloanview', $content);
+    case 'account_loanview':
+      return theme('account-loanview', $content);
+    case 'account_loanappview':
+      return theme('account-loanappview', $content);
     case 'account_basicinfo':
 /*
       db_set_active('hyd');

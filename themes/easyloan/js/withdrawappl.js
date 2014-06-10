@@ -167,7 +167,7 @@
                   list += ' dark';
                 }
                 list += '"><span class="ui-list-field w50 ph5 fn-left"><a href="/management/user/'
-                  + w.user_id + '">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right';
+                  + w.user_id + '" target="blank">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right';
                 if (w.is_owned){
                   list += ' red';
                 }
@@ -213,7 +213,7 @@
                   })
                   .fail(function( jqxhr, textStatus, error ) {
                     var err = textStatus + ", " + error;
-                    alert( "设置出现问题，请重新刷新页面。");
+                    alert( "设置出现问题，请刷新页面。");
                   });
                 }
               });
@@ -236,7 +236,7 @@
                   })
                   .fail(function( jqxhr, textStatus, error ) {
                     var err = textStatus + ", " + error;
-                    alert( "设置出现问题，请重新刷新页面。");
+                    alert( "设置出现问题，请刷新页面。");
                   });
                 }
               });
@@ -250,7 +250,7 @@
                   list += ' dark';
                 }
                 list += '"><span class="ui-list-field w50 ph5 fn-left"><a href="/management/user/'
-                  + w.user_id + '">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right">'
+                  + w.user_id + '" target="blank">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right">'
                   + w.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w40 ph5 fn-left text-right">'
                   + w.fee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w100 ph5 fn-left text-center">'
                   + map_id_name(banks, w.bank) + '</span><span class="ui-list-field w180 ph5 fn-left">'
@@ -277,7 +277,7 @@
         })
         .fail(function( jqxhr, textStatus, error ) {
           var err = textStatus + ", " + error;
-          alert( "获取信息出现问题，请重新刷新页面。");
+          alert( "获取信息出现问题，请刷新页面。");
         });
 
       });
