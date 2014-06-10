@@ -270,11 +270,12 @@ global $user;
           </div>
         </div>
 
-
-
-
-
         <div id="pg-account-security-find-cash-pass" style="height:400px;clear:both;" class="fn-clear fn-hide">
+
+          <div class="content p20" id="mobileCashPassStep0">
+            <p class="info">请先绑定手机</p>  
+          </div>  
+
           <div class="content p20" id="mobileCashPassStep1">
             <form id="findCashPswFormStepOneForm" class="ui-form">
               <div class="inputs">
@@ -284,15 +285,15 @@ global $user;
                 <div class="ui-form-item">
                   <label class="ui-label"><span class="ui-form-required">*</span>手机验证码</label>
                   <input type="text" class="ui-input code" name="validateCode4" id="validateCode4" value="">
-                  <button id="getMobileCodeFindCashPass" class="ui-button ui-button-green ui-button-small">获取验证码</button>
+                  <input type="button" id="getMobileCodeFindCashPass" class="ui-button ui-button-green ui-button-small" value="获取验证码">
                 </div>
                 <div class="ui-form-item">
                    <label class="ui-label"><span class="ui-form-required">*</span>输入新提现密码</label>
-                   <input type="password" class="ui-input" name="newCashPwd" id="newCashPwd">
+                   <input type="password" class="ui-input" name="newFindCashPwd" id="newFindCashPwd" />
                  </div>
                  <div class="ui-form-item">
                    <label class="ui-label"><span class="ui-form-required">*</span>再次输入新提现密码</label>
-                   <input type="password" class="ui-input" name="newCashPwd2" id="newCashPwd2">
+                   <input type="password" class="ui-input" name="newFindCashPwd2" id="newFindCashPwd2" />
                  </div>
                 <div class="ui-form-item">
                   <input type="submit" value="重设密码" id="subFindCashPswStepOneBt" class="ui-button ui-button-mid ui-button-green">
@@ -301,6 +302,8 @@ global $user;
             </form>
           </div>  
         </div>
+
+        
       </div>
     </li>
   </ul>
