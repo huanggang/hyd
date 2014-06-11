@@ -159,14 +159,14 @@
             $('#repaid-total-'+type).html("共"+total+"条");
 
             if (type == 1){ // checking
-              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w50 ph5 fn-left title">开户名</span><span class="ui-list-title w90 ph5 fn-left">提现金额</span><span class="ui-list-title w40 ph5 fn-left">费用</span><span class="ui-list-title w100 ph5 fn-left">银行</span><span class="ui-list-title w180 ph5 fn-left">卡号</span><span class="ui-list-title w80 ph5 fn-left">申请日期</span><span class="ui-list-title w60 ph5 fn-left last">转账</span><span class="ui-list-title w60 ph5 fn-left last">拒绝</span></li>';
+              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w50 ph5 fn-left title">开户名</span><span class="ui-list-title w90 ph5 fn-left">提现金额</span><span class="ui-list-title w40 ph5 fn-left">费用</span><span class="ui-list-title w100 ph5 fn-left">银行</span><span class="ui-list-title w180 ph5 fn-left">卡号</span><span class="ui-list-title w80 ph5 fn-left">申请日期</span><span class="ui-list-title w60 ph5 fn-left">转账</span><span class="ui-list-title w60 ph5 fn-left">拒绝</span></li>';
               for (var i = 0; i < d.withdraws.length; i++){
                 var w = d.withdraws[i];
                 list += '<li class="ui-list-item fn-clear';
                 if (i % 2 == 0){
                   list += ' dark';
                 }
-                list += '"><span class="ui-list-field w50 ph5 fn-left"><a href="/management/user/'
+                list += '"><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
                   + w.user_id + '" target="blank">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right';
                 if (w.is_owned){
                   list += ' red';
@@ -178,11 +178,11 @@
                 list += '">' + w.fee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w100 ph5 fn-left text-center">' 
                   + map_id_name(banks, w.bank) + '</span><span class="ui-list-field w180 ph5 fn-left">' 
                   + w.number.replace(/\B(?=(\d{4})+(?!\d))/g, " ") + '</span><span class="ui-list-field w80 ph5 fn-left">'
-                  + w.time.slice(0, 10) + '</span><span class="ui-list-title w60 ph5 fn-left last"><a class="ui-button ui-button-small ui-button-green transfer" data-user-id="'
+                  + w.time.slice(0, 10) + '</span><span class="ui-list-title w60 ph5 fn-left"><a class="ui-button ui-button-small ui-button-green transfer" data-user-id="'
                   + w.user_id + '" data-number="'
                   + w.number + '" data-amount="'
                   + w.amount + '" data-fee="'
-                  + w.fee + '">转账</a></span><span class="ui-list-title w60 ph5 fn-left last"><a class="ui-button ui-button-small ui-button-green reject" data-user-id="'
+                  + w.fee + '">转账</a></span><span class="ui-list-title w60 ph5 fn-left"><a class="ui-button ui-button-small ui-button-green reject" data-user-id="'
                   + w.user_id + '" data-number="'
                   + w.number + '" data-amount="'
                   + w.amount + '" data-fee="'
@@ -242,14 +242,14 @@
               });
             }
             else{ // checked
-              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w50 ph5 fn-left title">开户名</span><span class="ui-list-title w90 ph5 fn-left">提现金额</span><span class="ui-list-title w40 ph5 fn-left">费用</span><span class="ui-list-title w100 ph5 fn-left">银行</span><span class="ui-list-title w180 ph5 fn-left">卡号</span><span class="ui-list-title w80 ph5 fn-left">申请日期</span><span class="ui-list-title w80 ph5 fn-left last">转账日期</span><span class="ui-list-field w40 ph5 fn-left">转账</span></li>';
+              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w50 ph5 fn-left title">开户名</span><span class="ui-list-title w90 ph5 fn-left">提现金额</span><span class="ui-list-title w40 ph5 fn-left">费用</span><span class="ui-list-title w100 ph5 fn-left">银行</span><span class="ui-list-title w180 ph5 fn-left">卡号</span><span class="ui-list-title w80 ph5 fn-left">申请日期</span><span class="ui-list-title w80 ph5 fn-left">转账日期</span><span class="ui-list-field w40 ph5 fn-left">转账</span></li>';
               for (var i = 0; i < d.withdraws.length; i++){
                 var w = d.withdraws[i];
                 list += '<li class="ui-list-item fn-clear';
                 if (i % 2 == 0){
                   list += ' dark';
                 }
-                list += '"><span class="ui-list-field w50 ph5 fn-left"><a href="/management/user/'
+                list += '"><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
                   + w.user_id + '" target="blank">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right">'
                   + w.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w40 ph5 fn-left text-right">'
                   + w.fee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w100 ph5 fn-left text-center">'

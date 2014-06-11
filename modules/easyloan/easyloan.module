@@ -25,6 +25,12 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/m_loan_applications'] = array(
+    'page callback'   => 'manage_loan_applications', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_loan_applications.php',
+  );
   $items['api/loanapp'] = array(
     'page callback'   => 'loanapp', 
     'access callback' => 'authenticated_access',
@@ -325,19 +331,19 @@ function easyloan_menu() {
     'menu_name'       => 'easyloan_account',
     'weight'          => '15'
   );
-  $items['management/readytolend'] = array( 
-    'title'           => t('审定放款'), 
+  $items['management/loans'] = array( 
+    'title'           => t('借款项目'), 
     'page callback'   => 'menu_callback', 
-    'page arguments'  => array('management_readytolend', 2),
+    'page arguments'  => array('management_loans', 2),
     'access arguments' => array('accountant permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
     'weight'          => '20'
   );
-  $items['management/createinvestplan'] = array( 
-    'title'           => t('投资产品管理'), 
+  $items['management/investments'] = array( 
+    'title'           => t('投资产品'), 
     'page callback'   => 'menu_callback', 
-    'page arguments'  => array('management_createinvestplan'),
+    'page arguments'  => array('management_investments'),
     'access arguments' => array('manager permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
@@ -654,16 +660,16 @@ function menu_callback($menu, $param = ''){
       } else {
         return theme('management-accountsindebt', $content);
       }
-    case 'management_readytolend':
+    case 'management_loans':
       if (intval($param) > 0) {
-        return theme('management-readytolend-detail', $content);
+        return theme('management-loan-lend', $content);
       } else {
-        return theme('management-readytolend', $content);
+        return theme('management-loans', $content);
       }
     case 'management_withdrawappl':
       return theme('management-withdrawappl', $content);
-    case 'management_createinvestplan':
-      return theme('management-createinvestplan', $content);
+    case 'management_investments':
+      return theme('management-investments', $content);
     case 'account_invest':
       return theme('account-invest', $content);
     case 'account_investplan':

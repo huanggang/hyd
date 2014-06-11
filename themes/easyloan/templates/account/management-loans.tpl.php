@@ -24,7 +24,7 @@ global $base_url;
         <span class="ui-list-field w100 fn-left text-center">2014-08-08</span>
         <span class="ui-list-field w100 fn-left text-center">2014-04-08</span>
         <span class="ui-list-field w100 fn-left text-center last">
-          <a href="readytolend/123456" target="_blank" class="ui-button ui-button-small ui-button-blue">审定放款</a>
+          <a href="loans/123456" target="_blank" class="ui-button ui-button-small ui-button-blue">审定放款</a>
         </span>
       </li>
       <li class="ui-list-item fn-clear">
@@ -35,7 +35,7 @@ global $base_url;
         <span class="ui-list-field w100 fn-left text-center">2014-08-08</span>
         <span class="ui-list-field w100 fn-left text-center">2014-04-08</span>
         <span class="ui-list-field w100 fn-left text-center last">
-          <a href="readytolend/123457" target="_blank" class="ui-button ui-button-small ui-button-blue">审定放款</a>
+          <a href="loans/123457" target="_blank" class="ui-button ui-button-small ui-button-blue">审定放款</a>
         </span>
       </li>
       </ul>

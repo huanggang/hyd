@@ -172,7 +172,7 @@ function easyloan_theme() {
 
     'management-applications' => array(
         'path'     => $path . '/account',
-        'template' => 'applications',),
+        'template' => 'management-applications',),
 
     'management-accountsindebt' => array(
         'path'     => $path . '/account',
@@ -180,18 +180,18 @@ function easyloan_theme() {
     'management-accountsindebt-detail' => array(
         'path'     => $path . '/account',
         'template' => 'accountsindebt-detail',),
-    'management-readytolend' => array(
+    'management-loans' => array(
         'path'     => $path . '/account',
-        'template' => 'readytolend',),
-    'management-readytolend-detail' => array(
+        'template' => 'management-loans',),
+    'management-loan-lend' => array(
         'path'     => $path . '/account',
-        'template' => 'readytolend-detail',),
+        'template' => 'management-loan-lend',),
     'management-withdrawappl' => array(
         'path'     => $path . '/account',
-        'template' => 'withdrawappl',),
-    'management-createinvestplan' => array(
+        'template' => 'management-withdrawappl',),
+    'management-investments' => array(
         'path'     => $path . '/account',
-        'template' => 'createinvestplan',),
+        'template' => 'management-investments',),
     );
 }
 
