@@ -155,8 +155,8 @@
               }
             }
             pagination += '</ul>';
-            $('#repaid-list-pagination-'+ type).html(pagination);
-            $('#repaid-total-'+type).html("共"+total+"条");
+            $('#withdrawapp-list-pagination-'+ type).html(pagination);
+            $('#withdrawapp-total-'+type).html("共"+total+"条");
 
             if (type == 1){ // checking
               list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w50 ph5 fn-left title">开户名</span><span class="ui-list-title w90 ph5 fn-left">提现金额</span><span class="ui-list-title w40 ph5 fn-left">费用</span><span class="ui-list-title w100 ph5 fn-left">银行</span><span class="ui-list-title w180 ph5 fn-left">卡号</span><span class="ui-list-title w80 ph5 fn-left">申请日期</span><span class="ui-list-title w60 ph5 fn-left">转账</span><span class="ui-list-title w60 ph5 fn-left">拒绝</span></li>';
@@ -193,7 +193,7 @@
                   + w.number.replace(/\B(?=(\d{4})+(?!\d))/g, " ") + '</div></div><div class="fn-clear"><label class="font-nm w80 fn-left text-right">申请日期</label><div class="w150 ph10 fn-left">'
                   + w.time + '</div></div></div></div></div></div></li>';
               }
-              $('#repaid-list-1').html(list_title + list);
+              $('#withdrawapp-list-1').html(list_title + list);
 
               $('.transfer').click(function(event){
                 if (confirm("确定转账吗？")) {
@@ -265,7 +265,7 @@
                   + w.time + '</div></div><div class="fn-clear"><label class="font-nm w80 fn-left text-right">转账日期</label><div class="w230 ph10 fn-left">'
                   + w.done + '</div></div></div></div></div></div></li>';
               }
-              $('#repaid-list-2').html(list_title + list);
+              $('#withdrawapp-list-2').html(list_title + list);
             }
 
             $(".ui-list-item").hover(function(event){

@@ -25,6 +25,12 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/m_loans'] = array(
+    'page callback'   => 'manage_loans', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_loans.php',
+  );
   $items['api/m_loan_applications'] = array(
     'page callback'   => 'manage_loan_applications', 
     'access callback' => 'authenticated_access',

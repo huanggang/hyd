@@ -49,7 +49,7 @@ drupal_add_js($theme_path . '/js/myloan.js');
   </div>
 </div>
 <div class="mt20">
-  <div class="ui-tab ui-tab-transparent" id="loans-tab">
+  <div class="ui-tab ui-tab-transparent">
     <ul class="ui-tab-items">
       <li class="ui-tab-item ui-tab-item-current" data-name="loan">
         <a class="ui-tab-item-link">我的借款</a>
@@ -60,20 +60,18 @@ drupal_add_js($theme_path . '/js/myloan.js');
     </ul>
   </div>
   <div class="p20bs color-white-bg">
-    <div id="loans-tab-content">
-      <div class="ui-tab-content fn-clear ui-tab-content-current" data-name="loan">
-        <ul class="ui-list ui-list-s" id="loan-list-2">
-        </ul>
-        <div class="fn-left mt10" id="loan-total-2"></div>
-        <div class="fn-right mt10 ui-pagination simple-pagination" id="loan-list-pagination-2">
-        </div>
+    <div class="ui-tab-content fn-clear ui-tab-content-current" data-name="loan">
+      <ul class="ui-list ui-list-s" id="loan-list-2">
+      </ul>
+      <div class="fn-left mt10" id="loan-total-2"></div>
+      <div class="fn-right mt10 ui-pagination simple-pagination" id="loan-list-pagination-2">
       </div>
-      <div class="ui-tab-content fn-clear" data-name="loanapp">
-        <ul class="ui-list ui-list-s" id="loan-list-3">
-        </ul>
-        <div class="fn-left mt10" id="loan-total-3"></div>
-        <div class="fn-right mt10 ui-pagination simple-pagination" id="loan-list-pagination-3">
-        </div>
+    </div>
+    <div class="ui-tab-content fn-clear" data-name="loanapp">
+      <ul class="ui-list ui-list-s" id="loan-list-3">
+      </ul>
+      <div class="fn-left mt10" id="loan-total-3"></div>
+      <div class="fn-right mt10 ui-pagination simple-pagination" id="loan-list-pagination-3">
       </div>
     </div>
   </div>

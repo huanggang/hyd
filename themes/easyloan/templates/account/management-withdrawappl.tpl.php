@@ -19,7 +19,7 @@ drupal_add_js($theme_path . '/js/tab.js');
 drupal_add_js($theme_path . '/js/withdrawappl.js');
 ?>
 <div class="color-white-bg" id="withdrawappl">
-  <div class="ui-tab ui-tab-transparent" id="withdrawappl-tab">
+  <div class="ui-tab ui-tab-transparent">
     <ul class="ui-tab-items">
       <li class="ui-tab-item ui-tab-item-current" data-name="checking">
         <a class="ui-tab-item-link">未处理</a>
@@ -30,20 +30,18 @@ drupal_add_js($theme_path . '/js/withdrawappl.js');
     </ul>
   </div>
   <div class="p20bs color-white-bg">
-    <div id="repayments-tab-content">
-      <div class="ui-tab-content ui-tab-content-current fn-clear" data-name="checking">
-        <ul class="ui-list ui-list-s" id="repaid-list-1">
-        </ul>
-        <div class="fn-left mt10" id="repaid-total-1"></div>
-        <div class="fn-right mt10 ui-pagination simple-pagination" id="repaid-list-pagination-1">
-        </div>
+    <div class="ui-tab-content ui-tab-content-current fn-clear" data-name="checking">
+      <ul class="ui-list ui-list-s" id="withdrawapp-list-1">
+      </ul>
+      <div class="fn-left mt10" id="withdrawapp-total-1"></div>
+      <div class="fn-right mt10 ui-pagination simple-pagination" id="withdrawapp-list-pagination-1">
       </div>
-      <div class="ui-tab-content fn-clear" data-name="checked">
-        <ul class="ui-list ui-list-s" id="repaid-list-2">
-        </ul>
-        <div class="fn-left mt10" id="repaid-total-2"></div>
-        <div class="fn-right mt10 ui-pagination simple-pagination" id="repaid-list-pagination-2">
-        </div>
+    </div>
+    <div class="ui-tab-content fn-clear" data-name="checked">
+      <ul class="ui-list ui-list-s" id="withdrawapp-list-2">
+      </ul>
+      <div class="fn-left mt10" id="withdrawapp-total-2"></div>
+      <div class="fn-right mt10 ui-pagination simple-pagination" id="withdrawapp-list-pagination-2">
       </div>
     </div>
   </div>
