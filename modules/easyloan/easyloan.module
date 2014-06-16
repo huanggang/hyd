@@ -103,6 +103,19 @@ function easyloan_menu() {
     'type'            => MENU_NORMAL_ITEM, 
     'file'            => 'api/account_security.php',
   );
+  $items['api/manage_user'] = array(
+    'page callback'   => 'manage_user', 
+    'access callback' => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_user.php',
+  );
+  $items['api/account_status'] = array(
+    'page callback'   => 'account_status', 
+    'access callback' => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_status.php',
+  );
+
 
   // real menus
   $items['lend'] = array(
