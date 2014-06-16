@@ -4,11 +4,48 @@
 // To understand behaviors, see https://drupal.org/node/756722#behaviors
 Drupal.behaviors.account_info = {
   attach: function(context, settings) {
+
+  	function getJsonValueById(id, json){
+  		for (var i = json.length - 1; i >= 0; i--) {
+  			if(json[i].id === id){
+  				return json[i].name; 
+  			}
+  		}
+  	}
+
+  	$.cachedScript = function( url, options ) {
+        // Allow user to set any option except for dataType, cache, and url
+        options = $.extend( options || {}, {
+          dataType: "script",
+          cache: false,
+          url: url,
+          async: false,
+        });
+        return $.ajax( options );
+      };
+
+	var cityCache = {}; // cache the city lists so it won't send another request 
+
+	/// assing options to the 'city' select input
+	///
+	///  provinceid - the id of the province
+	///  value      - the default city value
+	function getCity(provinceid, value, async) { 
+		if (async == undefined) { async = true; } 
+		var url = js_path + '/city/cities_' + provinceid + '.js'; 
+		console.log(url);
+		$.cachedScript(url, {async:async}).done(function(data, textStatus) { 
+		  var cities = eval('cities_' + provinceid);
+		  cityCache[provinceid] = cities;
+		  $('#city').html(getJsonValueById(value, cities));
+		});
+	}
+
 	var apiUrl;
   	if (is_my_page){
   		apiUrl = Drupal.settings.basePath + "api/account_status?type=1&id=" + uid;	
   	} else {
-  		apiUrl = Drupal.settings.basePath + "api/manage_user?type=1&id=4";// + uid;	
+  		apiUrl = Drupal.settings.basePath + "api/manage_user?type=1&id=" + uid;	
   	}
   	
 	$.getJSON(apiUrl,
@@ -55,7 +92,10 @@ Drupal.behaviors.account_info = {
       	} else {
       		var user = d.users[0];
       		if (user.ssn_status === 1){
-	      		$('#icon-ssn').addClass('light').children().addClass('light').attr('title', user.name + ": " + user.ssn);
+	      		$('#icon-ssn').addClass('light').children().addClass('light').attr('title', user.name + "(" + (user.gender?"男":"女") + ")" + user.ssn);
+	      		$('#name').html(user.name);
+	      		$('#ssn').html(user.ssn);
+	      		$('#gender').html(user.gender?"男":"女");
 	      	}
 	      	if (user.mobile_status === 1){
 	      		$('#icon-mobile').addClass('light').children().addClass('light').attr('title', user.mobile);
@@ -63,6 +103,12 @@ Drupal.behaviors.account_info = {
 	      	if (user.email_status === 1){
 	      		$('#icon-email').addClass('light').children().addClass('light').attr('title', user.email);
 	      	}
+
+			$('#education').html(getJsonValueById(user.education, educations));
+			$('#marital').html(getJsonValueById(user.marital, marital_status));
+			$('#province').html(getJsonValueById(user.province, provinces));
+			$('#address').html(user.address);
+			getCity(user.province, user.city);
 
 	      	$("#amount_total").html(user.amount_total);
 	      	$("#amount_available").html(user.amount_available);
@@ -89,14 +135,7 @@ Drupal.behaviors.account_info = {
 	      	$("#l_fine").html(user.ln_fine);
 	      	$("#l_rate").html(user.ln_rate);
 
-      		console.log(user.name);
-	      	console.log(user.gender);
 	      	console.log(user.dob);
-	      	console.log(user.education);
-	      	console.log(user.marital);
-	      	console.log(user.province);
-	      	console.log(user.city);
-	      	console.log(user.address);
       	}
       })
     .done(function(){ 

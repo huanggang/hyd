@@ -5,11 +5,10 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/common.css');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/iconfont.css');
 //drupal_add_css(drupal_get_path('theme','easyloan') . '/css/jquery.powertip.min.css');
 //drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.powertip.min.js');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account_info.js');
 
 global $base_url;
-$img_path = $base_url . '/' . drupal_get_path('theme','easyloan') . '/images/';
+$theme_path = drupal_get_path('theme','easyloan');
+$img_path = $base_url . '/' . $theme_path . '/images/';
 
 global $user;
 
@@ -22,6 +21,18 @@ $markup = $variables["elements"]["user_picture"];
 // load the account to check
 // $account = menu_get_object('user');
 $security_url = $is_my_page ? $base_url . '/account_management/security':'#';
+
+if (!$is_my_page){
+  drupal_add_js($theme_path . '/js/educations.js');
+  drupal_add_js($theme_path . '/js/provinces.js');
+  drupal_add_js($theme_path . '/js/marital_status.js');
+
+  $js_path = $base_url . '/' . $theme_path . '/js/';
+  drupal_add_js('var js_path=\'' . $js_path . '\'', 'inline');
+}
+
+drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
+drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account_info.js');
 
 ?>
 <script>
@@ -59,6 +70,13 @@ Drupal.behaviors.tip = {
 </div> 
 <div class="user-info-container"> 
   <h3 title="<?php print $current_user->name; ?>"><?php print $current_user->name; ?></h3>
+  <?php if (!$is_my_page){ ?>
+  <br />
+  <span class="mr10"><em id="name"></em></span><span class="mr10"><em id="gender"></em></span><span class="mr10"><em id="ssn"></em></span><br />
+  <span class="mr10"><em id="education"></em></span><span class="mr10"><em id="marital"></em></span><br />
+  <span class="mr10"><em id="province"></em><em id="city"></em></span><span class="mr10"><em id="address"></em></span><br />
+  <br />
+  <?php } ?>
   <div class="fn-clear"> 
     <div class="fn-left user-security-container mr10" id="info-box">
       <div class="icons fn-clear mt15">
