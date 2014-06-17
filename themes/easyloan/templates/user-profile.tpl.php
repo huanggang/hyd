@@ -34,6 +34,10 @@ if (!$is_my_page){
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account_info.js');
 
+
+$in_url = $is_my_page ? $base_url . '/invest_management' : '#';
+$lo_url = $is_my_page ? $base_url . '/loan_management' : '#';
+
 ?>
 <script>
 var uid = <?php print $current_user->uid; ?>;
@@ -70,13 +74,6 @@ Drupal.behaviors.tip = {
 </div> 
 <div class="user-info-container"> 
   <h3 title="<?php print $current_user->name; ?>"><?php print $current_user->name; ?></h3>
-  <?php if (!$is_my_page){ ?>
-  <br />
-  <span class="mr10"><em id="name"></em></span><span class="mr10"><em id="gender"></em></span><span class="mr10"><em id="ssn"></em></span><br />
-  <span class="mr10"><em id="education"></em></span><span class="mr10"><em id="marital"></em></span><br />
-  <span class="mr10"><em id="province"></em><em id="city"></em></span><span class="mr10"><em id="address"></em></span><br />
-  <br />
-  <?php } ?>
   <div class="fn-clear"> 
     <div class="fn-left user-security-container mr10" id="info-box">
       <div class="icons fn-clear mt15">
@@ -106,7 +103,7 @@ Drupal.behaviors.tip = {
         <a class="fn-left ui-button ui-button-green ui-button-mid mr4" href="<?php print $base_url;?>/capital_management/recharge">充值</a>
         <a class="fn-left ui-button ui-button-blue ui-button-mid last" href="<?php print $base_url;?>/capital_management/withdraw">提现</a>
         <?php } else { ?>
-        <a class="fn-left ui-button ui-button-green ui-button-mid mr4" href="<?php print $base_url;?>/capital_management/deals">查看交易记录</a>
+        <a class="fn-left ui-button ui-button-green ui-button-mid mr4" href="<?php print $base_url;?>/capital_management/deals/<?php print $current_user->uid;?>">查看交易记录</a>
         <?php } ?>
       </div>
       <div class="surplus-detail fn-clear">
@@ -131,10 +128,17 @@ Drupal.behaviors.tip = {
           </span>
         </div>
       </div>
-      
     </div>
   </div>
 </div>
+<?php if (!$is_my_page){ ?>
+  <div class="fn-clear pl50">
+    <span class="mr10"><em id="name"></em></span><span class="mr10"><em id="gender"></em></span><span class="mr10"><em id="ssn"></em></span><br />
+    <span class="mr10"><em id="dob"></em></span><span class="mr10"><em id="education"></em></span><span class="mr10"><em id="marital"></em></span><br />
+    <span class="mr10"><em id="province"></em><em id="city"></em></span><span class="mr10"><em id="address"></em></span><br />
+  </div>
+  <br />
+<?php } ?>
 </div>
 <?php if ($is_my_page){ ?>
 <!-- ad start -->
@@ -204,7 +208,7 @@ Drupal.behaviors.tip = {
 </div>
 <div>
   <div class="fn-clear summary">
-    <a class="fn-left text mr30" href="<?php print $base_url . '/invest_management'; ?>">投资账户</a>
+    <a class="fn-left text mr30" href="<?php print $in_url; ?>">投资账户</a>
   </div>
   <ul class="ui-list ui-list-s">
     <li class="ui-list-header fn-clear">
@@ -222,7 +226,7 @@ Drupal.behaviors.tip = {
 </div>
 <div class="mt20 mb20">
   <div class="fn-clear summary">
-    <a class="fn-left text mr30" href="<?php print $base_url . '/loan_management'; ?>">借款账户</a>
+    <a class="fn-left text mr30" href="<?php print $lo_url; ?>">借款账户</a>
   </div>
   <ul class="ui-list ui-list-s" id="borrowing">
 <li class="ui-list-header fn-clear">

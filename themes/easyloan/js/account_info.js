@@ -91,6 +91,10 @@ Drupal.behaviors.account_info = {
 	      	$("#l_rate").html(d.loan.rate);
       	} else {
       		var user = d.users[0];
+      		if(user === undefined || user === null){
+      			alert("用户信息错误");
+      			return;
+      		}
       		if (user.ssn_status === 1){
 	      		$('#icon-ssn').addClass('light').children().addClass('light').attr('title', user.name + "(" + (user.gender?"男":"女") + ")" + user.ssn);
 	      		$('#name').html(user.name);
@@ -108,6 +112,7 @@ Drupal.behaviors.account_info = {
 			$('#marital').html(getJsonValueById(user.marital, marital_status));
 			$('#province').html(getJsonValueById(user.province, provinces));
 			$('#address').html(user.address);
+			$('#dob').html(user.dob);
 			getCity(user.province, user.city);
 
 	      	$("#amount_total").html(user.amount_total);
@@ -134,8 +139,6 @@ Drupal.behaviors.account_info = {
 	      	$("#l_interest").html(user.ln_interest);
 	      	$("#l_fine").html(user.ln_fine);
 	      	$("#l_rate").html(user.ln_rate);
-
-	      	console.log(user.dob);
       	}
       })
     .done(function(){ 

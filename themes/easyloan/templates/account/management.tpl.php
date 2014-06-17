@@ -58,7 +58,7 @@ global $base_url;
           -->
           <li class="ui-list-item text fn-clear">
             <span class="ui-list-title w90 fn-left time">神鱼</span>
-            <span class="ui-list-title w50 fn-left type"><a href="management/123456" target="_blank">习近平</a></span>
+            <span class="ui-list-title w50 fn-left type"><a href="<?php print $base_url; ?>/user/56" target="_blank">习近平</a></span>
             <span class="ui-list-title w80 fn-left credit">10，000元</span>
             <span class="ui-list-title w80 fn-left debit">10，000元</span>
             <span class="ui-list-title w80 fn-left balance">0元</span>
@@ -68,7 +68,7 @@ global $base_url;
           </li>
           <li class="ui-list-item text fn-clear">
             <span class="ui-list-title w90 fn-left time">神鱼</span>
-            <span class="ui-list-title w50 fn-left type"><a href="management/123457" target="_blank">李克强</a></span>
+            <span class="ui-list-title w50 fn-left type"><a href="<?php print $base_url; ?>/user/57" target="_blank">李克强</a></span>
             <span class="ui-list-title w80 fn-left credit">10，000元</span>
             <span class="ui-list-title w80 fn-left debit">10，000元</span>
             <span class="ui-list-title w80 fn-left balance">0元</span>
