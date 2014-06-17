@@ -1441,6 +1441,21 @@ height:60px;
 line-height:20px;
 }
 
+.ad-dimgray {
+ background:#fce6bf;
+ border:1px solid #fcda9f;
+ border-radius:5px;
+ padding:10px 20px;
+}
+
+.icon-hui {
+ display:inline-block;
+ width:21px;
+ height:21px;
+ margin-right:10px;
+ vertical-align:middle;
+}
+
 .ui-side-item .icon-hui {
 margin-left:-26px;
 margin-right:5px;
