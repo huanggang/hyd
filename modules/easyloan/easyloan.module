@@ -173,6 +173,20 @@ function easyloan_menu() {
     'access callback' => TRUE, 
     'type'            => MENU_NORMAL_ITEM, 
   );
+  $items['borrow/credit'] = array(
+    'title'           => t('信用贷'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('borrow_credit'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['borrow/credit/apply'] = array( 
+    'title'           => t('信用贷申请'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('borrow_credit_apply'),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
   $items['borrow/else'] = array(
     'title'           => t('其他抵押'), 
     'page callback'   => 'menu_callback', 
@@ -789,6 +803,8 @@ function menu_callback($menu, $param = ''){
       return theme('borrow-gold', $content);
     case 'borrow_car':
       return theme('borrow-car', $content);
+    case 'borrow_credit':
+      return theme('borrow-credit', $content);
     case 'borrow_else':
       return theme('borrow-else', $content); 
 
@@ -798,6 +814,8 @@ function menu_callback($menu, $param = ''){
       return theme('borrow-gold-apply', $content);
     case 'borrow_car_apply':
       return theme('borrow-car-apply', $content);
+    case 'borrow_credit_apply':
+      return theme('borrow-credit-apply', $content);
     case 'borrow_else_apply':
       return theme('borrow-else-apply', $content);
   

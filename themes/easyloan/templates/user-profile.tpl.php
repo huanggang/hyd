@@ -216,11 +216,12 @@ Drupal.behaviors.tip = {
       <span class="ui-list-title fn-left color-gray-text w240">已结束投资总逾期罚金</span>
       <span class="ui-list-title fn-left color-gray-text w220">已结束投资加权平均年收益</span>
     </li>
+    
+
     <li class="ui-list-item fn-clear">
       <span class="ui-list-field fn-left num-s text-center w220 pr20"><em id="i_interest">0.00</em>元</span>
       <span class="ui-list-field fn-left num-s text-center w220 pr20"><em id="i_fine">0.00</em>元</span>
       <span class="ui-list-field fn-left num-s text-center w200 pr20"><em id="i_rate">0.0</em>%</span>
-      <!--span class="ui-list-field fn-left text-center w100 last"><a href="#">查看</a></span-->
     </li>
   </ul>
 </div>
@@ -231,19 +232,19 @@ Drupal.behaviors.tip = {
   <ul class="ui-list ui-list-s" id="borrowing">
 <li class="ui-list-header fn-clear">
 <?php if ($is_my_page){ ?>
-<span class="ui-list-title fn-left color-gray-text w100">待还本金</span>
-<span class="ui-list-title fn-left color-gray-text w100">待还利息</span>
-<span class="ui-list-title fn-left color-gray-text w100">欠款金额</span>
-<span class="ui-list-title fn-left color-gray-text w100 pr20">欠款罚金</span>
-<span class="ui-list-title fn-left color-gray-text two-line w80 pr20">已结束借款总利息</span>
-<span class="ui-list-title fn-left color-gray-text two-line w80 pr20">已结束借款总逾期罚金</span>
-<span class="ui-list-title fn-left color-gray-text two-line w100">已结束借款加权平均年利率</span>
+  <span class="ui-list-title fn-left color-gray-text w100">待还本金</span>
+  <span class="ui-list-title fn-left color-gray-text w100">待还利息</span>
+  <span class="ui-list-title fn-left color-gray-text w100">欠款金额</span>
+  <span class="ui-list-title fn-left color-gray-text w100 pr20">欠款罚金</span>
+  <span class="ui-list-title fn-left color-gray-text two-line w80 pr20">已结束借款总利息</span>
+  <span class="ui-list-title fn-left color-gray-text two-line w80 pr20">已结束借款总逾期罚金</span>
+  <span class="ui-list-title fn-left color-gray-text two-line w100">已结束借款加权平均年利率</span>
 <?php } else { ?>
-<span class="ui-list-title fn-left color-gray-text w100">待还本金</span>
-<span class="ui-list-title fn-left color-gray-text w100">待还利息</span>
-<span class="ui-list-title fn-left color-gray-text w180 pr20">已结束借款总利息</span>
-<span class="ui-list-title fn-left color-gray-text w180 pr20">已结束借款总逾期罚金</span>
-<span class="ui-list-title fn-left color-gray-text two-line w120">已结束借款加权平均年利率</span>
+  <span class="ui-list-title fn-left color-gray-text w100">待还本金</span>
+  <span class="ui-list-title fn-left color-gray-text w100">待还利息</span>
+  <span class="ui-list-title fn-left color-gray-text w180 pr20">已结束借款总利息</span>
+  <span class="ui-list-title fn-left color-gray-text w180 pr20">已结束借款总逾期罚金</span>
+  <span class="ui-list-title fn-left color-gray-text two-line w120">已结束借款加权平均年利率</span>
 <?php } ?>
 </li>
 

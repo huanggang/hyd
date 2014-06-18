@@ -109,6 +109,9 @@ function easyloan_theme() {
     'borrow-car' => array(
         'path'     => $path . '/borrow',
         'template' => 'car',),
+    'borrow-credit' => array(
+        'path'     => $path . '/borrow',
+        'template' => 'credit',),
     'borrow-else' => array(
         'path'     => $path . '/borrow',
         'template' => 'else',),
@@ -121,6 +124,9 @@ function easyloan_theme() {
     'borrow-car-apply' => array(
         'path'     => $path . '/borrow',
         'template' => 'car-apply',),
+    'borrow-credit-apply' => array(
+        'path'     => $path . '/borrow',
+        'template' => 'credit-apply',),
     'borrow-else-apply' => array(
         'path'     => $path . '/borrow',
         'template' => 'else-apply',),
@@ -205,9 +211,9 @@ function easyloan_form_alter(&$form, &$form_state, $form_id) {
 
             $form['account']['mail']['#value'] = "a@b.com"; // set to a fake value to cheat the validation for email
             $form['account']['phone'] = array( 
-                    '#title' => t('手机号'), 
+                    '#title' => t('手机�?), 
                     '#type' => 'textfield', 
-                    '#description' => t('请输入11位手机号码'), 
+                    '#description' => t('请输�?1位手机号�?), 
                     '#size' => 11, 
                     '#weight' => 10,); 
 

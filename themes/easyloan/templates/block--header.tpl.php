@@ -32,6 +32,7 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/easyloan.js');
               <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/estate">房屋商铺贷</a></li>
               <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/car">机动车贷</a></li>
               <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/gold">黄金抵押</a></li>
+              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/credit">信用贷</a></li>
               <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/else">其他抵押</a></li>
             </ul>
           </li>
