@@ -25,6 +25,12 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/m_set_loan'] = array(
+    'page callback'   => 'manage_set_loan', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_set_loan.php',
+  );
   $items['api/m_loans'] = array(
     'page callback'   => 'manage_loans', 
     'access callback' => 'authenticated_access',
@@ -90,6 +96,12 @@ function easyloan_menu() {
     'access callback' => 'authenticated_access',
     'type'            => MENU_NORMAL_ITEM, 
     'file'            => 'api/account_recharge.php',
+  );
+  $items['api/params'] = array(
+    'page callback'   => 'params', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/params.php',
   );
   $items['api/basic'] = array(
     'page callback'   => 'account_info', 
@@ -694,7 +706,7 @@ function menu_callback($menu, $param = ''){
         return theme('management-accountsindebt', $content);
       }
     case 'management_loans':
-      if (intval($param) > 0) {
+      if ($param=='lend'){//intval($param) > 0) {
         return theme('management-loan-lend', $content);
       } else {
         return theme('management-loans', $content);

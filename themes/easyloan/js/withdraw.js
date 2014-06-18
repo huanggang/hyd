@@ -82,7 +82,7 @@
         )
         .fail(function( jqxhr, textStatus, error ) {
           var err = textStatus + ", " + error;
-          alert( "后台验证出现问题，请重新刷新页面" );
+          alert( "后台验证出现问题，请刷新页面" );
         });
 
       });
@@ -103,7 +103,7 @@
       })
       .fail(function( jqxhr, textStatus, error ) {
         var err = textStatus + ", " + error;
-        alert( "网络出现问题，请重新刷新页面。" );
+        alert( "网络出现问题，请刷新页面。" );
       });
 
       $.getJSON( Drupal.settings.basePath + "api/banks", 
@@ -135,7 +135,7 @@
       })
       .fail(function( jqxhr, textStatus, error ) {
         var err = textStatus + ", " + error;
-        alert( "网络出现问题，请重新刷新页面。");
+        alert( "网络出现问题，请刷新页面。");
       });
     
 

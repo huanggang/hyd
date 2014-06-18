@@ -17,7 +17,7 @@ drupal_add_js($theme_path . '/js/loanapp_view.js');
     <div class="grid_12">
       <div class="loanapp loanapp p20bs color-white-bg">
         <div class="loanboder">
-          <legend><span id="category"></span>抵押借款申请</legend>
+          <legend><span id="category"></span>借款申请</legend>
           <div class="ui-form-item">
             <label class="ui-label">借款标题</label>
             <span id="title"></span>
@@ -134,20 +134,38 @@ drupal_add_js($theme_path . '/js/loanapp_view.js');
           </div>
           <div id="category-4" style="display:none">
             <div class="ui-form-item">
+              <label class="ui-label">工作单位</label>
+              <span id="organization-4"></span>
+            </div>
+            <div class="ui-form-item">
+              <label class="ui-label">职务</label>
+              <span id="position-4"></span>
+            </div>
+            <div class="ui-form-item">
+              <label class="ui-label">现单位工龄</label>
+              <span id="years-4"></span> 年，<span id="months-4"></span> 月
+            </div>
+            <div class="ui-form-item">
+              <label class="ui-label">平均月收入</label>
+              <span id="income-4"></span>
+            </div>
+          </div>
+          <div id="category-5" style="display:none">
+            <div class="ui-form-item">
               <label class="ui-label">物品名称</label>
-              <span id="name-4"></span>
+              <span id="name-5"></span>
             </div>
             <div class="ui-form-item">
               <label class="ui-label">购买日期</label>
-              <span id="bought-4"></span>
+              <span id="bought-5"></span>
             </div>
             <div class="ui-form-item">
               <label class="ui-label">购买价格</label>
-              <span id="price-4"></span> 元
+              <span id="price-5"></span> 元
             </div>
             <div class="ui-form-item">
               <label class="ui-label">来源凭证</label>
-              <span id="certificate-4"></span>
+              <span id="certificate-5"></span>
             </div>
           </div>
           <div class="ui-form-item">
@@ -156,7 +174,7 @@ drupal_add_js($theme_path . '/js/loanapp_view.js');
           </div>
           <div class="ui-form-item">
             <label class="ui-label">计划用款时间</label>
-            <span id="duration"></span> 月
+            <span id="duration"></span> 个月
           </div>
           <div class="ui-form-item">
             <label class="ui-label">借款描述</label>

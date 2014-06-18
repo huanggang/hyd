@@ -4,7 +4,7 @@
  *
  */
 (function($, Drupal, window, document, undefined) {
-  Drupal.behaviors.vali = {
+  Drupal.behaviors.borrow_estate = {
     attach: function(context, settings) {
 
       var this_year = (new Date()).getFullYear();
@@ -150,7 +150,7 @@
           }, "json")
           .fail(function( jqxhr, textStatus, error ) {
             var err = textStatus + ", " + error;
-            alert( "网络出现问题，请重新刷新页面。" );
+            alert( "网络出现问题，请刷新页面。" );
           });
         }
       });

@@ -1,6 +1,6 @@
 (function ($, Drupal, window, document, undefined) {
 
-  Drupal.behaviors.myloan = {
+  Drupal.behaviors.loans = {
     attach: function(context, settings){
 
       var max_pages = 50;
@@ -9,6 +9,8 @@
       var show_pages = 11;
       var show_pages_mid = 7; // show_pages == (show_pages_mid + 4)
 
+      var total_1 = 0;
+      var total_pages_1 = 0;
       var total_2 = 0;
       var total_pages_2 = 0;
       var total_3 = 0;
@@ -16,38 +18,9 @@
 
       var cats = ['','(房产) ','(机车) ','(黄金) ','(信用) ','(其他) '];
 
-      $.getJSON( Drupal.settings.basePath + "api/loans", 
-        function(d) {
-          if (d.result == 0){
-            alert( "获取信息出现问题，请刷新页面。");
-          }
-          else {
-            $('#paid-interest').text((d.interest + d.r_interest).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-            $('#average-rate').text((d.rate * 100).toFixed(2));
-            $('#owned-total').text((d.w_amount + d.w_interest + d.w_owned + d.w_fine).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-            $('#paid-fine').text(d.fine.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-            $('#average-duration').text(d.duration.toFixed(2));
-            $('#loan-total').text((d.amount + d.r_amount + d.w_amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-            $('#loan-times').text(d.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-            if (d.n_date){
-              $('#next-pay').html('下次还款日期 <em>' + d.n_date + '</em>，应还本息 <em>' + (d.n_amount + d.n_interest).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</em>元');
-            }
-            else{
-              $('#next-pay').html('');
-            }
-            if ((d.w_owned + d.w_fine) > 0) {
-              $('#owned-now').html('目前所欠本金 <em>' + d.w_owned.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</em>，逾期罚金 <em>' + d.w_fine.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</em>元');
-            }
-          }
-      })
-      .fail(function( jqxhr, textStatus, error ) {
-        var err = textStatus + ", " + error;
-        alert( "获取信息出现问题，请刷新页面。");
-      });
-
       $(window).bind('hashchange', function(){
         var hash = window.location.hash;
-        var type = 2;
+        var type = 1;
         var page = 1;
         if (hash.length > 1){
           hash = hash.slice(1);
@@ -69,15 +42,18 @@
           }
         }
 
-        if (type == 2){ // show tab 1
-          $(".ui-tab-item[data-name=loan]").click();
+        if (type == 1){ // show tab 1
+          $(".ui-tab-item[data-name=notyet]").click();
         }
-        else { // show tab 2
+        else if (type == 2){ // show tab 2
+          $(".ui-tab-item[data-name=lending]").click();
+        }
+        else { // show tab 3
           type = 3;
-          $(".ui-tab-item[data-name=loanapp]").click();
+          $(".ui-tab-item[data-name=finished]").click();
         }
 
-        $.getJSON( Drupal.settings.basePath + "api/loans?type=" + type + "&page=" + page, 
+        $.getJSON( Drupal.settings.basePath + "api/m_loans?type=" + type + "&page=" + page, 
           function(d) {
             var list_title = '';
             var list = '';
@@ -85,7 +61,11 @@
             if (page == 1){
               var total = d.total;
               var total_pages = total == 0 ? 0 : Math.round(total / per_page) + 1;
-              if (type == 2){
+              if (type == 1){
+                total_1 = total;
+                total_pages_1 = total_pages;
+              }
+              else if (type == 2){
                 total_2 = total;
                 total_pages_2 = total_pages;
               }
@@ -124,13 +104,13 @@
             else{ // page > 1
               var total = 0;
               var total_pages = 0;
-              if (type == 2){
-                total = total_2;
-                total_pages = total_pages_2;
+              if (type == 1){
+                total = total_1;
+                total_pages = total_pages_1;
               }
               else{
-                total = total_3;
-                total_pages = total_pages_3;
+                total = total_2;
+                total_pages = total_pages_2;
               }
               if (total_pages <= show_pages){
                 for (var i = 1; i < page; i++){
@@ -189,45 +169,93 @@
             $('#loan-list-pagination-'+ type).html(pagination);
             $('#loan-total-'+type).html("共"+total+"条");
 
-            if (type == 2){ // loans
-              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w220 ph5 fn-left">借款标题</span><span class="ui-list-title w85 ph5 fn-left">借款金额</span><span class="ui-list-title w85 ph5 fn-left">借款利息</span><span class="ui-list-title w55 ph5 fn-left">年利率</span><span class="ui-list-title w30 ph5 fn-left">月数</span><span class="ui-list-title w80 ph5 fn-left">借款日期</span><span class="ui-list-title w80 ph5 fn-left">到期日期</span><span class="ui-list-title w30 fn-left">还清</span></li>';
+            if (type == 1){ // not yet
+              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w300 ph5 fn-left">借款标题</span><span class="ui-list-title w50 ph5 fn-left">借款人</span><span class="ui-list-title w85 ph5 fn-left">计划用款</span><span class="ui-list-title w30 ph5 fn-left">月数</span><span class="ui-list-title w80 ph5 fn-left">申请日期</span><span class="ui-list-title w60 ph5 fn-left">备注</span><span class="ui-list-title w60 ph5 fn-left">放款</span></li>';
               for (var i = 0; i < d.loans.length; i++){
                 var w = d.loans[i];
                 list += '<li class="ui-list-item fn-clear';
                 if (i % 2 == 0){
                   list += ' dark';
                 }
-                list += '"><span class="ui-list-field w220 ph5 fn-left" style="display: block; overflow: hidden"><a href="/loan_view#id='
-                  + w.id + '" target="blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">' 
-                  + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w85 ph5 fn-left text-right">' 
-                  + w.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w55 ph5 fn-left text-right">' 
-                  + (w.rate * 100).toFixed(2) + '%</span><span class="ui-list-field w30 ph5 fn-left text-right">' 
-                  + w.duration.toFixed(0) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">'
-                  + w.start.slice(0, 10) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">'
-                  + w.end.slice(0, 10) + '</span><span class="ui-list-field w30 fn-left text-center">'
-                  + (w.is_done == null ? '' : (w.is_done == 1 ? '是' : '否')) + '</span></li>';
+                list += '"><span class="ui-list-field w300 ph5 fn-left" style="display:block;overflow:hidden"><a href="/loan_view#id='
+                  + w.app_id + '" target="blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
+                  + w.user_id + '" target="blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">' 
+                  + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w30 ph5 fn-left text-right">' 
+                  + w.duration.toFixed(0) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">' 
+                  + w.applied.slice(0,10) + '</span><span class="ui-list-field w60 ph5 fn-left text-center">';
+                  if (w.comment != null && w.comment.length > 0){
+                    list += '<a class="ui-button ui-button-small ui-button-blue comment" data-comment="' + w.comment + '">查看</a>';
+                  }
+                  list += '</span><span class="ui-list-field w60 ph5 fn-left text-center"><a href="loans/lend#app_id=' + w.app_id + '&title=' + w.title + '&user_id=' + w.user_id + '&name=' + w.name + '&nick=' + w.nick + '&category=' + w.category + '&amount=' + w.amount + '&duration=' + w.duration + '&applied=' + w.applied + '" class="ui-button ui-button-small ui-button-blue" target="blank">放款</a></span></li>';
               }
-              $('#loan-list-2').html(list_title + list);
+              $('#loan-list-1').html(list_title + list);
             }
-            else{ // loan-application
-              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w300 ph5 fn-left">借款标题</span><span class="ui-list-title w80 ph5 fn-left">计划用款</span><span class="ui-list-title w30 ph5 fn-left">月数</span><span class="ui-list-title w60 ph5 fn-left">申请状态</span><span class="ui-list-title w60 ph5 fn-left">是否放款</span><span class="ui-list-title w60 ph5 fn-left">是否结束</span><span class="ui-list-title w80 ph5 fn-left">申请时间</span></li>';
-              for (var i = 0; i < d.applications.length; i++){
-                var w = d.applications[i];
+            else if (type == 2){ // lending
+              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w195 ph5 fn-left">借款标题</span><span class="ui-list-title w50 ph5 fn-left">借款人</span><span class="ui-list-title w85 ph5 fn-left">借款金额</span><span class="ui-list-title w85 ph5 fn-left">借款利息</span><span class="ui-list-title w55 ph5 fn-left">年利率</span><span class="ui-list-title w30 ph5 fn-left">月数</span><span class="ui-list-title w80 ph5 fn-left">到期日期</span><span class="ui-list-title w80 ph5 fn-left">放款日期</span></li>';
+              for (var i = 0; i < d.loans.length; i++){
+                var w = d.loans[i];
                 list += '<li class="ui-list-item fn-clear';
                 if (i % 2 == 0){
                   list += ' dark';
                 }
-                list += '"><span class="ui-list-field w300 ph5 fn-left" style="display: block; overflow: hidden"><a href="/loanapp_view#id='
-                  + w.id + '" target="blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w80 ph5 fn-left text-right">'
-                  + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w30 ph5 fn-left text-right">'
-                  + w.duration.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w60 ph5 fn-left text-center">'
-                  + map_id_name(application_status, w.status) + '</span><span class="ui-list-field w60 ph5 fn-left text-center">'
-                  + (w.is_loaned == null ? '' : (w.is_loaned == 1 ? '是' : '否')) + '</span><span class="ui-list-field w60 ph5 fn-left text-center">'
-                  + (w.is_done == null ? '' : (w.is_done == 1 ? '是' : '否')) + '</span><span class="ui-list-field w80 fn-left text-center">'
-                  + w.applied.slice(0, 10) + '</span></li>';
+                list += '"><span class="ui-list-field w195 ph5 fn-left" style="display:block;overflow:hidden"><a href="/loan_view#id='
+                  + w.app_id + '" target="blank" title="' + w.title + '"';
+                if (w.fine > 0){
+                  list += ' style="color:red"';
+                }
+                list += '>' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
+                  + w.user_id + '" target="blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">'
+                  + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w85 ph5 fn-left text-right">'
+                  + w.interest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w55 ph5 fn-left text-right">'
+                  + (w.rate * 100).toFixed(2) + '%</span><span class="ui-list-field w30 ph5 fn-left text-right">'
+                  + w.duration.toFixed(0) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">'
+                  + w.end.slice(0,10) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">'
+                  + w.created.slice(0,10) + '</span></li>';
+              }
+              $('#loan-list-2').html(list_title + list);
+            }
+            else{ // finished
+              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w195 ph5 fn-left">借款标题</span><span class="ui-list-title w50 ph5 fn-left">借款人</span><span class="ui-list-title w85 ph5 fn-left">借款金额</span><span class="ui-list-title w85 ph5 fn-left">借款利息</span><span class="ui-list-title w55 ph5 fn-left">年利率</span><span class="ui-list-title w30 ph5 fn-left">月数</span><span class="ui-list-title w80 ph5 fn-left">到期日期</span><span class="ui-list-title w80 ph5 fn-left">放款日期</span></li>';
+              for (var i = 0; i < d.loans.length; i++){
+                var w = d.loans[i];
+                list += '<li class="ui-list-item fn-clear';
+                if (i % 2 == 0){
+                  list += ' dark';
+                }
+                list += '"><span class="ui-list-field w195 ph5 fn-left" style="display:block;overflow:hidden"><a href="/loan_view#id='
+                  + w.app_id + '" target="blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
+                  + w.user_id + '" target="blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">'
+                  + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w85 ph5 fn-left text-right">'
+                  + w.interest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w55 ph5 fn-left text-right">'
+                  + (w.rate * 100).toFixed(2) + '%</span><span class="ui-list-field w30 ph5 fn-left text-right">'
+                  + w.duration.toFixed(0) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">'
+                  + w.end.slice(0,10) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">'
+                  + w.created.slice(0,10) + '</span></li>';
               }
               $('#loan-list-3').html(list_title + list);
             }
+
+            // set up buttons: comment, check-status
+            $('.comment').click(function(event){
+              $('body').append('<div id="dialog-form" title="审核备注">' + $(this).attr("data-comment") + '</div>');
+              $('#dialog-form').dialog({
+                autoOpen: false,
+                height: 410,
+                width: 650,
+                modal: true,
+                closeText: "关闭本框",
+                buttons: {
+                  "确 定": function() {
+                    $( this ).dialog( "close" );
+                  },
+                },
+                close: function() {
+                  $(this).remove();
+                }
+              });
+              $('.ui-dialog').css("z-index","99999");
+              $('#dialog-form').dialog("open");
+            });
 
         })
         .fail(function( jqxhr, textStatus, error ) {
@@ -238,12 +266,17 @@
       });
       $(window).trigger('hashchange');
 
-      $(".ui-tab-item[data-name=loan]").click(function(event){
-        if (window.location.hash != "#type=2" && window.location.hash != ""){
+      $(".ui-tab-item[data-name=notyet]").click(function(event){
+        if (window.location.hash != "#type=1" && window.location.hash != ""){
+          window.location.hash = "#type=1";
+        }
+      });
+      $(".ui-tab-item[data-name=lending]").click(function(event){
+        if (window.location.hash != "#type=2") {
           window.location.hash = "#type=2";
         }
       });
-      $(".ui-tab-item[data-name=loanapp]").click(function(event){
+      $(".ui-tab-item[data-name=finished]").click(function(event){
         if (window.location.hash != "#type=3") {
           window.location.hash = "#type=3";
         }

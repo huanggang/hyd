@@ -72,6 +72,7 @@ function apply(){
   $address = null; $area = null; $floor = null; $height = null; $facing = null; $estate_year = null; $usage = null; $has_loan = null;
   $brand = null; $vehicle_year = null; $vin = null; $made = null; $violations = null; $register = null; $vehicle_price = null; $color = null; $features = null; $mileage = null; $transfers = null; $oversea = null; $vehicle_status = null;
   $gold_name = null; $weight = null; $purity = null;
+  $organization = null; $position = null; $years = null; $months = null; $income = null;
   $other_name = null; $bought = null; $other_price = null;
 
   switch ($category)
@@ -215,6 +216,28 @@ function apply(){
       }
       break;
     case 4:
+      $organization = $_POST["organization"];
+      if (is_null($organization))
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      $position = $_POST["position"];
+      if (is_null($position))
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      $years = str2int($_POST["years"], 0);
+      $months = str2int($_POST["months"], 0);
+      $income = str2int($_POST["income"], 0);
+      if ($income <= 2000)
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
+      break;
+    case 5:
       $other_name = $_POST["name"];
       if (is_null($other_name))
       {
@@ -277,10 +300,10 @@ function apply(){
         {
           mysqli_free_result($result);
 
-          $query = "INSERT INTO applications_app (app_usr_id, app_is_done, app_is_loaned, app_applied, app_status, app_category, app_title, app_amount, app_duration, app_purpose, app_asset_description, app_has_certificate, app_real_estate_address, app_real_estate_area, app_real_estate_floor, app_real_estate_height, app_real_estate_facing, app_real_estate_year, app_real_estate_usage, app_real_estate_has_loan, app_vehicle_brand, app_vehicle_year, app_vehicle_vin, app_vehicle_made, app_vehicle_violations, app_vehicle_register, app_vehicle_price, app_vehicle_color, app_vehicle_features, app_vehicle_mileage, app_vehicle_transfers, app_vehicle_oversea, app_vehicle_status, app_gold_name, app_gold_weight, app_gold_purity, app_other_name, app_other_bought, app_other_price, app_updated) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          $query = "INSERT INTO applications_app (app_usr_id, app_is_done, app_is_loaned, app_applied, app_status, app_category, app_title, app_amount, app_duration, app_purpose, app_asset_description, app_has_certificate, app_real_estate_address, app_real_estate_area, app_real_estate_floor, app_real_estate_height, app_real_estate_facing, app_real_estate_year, app_real_estate_usage, app_real_estate_has_loan, app_vehicle_brand, app_vehicle_year, app_vehicle_vin, app_vehicle_made, app_vehicle_violations, app_vehicle_register, app_vehicle_price, app_vehicle_color, app_vehicle_features, app_vehicle_mileage, app_vehicle_transfers, app_vehicle_oversea, app_vehicle_status, app_gold_name, app_gold_weight, app_gold_purity, app_credit_organization, app_credit_position, app_credit_years, app_credit_months, app_credit_income, app_other_name, app_other_bought, app_other_price, app_updated) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
           if ($stmt = mysqli_prepare($con, $query))
           {
-            mysqli_stmt_bind_param($stmt, "iiisiisdissisdiiiisisissisdssiiiisddssds", $usr_id, $is_done, $is_loaned, $nowStr, $status, $category, $title, $amount, $duration, $purpose, $asset_description, $certificate, $address, $area, $floor, $height, $facing, $estate_year, $usage, $has_loan, $brand, $vehicle_year, $vin, $made, $violations, $register, $vehicle_price, $color, $features, $mileage, $transfers, $oversea, $vehicle_status, $gold_name, $weight, $purity, $other_name, $bought, $other_price, $nowStr);
+            mysqli_stmt_bind_param($stmt, "iiisiisdissisdiiiisisissisdssiiiisddssiiissds", $usr_id, $is_done, $is_loaned, $nowStr, $status, $category, $title, $amount, $duration, $purpose, $asset_description, $certificate, $address, $area, $floor, $height, $facing, $estate_year, $usage, $has_loan, $brand, $vehicle_year, $vin, $made, $violations, $register, $vehicle_price, $color, $features, $mileage, $transfers, $oversea, $vehicle_status, $gold_name, $weight, $purity, $organization, $position, $years, $months, $income, $other_name, $bought, $other_price, $nowStr);
 
             $flag = mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);

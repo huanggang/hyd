@@ -1,6 +1,6 @@
 (function ($, Drupal, window, document, undefined) {
 
-  Drupal.behaviors.bankcard = {
+  Drupal.behaviors.loan_view = {
     attach: function(context, settings){
 
       $(window).bind('hashchange', function(){
@@ -27,16 +27,19 @@
                 var category = "";
                 switch (d.category){
                   case 1:
-                    category = "房屋商铺";
+                    category = "房屋商铺抵押";
                     break;
                   case 2:
-                    category = "机动车";
+                    category = "机动车抵押";
                     break;
                   case 3:
-                    category = "黄金";
+                    category = "黄金抵押";
                     break;
                   case 4:
-                    category = "其他";
+                    categroy = "信用";
+                    break;
+                  case 5:
+                    category = "其他抵押";
                     break;
                 }
                 $('#category').text(category);

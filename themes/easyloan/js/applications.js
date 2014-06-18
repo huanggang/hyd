@@ -1,6 +1,6 @@
 (function ($, Drupal, window, document, undefined) {
 
-  Drupal.behaviors.bankcard = {
+  Drupal.behaviors.applications = {
     attach: function(context, settings){
 
       var max_pages = 50;
@@ -14,7 +14,7 @@
       var total_2 = 0;
       var total_pages_2 = 0;
 
-      var cats = ['','(房产) ','(机车) ','(黄金) ','(其他) '];
+      var cats = ['','(房产) ','(机车) ','(黄金) ','(信用) ','(其他) '];
 
       $(window).bind('hashchange', function(){
         var hash = window.location.hash;

@@ -4,7 +4,7 @@
  *
  */
 (function($, Drupal, window, document, undefined) {
-  Drupal.behaviors.vali = {
+  Drupal.behaviors.borrow_car = {
     attach: function(context, settings) {
 
       var this_year = (new Date()).getFullYear();
@@ -145,9 +145,9 @@
               year: $('#year').val(),
               vin: $('#vin').val(),
               mileage: $('#mileage').val(),
-              made: $('#made').val(),
+              made: $('#made').val().replace(/\//g,"-"),
               violations: $('#violations').val(),
-              register: $('#register').val(),
+              register: $('#register').val().replace(/\//g,"-"),
               price: $('#price').val(),
               color: $('#color').val(),
               tranfers: $('#tranfers').val(),
@@ -188,7 +188,7 @@
           }, "json")
           .fail(function( jqxhr, textStatus, error ) {
             var err = textStatus + ", " + error;
-            alert( "网络出现问题，请重新刷新页面。" );
+            alert( "网络出现问题，请刷新页面。" );
           });
         }
       });

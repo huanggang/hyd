@@ -1,6 +1,6 @@
 (function ($, Drupal, window, document, undefined) {
 
-  Drupal.behaviors.bankcard = {
+  Drupal.behaviors.loanapp_view = {
     attach: function(context, settings){
 
       $(window).bind('hashchange', function(){
@@ -27,7 +27,7 @@
                 var category = "";
                 switch (d.category){
                   case 1:
-                    category = "房屋商铺";
+                    category = "房屋商铺抵押";
                     $('#address-1').text(d.address);
                     $('#area-1').text(d.area);
                     $('#floor-1').text(d.floor);
@@ -39,7 +39,7 @@
                     $('#certificate-1').text(d.has_certificate == 1 ? '是' : '否');
                     break;
                   case 2:
-                    category = "机动车";
+                    category = "机动车抵押";
                     var features = '';
                     var fa = d.features.split(',');
                     for (var i = 0; i < fa.length; i++){
@@ -57,26 +57,34 @@
                     $('#mileage-2').text(d.mileage.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     $('#transfers-2').text(d.transfers.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     $('#oversea-2').text(d.oversea == 1 ? '进口' : '国产');
-                    $('#status-2').text(map_id_name(vehicle_status, d.status));
+                    $('#status-2').text(map_id_name(vehicle_status, d.vstatus));
                     $('#certificate-2').text(d.has_certificate == 1 ? '是' : '否');
                     break;
                   case 3:
-                    category = "黄金";
+                    category = "黄金抵押";
                     $('#name-3').text(d.name);
                     $('#weight-3').text(d.weight.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     $('#purity-3').text(d.purity.toFixed(6));
                     $('#certificate-3').text(d.has_certificate == 1 ? '是' : '否');
                     break;
                   case 4:
-                    category = "其他";
-                    $('#name-4').text(d.name);
-                    $('#bought-4').text(d.bought);
-                    $('#price-4').text(d.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                    $('#certificate-4').text(d.has_certificate == 1 ? '是' : '否');
+                    category = "信用贷";
+                    $('#organization-4').text(d.organization);
+                    $('#position-4').text(d.position);
+                    $('#years-4').text(d.years);
+                    $('#months-4').text(d.months);
+                    $('#income-4').text(d.income);
+                    break;
+                  case 5:
+                    category = "其他抵押";
+                    $('#name-5').text(d.name);
+                    $('#bought-5').text(d.bought);
+                    $('#price-5').text(d.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    $('#certificate-5').text(d.has_certificate == 1 ? '是' : '否');
                     break;
                 }
                 $('#category').text(category);
-                for (var i = 1; i <= 4; i++){
+                for (var i = 1; i <= 5; i++){
                   if (i == d.category){
                     $('#category-'+i).show();
                   }

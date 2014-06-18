@@ -30,7 +30,7 @@ function loanapp(){
 
   $json = "";
 
-  $query = "SELECT app_usr_id, app_is_done, app_is_loaned, app_status, app_title, app_category, app_amount, app_duration, app_purpose, app_asset_description, app_has_certificate, app_real_estate_address, app_real_estate_area, app_real_estate_floor, app_real_estate_height, app_real_estate_facing, app_real_estate_year, app_real_estate_usage, app_real_estate_has_loan, app_vehicle_brand, app_vehicle_year, app_vehicle_vin, app_vehicle_made, app_vehicle_violations, app_vehicle_register, app_vehicle_price, app_vehicle_color, app_vehicle_features, app_vehicle_mileage, app_vehicle_transfers, app_vehicle_oversea, app_vehicle_status, app_gold_name, app_gold_weight, app_gold_purity, app_other_name, app_other_bought, app_other_price FROM applications_app WHERE app_id = ".strval($id);
+  $query = "SELECT app_usr_id, app_is_done, app_is_loaned, app_status, app_title, app_category, app_amount, app_duration, app_purpose, app_asset_description, app_has_certificate, app_real_estate_address, app_real_estate_area, app_real_estate_floor, app_real_estate_height, app_real_estate_facing, app_real_estate_year, app_real_estate_usage, app_real_estate_has_loan, app_vehicle_brand, app_vehicle_year, app_vehicle_vin, app_vehicle_made, app_vehicle_violations, app_vehicle_register, app_vehicle_price, app_vehicle_color, app_vehicle_features, app_vehicle_mileage, app_vehicle_transfers, app_vehicle_oversea, app_vehicle_status, app_gold_name, app_gold_weight, app_gold_purity, app_credit_organization, app_credit_position, app_credit_years, app_credit_months, app_credit_income, app_other_name, app_other_bought, app_other_price FROM applications_app WHERE app_id = ".strval($id);
   if (!is_auditor($user) && !is_accountant($user) && !is_manager($user) && !is_administrator($user))
   {
     $query = $query." AND app_usr_id = ".strval($usr_id);
@@ -75,6 +75,11 @@ function loanapp(){
     $app_gold_name = $row['app_gold_name'];
     $app_gold_weight = $row['app_gold_weight'];
     $app_gold_purity = $row['app_gold_purity'];
+    $app_credit_organization = $row['app_credit_organization'];
+    $app_credit_position = $row['app_credit_position'];
+    $app_credit_years = $row['app_credit_years'];
+    $app_credit_months = $row['app_credit_months'];
+    $app_credit_income = $row['app_credit_income'];
     $app_other_name = $row['app_other_name'];
     $app_other_bought = $row['app_other_bought'];
     $app_other_price = $row['app_other_price'];
@@ -87,12 +92,15 @@ function loanapp(){
         $json = $json.",\"address\":".jsonstr($app_real_estate_address).",\"area\":".jsonstrval($app_real_estate_area).",\"floor\":".jsonstrval($app_real_estate_floor).",\"height\":".jsonstrval($app_real_estate_height).",\"facing\":".jsonstrval($app_real_estate_facing).",\"year\":".jsonstrval($app_real_estate_year).",\"usage\":".jsonstr($app_real_estate_usage).",\"has_loan\":".jsonstrval($app_real_estate_has_loan)."}";
         break;
       case 2:
-        $json = $json.",\"brand\":".jsonstr($app_vehicle_brand).",\"year\":".jsonstrval($app_vehicle_year).",\"vin\":".jsonstr($app_vehicle_vin).",\"made\":".jsonstr($app_vehicle_made).",\"violations\":".jsonstrval($app_vehicle_violations).",\"register\":".jsonstr($app_vehicle_register).",\"price\":".jsonstrval($app_vehicle_price).",\"color\":".jsonstr($app_vehicle_color).",\"features\":".jsonstr($app_vehicle_features).",\"mileage\":".jsonstrval($app_vehicle_mileage).",\"transfers\":".jsonstrval($app_vehicle_transfers).",\"oversea\":".jsonstrval($app_vehicle_oversea).",\"status\":".jsonstrval($app_vehicle_status)."}";
+        $json = $json.",\"brand\":".jsonstr($app_vehicle_brand).",\"year\":".jsonstrval($app_vehicle_year).",\"vin\":".jsonstr($app_vehicle_vin).",\"made\":".jsonstr($app_vehicle_made).",\"violations\":".jsonstrval($app_vehicle_violations).",\"register\":".jsonstr($app_vehicle_register).",\"price\":".jsonstrval($app_vehicle_price).",\"color\":".jsonstr($app_vehicle_color).",\"features\":".jsonstr($app_vehicle_features).",\"mileage\":".jsonstrval($app_vehicle_mileage).",\"transfers\":".jsonstrval($app_vehicle_transfers).",\"oversea\":".jsonstrval($app_vehicle_oversea).",\"vstatus\":".jsonstrval($app_vehicle_status)."}";
         break;
       case 3:
         $json = $json.",\"name\":".jsonstr($app_gold_name).",\"weight\":".jsonstrval($app_gold_weight).",\"purity\":".jsonstrval($app_gold_purity)."}";
         break;
       case 4:
+        $json = $json.",\"organization\":".jsonstr($app_credit_organization).",\"position\":".jsonstr($app_credit_position).",\"years\":".jsonstrval($app_credit_years).",\"months\":".jsonstrval($app_credit_months).",\"income\":".jsonstrval($app_credit_income)."}";
+        break;
+      case 5:
         $json = $json.",\"name\":".jsonstr($app_other_name).",\"bought\":".jsonstr($app_other_bought).",\"price\":".jsonstrval($app_other_price)."}";
         break;
     }

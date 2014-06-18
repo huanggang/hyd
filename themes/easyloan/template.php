@@ -211,9 +211,9 @@ function easyloan_form_alter(&$form, &$form_state, $form_id) {
 
             $form['account']['mail']['#value'] = "a@b.com"; // set to a fake value to cheat the validation for email
             $form['account']['phone'] = array( 
-                    '#title' => t('手机�?), 
+                    '#title' => t('手机号'), 
                     '#type' => 'textfield', 
-                    '#description' => t('请输�?1位手机号�?), 
+                    '#description' => t('请输入11位手机号码'), 
                     '#size' => 11, 
                     '#weight' => 10,); 
 

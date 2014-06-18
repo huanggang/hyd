@@ -59,7 +59,7 @@ function manage_loans(){
         }
       }
       $start = ($page - 1) * $per_page;
-      $query = "SELECT app_id, app_title, app_usr_id, act_info_nick, app_category, app_amount, app_duration, app_applied, app_comment FROM applications_app LEFT JOIN account_info_act_info ON app_usr_id = act_info_usr_id WHERE app_is_done = 1 AND app_is_loaned IS NULL ORDER BY app_applied ASC LIMIT ".strval($start).",".strval($per_page);
+      $query = "SELECT app_id, app_title, app_usr_id, act_info_nick, act_info_name, app_category, app_amount, app_duration, app_applied, app_comment FROM applications_app LEFT JOIN account_info_act_info ON app_usr_id = act_info_usr_id WHERE app_is_done = 1 AND app_is_loaned IS NULL ORDER BY app_applied ASC LIMIT ".strval($start).",".strval($per_page);
       $result = mysqli_query($con, $query);
       mysqli_query($con, "UNLOCK TABLES");
       while ($row = mysqli_fetch_array($result))
@@ -68,13 +68,14 @@ function manage_loans(){
         $app_title = $row['app_title'];
         $app_usr_id = $row['app_usr_id'];
         $act_info_nick = $row['act_info_nick'];
+        $act_info_name = $row['act_info_name'];
         $app_category = $row['app_category'];
         $app_amount = $row['app_amount'];
         $app_duration = $row['app_duration'];
         $app_applied = $row['app_applied'];
         $app_comment = $row['app_comment'];
 
-        $json = $json.",{\"app_id\":".jsonstrval($app_id).",\"title\":".jsonstr($app_title).",\"user_id\":".jsonstrval($app_usr_id).",\"nick\":".jsonstr($act_info_nick).",\"category\":".jsonstrval($app_category).",\"amount\":".jsonstrval($app_amount).",\"duration\":".jsonstrval($app_duration).",\"applied\":".jsonstr($app_applied).",\"comment\":".jsonstr($app_comment)."}";
+        $json = $json.",{\"app_id\":".jsonstrval($app_id).",\"title\":".jsonstr($app_title).",\"user_id\":".jsonstrval($app_usr_id).",\"nick\":".jsonstr($act_info_nick).",\"name\":".jsonstr($act_info_name).",\"category\":".jsonstrval($app_category).",\"amount\":".jsonstrval($app_amount).",\"duration\":".jsonstrval($app_duration).",\"applied\":".jsonstr($app_applied).",\"comment\":".jsonstr($app_comment)."}";
       }
       mysqli_free_result($result);
       break;
@@ -91,7 +92,7 @@ function manage_loans(){
         }
       }
       $start = ($page - 1) * $per_page;
-      $query = "SELECT lns_app_id, lns_title, lns_usr_id, act_info_nick, lns_category, lns_amount, lns_interest, lns_interest_rate, lns_repayment_method, lns_duration, lns_start, lns_end, lns_fine_rate, lns_fine_rate_is_single, lns_fine, lns_created FROM loans_lns LEFT JOIN account_info_act_info ON lns_usr_id = act_info_usr_id WHERE lns_is_done = 0 ORDER BY lns_created ASC LIMIT ".strval($start).",".strval($per_page);
+      $query = "SELECT lns_app_id, lns_title, lns_usr_id, act_info_nick, act_info_name, lns_category, lns_amount, lns_interest, lns_interest_rate, lns_repayment_method, lns_duration, lns_start, lns_end, lns_fine_rate, lns_fine_rate_is_single, lns_fine, lns_created FROM loans_lns LEFT JOIN account_info_act_info ON lns_usr_id = act_info_usr_id WHERE lns_is_done = 0 ORDER BY lns_created ASC LIMIT ".strval($start).",".strval($per_page);
       $result = mysqli_query($con, $query);
       mysqli_query($con, "UNLOCK TABLES");
       while ($row = mysqli_fetch_array($result))
@@ -100,6 +101,7 @@ function manage_loans(){
         $lns_title = $row['lns_title'];
         $lns_usr_id = $row['lns_usr_id'];
         $act_info_nick = $row['act_info_nick'];
+        $act_info_name = $row['act_info_name'];
         $lns_category = $row['lns_category'];
         $lns_amount = $row['lns_amount'];
         $lns_interest = $row['lns_interest'];
@@ -113,7 +115,7 @@ function manage_loans(){
         $lns_fine = $row['lns_fine'];
         $lns_created = $row['lns_created'];
 
-        $json = $json.",{\"app_id\":".jsonstrval($lns_app_id).",\"title\":".jsonstr($lns_title).",\"user_id\":".jsonstrval($lns_usr_id).",\"nick\":".jsonstr($act_info_nick).",\"category\":".jsonstrval($lns_category).",\"amount\":".jsonstrval($lns_amount).",\"interest\":".jsonstrval($lns_interest)."\"rate\":".jsonstrval($lns_interest_rate).",\"method\":".jsonstrval($lns_repayment_method).",\"duration\":".jsonstrval($lns_duration).",\"start\":".jsonstr($lns_start).",\"end\":".jsonstr($lns_end).",\"fine_rate\":".jsonstrval($lns_fine_rate).",\"fine_is_single\":".jsonstrval($lns_fine_rate_is_single).",\"fine\":".jsonstrval($lns_fine).",\"created\":".jsonstr($lns_created)."}";
+        $json = $json.",{\"app_id\":".jsonstrval($lns_app_id).",\"title\":".jsonstr($lns_title).",\"user_id\":".jsonstrval($lns_usr_id).",\"nick\":".jsonstr($act_info_nick).",\"name\":".jsonstr($act_info_name).",\"category\":".jsonstrval($lns_category).",\"amount\":".jsonstrval($lns_amount).",\"interest\":".jsonstrval($lns_interest).",\"rate\":".jsonstrval($lns_interest_rate).",\"method\":".jsonstrval($lns_repayment_method).",\"duration\":".jsonstrval($lns_duration).",\"start\":".jsonstr($lns_start).",\"end\":".jsonstr($lns_end).",\"fine_rate\":".jsonstrval($lns_fine_rate).",\"fine_is_single\":".jsonstrval($lns_fine_rate_is_single).",\"fine\":".jsonstrval($lns_fine).",\"created\":".jsonstr($lns_created)."}";
       }
       mysqli_free_result($result);
       break;
@@ -130,7 +132,7 @@ function manage_loans(){
         }
       }
       $start = ($page - 1) * $per_page;
-      $query = "SELECT lns_app_id, lns_title, lns_usr_id, act_info_nick, lns_category, lns_amount, lns_interest, lns_interest_rate, lns_repayment_method, lns_duration, lns_start, lns_end, lns_fine_rate, lns_fine_rate_is_single, lns_finished, lns_fine, lns_created FROM loans_lns LEFT JOIN account_info_act_info ON lns_usr_id = act_info_usr_id WHERE lns_is_done = 1 ORDER BY lns_created DESC LIMIT ".strval($start).",".strval($per_page);
+      $query = "SELECT lns_app_id, lns_title, lns_usr_id, act_info_nick, act_info_name, lns_category, lns_amount, lns_interest, lns_interest_rate, lns_repayment_method, lns_duration, lns_start, lns_end, lns_fine_rate, lns_fine_rate_is_single, lns_finished, lns_fine, lns_created FROM loans_lns LEFT JOIN account_info_act_info ON lns_usr_id = act_info_usr_id WHERE lns_is_done = 1 ORDER BY lns_created DESC LIMIT ".strval($start).",".strval($per_page);
       $result = mysqli_query($con, $query);
       mysqli_query($con, "UNLOCK TABLES");
       while ($row = mysqli_fetch_array($result))
@@ -139,6 +141,7 @@ function manage_loans(){
         $lns_title = $row['lns_title'];
         $lns_usr_id = $row['lns_usr_id'];
         $act_info_nick = $row['act_info_nick'];
+        $act_info_name = $row['act_info_name'];
         $lns_category = $row['lns_category'];
         $lns_amount = $row['lns_amount'];
         $lns_interest = $row['lns_interest'];
@@ -153,7 +156,7 @@ function manage_loans(){
         $lns_fine = $row['lns_fine'];
         $lns_created = $row['lns_created'];
 
-        $json = $json.",{\"app_id\":".jsonstrval($lns_app_id).",\"title\":".jsonstr($lns_title).",\"user_id\":".jsonstrval($lns_usr_id).",\"nick\":".jsonstr($act_info_nick).",\"category\":".jsonstrval($lns_category).",\"amount\":".jsonstrval($lns_amount).",\"interest\":".jsonstrval($lns_interest)."\"rate\":".jsonstrval($lns_interest_rate).",\"method\":".jsonstrval($lns_repayment_method).",\"duration\":".jsonstrval($lns_duration).",\"start\":".jsonstr($lns_start).",\"end\":".jsonstr($lns_end).",\"fine_rate\":".jsonstrval($lns_fine_rate).",\"fine_is_single\":".jsonstrval($lns_fine_rate_is_single).",\"finished\":".jsonstrval($lns_finished).",\"fine\":".jsonstrval($lns_fine).",\"created\":".jsonstr($lns_created)."}";
+        $json = $json.",{\"app_id\":".jsonstrval($lns_app_id).",\"title\":".jsonstr($lns_title).",\"user_id\":".jsonstrval($lns_usr_id).",\"nick\":".jsonstr($act_info_nick).",\"name\":".jsonstr($act_info_name).",\"category\":".jsonstrval($lns_category).",\"amount\":".jsonstrval($lns_amount).",\"interest\":".jsonstrval($lns_interest).",\"rate\":".jsonstrval($lns_interest_rate).",\"method\":".jsonstrval($lns_repayment_method).",\"duration\":".jsonstrval($lns_duration).",\"start\":".jsonstr($lns_start).",\"end\":".jsonstr($lns_end).",\"fine_rate\":".jsonstrval($lns_fine_rate).",\"fine_is_single\":".jsonstrval($lns_fine_rate_is_single).",\"finished\":".jsonstrval($lns_finished).",\"fine\":".jsonstrval($lns_fine).",\"created\":".jsonstr($lns_created)."}";
       }
       mysqli_free_result($result);
       break;
@@ -162,7 +165,7 @@ function manage_loans(){
   mysqli_close($con);
 
   $json = substr($json, 1);
-  $json = "{\"total\":".jsonstrval($total).",\"applications\":[".$json."]}";
+  $json = "{\"total\":".jsonstrval($total).",\"loans\":[".$json."]}";
   echo $json;
 }
 ?>

@@ -1,6 +1,6 @@
 (function ($, Drupal, window, document, undefined) {
 
-  Drupal.behaviors.bankcard = {
+  Drupal.behaviors.withdrawappl = {
     attach: function(context, settings){
 
       var max_pages = 50;

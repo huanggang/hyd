@@ -14,7 +14,7 @@ drupal_add_js($theme_path . '/js/loan_view.js');
     <div class="grid_12">
       <div class="loanapp loanapp p20bs color-white-bg">
         <div class="loanboder">
-          <legend><span id="category"></span>抵押借款</legend>
+          <legend><span id="category"></span>借款</legend>
           <div class="ui-form-item">
             <label class="ui-label">借款标题</label>
             <span id="title"></span>
@@ -49,7 +49,7 @@ drupal_add_js($theme_path . '/js/loan_view.js');
           </div>
           <div class="ui-form-item">
             <label class="ui-label">借款期限</label>
-            <span id="duration"></span> 月
+            <span id="duration"></span> 个月
           </div>
           <div class="ui-form-item">
             <label class="ui-label">借款日期</label>

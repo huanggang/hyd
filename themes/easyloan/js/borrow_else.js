@@ -4,7 +4,7 @@
  *
  */
 (function($, Drupal, window, document, undefined) {
-  Drupal.behaviors.vali = {
+  Drupal.behaviors.borrow_else = {
     attach: function(context, settings) {
 
       var v = $("#borrowForm").validate({
@@ -90,7 +90,7 @@
               purpose: $('#purpose').val(),
               asset_description: $('#asset_description').val(),
               name: $('#name').val(),
-              bought: $('#bought').val(),
+              bought: $('#bought').val().replace(/\//g,"-"),
               price: $('#price').val(),
             },
             function(d) {
@@ -126,7 +126,7 @@
           }, "json")
           .fail(function( jqxhr, textStatus, error ) {
             var err = textStatus + ", " + error;
-            alert( "网络出现问题，请重新刷新页面。" );
+            alert( "网络出现问题，请刷新页面。" );
           });
         }
       });

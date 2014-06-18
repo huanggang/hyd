@@ -48,11 +48,11 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/borrow_credit.js');
             </div>
             <div class="ui-form-item">
               <label class="ui-label">计划用款</label>
-              <input class="ui-input" type="text" value="" name="amount" id="amount">元
+              <input class="ui-input" type="text" value="" name="amount" id="amount"> 元
             </div>
             <div class="ui-form-item">
               <label class="ui-label">计划用款时间</label>
-              <input class="ui-input" type="text" value="" name="duration" id="duration">月
+              <input class="ui-input" type="text" value="" name="duration" id="duration"> 个月
             </div>
             <div class="ui-form-item">
               <label class="ui-label">借款详情</label>

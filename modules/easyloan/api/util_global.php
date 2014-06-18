@@ -3,16 +3,18 @@ global $user;
 
 global $db_host, $db_user, $db_pwd, $db_name;
 
+global $web_js, $site_js;
+
 $site_name = "清远好易贷";
 
 // web site url
 $http_scheme = "http";
-$host = "www.hyd1818.com";
+$host = "localhost";//"www.hyd1818.com";
 
 #$web_js = "http://www.hyd1818.com/js/";
-$web_js = $http_scheme."://".$host."/js/";
+$web_js = $http_scheme."://".$host."/sites/all/themes/easyloan/js/";
 // web site directory
-$site_js = "/var/www/js/";
+$site_js = "/var/www/sites/all/themes/easyloan/js/";
 
 // database
 $db_host = "localhost";

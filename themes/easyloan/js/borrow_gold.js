@@ -4,7 +4,7 @@
  *
  */
 (function($, Drupal, window, document, undefined) {
-  Drupal.behaviors.vali = {
+  Drupal.behaviors.borrow_gold = {
     attach: function(context, settings) {
 
       var v = $("#borrowForm").validate({
@@ -128,7 +128,7 @@
           }, "json")
           .fail(function( jqxhr, textStatus, error ) {
             var err = textStatus + ", " + error;
-            alert( "网络出现问题，请重新刷新页面。" );
+            alert( "网络出现问题，请刷新页面。" );
           });
         }
       });

@@ -1,1 +1,1 @@
-var loan_categories=[{"id":1,"name":"房屋商铺"},{"id":2,"name":"机动车"},{"id":3,"name":"黄金"},{"id":4,"name":"其他"}];
+var loan_categories=[{"id":1,"name":"房屋商铺"},{"id":2,"name":"机动车"},{"id":3,"name":"黄金"},{"id":4,"name":"信用"},{"id":5,"name":"其他"}];

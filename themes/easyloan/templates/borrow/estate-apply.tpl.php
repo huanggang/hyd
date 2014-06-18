@@ -64,7 +64,7 @@ drupal_add_js($theme_path . '/js/borrow_estate.js');
             </div>
             <div class="ui-form-item">
               <label class="ui-label"><span class="ui-form-required">*</span>计划用款时间</label>
-              <input class="ui-input w40" type="text" value="" name="duration" id="duration"> 月
+              <input class="ui-input w40" type="text" value="" name="duration" id="duration"> 个月
             </div>
             <div class="ui-form-item">
               <label class="ui-label"><span class="ui-form-required">*</span>借款描述</label>

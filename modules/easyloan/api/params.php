@@ -1,9 +1,101 @@
 <?php
 
-include_once 'util_global.php';
+function params()
+{
+  include_once 'util_global.php';
+
+  if ($user->uid <= 0)
+  {
+    echo "{\"result\":0, \"message\":\"Login\"}";
+    exit;
+  }
+  $usr_id = $user->uid;
+
+  if (!is_administrator($user))
+  {
+    echo "{\"result\":0, \"message\":\"Unauthorized\"}";
+    exit;
+  }
+
+  $type = $_GET["type"];
+  if (is_null($type))
+  {
+    header("HTTP/1.0 404 Not Found");
+    exit;
+  }
+
+  $type = strtolower($type);
+  $redirect = "Location: ".$web_js;
+  if ($type == "refresh")
+  {
+    if (refresh())
+    {
+      echo "{\"result\": 1}";
+    }
+    else
+    {
+      echo "{\"result\": 0,\"message\":\"Failed\"}";
+    }
+  }
+  else
+  {
+    switch ($type)
+    {
+      case "education":
+        $redirect = $redirect."educations.js";
+        break;
+      case "marital_status":
+        $redirect = $redirect."marital_status.js";
+        break;
+      case "province":
+        $redirect = $redirect."provinces.js";
+        break;
+      case "city":
+        $prv_id = $_GET["province"];
+        $redirect = $redirect."cities_".strval($prv_id).".js";
+        break;
+      case "bank":
+        $redirect = $redirect."banks.js";
+        break;
+      case "duration_range":
+        $redirect = $redirect."duration_ranges.js";
+        break;
+      case "investment_status":
+        $redirect = $redirect."investment_status.js";
+        break;
+      case "loan_category":
+        $redirect = $redirect."loan_categories.js";
+        break;
+      case "act_ln_method":
+        $redirect = $redirect."repayment_methods.js";
+        break;
+      case "application_status":
+        $redirect = $redirect."application_status.js";
+        break;
+      case "facing":
+        $redirect = $redirect."facing.js";
+        break;
+      case "vehicle_feature":
+        $redirect = $redirect."vehicle_features.js";
+        break;
+      case "vehicle_status":
+        $redirect = $redirect."vehicle_status.js";
+        break;
+      case "transaction_type":
+        $redirect = $redirect."transaction_types.js";
+        break;
+      case "transaction_time_range":
+        $redirect = $redirect."transaction_time_ranges.js";
+        break;
+    }
+    header($redirect); /* Redirect browser */
+    exit;
+  }
+}
 
 function refresh()
 {
+  include_once 'util_global.php';
   global $site_js;
   global $db_host, $db_name, $db_user, $db_pwd;
   $con=mysqli_connect($db_host, $db_user, $db_pwd, $db_name);
@@ -13,7 +105,7 @@ function refresh()
     return false;
   }
   mysqli_set_charset($con, "UTF8");
-  
+
   // educations
   $educations = "";
   mysqli_query($con, "LOCK TABLES educations_edu READ");
@@ -67,7 +159,7 @@ function refresh()
     mysqli_free_result($result1);
     $cities = substr($cities, 1);
     $cities = "var cities_".strval($prv_id)."=[".$cities."];";
-    file_put_contents($site_js."cities_".strval($prv_id).".js", $cities);
+    file_put_contents($site_js."city/cities_".strval($prv_id).".js", $cities);
   }
   mysqli_query($con, "UNLOCK TABLES");
   mysqli_free_result($result);
@@ -254,80 +346,5 @@ function refresh()
   mysqli_kill($con, mysqli_thread_id($con));
   mysqli_close($con);
   return true;
-}
-
-$type = $_GET["type"];
-if (is_null($type))
-{
-  header("HTTP/1.0 404 Not Found");
-  exit;
-}
-
-$type = strtolower($type);
-$redirect = "Location: ".$web_js;
-if ($type == "refresh")
-{
-  if (refresh())
-  {
-    echo "{\"result\": 1}";
-  }
-  else
-  {
-    echo "{\"result\": 0}";
-  }
-}
-else
-{
-  switch ($type)
-  {
-    case "education":
-      $redirect = $redirect."educations.js";
-      break;
-    case "marital_status":
-      $redirect = $redirect."marital_status.js";
-      break;
-    case "province":
-      $redirect = $redirect."provinces.js";
-      break;
-    case "city":
-      $prv_id = $_GET["province"];
-      $redirect = $redirect."cities_".strval($prv_id).".js";
-      break;
-    case "bank":
-      $redirect = $redirect."banks.js";
-      break;
-    case "duration_range":
-      $redirect = $redirect."duration_ranges.js";
-      break;
-    case "investment_status":
-      $redirect = $redirect."investment_status.js";
-      break;
-    case "loan_category":
-      $redirect = $redirect."loan_categories.js";
-      break;
-    case "act_ln_method":
-      $redirect = $redirect."repayment_methods.js";
-      break;
-    case "application_status":
-      $redirect = $redirect."application_status.js";
-      break;
-    case "facing":
-      $redirect = $redirect."facing.js";
-      break;
-    case "vehicle_feature":
-      $redirect = $redirect."vehicle_features.js";
-      break;
-    case "vehicle_status":
-      $redirect = $redirect."vehicle_status.js";
-      break;
-    case "transaction_type":
-      $redirect = $redirect."transaction_types.js";
-      break;
-    case "transaction_time_range":
-      $redirect = $redirect."transaction_time_ranges.js";
-      break;
-  }
-  header($redirect); /* Redirect browser */
-  exit;
 }
 ?>
