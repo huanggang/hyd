@@ -1,10 +1,10 @@
 <?php
 /**
- * @file
- * Returns the HTML for a single Drupal page.
+ * @file 
+ * Returns the HTML for a single Drupal page. 
  *
- * Complete documentation for this file is available online.
- * @see https://drupal.org/node/1728148
+ * Complete documentation for this file is available online. 
+ * @see https://drupal.org/node/1728148 
  */
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/products.css');
 ?>
@@ -66,6 +66,24 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/products.css');
                     <br>
                     <p class="text-center">
                       <a class="ui-button ui-button-blue ui-button-mid w70" href="borrow/gold/apply">立即申请</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="fn-left products-team borrow bg-green">
+                <h2 class="h4">信用贷</h2>
+                <div class="content-padding">
+                  <p class="h4">适用工薪阶层</p>
+                  <h3 class="h6">申请条件</h3>
+                  <ul class="ui-list-disc">
+                    <li class="fn-clear"><i></i><span>22-55周岁的中国公民</span></li>
+                    <li class="fn-clear"><i></i><span>拥有稳定收入</span></li>
+                  </ul>
+                  <div class="products-link">
+                    <a href="borrow/credit" target="_blank">查看详细信息</a>
+                    <br>
+                    <p class="text-center">
+                      <a class="ui-button ui-button-blue ui-button-mid w70" href="borrow/credit/apply">立即申请</a>
                     </p>
                   </div>
                 </div>
