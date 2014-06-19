@@ -140,14 +140,11 @@ Drupal.behaviors.tip = {
   <br />
 <?php } ?>
 </div>
-<?php if ($is_my_page){ ?>
-<!-- ad start -->
-<div class="ad-dimgray mt20">
-<i class="icon icon-hui"></i>活动：2014年1月17日10时至2014年3月31日18时，债权转让费率下调至0.5%。
-<a href="#" target="_blank">查看详情</a>
-</div>
-<!-- ad end -->
-<?php } ?>
+<?php 
+  if ($is_my_page){ 
+    print views_embed_view('latest_notice', "block", "");
+  }
+?>
 <div class="box mt20 p5">
 <div class="fn-clear equation">
   <div class="fn-left text-center">
