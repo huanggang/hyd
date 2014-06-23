@@ -84,7 +84,8 @@
             var pagination = '<ul>';
             if (page == 1){
               var total = d.total;
-              var total_pages = total == 0 ? 0 : Math.round(total / per_page) + 1;
+              var total_pages = total == 0 ? 0 : Math.floor((total - 1) / per_page) + 1;
+
               if (type == 2){
                 total_2 = total;
                 total_pages_2 = total_pages;
