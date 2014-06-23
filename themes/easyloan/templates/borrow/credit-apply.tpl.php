@@ -1,71 +1,66 @@
 <?php
-/**
- * @file
- * Returns the HTML for a single Drupal page.
- *
- * Complete documentation for this file is available online.
- * @see https://drupal.org/node/1728148
- */
-drupal_add_css(drupal_get_path('theme','easyloan') . '/css/loan.css');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.validate.min.js');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/borrow_credit.js');
+global $base_url;
+
+$theme_path = drupal_get_path('theme','easyloan');
+
+drupal_add_css($theme_path . '/css/loan.css');
+
+drupal_add_js($theme_path . '/js/jquery.validate.min.js');
+drupal_add_js($theme_path . '/js/borrow_credit.js');
 ?>
 <div class="pg-loan" id="pg-loan">
   <div class="container_12 mt10">
     <div class="grid_12">
       <div class="loanapp loanapp p20bs color-white-bg">
-        <form enctype="multipart/form-data" class="ui-form" method="post" id="borrowForm" action="apply">
+        <form class="ui-form" method="post" id="borrowForm">
           <fieldset>
             <div class="loanboder">
-            <legend>信用贷借款申请</legend>
+            <legend>信用贷款借款申请</legend>
             <div class="ui-form-item">
-              <label class="ui-label">借款标题</label>
-              <input class="ui-input" type="text" value="" name="title" id="title">
+              <label class="ui-label"><span class="ui-form-required">*</span>借款标题</label>
+              <input class="ui-input w300" type="text" value="" name="title" id="title">
             </div>
             <div class="ui-form-item">
-              <label class="ui-label required">工作单位</label>
-              <input class="ui-input" type="text" value="" name="company" id="company">
+              <label class="ui-label required"><span class="ui-form-required">*</span>现工作单位</label>
+              <input class="ui-input w300" type="text" value="" name="organization" id="organization">
             </div>
             <div class="ui-form-item">
-              <label class="ui-label">现单位工龄</label>
-              <input class="ui-input" type="text" value="" name="year" id="year">年
-              <input class="ui-input" type="text" value="" name="month" id="month">月
+              <label class="ui-label required"><span class="ui-form-required">*</span>当前职务</label>
+              <input class="ui-input w300" type="text" value="" name="position" id="position">
             </div>
             <div class="ui-form-item">
-              <label class="ui-label">平均月收入</label>
-              <input class="ui-input" type="text" value="" name="income" id="income">
+              <label class="ui-label"><span class="ui-form-required">*</span>现单位工龄</label>
+              <input class="ui-input w40" type="text" value="" name="year" id="years"> 年
+              <input class="ui-input w40" type="text" value="" name="month" id="months"> 个月
             </div>
             <div class="ui-form-item">
-              <label class="ui-label">工作凭证</label>
-              <select name="certificate" id="certificate">
-                <option value="无">
-                  无
-                </option>
-                <option value="有">
-                  有
-                </option>
-              </select>
+              <label class="ui-label"><span class="ui-form-required">*</span>平均月收入</label>
+              <input class="ui-input w80" type="text" value="" name="income" id="income"> 元
             </div>
             <div class="ui-form-item">
-              <label class="ui-label">计划用款</label>
-              <input class="ui-input" type="text" value="" name="amount" id="amount"> 元
+              <label class="ui-label"><span class="ui-form-required">*</span>工作凭证</label>
+              <input type="radio" class="certificate" name="certificate" value="0">无
+              <input type="radio" class="certificate" name="certificate" value="1">有
             </div>
             <div class="ui-form-item">
-              <label class="ui-label">计划用款时间</label>
-              <input class="ui-input" type="text" value="" name="duration" id="duration"> 个月
+              <label class="ui-label"><span class="ui-form-required">*</span>计划用款</label>
+              <input class="ui-input w80" type="text" value="" name="amount" id="amount"> 元
             </div>
             <div class="ui-form-item">
-              <label class="ui-label">借款详情</label>
+              <label class="ui-label"><span class="ui-form-required">*</span>计划用款时间</label>
+              <input class="ui-input w40" type="text" value="" name="duration" id="duration"> 个月
+            </div>
+            <div class="ui-form-item">
+              <label class="ui-label"><span class="ui-form-required">*</span>借款详情</label>
               <textarea class="ui-textarea" name="purpose" id="purpose" rows="6"></textarea>
             </div>
             <div class="ui-form-item">
-              <label class="ui-label">信用说明</label>
-              <textarea class="ui-textarea" name="description" id="description" rows="6"></textarea>
+              <label class="ui-label"><span class="ui-form-required">*</span>信用说明</label>
+              <textarea class="ui-textarea" name="asset_description" id="asset_description" rows="6"></textarea>
             </div>
             </div>
             <div class="ui-form-item">
-              <input name="category" id="category" type="hidden" value="CAR">
-              <input type="submit" class="ui-button ui-button-blue ui-button-mid" value="立即申请">
+              <input type="submit" class="ui-button ui-button-blue ui-button-mid" value="立即申请" id="apply">
             </div>
           </fieldset>
         </form>

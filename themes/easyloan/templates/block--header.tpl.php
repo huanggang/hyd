@@ -18,7 +18,7 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/easyloan.js');
       <div class="grid_7 ui-header-grid">
         <ul class="ui-nav ">
           <li class="ui-nav-item ui-nav-item-x">
-            <a class="ui-nav-item-link rrd-dimgray" href="<?php print $base_url;?>/lend">
+            <a class="ui-nav-item-link rrd-dimgray" href="<?php print $base_url;?>/invest">
               <span>我要投资</span>
             </a>
           </li>
@@ -29,10 +29,10 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/easyloan.js');
             </a>
             <ul class="ui-nav-dropdown ui-nav-dropdown-borrow fn-hide">
               <li class="ui-nav-dropdown-angle"><span></span></li>
-              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/estate">房屋商铺贷</a></li>
-              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/car">机动车贷</a></li>
+              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/estate">房产抵押</a></li>
+              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/car">机动车抵押</a></li>
               <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/gold">黄金抵押</a></li>
-              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/credit">信用贷</a></li>
+              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/credit">信用贷款</a></li>
               <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/borrow/else">其他抵押</a></li>
             </ul>
           </li>

@@ -15,7 +15,7 @@ drupal_add_js($theme_path . '/js/borrow_else.js');
         <form class="ui-form" method="post" id="borrowForm">
           <fieldset>
             <div class="loanboder">
-            <legend>其他物品抵押借款申请</legend>
+            <legend>其他抵押借款申请</legend>
             <div class="ui-form-item">
               <label class="ui-label"><span class="ui-form-required">*</span>借款标题</label>
               <input class="ui-input w300" type="text" value="" name="title" id="title">

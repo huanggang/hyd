@@ -25,3 +25,14 @@ Date.prototype.format = function (fmt){
       fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
   return fmt;
 }
+
+function showTab(tabname){ // to use this function, you must include tab.js
+  if (!$(".ui-tab-item[data-name=" + tabname + "]").hasClass("ui-tab-item-current")){
+    $(".ui-tab-item[data-name=" + tabname + "]").addClass('ui-tab-item-current');
+    $('.ui-tab-item').not(".ui-tab-item[data-name=" + tabname + "]").removeClass('ui-tab-item-current');
+
+    $('div.ui-tab-content').removeClass('ui-tab-content-current').filter(function(index){
+      return tabname == $(this).attr('data-name');
+    }).addClass('ui-tab-content-current');
+  }
+}

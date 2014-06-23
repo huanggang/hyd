@@ -1,12 +1,6 @@
 <?php
-/**
- * @file
- * Returns the HTML for a single Drupal page.
- *
- * Complete documentation for this file is available online.
- * @see https://drupal.org/node/1728148
- */
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/list.css');
+
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/list.js');
 ?>
 <div class="pg-invest-list" id="pg-loan-list">
@@ -132,7 +126,7 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/list.js');
             </li>
             <li class="ui-list-item fn-clear ">
               <span class="ui-list-field fn-left text-big w200 pr20">
-                <a class="fn-left w80 rrd-dimgray fn-text-overflow" href="./lend/10001" target="_blank" title="资金周转">资金周转</a>
+                <a class="fn-left w80 rrd-dimgray fn-text-overflow" href="./invest/10001" target="_blank" title="资金周转">资金周转</a>
               </span>
               <span class="ui-list-field fn-left w80">房产商铺</span>
               <span class="ui-list-field fn-left w110">一次性还本付息</span>
@@ -196,7 +190,7 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/list.js');
             </li>
             <li class="ui-list-item fn-clear ">
               <span class="ui-list-field fn-left text-big w200 pr20">
-                <a class="fn-left w80 rrd-dimgray fn-text-overflow" href="./lend/10001" target="_blank" title="资金周转">资金周转</a>
+                <a class="fn-left w80 rrd-dimgray fn-text-overflow" href="./invest/10001" target="_blank" title="资金周转">资金周转</a>
               </span>
               <span class="ui-list-field fn-left w80">房产商铺</span>
               <span class="ui-list-field fn-left w110">一次性还本付息</span>
@@ -260,7 +254,7 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/list.js');
             </li>
             <li class="ui-list-item fn-clear ">
               <span class="ui-list-field fn-left text-big w200 pr20">
-                <a class="fn-left w80 rrd-dimgray fn-text-overflow" href="./lend/10001" target="_blank" title="资金周转">资金周转</a>
+                <a class="fn-left w80 rrd-dimgray fn-text-overflow" href="./invest/10001" target="_blank" title="资金周转">资金周转</a>
               </span>
               <span class="ui-list-field fn-left w80">房产商铺</span>
               <span class="ui-list-field fn-left w110">一次性还本付息</span>

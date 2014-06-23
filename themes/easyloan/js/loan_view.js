@@ -43,7 +43,7 @@
                     break;
                 }
                 $('#category').text(category);
-                $('#title').text(d.title);
+                $('#title').html('<a href="loanapp_view#id=' + d.id + '">' + d.title + '</a>');
                 $('#amount').text(d.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 $('#interest').text(d.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 $('#rate').text((d.rate * 100).toFixed(2));

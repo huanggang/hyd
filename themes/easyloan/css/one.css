@@ -1058,6 +1058,10 @@ background:#fff;
 border:1px solid #e0e0e0;
 }
 
+.ui-box-gray-bg {
+    background: none repeat scroll 0 0 #f3f3f3;
+}
+
 .ui-box-title {
 height:58px;
 line-height:58px;
@@ -3147,6 +3151,14 @@ width:18px;
 height:18px;
 background:url(../images/icon-content.png) no-repeat;
 vertical-align:middle;
+}
+
+.icon-check-checked {
+    background-position: -30px 0;
+}
+
+.icon-check-unchecked {
+    background-position: 0 0;
 }
 
 .icon-circle-checked {

@@ -6,13 +6,15 @@
  * Complete documentation for this file is available online.
  * @see https://drupal.org/node/1728148
  */
+global $user;
+
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/prod.css');
 ?>
 <div id="pg-borrow-prod">
     <div class="container_12">
       <div class="grid_12">
         <div class="info-list">
-          <h1 class="h3 bg-green">信用贷</h1> 
+          <h1 class="h3 bg-green">信用贷款</h1> 
 
           <div class="info-list-condition border-bt">
             <h2 class="h4 mb15">申请条件</h2>
@@ -22,7 +24,7 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/prod.css');
               <li><i></i>月收入2000以上</li>
             </ul>
             <div class="review-button">
-              <a href="credit/apply" class="ui-button ui-button-green ui-button-mid">立即申请</a>
+              <a href="<?php if($user->uid > 0) print "credit/apply"; else print "/user/login"; ?>" class="ui-button ui-button-green ui-button-mid">立即申请</a>
             </div>
           </div>
           <div class="info-list-way border-bt">
@@ -65,7 +67,7 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/prod.css');
             </ul>
           </div>
           <div class="review-button">
-            <a href="credit/apply" class="ui-button ui-button-green ui-button-mid">立即申请</a>
+            <a href="<?php if($user->uid > 0) print "credit/apply"; else print "/user/login"; ?>" class="ui-button ui-button-green ui-button-mid">立即申请</a>
           </div>
         </div>
       </div>

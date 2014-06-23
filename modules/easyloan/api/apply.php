@@ -231,7 +231,7 @@ function apply(){
       $years = str2int($_POST["years"], 0);
       $months = str2int($_POST["months"], 0);
       $income = str2int($_POST["income"], 0);
-      if ($income <= 2000)
+      if ($income < 2000)
       {
         echo "{\"result\":0}";
         exit;

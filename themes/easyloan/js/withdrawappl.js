@@ -39,11 +39,11 @@
         }
 
         if (type == 1){ // show tab 1
-          $(".ui-tab-item[data-name=checking]").click();
+          showTab("checking");
         }
         else { // show tab 2
           type = 2;
-          $(".ui-tab-item[data-name=checked]").click();
+          showTab("checked");
         }
 
         $.getJSON( Drupal.settings.basePath + "api/m_withdraws?type=" + type + "&page=" + page, 
@@ -53,7 +53,7 @@
             var pagination = '<ul>';
             if (page == 1){
               var total = d.total;
-              var total_pages = total == 0 ? 0 : Math.round(total / per_page) + 1;
+              var total_pages = total == 0 ? 0 : Math.floor((total - 1) / per_page) + 1;
               if (type == 1){
                 total_1 = total;
                 total_pages_1 = total_pages;

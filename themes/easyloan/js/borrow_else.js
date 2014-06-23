@@ -82,7 +82,7 @@
 
           $.post(Drupal.settings.basePath + "api/apply", 
             {
-              category: 4,
+              category: 5,
               title: $('#title').val(),
               amount: $('#amount').val(),
               duration: $('#duration').val(),

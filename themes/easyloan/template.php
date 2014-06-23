@@ -87,12 +87,12 @@ function easyloan_theme() {
     'guide-security' => array(
         'path'     => $path . '/guide',
         'template' => 'security',),
-    'lend' => array(
+    'invest' => array(
         'path'     => $path,
-        'template' => 'lend',),
-    'lend-detail' => array(
+        'template' => 'invest',),
+    'invest-detail' => array(
         'path'     => $path,
-        'template' => 'lend-detail',),
+        'template' => 'invest-detail',),
     'notfound' => array(
         'path'     => $path,
         'template' => 'notfound',),
@@ -198,6 +198,9 @@ function easyloan_theme() {
     'management-investments' => array(
         'path'     => $path . '/account',
         'template' => 'management-investments',),
+    'management-investment-set' => array(
+        'path'     => $path . '/account',
+        'template' => 'management-investment-set',),
     );
 }
 

@@ -6,6 +6,8 @@
  * Complete documentation for this file is available online. 
  * @see https://drupal.org/node/1728148 
  */
+global $user;
+
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/products.css');
 ?>
 <div id="pg-products">
@@ -16,7 +18,7 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/products.css');
             <h1 class="h3">好易贷借款 - 产品介绍</h1>
             <div class="fn-clear products-list">
               <div class="fn-left products-team borrow bg-bule">
-                <h2 class="h4">房屋商铺抵押</h2>
+                <h2 class="h4">房产抵押</h2>
                 <div class="content-padding">
                   <p class="h4">适用有房产的人</p>
                   <h3 class="h6">申请条件</h3>
@@ -29,7 +31,7 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/products.css');
                     <a href="borrow/estate" target="_blank">查看详细信息</a>
                     <br>
                     <p class="text-center">
-                      <a class="ui-button ui-button-blue ui-button-mid w70" href="borrow/estate/apply">立即申请</a>
+                      <a class="ui-button ui-button-blue ui-button-mid w70" href="<?php if($user->uid > 0) print "borrow/estate/apply"; else print "/user/login"; ?>">立即申请</a>
                     </p>
                   </div>
                 </div>
@@ -47,7 +49,7 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/products.css');
                     <a href="borrow/car" target="_blank">查看详细信息</a>
                     <br>
                     <p class="text-center">
-                      <a class="ui-button ui-button-blue ui-button-mid w70" href="borrow/car/apply">立即申请</a>
+                      <a class="ui-button ui-button-blue ui-button-mid w70" href="<?php if($user->uid > 0) print "borrow/car/apply"; else print "/user/login"; ?>">立即申请</a>
                     </p>
                   </div>
                 </div>
@@ -65,13 +67,13 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/products.css');
                     <a href="borrow/gold" target="_blank">查看详细信息</a>
                     <br>
                     <p class="text-center">
-                      <a class="ui-button ui-button-blue ui-button-mid w70" href="borrow/gold/apply">立即申请</a>
+                      <a class="ui-button ui-button-blue ui-button-mid w70" href="<?php if($user->uid > 0) print "borrow/gold/apply"; else print "/user/login"; ?>">立即申请</a>
                     </p>
                   </div>
                 </div>
               </div>
               <div class="fn-left products-team borrow bg-green">
-                <h2 class="h4">信用贷</h2>
+                <h2 class="h4">信用贷款</h2>
                 <div class="content-padding">
                   <p class="h4">适用工薪阶层</p>
                   <h3 class="h6">申请条件</h3>
@@ -83,7 +85,7 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/products.css');
                     <a href="borrow/credit" target="_blank">查看详细信息</a>
                     <br>
                     <p class="text-center">
-                      <a class="ui-button ui-button-blue ui-button-mid w70" href="borrow/credit/apply">立即申请</a>
+                      <a class="ui-button ui-button-blue ui-button-mid w70" href="<?php if($user->uid > 0) print "borrow/credit/apply"; else print "/user/login"; ?>">立即申请</a>
                     </p>
                   </div>
                 </div>
@@ -102,7 +104,7 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/products.css');
                     <a href="borrow/else" target="_blank">查看详细信息</a>
                     <br>
                     <p class="text-center">
-                      <a class="ui-button ui-button-blue ui-button-mid w70" href="borrow/else/apply">立即申请</a>
+                      <a class="ui-button ui-button-blue ui-button-mid w70" href="<?php if($user->uid > 0) print "borrow/else/apply"; else print "/user/login"; ?>">立即申请</a>
                     </p>
                   </div>
                 </div>

@@ -14,7 +14,7 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/prod.css');
   <div class="container_12">
     <div class="grid_12">
       <div class="info-list">
-        <h1 class="h3 bg-blue">房屋商铺抵押</h1> 
+        <h1 class="h3 bg-blue">房产抵押</h1> 
 
         <div class="info-list-condition border-bt">
           <h2 class="h4 mb15">申请条件</h2>

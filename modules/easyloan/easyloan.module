@@ -25,6 +25,24 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/investment'] = array(
+    'page callback'   => 'investment', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/investment.php',
+  );
+  $items['api/m_set_investment'] = array(
+    'page callback'   => 'manage_set_investment', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_set_investment.php',
+  );
+  $items['api/m_investments'] = array(
+    'page callback'   => 'manage_investments', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_investments.php',
+  );
   $items['api/m_set_loan'] = array(
     'page callback'   => 'manage_set_loan', 
     'access callback' => 'authenticated_access',
@@ -130,10 +148,10 @@ function easyloan_menu() {
 
 
   // real menus
-  $items['lend'] = array(
+  $items['invest'] = array(
     'title'           => t('我要投资'), 
-    'page callback'   => 'menu_lend', 
-    'page arguments'  => array(1), // if of the lending page
+    'page callback'   => 'menu_invest', 
+    'page arguments'  => array(1), // if of the investing page
     'access callback' => TRUE, 
     'type'            => MENU_NORMAL_ITEM, 
   );
@@ -388,7 +406,7 @@ function easyloan_menu() {
   $items['management/investments'] = array( 
     'title'           => t('投资产品'), 
     'page callback'   => 'menu_callback', 
-    'page arguments'  => array('management_investments'),
+    'page arguments'  => array('management_investments', 2),
     'access arguments' => array('manager permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
@@ -714,7 +732,11 @@ function menu_callback($menu, $param = ''){
     case 'management_withdrawappl':
       return theme('management-withdrawappl', $content);
     case 'management_investments':
-      return theme('management-investments', $content);
+      if ($param=='set'){
+        return theme('management-investment-set', $content);
+      } else {
+        return theme('management-investments', $content);
+      }
     case 'account_invest':
       return theme('account-invest', $content);
     case 'account_investplan':
@@ -842,12 +864,12 @@ function menu_borrow(){ return theme('borrow', array());}
 
 function menu_notfound(){ return theme('notfound', array());}
 
-function menu_lend($lendid = ''){ 
-  if (isset($lendid) && is_numeric($lendid)){
-    // $content['easyloan_id'] = $lendid; 
-    return theme('lend-detail', array());
+function menu_invest($investmentid = ''){ 
+  if (isset($investmentid) && is_numeric($investmentid)){
+    // $content['easyloan_id'] = $investmentid; 
+    return theme('invest-detail', array());
   }
-  return theme('lend', array());
+  return theme('invest', array());
 }
 
 function easyloan_menu_tree__menu_account_second($variables){
