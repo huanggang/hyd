@@ -43,14 +43,14 @@
         }
 
         if (type == 1){ // show tab 1
-          showTab("notyet");
+          Drupal.behaviors.utils.showTab("notyet");
         }
         else if (type == 2){ // show tab 2
-          showTab("investing");
+          Drupal.behaviors.utils.showTab("investing");
         }
         else { // show tab 3
           type = 3;
-          showTab("finished");
+          Drupal.behaviors.utils.showTab("finished");
         }
 
         $.getJSON( Drupal.settings.basePath + "api/m_investments?type=" + type + "&page=" + page, 

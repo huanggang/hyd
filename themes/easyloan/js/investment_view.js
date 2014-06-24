@@ -41,7 +41,14 @@
                   $('#no_fine').show();
                 }
                 if (d.is_done == null) {// not start yet
+                  $('#is_apply').show();
+                  var progress = (d.investment / d.amount * 100).toFixed(0);
+                  $('#apply_progress_1').attr("style", "width: " + progress + "%");
+                  $('#apply_progress_2').text(progress + "%");
 
+                  $('#panel_invest').show();
+                  $('#invest_left').text("￥" + (d.amount - d.investment).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")).attr("data-amount", (d.amount - d.investment).toFixed(0));
+                  
                 }
                 else if (d.is_done == 0){ // start, but not finished
 

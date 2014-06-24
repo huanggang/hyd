@@ -68,16 +68,11 @@ drupal_add_js($theme_path . '/js/investment_view.js');
               </li>
               <li class="fn-clear basic-progress pt25" id="is_apply" style="display:none">
                 <span class="fn-left basic-label w70">投标进度</span>
-                <span id="apply_progress">
+                <span>
                   <span class="fn-left basic-progress-bg">
-                    <b style="width: 39%" class="basic-percent"></b>
+                    <b style="width: 39%" class="basic-percent" id="apply_progress_1"></b>
                   </span>
-                  <span class="fn-left basic-progress-value"><em>39%</em></span>
-                </span>
-                <span class="fn-left basic-progress-time">剩余时间
-                  <span id="apply_lefttime">
-                    <em class="value">6</em>天<em class="value">23</em>时<em class="value">58</em>分
-                  </span>
+                  <span class="fn-left basic-progress-value"><em id="apply_progress_2">39%</em></span>
                 </span>
               </li>
               <li class="fn-clear" style="display:none" id="is_overdue">

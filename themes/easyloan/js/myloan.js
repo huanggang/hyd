@@ -70,11 +70,11 @@
         }
 
         if (type == 2){ // show tab 1
-          showTab("loan");
+          Drupal.behaviors.utils.showTab("loan");
         }
         else { // show tab 2
           type = 3;
-          showTab("loanapp");
+          Drupal.behaviors.utils.showTab("loanapp");
         }
 
         $.getJSON( Drupal.settings.basePath + "api/loans?type=" + type + "&page=" + page, 

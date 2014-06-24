@@ -43,14 +43,14 @@
         }
 
         if (type == 1){ // show tab 1
-          showTab("notyet");
+          Drupal.behaviors.utils.showTab("notyet");
         }
         else if (type == 2){ // show tab 2
-          showTab("lending");
+          Drupal.behaviors.utils.showTab("lending");
         }
         else { // show tab 3
           type = 3;
-          showTab("finished");
+          Drupal.behaviors.utils.showTab("finished");
         }
 
         $.getJSON( Drupal.settings.basePath + "api/m_loans?type=" + type + "&page=" + page, 

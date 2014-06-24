@@ -6,7 +6,7 @@ function map_id_name(jsons, id){
     }
   }
   return '';
-}
+};
 
 Date.prototype.format = function (fmt){
   var o = {
@@ -24,15 +24,21 @@ Date.prototype.format = function (fmt){
     if(new RegExp("("+ k +")").test(fmt))
       fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
   return fmt;
-}
+};
 
-function showTab(tabname){ // to use this function, you must include tab.js
-  if (!$(".ui-tab-item[data-name=" + tabname + "]").hasClass("ui-tab-item-current")){
-    $(".ui-tab-item[data-name=" + tabname + "]").addClass('ui-tab-item-current');
-    $('.ui-tab-item').not(".ui-tab-item[data-name=" + tabname + "]").removeClass('ui-tab-item-current');
+(function ($, Drupal, window, document, undefined) {
 
-    $('div.ui-tab-content').removeClass('ui-tab-content-current').filter(function(index){
-      return tabname == $(this).attr('data-name');
-    }).addClass('ui-tab-content-current');
-  }
-}
+  Drupal.behaviors.utils = {
+
+    showTab: function (tabname){ // to use this function, you must include tab.js
+      if (!$(".ui-tab-item[data-name=" + tabname + "]").hasClass("ui-tab-item-current")){
+        $(".ui-tab-item[data-name=" + tabname + "]").addClass('ui-tab-item-current');
+        $('.ui-tab-item').not(".ui-tab-item[data-name=" + tabname + "]").removeClass('ui-tab-item-current');
+
+        $('div.ui-tab-content').removeClass('ui-tab-content-current').filter(function(index){
+          return tabname == $(this).attr('data-name');
+        }).addClass('ui-tab-content-current');
+      }
+    }
+  };
+})(jQuery, Drupal, this, this.document);

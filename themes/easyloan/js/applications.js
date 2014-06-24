@@ -41,11 +41,11 @@
         }
 
         if (type == 1){ // show tab 1
-          showTab("checking");
+          Drupal.behaviors.utils.showTab("checking");
         }
         else { // show tab 2
           type = 2;
-          showTab("checked");
+          Drupal.behaviors.utils.showTab("checked");
         }
 
         $.getJSON( Drupal.settings.basePath + "api/m_loan_applications?type=" + type + "&page=" + page, 
