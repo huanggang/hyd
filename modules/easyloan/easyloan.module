@@ -27,7 +27,7 @@ function easyloan_menu() {
   // api function calls
   $items['api/investment'] = array(
     'page callback'   => 'investment', 
-    'access callback' => 'authenticated_access',
+    'access callback' => TRUE,
     'type'            => MENU_NORMAL_ITEM, 
     'file'            => 'api/investment.php',
   );
