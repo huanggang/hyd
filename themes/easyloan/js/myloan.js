@@ -112,7 +112,7 @@
                                   + cats[w.category] + w.title + '</a>'))
                             .append(span.clone().addClass('w85 ph5 text-right').append(w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
                             .append(span.clone().addClass('w85 ph5 text-right').append(w.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
-                            .append(span.clone().addClass('w55 ph5 text-right').append((w.rate * 100).toFixed(2)))
+                            .append(span.clone().addClass('w55 ph5 text-right').append((w.rate * 100).toFixed(2) + '%'))
                             .append(span.clone().addClass('w30 ph5 text-right').append(w.duration.toFixed(0)))
                             .append(span.clone().addClass('w80 ph5 text-center').append(w.start.slice(0, 10)))
                             .append(span.clone().addClass('w80 ph5 text-center').append(w.end.slice(0, 10)))
