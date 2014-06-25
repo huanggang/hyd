@@ -5,12 +5,13 @@
 
       var max_pages = 50;
       var per_page = 20;
-      
-      var current_page_type_2 = 1;
-      var current_page_type_3 = 1;
-      
       var cats = ['','(房产) ','(机车) ','(黄金) ','(信用) ','(其他) '];
-
+      
+      var status_li = $('<li />').addClass('ui-list-status');
+      var status_p = $('<p />').addClass('color-gray-text');
+      var loading = status_li.clone().append(status_p.clone().append('加载中...'));
+      var empty = status_li.clone().append(status_p.clone().append('没有记录'));
+      
       $.getJSON( Drupal.settings.basePath + "api/loans", 
         function(d) {
           if (d.result == 0){
@@ -85,42 +86,42 @@
         }
         if (type == 2){ // show tab 1
           Drupal.behaviors.utils.showTab("loan");
-          current_page_type_2 = page;
         }
         else { // show tab 2
           type = 3;
           Drupal.behaviors.utils.showTab("loanapp");
-          current_page_type_3 = page;
         }
+        var list = '#loan-list-' + type;
 
+        var header = $(list).children().get(0);
+        $(list).empty().append(header).append(loading);
+        
         var targetUrl = Drupal.settings.basePath + "api/loans?type=" + type + "&page=" + page;
-
         $.getJSON( targetUrl)
         .done(function(d) {
             var total = d.total;
-            
             if (total > 0){
               var max_items_count = max_pages * per_page;
               total = total < max_items_count ? total : max_items_count;
 
               $("#loan-list-pagination-" + type).pagination('updateItems', total); 
-              $('#loan-total-'+type).html(total).parent().show();
+              
             } else {
               // if no total got, check the page for the previous value
               total = $('#loan-total-'+type).html() - 0;
             }
+
+            $('#loan-total-'+type).html(total).parent().show();
 
             // if the page required is beyond the max available page number, just show the 1st page
             var max_page_available = (total == 0 ? 0 : Math.floor((total - 1) / per_page) + 1);
             page = page > max_page_available ? 1 : page;
             
             $("#loan-list-pagination-" + type).pagination('selectPage', page);
-
+            
+            $(list).empty().append(header);
             if (type == 2){ // loans 
-              var header = $('#loan-list-2').children().get(0);
-
               if(d.loans.length > 0){
-                $('#loan-list-2').empty().append(header);
                 for (var i = 0; i <= d.loans.length - 1; i++) {
                   var w = d.loans[i];
                   var li = $('<li/>').addClass('ui-list-item text fn-clear');
@@ -139,14 +140,14 @@
                   if (i % 2 == 0){
                     row.addClass('dark');
                   }
-                  row.appendTo('#loan-list-2');
+                  row.appendTo(list);
                 }
+              } else {
+                // no results
+                $(list).append(empty);
               }
             } else {
-              var header = $('#loan-list-3').children().get(0);
               if(d.applications.length > 0){
-                $('#loan-list-3').empty().append(header);
-
                 for (var i = 0; i <= d.applications.length - 1; i++) {
                   var w = d.applications[i];
                   var li = $('<li/>').addClass('ui-list-item text fn-clear');
@@ -164,8 +165,11 @@
                   if (i % 2 == 0){
                     row.addClass('dark');
                   }
-                  row.appendTo('#loan-list-3');
+                  row.appendTo(list);
                 }
+              } else {
+                // no results
+                $(list).append(empty);
               }
             }
         })
@@ -179,6 +183,7 @@
 
       $(".ui-tab-item[data-name=loan]").click(function(event){
         if (window.location.hash.indexOf("#type=2") < 0 && window.location.hash != ""){
+          var current_page_type_2 = $("#loan-list-pagination-2").pagination('getCurrentPage');
           if (current_page_type_2 > 1){
             window.location.hash = "#type=2&page=" + current_page_type_2;  
           } else {
@@ -188,6 +193,7 @@
       });
       $(".ui-tab-item[data-name=loanapp]").click(function(event){
         if (window.location.hash.indexOf("#type=3") < 0) {
+          var current_page_type_3 = $("#loan-list-pagination-3").pagination('getCurrentPage');
           if (current_page_type_3 > 1){
             window.location.hash = "#type=3&page=" + current_page_type_3;  
           } else {
