@@ -125,7 +125,7 @@
               }
             } else {
               var header = $('#loan-list-3').children().get(0);
-              if(d.loans.length > 0){
+              if(d.applications.length > 0){
                 $('#loan-list-3').empty().append(header);
 
                 for (var i = 0; i <= d.applications.length - 1; i++) {
