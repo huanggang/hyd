@@ -467,21 +467,23 @@ function easyloan_enable() {
 			'visibility' => 2,	// 1: listed pages; 2: show PHP code 
 			'status'     => 1, 
 			'title'      => '<none>',
-			'pages'      => '<?php 
-$m = FALSE;
-$types = array("notice"=>1, "news"=>1, );
-$url = request_uri();
+			'pages'      => '<?php
 if ((arg(0) == "node") && is_numeric(arg(1))) {
-$node = node_load(arg(1));
-	if (isset(types[$node->type])){
-		$m = TRUE;
-	}
+    $node = node_load(arg(1));
+    if ($node->type=="notice" || $node->type=="news"){
+      return true;
+    }
 }
-// block is invisible on URLs entered here 
-if (strpos($url, "about/notices")) {
-	$m = TRUE;
+$url = request_uri();
+if (strpos($url, "about/company") > 0 
+  ||strpos($url, "about/news") > 0 
+  ||strpos($url, "about/notices") > 0 
+  ||strpos($url, "about/invite") > 0 
+  ||strpos($url, "about/contact") > 0 
+) {
+	return true;
 }
-return $m;
+return false;
 ?>',
 			'cache'      => DRUPAL_CACHE_GLOBAL, // 8 is for DRUPAL_CACHE_GLOBAL
 	    ))
