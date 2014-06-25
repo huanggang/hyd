@@ -3,6 +3,8 @@
   Drupal.behaviors.myloan = {
     attach: function(context, settings){
 
+      var max_pages = 50;
+      
       var cats = ['','(房产) ','(机车) ','(黄金) ','(信用) ','(其他) '];
 
       $.getJSON( Drupal.settings.basePath + "api/loans", 
