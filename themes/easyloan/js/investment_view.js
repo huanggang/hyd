@@ -44,7 +44,7 @@
                   $('#has_overdue').show();
                   $('#fine').text(d.fine.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 }
-                if ( true || d.is_done == null) {// not start yet
+                if (d.is_done == null) {// not start yet
                   $('#is_apply').show();
                   var progress = (d.investment / d.amount * 100).toFixed(0); progress = 89;
                   $('#apply_progress_1').attr("style", "width: " + progress + "%");
@@ -114,6 +114,52 @@
                         if (left % d.step == 0){
                           $('#invest_error').text("").hide();
                           // submit invest-request
+                          $.getJSON( Drupal.settings.basePath + "api/invest?id="+id+"&amount="+v, 
+                            function(d) {
+                              if (d.result != null && d.result == 0){
+                                if (d.message != null){
+                                  if (d.message == 'DB write failure') {
+                                    alert('投资失败，请重试。');
+                                    location.reload();
+                                  }
+                                  else if (d.message == 'Invalid investing amount of money') {
+                                    alert('投资金额有误，请重试。');
+                                    location.reload();
+                                  }
+                                  else if (d.message == 'Investment closed for investing'){
+                                    alert('投资已结束，请投资其他项目。');
+                                    window.location.href = Drupal.settings.basePath + 'invest';
+                                  }
+                                  else if (d.message == 'Insufficient money'){
+                                    alert('账户余额不足，请充值。');
+                                    window.location.href = Drupal.settings.basePath + 'capital_management/recharge';
+                                  }
+                                  else if (d.message == 'Unfinished loan') {
+                                    alert('尚有未还清借款，不可投资。');
+                                    window.location.href = Drupal.settings.basePath + 'loan_management';
+                                  }
+                                  else if (d.message == 'Under processing loan application') {
+                                    alert('尚有借款申请，不可投资。');
+                                    window.location.href = Drupal.settings.basePath + 'loan_management#type=2';
+                                  }
+                                  else if (d.message == 'Overtime'){
+                                    alert('投资时间段（北京时间）: 上午9:00 ~ 晚上11:00。');
+                                    window.location.href = Drupal.settings.basePath + 'invest';
+                                  }
+                                }
+                                else{
+                                  alert('请登录。');
+                                  window.location.href = Drupal.settings.basePath + "user/login";
+                                }
+                              }
+                              else if (d.result != null && d.result == 1) {
+                                window.location.href = Drupal.settings.basePath + "invest_management";
+                              }
+                          })
+                          .fail(function( jqxhr, textStatus, error ) {
+                            var err = textStatus + ", " + error;
+                            alert( "投标出现问题，请重新投标。");
+                          });
 
                         }
                         else{
@@ -173,7 +219,7 @@
 
                 if ($('#borrower').length > 0){
                   if (d.user_id != null && d.user_id > 0){
-                    $('#borrower').html('<a href="/user/' + d.user_id + '" target="blank" title="' + d.name + '">' + d.nick + '</a>').attr("title", d.nick);
+                    $('#borrower').html('<a href="/user/' + d.user_id + '" target="_blank" title="' + d.name + '">' + d.nick + '</a>').attr("title", d.nick);
                   }
                   else {
                     $('#borrower').text(d.nick).attr("title", d.nick);
@@ -217,7 +263,7 @@
                     }
                     html += '"><td><div class="ui-td-bg pl60">' + (i+1) + '</div></td><td><div class="ui-td-bg pl40">';
                     if (inv.user_id != null && inv.user_id > 0){
-                      html += '<a href="/user/' + inv.user_id + '" target="blank" title="' + inv.name + '">' + inv.nick + '</a>';
+                      html += '<a href="/user/' + inv.user_id + '" target="_blank" title="' + inv.name + '">' + inv.nick + '</a>';
                     }
                     else {
                       html += inv.nick;
@@ -234,7 +280,7 @@
           })
           .fail(function( jqxhr, textStatus, error ) {
             var err = textStatus + ", " + error;
-            alert( "获取信息出现问题，请刷新页面。" + err);
+            alert( "获取信息出现问题，请刷新页面。");
           });
         }
 

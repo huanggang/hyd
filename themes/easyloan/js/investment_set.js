@@ -62,8 +62,8 @@
           }
         }
       }
-      $("#app_title").html('<a href="/loan_view#id=' + app_id + '" target="blank" title="' + title + '">' + title + '</a>');
-      $("#app_name").html('<a href="/user/' + user_id + '" target="blank" title="' + nick + '">' + name + '</a>');
+      $("#app_title").html('<a href="/loan_view#id=' + app_id + '" target="_blank" title="' + title + '">' + title + '</a>');
+      $("#app_name").html('<a href="/user/' + user_id + '" target="_blank" title="' + nick + '">' + name + '</a>');
 
       var html = '';
       for (var i = 0; i < repayment_methods.length; i++){

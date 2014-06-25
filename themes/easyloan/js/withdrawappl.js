@@ -167,7 +167,7 @@
                   list += ' dark';
                 }
                 list += '"><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
-                  + w.user_id + '" target="blank">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right';
+                  + w.user_id + '" target="_blank">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right';
                 if (w.is_owned){
                   list += ' red';
                 }
@@ -250,7 +250,7 @@
                   list += ' dark';
                 }
                 list += '"><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
-                  + w.user_id + '" target="blank">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right">'
+                  + w.user_id + '" target="_blank">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right">'
                   + w.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w40 ph5 fn-left text-right">'
                   + w.fee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w100 ph5 fn-left text-center">'
                   + map_id_name(banks, w.bank) + '</span><span class="ui-list-field w180 ph5 fn-left">'

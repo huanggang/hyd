@@ -168,9 +168,9 @@
                 if (i % 2 == 0){
                   list += ' dark';
                 }
-                list += '"><span class="ui-list-field w260 ph5 fn-left" style="display:block;overflow:hidden"><a href="/loanapp_view#id='
-                  + w.app_id + '" target="blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
-                  + w.user_id + '" target="blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">' 
+                list += '"><span class="ui-list-field w260 ph5 fn-left fn-text-overflow"><a href="/loanapp_view#id='
+                  + w.app_id + '" target="_blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
+                  + w.user_id + '" target="_blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">' 
                   + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w30 ph5 fn-left text-right">' 
                   + w.duration.toFixed(0) + '</span><span class="ui-list-field w30 ph5 fn-left">' 
                   + map_id_name(application_status, w.status) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">'
@@ -191,9 +191,9 @@
                 if (i % 2 == 0){
                   list += ' dark';
                 }
-                list += '"><span class="ui-list-field w300 ph5 fn-left" style="display:block;overflow:hidden"><a href="/loanapp_view#id='
-                  + w.app_id + '" target="blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
-                  + w.user_id + '" target="blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">'
+                list += '"><span class="ui-list-field w300 ph5 fn-left fn-text-overflow"><a href="/loanapp_view#id='
+                  + w.app_id + '" target="_blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
+                  + w.user_id + '" target="_blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">'
                   + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w30 ph5 fn-left text-right">'
                   + w.duration.toFixed(0) + '</span><span class="ui-list-field w30 ph5 fn-left">'
                   + map_id_name(application_status, w.status) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">'

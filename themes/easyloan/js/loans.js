@@ -177,16 +177,16 @@
                 if (i % 2 == 0){
                   list += ' dark';
                 }
-                list += '"><span class="ui-list-field w300 ph5 fn-left" style="display:block;overflow:hidden"><a href="/loan_view#id='
-                  + w.app_id + '" target="blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
-                  + w.user_id + '" target="blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">' 
+                list += '"><span class="ui-list-field w300 ph5 fn-left fn-text-overflow"><a href="/loan_view#id='
+                  + w.app_id + '" target="_blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
+                  + w.user_id + '" target="_blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">' 
                   + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w30 ph5 fn-left text-right">' 
                   + w.duration.toFixed(0) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">' 
                   + w.applied.slice(0,10) + '</span><span class="ui-list-field w60 ph5 fn-left text-center">';
                   if (w.comment != null && w.comment.length > 0){
                     list += '<a class="ui-button ui-button-small ui-button-blue comment" data-comment="' + w.comment + '">查看</a>';
                   }
-                  list += '</span><span class="ui-list-field w60 ph5 fn-left text-center"><a href="loans/lend#app_id=' + w.app_id + '&title=' + w.title + '&user_id=' + w.user_id + '&name=' + w.name + '&nick=' + w.nick + '&category=' + w.category + '&amount=' + w.amount + '&duration=' + w.duration + '&applied=' + w.applied + '" class="ui-button ui-button-small ui-button-blue" target="blank">放款</a></span></li>';
+                  list += '</span><span class="ui-list-field w60 ph5 fn-left text-center"><a href="loans/lend#app_id=' + w.app_id + '&title=' + w.title + '&user_id=' + w.user_id + '&name=' + w.name + '&nick=' + w.nick + '&category=' + w.category + '&amount=' + w.amount + '&duration=' + w.duration + '&applied=' + w.applied + '" class="ui-button ui-button-small ui-button-blue" target="_blank">放款</a></span></li>';
               }
               $('#loan-list-1').html(list_title + list);
             }
@@ -198,13 +198,13 @@
                 if (i % 2 == 0){
                   list += ' dark';
                 }
-                list += '"><span class="ui-list-field w195 ph5 fn-left" style="display:block;overflow:hidden"><a href="/loan_view#id='
-                  + w.app_id + '" target="blank" title="' + w.title + '"';
+                list += '"><span class="ui-list-field w195 ph5 fn-left fn-text-overflow"><a href="/loan_view#id='
+                  + w.app_id + '" target="_blank" title="' + w.title + '"';
                 if (w.fine > 0){
                   list += ' style="color:red"';
                 }
                 list += '>' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
-                  + w.user_id + '" target="blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">'
+                  + w.user_id + '" target="_blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">'
                   + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w85 ph5 fn-left text-right">'
                   + w.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w55 ph5 fn-left text-right">'
                   + (w.rate * 100).toFixed(2) + '%</span><span class="ui-list-field w30 ph5 fn-left text-right">'
@@ -222,9 +222,9 @@
                 if (i % 2 == 0){
                   list += ' dark';
                 }
-                list += '"><span class="ui-list-field w195 ph5 fn-left" style="display:block;overflow:hidden"><a href="/loan_view#id='
-                  + w.app_id + '" target="blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
-                  + w.user_id + '" target="blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">'
+                list += '"><span class="ui-list-field w195 ph5 fn-left fn-text-overflow"><a href="/loan_view#id='
+                  + w.app_id + '" target="_blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
+                  + w.user_id + '" target="_blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">'
                   + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w85 ph5 fn-left text-right">'
                   + w.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w55 ph5 fn-left text-right">'
                   + (w.rate * 100).toFixed(2) + '%</span><span class="ui-list-field w30 ph5 fn-left text-right">'
