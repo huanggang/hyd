@@ -98,13 +98,24 @@
         $.getJSON( targetUrl)
         .done(function(d) {
             var total = d.total;
+            
             if (total > 0){
+              var max_items_count = max_pages * per_page;
+              total = total < max_items_count ? total : max_items_count;
+
               $("#loan-list-pagination-" + type).pagination('updateItems', total); 
               $('#loan-total-'+type).html(total).parent().show();
+            } else {
+              // if no total got, check the page for the previous value
+              total = $('#loan-total-'+type).html() - 0;
             }
 
-            var list_title = '';
-            var list = '';
+            // if the page required is beyond the max available page number, just show the 1st page
+            var max_page_available = (total == 0 ? 0 : Math.floor((total - 1) / per_page) + 1);
+            page = page > max_page_available ? 1 : page;
+            
+            $("#loan-list-pagination-" + type).pagination('selectPage', page);
+
             if (type == 2){ // loans 
               var header = $('#loan-list-2').children().get(0);
 
