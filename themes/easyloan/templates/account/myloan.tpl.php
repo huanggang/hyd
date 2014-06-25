@@ -73,11 +73,11 @@ drupal_add_js($theme_path . '/js/myloan.js');
           <span class="ui-list-title w80 ph5 fn-left">到期日期</span>
           <span class="ui-list-title w30 fn-left">还清</span>
         </li>
-        <li class="ui-list-status" id="rowempty2">
+        <li class="ui-list-status fn-hide" id="rowempty2">
           <p class="color-gray-text">没有记录</p>
         </li>
       </ul>
-      <div class="fn-left mt10">共<span id="loan-total-2">0</span>条</div>
+      <div class="fn-left mt10 fn-hide">共<span id="loan-total-2">0</span>条</div>
       <div class="fn-right mt10 ui-pagination simple-pagination" id="loan-list-pagination-2">
       </div>
     </div>
@@ -92,11 +92,11 @@ drupal_add_js($theme_path . '/js/myloan.js');
           <span class="ui-list-title w60 ph5 fn-left">是否结束</span>
           <span class="ui-list-title w80 ph5 fn-left">申请时间</span>
         </li>
-        <li class="ui-list-status" id="rowempty3">
+        <li class="ui-list-status fn-hide" id="rowempty3">
           <p class="color-gray-text">没有记录</p>
         </li>
       </ul>
-      <div class="fn-left mt10">共<span id="loan-total-3">0</span>条</div>
+      <div class="fn-left mt10 fn-hide">共<span id="loan-total-3">0</span>条</div>
       <div class="fn-right mt10 ui-pagination simple-pagination" id="loan-list-pagination-3">
       </div>
     </div>

@@ -4,6 +4,10 @@
     attach: function(context, settings){
 
       var max_pages = 50;
+      var per_page = 20;
+      
+      var current_page_type_2 = 1;
+      var current_page_type_3 = 1;
       
       var cats = ['','(房产) ','(机车) ','(黄金) ','(信用) ','(其他) '];
 
@@ -40,19 +44,19 @@
       page_total2 = page_total2 > 0 ? page_total2 : 0;
       var page_total3 = $('#loan-total-3').html();
       page_total3 = page_total3 > 0 ? page_total3 : 0;
-      
+
       $("#loan-list-pagination-2").pagination({
         items: page_total2,      // total items 
-        itemsOnPage: 2,  // items per page
+        itemsOnPage: per_page,  // items per page
         hrefTextPrefix: '#type=2&page=', 
-        displayedPages:3, 
+        displayedPages:7, 
       }); 
 
       $("#loan-list-pagination-3").pagination({
         items: page_total3,      // total items 
-        itemsOnPage: 2,  // items per page
+        itemsOnPage: per_page,  // items per page
         hrefTextPrefix: '#type=3&page=', 
-        displayedPages:3, 
+        displayedPages:7, 
       });
 
       $(window).bind('hashchange', function(){
@@ -79,31 +83,33 @@
             }
           }
         }
-
         if (type == 2){ // show tab 1
           Drupal.behaviors.utils.showTab("loan");
+          current_page_type_2 = page;
         }
         else { // show tab 2
           type = 3;
           Drupal.behaviors.utils.showTab("loanapp");
+          current_page_type_3 = page;
         }
 
-        $.getJSON( Drupal.settings.basePath + "api/loans?type=" + type + "&page=" + page, 
-          function(d) {
+        var targetUrl = Drupal.settings.basePath + "api/loans?type=" + type + "&page=" + page;
+
+        $.getJSON( targetUrl)
+        .done(function(d) {
             var total = d.total;
             if (total > 0){
               $("#loan-list-pagination-" + type).pagination('updateItems', total); 
-              $('#loan-total-'+type).html(total);
+              $('#loan-total-'+type).html(total).parent().show();
             }
 
-            var list_title = ''; 
-            var list = ''; 
-            if (type == 2){ // loans
+            var list_title = '';
+            var list = '';
+            if (type == 2){ // loans 
               var header = $('#loan-list-2').children().get(0);
 
               if(d.loans.length > 0){
                 $('#loan-list-2').empty().append(header);
-                
                 for (var i = 0; i <= d.loans.length - 1; i++) {
                   var w = d.loans[i];
                   var li = $('<li/>').addClass('ui-list-item text fn-clear');
@@ -156,18 +162,26 @@
           var err = textStatus + ", " + error;
           alert( "获取信息出现问题，请刷新页面。");
         });
-
       });
+
       $(window).trigger('hashchange');
 
       $(".ui-tab-item[data-name=loan]").click(function(event){
-        if (window.location.hash != "#type=2" && window.location.hash != ""){
-          window.location.hash = "#type=2";
+        if (window.location.hash.indexOf("#type=2") < 0 && window.location.hash != ""){
+          if (current_page_type_2 > 1){
+            window.location.hash = "#type=2&page=" + current_page_type_2;  
+          } else {
+            window.location.hash = "#type=2";  
+          }
         }
       });
       $(".ui-tab-item[data-name=loanapp]").click(function(event){
-        if (window.location.hash != "#type=3") {
-          window.location.hash = "#type=3";
+        if (window.location.hash.indexOf("#type=3") < 0) {
+          if (current_page_type_3 > 1){
+            window.location.hash = "#type=3&page=" + current_page_type_3;  
+          } else {
+            window.location.hash = "#type=3";
+          }
         }
       });
     }
