@@ -46,7 +46,7 @@
                 }
                 if (d.is_done == null) {// not start yet
                   $('#is_apply').show();
-                  var progress = (d.investment / d.amount * 100).toFixed(0); progress = 89;
+                  var progress = (d.investment / d.amount * 100).toFixed(0);
                   $('#apply_progress_1').attr("style", "width: " + progress + "%");
                   $('#apply_progress_2').text(progress + "%");
 

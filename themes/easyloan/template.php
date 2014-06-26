@@ -141,9 +141,6 @@ function easyloan_theme() {
         'path'     => $path . '/account',
         'template' => 'capital',),
 
-    'account-invest' => array(
-        'path'     => $path . '/account',
-        'template' => 'invest',),
     'account-investplan' => array(
         'path'     => $path . '/account',
         'template' => 'investplan',), 

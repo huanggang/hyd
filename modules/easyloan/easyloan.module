@@ -25,6 +25,12 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/investments'] = array(
+    'page callback'   => 'investments', 
+    'access callback' => TRUE,
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/investments.php',
+  );
   $items['api/invest'] = array(
     'page callback'   => 'invest', 
     'access callback' => 'authenticated_access',
@@ -743,8 +749,6 @@ function menu_callback($menu, $param = ''){
       } else {
         return theme('management-investments', $content);
       }
-    case 'account_invest':
-      return theme('account-invest', $content);
     case 'account_investplan':
       return theme('account-investplan', $content);
     case 'account_recharge':

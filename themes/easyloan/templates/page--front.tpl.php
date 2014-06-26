@@ -1,15 +1,13 @@
 <?php
-/**
- * @file
- * Returns the HTML for the front page.
- *  var_dump($page['slide']);
- */
-drupal_add_css(drupal_get_path('theme','easyloan') . '/css/index.css');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/bjqs-1.3.js');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/slider.js');
-drupal_add_css(drupal_get_path('theme','easyloan') . '/css/bjqs.css');
 global $base_url;
 
+$theme_path = drupal_get_path('theme','easyloan');
+
+drupal_add_css($theme_path . '/css/index.css');
+drupal_add_css($theme_path . '/css/bjqs.css');
+
+drupal_add_js($theme_path . '/js/bjqs-1.3.js');
+drupal_add_js($theme_path . '/js/slider.js');
 ?>
 <div class="pg-container color-white-bg">
   <?php print render($page['header']); ?>

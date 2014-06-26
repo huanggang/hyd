@@ -14,16 +14,15 @@
 
 
 // To understand behaviors, see https://drupal.org/node/756722#behaviors
-Drupal.behaviors.account = {
-  attach: function(context, settings) {
+Drupal.behaviors.list = {
+  
+    init: function(){
 
-  	// remove those parent menu's link 
-  	$('li.ui-filter-tag').click(function(){
-  		$(this).siblings().removeClass('active').find('input[checked]').attr('checked', null).end().end()
-  			.addClass('active').find('input').attr('checked', 'checked');
-	});
-  }
-};
-
-
+      // remove those parent menu's link 
+      $('li.ui-filter-tag').click(function(){
+        $(this).siblings().removeClass('active').find('input[checked]').attr('checked', null).end().end()
+          .addClass('active').find('input').attr('checked', 'checked');
+      });
+    }
+  };
 })(jQuery, Drupal, this, this.document);

@@ -106,10 +106,13 @@
         $(list).empty().append(header).append(loading);
         
         var targetUrl = Drupal.settings.basePath + "api/loans?type=" + type + "&page=" + page;
-        $.getJSON( targetUrl)
-        .done(function(d) {
-            var total = d.total;
-            if (total > 0){
+        $.getJSON( targetUrl).done(function(d) {
+          if (d.result == 0){
+            alert( "获取信息出现问题，请刷新页面。");
+          }
+          else {
+            if (page == 1){
+              var total = d.total;
               $("#loan-list-pagination-" + type).pagination('updateItems', total < max_items ? total : max_items); 
               $('#loan-total-'+type).html(total).parent().show();
             }
@@ -169,6 +172,7 @@
                 $(list).append(empty);
               }
             }
+          }
         })
         .fail(function( jqxhr, textStatus, error ) {
           var err = textStatus + ", " + error;
