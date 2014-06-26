@@ -5,7 +5,8 @@
 
       var max_pages = 50;
       var per_page = 20;
-      var show_pages_mid = 7;
+      var display_pages = 7;
+      var max_items = max_pages * per_page;
 
       var cats = ['','(房产) ','(机车) ','(黄金) ','(信用) ','(其他) '];
       
@@ -43,23 +44,18 @@
         alert( "获取信息出现问题，请刷新页面。");
       });
 
-      var page_total2 = $('#loan-total-2').html();
-      page_total2 = page_total2 > 0 ? page_total2 : 0;
-      var page_total3 = $('#loan-total-3').html();
-      page_total3 = page_total3 > 0 ? page_total3 : 0;
-
       $("#loan-list-pagination-2").pagination({
-        items: page_total2,      // total items 
+        items: 0,      // total items 
         itemsOnPage: per_page,  // items per page
         hrefTextPrefix: '#type=2&page=', 
-        displayedPages:7, 
+        displayedPages: display_pages, 
       }); 
 
       $("#loan-list-pagination-3").pagination({
-        items: page_total3,      // total items 
+        items: 0,      // total items 
         itemsOnPage: per_page,  // items per page
         hrefTextPrefix: '#type=3&page=', 
-        displayedPages:7, 
+        displayedPages: display_pages, 
       });
 
       $(window).bind('hashchange', function(){
@@ -85,6 +81,17 @@
               }
             }
           }
+          var pagesCount = $("#loan-list-pagination-" + type).pagination('getPagesCount');
+          if (page > 1){
+            if (pagesCount > 0){
+              if (page > pagesCount) {
+                page = pagesCount;
+              }
+            }
+            else{
+              page = 1;
+            }
+          }
         }
         if (type == 2){ // show tab 1
           Drupal.behaviors.utils.showTab("loan");
@@ -103,22 +110,10 @@
         .done(function(d) {
             var total = d.total;
             if (total > 0){
-              var max_items_count = max_pages * per_page;
-              total = total < max_items_count ? total : max_items_count;
-
-              $("#loan-list-pagination-" + type).pagination('updateItems', total); 
-              
-            } else {
-              // if no total got, check the page for the previous value
-              total = $('#loan-total-'+type).html() - 0;
+              $("#loan-list-pagination-" + type).pagination('updateItems', total < max_items ? total : max_items); 
+              $('#loan-total-'+type).html(total).parent().show();
             }
 
-            $('#loan-total-'+type).html(total).parent().show();
-
-            // if the page required is beyond the max available page number, just show the 1st page
-            var max_page_available = (total == 0 ? 0 : Math.floor((total - 1) / per_page) + 1);
-            page = page > max_page_available ? 1 : page;
-            
             $("#loan-list-pagination-" + type).pagination('selectPage', page);
             
             $(list).empty().append(header);
