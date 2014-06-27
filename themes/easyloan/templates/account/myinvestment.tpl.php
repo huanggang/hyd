@@ -1,8 +1,15 @@
 <?php
-drupal_add_css(drupal_get_path('theme','easyloan') . '/css/account.css');
-drupal_add_css(drupal_get_path('theme','easyloan') . '/css/tab.css');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/tab.js');
+global $base_url;
+
+$theme_path = drupal_get_path('theme','easyloan');
+
+drupal_add_css($theme_path . '/css/account.css');
+drupal_add_css($theme_path . '/css/tab.css');
+
+drupal_add_js($theme_path . '/js/account.js');
+drupal_add_js($theme_path . '/js/tab.js');
+drupal_add_js($theme_path . '/js/jquery.simplePagination.js');
+drupal_add_js($theme_path . '/js/myinvestment.js');
 ?>
 <div class="p20bs color-orange-bg fn-clear">
   <div class="fn-left box-summary-left">

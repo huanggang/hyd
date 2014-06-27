@@ -25,6 +25,12 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/myinvestments'] = array(
+    'page callback'   => 'myinvestments', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_investments.php',
+  );
   $items['api/investments'] = array(
     'page callback'   => 'investments', 
     'access callback' => TRUE,
@@ -292,7 +298,7 @@ function easyloan_menu() {
   $items['invest_management'] = array(
     'title'           => t('理财管理'), 
     'page callback'   => 'menu_callback', 
-    'page arguments'  => array('account_investplan'),
+    'page arguments'  => array('account_myinvestment'),
     'access callback'   => 'authenticated_access', 
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
@@ -749,8 +755,8 @@ function menu_callback($menu, $param = ''){
       } else {
         return theme('management-investments', $content);
       }
-    case 'account_investplan':
-      return theme('account-investplan', $content);
+    case 'account_myinvestment':
+      return theme('account-myinvestment', $content);
     case 'account_recharge':
       return theme('account-recharge', $content);
     case 'account_withdraw':
