@@ -129,7 +129,7 @@
                     .append(span.clone().addClass('w80 text-center').append(w.start.slice(0, 10)))
                     .append(span.clone().addClass('w80 text-center').append(w.end.slice(0, 10)))
                     .append(span.clone().addClass('w30 text-center').append(progress))
-                    .append(btn.clone().attr('inv_id',w.id).attr('inv_progress',progress).attr('inv_title', cats[w.category] + w.title).attr('amount',w.amount).attr('r_amount',w.r_amount).attr('r_interest',w.r_interest).attr('w_amount',w.w_amount).attr('w_interest',w.w_interest).attr('a_amount',w.a_amount).attr('a_interest',w.a_interest).attr('r_fine',w.r_fine).attr('n_date',w.n_date.slice(0, 10)).attr('n_amount',w.n_amount).attr('n_interest',w.n_interest).attr('w_owned',w.w_owned).attr('w_fine',w.w_fine).attr('rate', (w.rate * 100).toFixed(2)).attr('method',map_id_name(repayment_methods,w.method)).attr('duration',w.duration).attr('start',w.start.slice(0, 10)).attr('end',w.end.slice(0, 10)));
+                    .append(span.clone().addClass('w60 text-center').append(btn.clone().attr('inv_id',w.id).attr('inv_progress',progress).attr('inv_title', cats[w.category] + w.title).attr('amount',w.amount).attr('r_amount',w.r_amount).attr('r_interest',w.r_interest).attr('w_amount',w.w_amount).attr('w_interest',w.w_interest).attr('a_amount',w.a_amount).attr('a_interest',w.a_interest).attr('r_fine',w.r_fine).attr('n_date',w.n_date.slice(0, 10)).attr('n_amount',w.n_amount).attr('n_interest',w.n_interest).attr('w_owned',w.w_owned).attr('w_fine',w.w_fine).attr('rate', (w.rate * 100).toFixed(2)).attr('method',map_id_name(repayment_methods,w.method)).attr('duration',w.duration).attr('start',w.start.slice(0, 10)).attr('end',w.end.slice(0, 10))));
                   if (i % 2 == 0){
                     row.addClass('dark');
                   }
@@ -151,7 +151,7 @@
                     .append(span.clone().addClass('w30 text-right').append(w.duration.toFixed(0)))
                     .append(span.clone().addClass('w80 text-center').append(w.start.slice(0, 10)))
                     .append(span.clone().addClass('w80 text-center').append(w.end.slice(0, 10)))
-                    .append(btn.clone().attr('inv_id',w.id).attr('inv_title', cats[w.category] + w.title).attr('amount',w.amount).attr('r_amount',w.r_amount).attr('r_interest',w.r_interest).attr('a_amount',w.a_amount).attr('a_interest',w.a_interest).attr('r_fine',w.r_fine).attr('rate', (w.rate * 100).toFixed(2)).attr('method',map_id_name(repayment_methods,w.method)).attr('duration',w.duration).attr('start',w.start.slice(0,10)).attr('end',w.end.slice(0,10)).attr('finished',w.finished.slice(0,10)));
+                    .append(span.clone().addClass('w60 text-center').append(btn.clone().attr('inv_id',w.id).attr('inv_title', cats[w.category] + w.title).attr('amount',w.amount).attr('r_amount',w.r_amount).attr('r_interest',w.r_interest).attr('a_amount',w.a_amount).attr('a_interest',w.a_interest).attr('r_fine',w.r_fine).attr('rate', (w.rate * 100).toFixed(2)).attr('method',map_id_name(repayment_methods,w.method)).attr('duration',w.duration).attr('start',w.start.slice(0,10)).attr('end',w.end.slice(0,10)).attr('finished',w.finished.slice(0,10))));
                   if (i % 2 == 0){
                     row.addClass('dark');
                   }

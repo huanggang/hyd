@@ -25,6 +25,18 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/transaction_summary'] = array(
+    'page callback'   => 'transaction_summary', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_transaction_summary.php',
+  );
+  $items['api/transactions'] = array(
+    'page callback'   => 'transactions', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_transactions.php',
+  );
   $items['api/myinvestments'] = array(
     'page callback'   => 'myinvestments', 
     'access callback' => 'authenticated_access',
