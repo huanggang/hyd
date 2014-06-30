@@ -120,23 +120,22 @@
             $("#loan-list-pagination-" + type).pagination('selectPage', page);
             
             $(list).empty().append(header);
+            var li = $('<li/>').addClass('ui-list-item text fn-clear');
+            var span = $('<span />').addClass('ui-list-field fn-left ph5');
+            var a = $('<a />').attr('target', '_blank');
             if (type == 2){ // loans 
               if(d.loans.length > 0){
                 for (var i = 0; i <= d.loans.length - 1; i++) {
                   var w = d.loans[i];
-                  var li = $('<li/>').addClass('ui-list-item text fn-clear');
-                  var span = $('<span />').addClass('ui-list-field fn-left');
                   var row = li.clone()
-                            .append(span.clone().addClass('w220 ph5 fn-text-overflow')
-                                .append('<a href="' + Drupal.settings.basePath + 'loan_view#id=' + w.id + '" target="_blank" title="' + w.title + '">' 
-                                  + cats[w.category] + w.title + '</a>'))
-                            .append(span.clone().addClass('w85 ph5 text-right').append(w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
-                            .append(span.clone().addClass('w85 ph5 text-right').append(w.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
-                            .append(span.clone().addClass('w55 ph5 text-right').append((w.rate * 100).toFixed(2) + '%'))
-                            .append(span.clone().addClass('w30 ph5 text-right').append(w.duration.toFixed(0)))
-                            .append(span.clone().addClass('w80 ph5 text-center').append(w.start.slice(0, 10)))
-                            .append(span.clone().addClass('w80 ph5 text-center').append(w.end.slice(0, 10)))
-                            .append(span.clone().addClass('w30 text-center').append((w.is_done == null ? '' : (w.is_done == 1 ? '是' : '否'))))
+                    .append(span.clone().addClass('w210 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'loan_view#id=' + w.id).attr('title', w.title).append(cats[w.category] + w.title )))
+                    .append(span.clone().addClass('w85 text-right').append(w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w85 text-right').append(w.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w55 text-right').append((w.rate * 100).toFixed(2) + '%'))
+                    .append(span.clone().addClass('w30 text-right').append(w.duration.toFixed(0)))
+                    .append(span.clone().addClass('w80 text-center').append(w.start.slice(0, 10)))
+                    .append(span.clone().addClass('w80 text-center').append(w.end.slice(0, 10)))
+                    .append(span.clone().addClass('w30 text-center').append((w.is_done == null ? '' : (w.is_done == 1 ? '是' : '否'))));
                   if (i % 2 == 0){
                     row.addClass('dark');
                   }
@@ -150,18 +149,14 @@
               if(d.applications.length > 0){
                 for (var i = 0; i <= d.applications.length - 1; i++) {
                   var w = d.applications[i];
-                  var li = $('<li/>').addClass('ui-list-item text fn-clear');
-                  var span = $('<span />').addClass('ui-list-field fn-left ph5');
                   var row = li.clone()
-                            .append(span.clone().addClass('w300 fn-text-overflow')
-                                .append('<a href="' + Drupal.settings.basePath + 'loanapp_view#id=' + w.id + '" target="_blank" title="' + w.title + '">' 
-                                  + cats[w.category] + w.title + '</a>'))
-                            .append(span.clone().addClass('w80 text-right').append(w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
-                            .append(span.clone().addClass('w30 text-right').append(w.duration.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
-                            .append(span.clone().addClass('w60 text-center').append(map_id_name(application_status, w.status)))
-                            .append(span.clone().addClass('w60 text-center').append((w.is_loaned == null ? '' : (w.is_loaned == 1 ? '是' : '否'))))
-                            .append(span.clone().addClass('w60 text-center').append((w.is_done == null ? '' : (w.is_done == 1 ? '是' : '否'))))
-                            .append(span.clone().addClass('w80 text-center').append(w.applied.slice(0, 10)))
+                    .append(span.clone().addClass('w300 fn-text-overflow').append(a.clone().attr('href',Drupal.settings.basePath + 'loanapp_view#id=' + w.id).attr('title',w.title).append(cats[w.category] + w.title)))
+                    .append(span.clone().addClass('w80 text-right').append(w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w30 text-right').append(w.duration.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w60 text-center').append(map_id_name(application_status, w.status)))
+                    .append(span.clone().addClass('w60 text-center').append((w.is_loaned == null ? '' : (w.is_loaned == 1 ? '是' : '否'))))
+                    .append(span.clone().addClass('w60 text-center').append((w.is_done == null ? '' : (w.is_done == 1 ? '是' : '否'))))
+                    .append(span.clone().addClass('w80 text-center').append(w.applied.slice(0, 10)));
                   if (i % 2 == 0){
                     row.addClass('dark');
                   }

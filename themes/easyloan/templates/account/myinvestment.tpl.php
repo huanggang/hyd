@@ -3,95 +3,94 @@ global $base_url;
 
 $theme_path = drupal_get_path('theme','easyloan');
 
-drupal_add_css($theme_path . '/css/account.css');
 drupal_add_css($theme_path . '/css/tab.css');
+drupal_add_css($theme_path . '/css/itemlist.css');
+drupal_add_css($theme_path . '/css/myinvestment.css');
+
+drupal_add_library('system', 'ui.dialog');
 
 drupal_add_js($theme_path . '/js/account.js');
 drupal_add_js($theme_path . '/js/tab.js');
+drupal_add_js($theme_path . '/js/repayment_methods.js');
 drupal_add_js($theme_path . '/js/jquery.simplePagination.js');
+drupal_add_js($theme_path . '/js/utils.js');
 drupal_add_js($theme_path . '/js/myinvestment.js');
 ?>
 <div class="p20bs color-orange-bg fn-clear">
-  <div class="fn-left box-summary-left">
-    <h3 class="text-xl">投资计划已赚总额</h3>
-    <p class="num color-orange-text"><em>0.00</em>元</p>
+  <div class="fn-left box-summary-left w250">
+    <h3 class="text-xl">投资已赚总额</h3>
+    <p class="num color-orange-text"><em id="investment_earnings"></em>元</p>
     <p class="text-small">
-      <span class="pr5">账户总资产</span>
-      <span class="num-s"><em>0.00</em>元</span>
+      <span class="pr5">加权平均年利率</span>
+      <span class="num-s"><em id="investment_rate"></em>%</span>
     </p>
     <p class="text-small">
-      <span class="pr5">平均年收益率</span>
-      <span class="num-s"><em>0.00</em>%</span>
+      <span class="pr5">加权平均投资期限</span>
+      <span class="num-s"><em id="investment_duration"></em>个月</span>
     </p>
   </div>
   <div class="fn-left box-summary-right last">
     <div class="fn-clear mt10 color-dimgray-text">
       <div class="grid_2 alpha">
-        <h5 class="text-big">持有中的投资产品数量</h5>
-        <p class="num-s"><em>0</em>个</p>
+        <h5 class="text-big">持有投资产品数</h5>
+        <p class="num-s"><em id="investment_holdings"></em>个</p>
       </div>
       <div class="grid_2 omega">
-        <h5 class="text-big">已结束的投资产品数量</h5>
-        <p class="num-s"><em>0</em>个</p>
+        <h5 class="text-big">已结束投资产品数</h5>
+        <p class="num-s"><em id="investment_closed"></em>个</p>
       </div>
     </div>
   </div>
 </div>
+
 <div class="mt20">
-  <div class="ui-tab ui-tab-transparent" id="plans-tab">
+  <div class="ui-tab ui-tab-transparent">
     <ul class="ui-tab-items">
       <li class="ui-tab-item ui-tab-item-current" data-name="holding">
-        <a class="ui-tab-item-link">持有中的投资产品</a>
+        <a class="ui-tab-item-link">持有投资产品</a>
       </li>
-      <li class="ui-tab-item" data-name="exited">
-        <a class="ui-tab-item-link">已结束的投资产品</a>
+      <li class="ui-tab-item" data-name="closed">
+        <a class="ui-tab-item-link">已结束投资产品</a>
       </li>
     </ul>
   </div>
+
   <div class="p20bs color-white-bg">
-  <div id="plans-tab-content">
-  <div class="ui-tab-content fn-clear ui-tab-content-current" data-name="holding">
-  <ul class="ui-list ui-list-s" id="holding-list">
-  <li class="ui-list-header color-gray-text fn-clear">
-  <span class="ui-list-title w70 fn-left fn-text-overflow">借款标题</span>
-  <span class="ui-list-title w70 fn-left">抵押类型</span>
-  <span class="ui-list-title w70 fn-left">投资金额</span>
-  <span class="ui-list-title w70 fn-left">预期收益</span>
-  <span class="ui-list-title w70 fn-left">年利率</span>
-  <span class="ui-list-title w70 fn-left">还款方式</span>
-  <span class="ui-list-title w70 fn-left">投资期限</span>
-  <span class="ui-list-title w70 fn-left">成立日期</span>
-  <span class="ui-list-title w70 fn-left">到期日期</span>
-  <span class="ui-list-title w70 fn-left last">进度</span>
-  </li>
+    <div>
+      <div class="ui-tab-content fn-clear ui-tab-content-current" data-name="holding">
+        <ul class="ui-list ui-list-s" id="investment-list-2">
+          <li class="ui-list-header color-gray-text fn-clear">
+            <span class="ui-list-title fn-left w140 ph5">借款标题</span>
+            <span class="ui-list-title fn-left w85 ph5">投资金额</span>
+            <span class="ui-list-title fn-left w85 ph5">预期收益</span>
+            <span class="ui-list-title fn-left w55 ph5">年利率</span>
+            <span class="ui-list-title fn-left w30 ph5">月数</span>
+            <span class="ui-list-title fn-left w80 ph5">成立日期</span>
+            <span class="ui-list-title fn-left w80 ph5">到期日期</span>
+            <span class="ui-list-title fn-left w30 ph5">进度</span>
+            <span class="ui-list-title fn-left w60 ph5"></span>
+          </li>
+        </ul>
+        <div class="fn-left mt10 fn-hide">共<span id="investment-total-2">0</span>条</div>
+        <div class="fn-right mt10 ui-pagination simple-pagination" id="investment-list-pagination-2"></div>
+      </div>
 
-  <li class="ui-list-status">
-  <p class="color-gray-text">没有持有中的投资产品</p>
-  </li>
-
-  </ul>
-  <div class="fn-right mt10" id="holding-list-pagination"></div>
-  </div>
-  <div class="ui-tab-content fn-clear" data-name="exited">
-    <ul class="ui-list ui-list-s" id="exited-list">
-      <li class="ui-list-header color-gray-text fn-clear">
-        <span class="ui-list-title w70 fn-left fn-text-overflow">借款标题</span>
-        <span class="ui-list-title w70 fn-left">抵押类型</span>
-        <span class="ui-list-title w70 fn-left">投资金额</span>
-        <span class="ui-list-title w70 fn-left">已赚金额</span>
-        <span class="ui-list-title w70 fn-left">年利率</span>
-        <span class="ui-list-title w70 fn-left">还款方式</span>
-        <span class="ui-list-title w70 fn-left">投资期限</span>
-        <span class="ui-list-title w70 fn-left">成立日期</span>
-        <span class="ui-list-title w70 fn-left">到期日期</span>
-        <span class="ui-list-title w70 fn-left">结束日期</span>
-      </li>
-      <li class="ui-list-status">
-        <p class="color-gray-text">没有已结束的投资产品</p>
-      </li>
-    </ul>
-    <div class="fn-right mt10" id="exited-list-pagination"></div>
-  </div>
-  </div>
+      <div class="ui-tab-content fn-clear" data-name="closed">
+        <ul class="ui-list ui-list-s" id="investment-list-3">
+          <li class="ui-list-header color-gray-text fn-clear">
+            <span class="ui-list-title fn-left w180 ph5">借款标题</span>
+            <span class="ui-list-title fn-left w85 ph5">投资金额</span>
+            <span class="ui-list-title fn-left w85 ph5">已赚金额</span>
+            <span class="ui-list-title fn-left w55 ph5">年利率</span>
+            <span class="ui-list-title fn-left w30 ph5">月数</span>
+            <span class="ui-list-title fn-left w80 ph5">成立日期</span>
+            <span class="ui-list-title fn-left w80 ph5">到期日期</span>
+            <span class="ui-list-title fn-left w60 ph5"></span>
+          </li>
+        </ul>
+        <div class="fn-left mt10 fn-hide">共<span id="investment-total-3">0</span>条</div>
+        <div class="fn-right mt10 ui-pagination simple-pagination" id="investment-list-pagination-3"></div>
+      </div>
+    </div>
   </div>
 </div>

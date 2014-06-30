@@ -31,7 +31,7 @@ drupal_add_js($theme_path . '/js/myloan.js');
         <p class="num color-orange-text"><em id="paid-fine"></em>元</p>
         <p class="text-small">
           <span class="pr5">加权平均借款期限</span>
-          <span class="num-s"><em id="average-duration"></em>月</span>
+          <span class="num-s"><em id="average-duration"></em>个月</span>
         </p>
       </div>
       <div class="fn-left ph20">
@@ -64,14 +64,14 @@ drupal_add_js($theme_path . '/js/myloan.js');
     <div class="ui-tab-content fn-clear ui-tab-content-current" data-name="loan">
       <ul class="ui-list ui-list-s" id="loan-list-2">
         <li class="ui-list-header color-gray-text fn-clear">
-          <span class="ui-list-title w220 ph5 fn-left">借款标题</span>
+          <span class="ui-list-title w210 ph5 fn-left">借款标题</span>
           <span class="ui-list-title w85 ph5 fn-left">借款金额</span>
           <span class="ui-list-title w85 ph5 fn-left">借款利息</span>
           <span class="ui-list-title w55 ph5 fn-left">年利率</span>
-          <span class="ui-list-title w30 ph5 fn-left">月数</span
-          ><span class="ui-list-title w80 ph5 fn-left">借款日期</span>
+          <span class="ui-list-title w30 ph5 fn-left">月数</span>
+          <span class="ui-list-title w80 ph5 fn-left">借款日期</span>
           <span class="ui-list-title w80 ph5 fn-left">到期日期</span>
-          <span class="ui-list-title w30 fn-left">还清</span>
+          <span class="ui-list-title w30 ph5 fn-left">还清</span>
         </li>
       </ul>
       <div class="fn-left mt10 fn-hide">共<span id="loan-total-2">0</span>条</div>

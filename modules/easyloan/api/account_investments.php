@@ -51,7 +51,7 @@ function myinvestments(){
         }
       }
       $start = ($page - 1) * $per_page;
-      $query = "SELECT act_invs_app_id, act_invs_is_done, inv_title, inv_category, act_invs_amount, act_invs_r_amount, act_invs_r_interest, act_invs_w_amount, act_invs_w_interest, act_invs_a_amount, act_invs_a_interest, act_invs_r_fine, act_invs_rate, inv_repayment_method, inv_duration, inv_start, inv_end, inv_finished FROM account_investments_act_invs LEFT JOIN investments_inv ON act_invs_app_id = inv_app_id WHERE act_invs_usr_id = ".strval($usr_id)." AND act_invs_is_done <> 1 ORDER BY act_invs_time ASC LIMIT ".strval($start).",".strval($per_page);
+      $query = "SELECT act_invs_app_id, act_invs_is_done, inv_title, inv_category, act_invs_amount, act_invs_r_amount, act_invs_r_interest, act_invs_w_amount, act_invs_w_interest, act_invs_a_amount, act_invs_a_interest, act_invs_r_fine, act_invs_n_date, act_invs_n_amount, act_invs_n_interest, act_invs_w_owned, act_invs_w_fine, act_invs_rate, inv_repayment_method, inv_duration, inv_start, inv_end, inv_finished FROM account_investments_act_invs LEFT JOIN investments_inv ON act_invs_app_id = inv_app_id WHERE act_invs_usr_id = ".strval($usr_id)." AND act_invs_is_done <> 1 ORDER BY act_invs_time ASC LIMIT ".strval($start).",".strval($per_page);
       mysqli_query($con, "LOCK TABLES account_investments_act_invs READ, investments_inv READ");
       $result = mysqli_query($con, $query);
       mysqli_query($con, "UNLOCK TABLES");
@@ -69,6 +69,11 @@ function myinvestments(){
         $act_invs_a_amount = $row['act_invs_a_amount'];
         $act_invs_a_interest = $row['act_invs_a_interest'];
         $act_invs_r_fine = $row['act_invs_r_fine'];
+        $act_invs_n_date = $row['act_invs_n_date'];
+        $act_invs_n_amount = $row['act_invs_n_amount'];
+        $act_invs_n_interest = $row['act_invs_n_interest'];
+        $act_invs_w_owned = $row['act_invs_w_owned'];
+        $act_invs_w_fine = $row['act_invs_w_fine'];
         $act_invs_rate = $row['act_invs_rate'];
         $inv_repayment_method = $row['inv_repayment_method'];
         $inv_duration = $row['inv_duration'];
@@ -76,7 +81,7 @@ function myinvestments(){
         $inv_end = $row['inv_end'];
         $inv_finished = $row['inv_finished'];
 
-        $json = $json.",{\"id\":".jsonstrval($act_invs_app_id).",\"is_done\":".jsonstrval($act_invs_is_done).",\"title\":".jsonstr($inv_title).",\"category\":".jsonstrval($inv_category).",\"amount\":".jsonstrval($act_invs_amount).",\"r_amount\":".jsonstrval($act_invs_r_amount).",\"r_interest\":".jsonstrval($act_invs_r_interest).",\"w_amount\":".jsonstrval($act_invs_w_amount).",\"w_interest\":".jsonstrval($act_invs_w_interest).",\"a_amount\":".jsonstrval($act_invs_a_amount).",\"a_interest\":".jsonstrval($act_invs_a_interest).",\"r_fine\":".jsonstrval($act_invs_r_fine).",\"rate\":".jsonstrval($act_invs_rate).",\"method\":".jsonstrval($inv_repayment_method).",\"duration\":".jsonstrval($inv_duration).",\"start\":".jsonstr($inv_start).",\"end\":".jsonstr($inv_end).",\"finished\":null}";
+        $json = $json.",{\"id\":".jsonstrval($act_invs_app_id).",\"is_done\":".jsonstrval($act_invs_is_done).",\"title\":".jsonstr($inv_title).",\"category\":".jsonstrval($inv_category).",\"amount\":".jsonstrval($act_invs_amount).",\"r_amount\":".jsonstrval($act_invs_r_amount).",\"r_interest\":".jsonstrval($act_invs_r_interest).",\"w_amount\":".jsonstrval($act_invs_w_amount).",\"w_interest\":".jsonstrval($act_invs_w_interest).",\"a_amount\":".jsonstrval($act_invs_a_amount).",\"a_interest\":".jsonstrval($act_invs_a_interest).",\"r_fine\":".jsonstrval($act_invs_r_fine).",\"n_date\":".jsonstr($act_invs_n_date).",\"n_amount\":".jsonstrval($act_invs_n_amount).",\"n_interest\":".jsonstrval($act_invs_n_interest).",\"w_owned\":".jsonstrval($act_invs_w_owned).",\"w_fine\":".jsonstrval($act_invs_w_fine).",\"rate\":".jsonstrval($act_invs_rate).",\"method\":".jsonstrval($inv_repayment_method).",\"duration\":".jsonstrval($inv_duration).",\"start\":".jsonstr($inv_start).",\"end\":".jsonstr($inv_end).",\"finished\":null}";
       }
       mysqli_free_result($result);
       $json = substr($json, 1);
@@ -97,7 +102,7 @@ function myinvestments(){
         }
       }
       $start = ($page - 1) * $per_page;
-      $query = "SELECT act_invs_app_id, act_invs_is_done, inv_title, inv_category, act_invs_amount, act_invs_r_amount, act_invs_r_interest, act_invs_w_amount, act_invs_w_interest, act_invs_a_amount, act_invs_a_interest, act_invs_r_fine, act_invs_rate, inv_repayment_method, inv_duration, inv_start, inv_end, inv_finished FROM account_investments_act_invs LEFT JOIN investments_inv ON act_invs_app_id = inv_app_id WHERE act_invs_usr_id = ".strval($usr_id)." AND act_invs_is_done = 1 ORDER BY act_invs_time ASC LIMIT ".strval($start).",".strval($per_page);
+      $query = "SELECT act_invs_app_id, act_invs_is_done, inv_title, inv_category, act_invs_amount, act_invs_r_amount, act_invs_r_interest, act_invs_a_amount, act_invs_a_interest, act_invs_r_fine, act_invs_rate, inv_repayment_method, inv_duration, inv_start, inv_end, inv_finished FROM account_investments_act_invs LEFT JOIN investments_inv ON act_invs_app_id = inv_app_id WHERE act_invs_usr_id = ".strval($usr_id)." AND act_invs_is_done = 1 ORDER BY act_invs_time ASC LIMIT ".strval($start).",".strval($per_page);
       mysqli_query($con, "LOCK TABLES account_investments_act_invs READ, investments_inv READ");
       $result = mysqli_query($con, $query);
       mysqli_query($con, "UNLOCK TABLES");
@@ -110,8 +115,6 @@ function myinvestments(){
         $act_invs_amount = $row['act_invs_amount'];
         $act_invs_r_amount = $row['act_invs_r_amount'];
         $act_invs_r_interest = $row['act_invs_r_interest'];
-        $act_invs_w_amount = $row['act_invs_w_amount'];
-        $act_invs_w_interest = $row['act_invs_w_interest'];
         $act_invs_a_amount = $row['act_invs_a_amount'];
         $act_invs_a_interest = $row['act_invs_a_interest'];
         $act_invs_r_fine = $row['act_invs_r_fine'];
@@ -122,7 +125,7 @@ function myinvestments(){
         $inv_end = $row['inv_end'];
         $inv_finished = $row['inv_finished'];
 
-        $json = $json."{\"id\":".jsonstrval($act_invs_app_id).",\"is_done\":".jsonstrval($act_invs_is_done).",\"title\":".jsonstr($inv_title).",\"category\":".jsonstrval($inv_category).",\"amount\":".jsonstrval($act_invs_amount).",\"r_amount\":".jsonstrval($act_invs_r_amount).",\"r_interest\":".jsonstrval($act_invs_r_interest).",\"w_amount\":".jsonstrval($act_invs_w_amount).",\"w_interest\":".jsonstrval($act_invs_w_interest).",\"a_amount\":".jsonstrval($act_invs_a_amount).",\"a_interest\":".jsonstrval($act_invs_a_interest).",\"r_fine\":".jsonstrval($act_invs_r_fine).",\"rate\":".jsonstrval($act_invs_rate).",\"method\":".jsonstrval($inv_repayment_method).",\"duration\":".jsonstrval($inv_duration).",\"start\":".jsonstr($inv_start).",\"end\":".jsonstr($inv_end).",\"finished\":".jsonstr($inv_finished)."}";
+        $json = $json."{\"id\":".jsonstrval($act_invs_app_id).",\"is_done\":".jsonstrval($act_invs_is_done).",\"title\":".jsonstr($inv_title).",\"category\":".jsonstrval($inv_category).",\"amount\":".jsonstrval($act_invs_amount).",\"r_amount\":".jsonstrval($act_invs_r_amount).",\"r_interest\":".jsonstrval($act_invs_r_interest).",\"a_amount\":".jsonstrval($act_invs_a_amount).",\"a_interest\":".jsonstrval($act_invs_a_interest).",\"r_fine\":".jsonstrval($act_invs_r_fine).",\"rate\":".jsonstrval($act_invs_rate).",\"method\":".jsonstrval($inv_repayment_method).",\"duration\":".jsonstrval($inv_duration).",\"start\":".jsonstr($inv_start).",\"end\":".jsonstr($inv_end).",\"finished\":".jsonstr($inv_finished)."}";
       }
       mysqli_free_result($result);
       $json = substr($json, 1);
