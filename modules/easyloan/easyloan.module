@@ -169,6 +169,12 @@ function easyloan_menu() {
     'type'            => MENU_NORMAL_ITEM, 
     'file'            => 'api/manage_user.php',
   );
+  $items['api/manage_users'] = array(
+    'page callback'   => 'manage_users', 
+    'access callback' => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_users.php',
+  );
   $items['api/account_status'] = array(
     'page callback'   => 'account_status', 
     'access callback' => 'authenticated_access', 
