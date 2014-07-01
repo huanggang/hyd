@@ -96,7 +96,7 @@
         
         var targetUrl = Drupal.settings.basePath + "api/myinvestments?type=" + type + "&page=" + page;
         $.getJSON( targetUrl).done(function(d) {
-          if (d.result == 0){
+          if (d.result != null && d.result == 0){
             alert( "获取信息出现问题，请刷新页面。");
           }
           else {

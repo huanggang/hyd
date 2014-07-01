@@ -5,16 +5,29 @@
 
       var max_pages = 50;
       var per_page = 20;
-
-      var show_pages = 11;
-      var show_pages_mid = 7; // show_pages == (show_pages_mid + 4)
-
-      var total_1 = 0;
-      var total_pages_1 = 0;
-      var total_2 = 0;
-      var total_pages_2 = 0;
+      var display_pages = 7;
+      var max_items = max_pages * per_page;
 
       var cats = ['','(房产) ','(机车) ','(黄金) ','(信用) ','(其他) '];
+      
+      var status_li = $('<li />').addClass('ui-list-status');
+      var status_p = $('<p />').addClass('color-gray-text');
+      var loading = status_li.clone().append(status_p.clone().append('加载中...'));
+      var empty = status_li.clone().append(status_p.clone().append('没有记录'));
+
+      $("#check-list-pagination-1").pagination({
+        items: 0,
+        itemsOnPage: per_page,
+        hrefTextPrefix: '#type=1&page=', 
+        displayedPages: display_pages, 
+      }); 
+
+      $("#check-list-pagination-2").pagination({
+        items: 0,
+        itemsOnPage: per_page,
+        hrefTextPrefix: '#type=2&page=', 
+        displayedPages: display_pages, 
+      });
 
       $(window).bind('hashchange', function(){
         var hash = window.location.hash;
@@ -38,6 +51,17 @@
               }
             }
           }
+          var pagesCount = $("#check-list-pagination-" + type).pagination('getPagesCount');
+          if (page > 1){
+            if (pagesCount > 0){
+              if (page > pagesCount) {
+                page = pagesCount;
+              }
+            }
+            else{
+              page = 1;
+            }
+          }
         }
 
         if (type == 1){ // show tab 1
@@ -48,170 +72,97 @@
           Drupal.behaviors.utils.showTab("checked");
         }
 
-        $.getJSON( Drupal.settings.basePath + "api/m_loan_applications?type=" + type + "&page=" + page, 
-          function(d) {
-            var list_title = '';
-            var list = '';
-            var pagination = '<ul>';
+        var list = '#check-list-' + type;
+
+        var header = $(list).children().get(0);
+        $(list).empty().append(header).append(loading);
+
+        $.getJSON( Drupal.settings.basePath + "api/m_loan_applications?type=" + type + "&page=" + page, function(d) {
+          if (d.result != null && d.result == 0){
+            alert( "获取信息出现问题，请刷新页面。");
+          }
+          else {
             if (page == 1){
               var total = d.total;
-              var total_pages = total == 0 ? 0 : Math.floor((total - 1) / per_page) + 1;
-              if (type == 1){
-                total_1 = total;
-                total_pages_1 = total_pages;
-              }
-              else{
-                total_2 = total;
-                total_pages_2 = total_pages;
-              }
+              $("#check-list-pagination-" + type).pagination('updateItems', total < max_items ? total : max_items); 
+              $('#check-total-'+type).html(total).parent().show();
+            }
 
-              if (total == 0){
-                list += '<li class="ui-list-status"><p class="color-gray-text">没有记录</p></li>';
-              }
-              else{
-                if (total_pages > max_pages) {
-                  total_pages = max_pages;
-                }
-                if (total_pages == 1){
-                  pagination += '<li class="active"><span class="current">1</span></li>';
-                }
-                else if (total_pages <= show_pages){
-                  pagination += '<li class="active"><span class="current">1</span></li>';
-                  for (var i = 2 ; i <= total_pages; i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                }
-                else{
-                  pagination += '<li class="active"><span class="current prev">前页</span></li><li class="active"><span class="current">1</span></li>';
-                  for (var i = 2 ; i <= (show_pages_mid+2); i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="disabled"><span class="ellipse">…</span></li><li><a href="#type='
-                    + type + '&page=' + total_pages + '" class="page-link">' + total_pages + '</a></li><li><a href="#type='
-                    + type + '&page=2" class="page-link next">后页</a></li>';
-                }
-              }
-            }
-            else{ // page > 1
-              var total = 0;
-              var total_pages = 0;
-              if (type == 1){
-                total = total_1;
-                total_pages = total_pages_1;
-              }
-              else{
-                total = total_2;
-                total_pages = total_pages_2;
-              }
-              if (total_pages <= show_pages){
-                for (var i = 1; i < page; i++){
-                  pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                }
-                pagination += '<li class="active"><span class="current">' + page + '</span></li>';
-                for (var i = (page+1); i <= total_pages; i++){
-                  pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                }
-              }
-              else{
-                pagination += '<li><a href="#type=' + type + '&page=' + (page-1).toString() + '" class="page-link prev">前页</span></li>';
-                if (page <= show_pages_mid){
-                  for (var i = 1; i < page; i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="active"><span class="current">' + page + '</span></li>';
-                  for (var i = (page+1); i <= (show_pages_mid+2); i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="disabled"><span class="ellipse">…</span></li><li><a href="#type='
-                    + type + '&page=' + total_pages + '" class="page-link">' + total_pages + '</a></li><li><a href="#type='
-                    + type + '&page=' + (page+1).toString() + '" class="page-link next">后页</a></li>';
-                }
-                else if (page >= (total_pages - show_pages_mid)){
-                  pagination += '<li><a href="#type=' + type + '&page=1" class="page-link">1</a></li><li class="disabled"><span class="ellipse">…</span></li>';
-                  for (var i = (total_pages - show_pages_mid - 2); i < page; i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="active"><span class="current">' + page + '</span></li>';
-                  for (var i = (page+1); i <= total_pages; i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  if (page == total_pages){
-                    pagination += '<li class="active"><span class="current next">后页</span></li>';
-                  }
-                  else{
-                    pagination += '<li><a href="#type='  + type + '&page=' + (page+1).toString() + '" class="page-link next">后页</a></li>';
-                  }
-                }
-                else{// page in the middle
-                  pagination += '<li><a href="#type=' + type + '&page=1" class="page-link">1</a></li><li class="disabled"><span class="ellipse">…</span></li>';
-                  var delta = Math.floor(show_pages_mid / 2.0);
-                  for (var i = (page-delta); i < page; i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="active"><span class="current">' + page + '</span></li>';
-                  for (var i = (page+1); i <= (page+delta); i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="disabled"><span class="ellipse">…</span></li><li><a href="#type=' + type + '&page=' + total_pages + '" class="page-link">' + total_pages + '</a></li><li><a href="#type='  + type + '&page=' + (page+1).toString() + '" class="page-link next">后页</a></li>';
-                }
-              }
-            }
-            pagination += '</ul>';
-            $('#check-list-pagination-'+ type).html(pagination);
-            $('#check-total-'+type).html("共"+total+"条");
+            $("#check-list-pagination-" + type).pagination('selectPage', page);
+
+            $(list).empty().append(header);
+            var li = $('<li/>').addClass('ui-list-item text fn-clear');
+            var span = $('<span />').addClass('ui-list-field fn-left ph5');
+            var a = $('<a />').attr('target', '_blank');
+            var btn1 = $('<a />').addClass('ui-button ui-button-small ui-button-green comment').append("查看");
+            var btn2 = $('<a />').addClass('ui-button ui-button-small ui-button-green check').append("审核");
 
             if (type == 1){ // checking
-              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w260 ph5 fn-left title">借款标题</span><span class="ui-list-title w50 ph5 fn-left">借款人</span><span class="ui-list-title w85 ph5 fn-left text-right">计划用款</span><span class="ui-list-title w30 ph5 fn-left">月数</span><span class="ui-list-title w30 ph5 fn-left">状态</span><span class="ui-list-title w80 ph5 fn-left">申请日期</span><span class="ui-list-title w60 ph5 fn-left">备注</span><span class="ui-list-title w60 ph5 fn-left">审核</span></li>';
-              for (var i = 0; i < d.applications.length; i++){
-                var w = d.applications[i];
-                list += '<li class="ui-list-item fn-clear';
-                if (i % 2 == 0){
-                  list += ' dark';
-                }
-                list += '"><span class="ui-list-field w260 ph5 fn-left fn-text-overflow"><a href="/loanapp_view#id='
-                  + w.app_id + '" target="_blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
-                  + w.user_id + '" target="_blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">' 
-                  + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w30 ph5 fn-left text-right">' 
-                  + w.duration.toFixed(0) + '</span><span class="ui-list-field w30 ph5 fn-left">' 
-                  + map_id_name(application_status, w.status) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">'
-                  + w.applied.slice(0,10) + '</span><span class="ui-list-field w60 ph5 fn-left text-center">';
+              if (d.applications.length > 0){
+                for (var i = 0; i < d.applications.length; i++){
+                  var w = d.applications[i];
+                  var row = li.clone()
+                    .append(span.clone().addClass('w260 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'loanapp_view#id=' + w.app_id).attr('title', w.title).append(cats[w.category] + w.title)))
+                    .append(span.clone().addClass('w50').append(a.clone().attr('href', Drupal.settings.basePath + 'user/' + w.user_id).attr('title', w.nick).append(w.name)))
+                    .append(span.clone().addClass('w85 text-right').append(w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w30 text-right').append(w.duration.toFixed(0)))
+                    .append(span.clone().addClass('w30 text-center').append(map_id_name(application_status, w.status)))
+                    .append(span.clone().addClass('w80 text-center').append(w.applied.slice(0,10)));
                   if (w.comment != null && w.comment.length > 0){
-                    list += '<a class="ui-button ui-button-small ui-button-green comment" data-comment="' + w.comment + '">查看</a>';
+                    row = row
+                      .append(span.clone().addClass('w60 text-center').append(btn1.clone().attr('data-comment', w.comment)))
+                      .append(span.clone().addClass('w60 text-center').append(btn2.clone().attr('data-app-id', w.app_id).attr('data-status', w.status).attr('data-comment', w.comment)));
                   }
-                  list += '</span><span class="ui-list-field w60 ph5 fn-left text-center"><a class="ui-button ui-button-small ui-button-green check" data-app-id="'
-                  + w.app_id + '" data-status="' + w.status + '" data-comment="' + (w.comment == null ? '' : w.comment) + '">审核</a></span></li>';
+                  else {
+                    row = row
+                      .append(span.clone().addClass('w60 text-center').append(''))
+                      .append(span.clone().addClass('w60 text-center').append(btn2.clone().attr('data-app-id', w.app_id).attr('data-status', w.status).attr('data-comment', '')));
+                  }
+                  if (i % 2 == 0){
+                    row.addClass('dark');
+                  }
+                  row.appendTo(list);
+                }
               }
-              $('#check-list-1').html(list_title + list);
+              else {
+                $(list).append(empty);
+              }
             }
-            else{ // checked
-              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w300 ph5 fn-left title">借款标题</span><span class="ui-list-title w50 ph5 fn-left">借款人</span><span class="ui-list-title w85 ph5 fn-left text-right">计划用款</span><span class="ui-list-title w30 ph5 fn-left">月数</span><span class="ui-list-title w30 ph5 fn-left">状态</span><span class="ui-list-title w80 ph5 fn-left">申请日期</span><span class="ui-list-title w60 ph5 fn-left">备注</span></li>';
-              for (var i = 0; i < d.applications.length; i++){
-                var w = d.applications[i];
-                list += '<li class="ui-list-item fn-clear';
-                if (i % 2 == 0){
-                  list += ' dark';
-                }
-                list += '"><span class="ui-list-field w300 ph5 fn-left fn-text-overflow"><a href="/loanapp_view#id='
-                  + w.app_id + '" target="_blank" title="' + w.title + '">' + cats[w.category] + w.title + '</a></span><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
-                  + w.user_id + '" target="_blank" title="' + w.nick + '">' + w.name + '</a></span><span class="ui-list-field w85 ph5 fn-left text-right">'
-                  + w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w30 ph5 fn-left text-right">'
-                  + w.duration.toFixed(0) + '</span><span class="ui-list-field w30 ph5 fn-left">'
-                  + map_id_name(application_status, w.status) + '</span><span class="ui-list-field w80 ph5 fn-left text-center">'
-                  + w.applied.slice(0,10) + '</span><span class="ui-list-field w60 ph5 fn-left text-center">';
+            else { // checked
+              if (d.applications.length > 0){
+                for (var i = 0; i < d.applications.length; i++){
+                  var w = d.applications[i];
+                  var row = li.clone()
+                    .append(span.clone().addClass('w300 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'loanapp_view#id=' + w.app_id).attr('title', w.title).append(cats[w.category] + w.title)))
+                    .append(span.clone().addClass('w50').append(a.clone().attr('href', Drupal.settings.basePath + 'user/' + w.user_id).attr('title', w.nick).append(w.name)))
+                    .append(span.clone().addClass('w85 text-right').append(w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w30 text-right').append(w.duration.toFixed(0)))
+                    .append(span.clone().addClass('w30 text-center').append(map_id_name(application_status, w.status)))
+                    .append(span.clone().addClass('w80 text-center').append(w.applied.slice(0,10)));
                   if (w.comment != null && w.comment.length > 0){
-                    list += '<a class="ui-button ui-button-small ui-button-green comment" data-comment="' + w.comment + '">查看</a>';
+                    row = row.append(span.clone().addClass('w60 text-center').append(btn1.clone().attr('data-comment', w.comment)))
                   }
-                  list += '</span></li>';
+                  else {
+                    row = row.append(span.clone().addClass('w60 text-center').append(''));
+                  }
+                  if (i % 2 == 0){
+                    row.addClass('dark');
+                  }
+                  row.appendTo(list);
+                }
               }
-              $('#check-list-2').html(list_title + list);
+              else {
+                $(list).append(empty);
+              }
             }
 
             // set up buttons: comment, check-status
             $('.comment').click(function(event){
-              $('body').append('<div id="dialog-form" title="审核备注">' + $(this).attr("data-comment") + '</div>');
+              var dialog = $('<div />').attr('id', 'dialog-form').attr('title', '审核备注').append($('<div />').addClass('comment').append($(this).attr("data-comment")));
+              $('body').append(dialog);
               $('#dialog-form').dialog({
                 autoOpen: false,
-                height: 410,
+                height: 320,
                 width: 650,
                 modal: true,
                 closeText: "关闭本框",
@@ -286,6 +237,7 @@
               $('#dialog-form').dialog("open");
 
             });
+          }
         })
         .fail(function( jqxhr, textStatus, error ) {
           var err = textStatus + ", " + error;
@@ -296,13 +248,23 @@
       $(window).trigger('hashchange');
 
       $(".ui-tab-item[data-name=checking]").click(function(event){
-        if (window.location.hash != "#type=1" && window.location.hash != ""){
-          window.location.hash = "#type=1";
+        if (window.location.hash.indexOf("#type=1") < 0 && window.location.hash != ""){
+          var current_page_type_1 = $("#check-list-pagination-1").pagination('getCurrentPage');
+          if (current_page_type_1 > 1){
+            window.location.hash = "#type=1&page=" + current_page_type_1;
+          } else {
+            window.location.hash = "#type=1";  
+          }
         }
       });
       $(".ui-tab-item[data-name=checked]").click(function(event){
-        if (window.location.hash != "#type=2") {
-          window.location.hash = "#type=2";
+        if (window.location.hash.indexOf("#type=2") < 0){
+          var current_page_type_2 = $("#check-list-pagination-2").pagination('getCurrentPage');
+          if (current_page_type_2 > 1){
+            window.location.hash = "#type=2&page=" + current_page_type_2;
+          } else {
+            window.location.hash = "#type=2";
+          }
         }
       });
 

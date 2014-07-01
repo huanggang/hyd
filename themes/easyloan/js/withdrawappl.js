@@ -5,14 +5,27 @@
 
       var max_pages = 50;
       var per_page = 20;
+      var display_pages = 7;
+      var max_items = max_pages * per_page;
 
-      var show_pages = 11;
-      var show_pages_mid = 7; // show_pages == (show_pages_mid + 4)
+      var status_li = $('<li />').addClass('ui-list-status');
+      var status_p = $('<p />').addClass('color-gray-text');
+      var loading = status_li.clone().append(status_p.clone().append('加载中...'));
+      var empty = status_li.clone().append(status_p.clone().append('没有记录'));
 
-      var total_1 = 0;
-      var total_pages_1 = 0;
-      var total_2 = 0;
-      var total_pages_2 = 0;
+      $("#withdrawapp-list-pagination-1").pagination({
+        items: 0,
+        itemsOnPage: per_page,
+        hrefTextPrefix: '#type=1&page=', 
+        displayedPages: display_pages, 
+      });
+
+      $("#withdrawapp-list-pagination-2").pagination({
+        items: 0,
+        itemsOnPage: per_page,
+        hrefTextPrefix: '#type=2&page=', 
+        displayedPages: display_pages, 
+      });
 
       $(window).bind('hashchange', function(){
         var hash = window.location.hash;
@@ -36,6 +49,17 @@
               }
             }
           }
+          var pagesCount = $("#withdrawapp-list-pagination-" + type).pagination('getPagesCount');
+          if (page > 1){
+            if (pagesCount > 0){
+              if (page > pagesCount) {
+                page = pagesCount;
+              }
+            }
+            else{
+              page = 1;
+            }
+          }
         }
 
         if (type == 1){ // show tab 1
@@ -46,226 +70,146 @@
           Drupal.behaviors.utils.showTab("checked");
         }
 
-        $.getJSON( Drupal.settings.basePath + "api/m_withdraws?type=" + type + "&page=" + page, 
-          function(d) {
-            var list_title = '';
-            var list = '';
-            var pagination = '<ul>';
+        var list = '#withdrawapp-list-' + type;
+
+        var header = $(list).children().get(0);
+        $(list).empty().append(header).append(loading);
+
+        $.getJSON( Drupal.settings.basePath + "api/m_withdraws?type=" + type + "&page=" + page, function(d) {
+          if (d.result != null && d.result == 0){
+            alert( "获取信息出现问题，请刷新页面。");
+          }
+          else{
             if (page == 1){
               var total = d.total;
-              var total_pages = total == 0 ? 0 : Math.floor((total - 1) / per_page) + 1;
-              if (type == 1){
-                total_1 = total;
-                total_pages_1 = total_pages;
-              }
-              else{
-                total_2 = total;
-                total_pages_2 = total_pages;
-              }
+              $("#withdrawapp-list-pagination-" + type).pagination('updateItems', total < max_items ? total : max_items); 
+              $('#withdrawapp-total-'+type).html(total).parent().show();
+            }
 
-              if (total == 0){
-                list += '<li class="ui-list-status"><p class="color-gray-text">没有记录</p></li>';
-              }
-              else{
-                if (total_pages > max_pages) {
-                  total_pages = max_pages;
-                }
-                if (total_pages == 1){
-                  pagination += '<li class="active"><span class="current">1</span></li>';
-                }
-                else if (total_pages <= show_pages){
-                  pagination += '<li class="active"><span class="current">1</span></li>';
-                  for (var i = 2 ; i <= total_pages; i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                }
-                else{
-                  pagination += '<li class="active"><span class="current prev">前页</span></li><li class="active"><span class="current">1</span></li>';
-                  for (var i = 2 ; i <= (show_pages_mid+2); i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="disabled"><span class="ellipse">…</span></li><li><a href="#type='
-                    + type + '&page=' + total_pages + '" class="page-link">' + total_pages + '</a></li><li><a href="#type='
-                    + type + '&page=2" class="page-link next">后页</a></li>';
-                }
-              }
-            }
-            else{ // page > 1
-              var total = 0;
-              var total_pages = 0;
-              if (type == 1){
-                total = total_1;
-                total_pages = total_pages_1;
-              }
-              else{
-                total = total_2;
-                total_pages = total_pages_2;
-              }
-              if (total_pages <= show_pages){
-                for (var i = 1; i < page; i++){
-                  pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                }
-                pagination += '<li class="active"><span class="current">' + page + '</span></li>';
-                for (var i = (page+1); i <= total_pages; i++){
-                  pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                }
-              }
-              else{
-                pagination += '<li><a href="#type=' + type + '&page=' + (page-1).toString() + '" class="page-link prev">前页</span></li>';
-                if (page <= show_pages_mid){
-                  for (var i = 1; i < page; i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="active"><span class="current">' + page + '</span></li>';
-                  for (var i = (page+1); i <= (show_pages_mid+2); i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="disabled"><span class="ellipse">…</span></li><li><a href="#type='
-                    + type + '&page=' + total_pages + '" class="page-link">' + total_pages + '</a></li><li><a href="#type='
-                    + type + '&page=' + (page+1).toString() + '" class="page-link next">后页</a></li>';
-                }
-                else if (page >= (total_pages - show_pages_mid)){
-                  pagination += '<li><a href="#type=' + type + '&page=1" class="page-link">1</a></li><li class="disabled"><span class="ellipse">…</span></li>';
-                  for (var i = (total_pages - show_pages_mid - 2); i < page; i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="active"><span class="current">' + page + '</span></li>';
-                  for (var i = (page+1); i <= total_pages; i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  if (page == total_pages){
-                    pagination += '<li class="active"><span class="current next">后页</span></li>';
-                  }
-                  else{
-                    pagination += '<li><a href="#type='  + type + '&page=' + (page+1).toString() + '" class="page-link next">后页</a></li>';
-                  }
-                }
-                else{// page in the middle
-                  pagination += '<li><a href="#type=' + type + '&page=1" class="page-link">1</a></li><li class="disabled"><span class="ellipse">…</span></li>';
-                  var delta = Math.floor(show_pages_mid / 2.0);
-                  for (var i = (page-delta); i < page; i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="active"><span class="current">' + page + '</span></li>';
-                  for (var i = (page+1); i <= (page+delta); i++){
-                    pagination += '<li><a href="#type=' + type + '&page=' + i + '" class="page-link">' + i + '</a></li>';
-                  }
-                  pagination += '<li class="disabled"><span class="ellipse">…</span></li><li><a href="#type=' + type + '&page=' + total_pages + '" class="page-link">' + total_pages + '</a></li><li><a href="#type='  + type + '&page=' + (page+1).toString() + '" class="page-link next">后页</a></li>';
-                }
-              }
-            }
-            pagination += '</ul>';
-            $('#withdrawapp-list-pagination-'+ type).html(pagination);
-            $('#withdrawapp-total-'+type).html("共"+total+"条");
+            $("#withdrawapp-list-pagination-" + type).pagination('selectPage', page);
+
+            $(list).empty().append(header);
+            var li = $('<li/>').addClass('ui-list-item text fn-clear');
+            var span = $('<span />').addClass('ui-list-field fn-left ph5');
+            var a = $('<a />').attr('target', '_blank');
+            var btn1 = $('<a />').addClass('ui-button ui-button-small ui-button-green transfer').append("转账");
+            var btn2 = $('<a />').addClass('ui-button ui-button-small ui-button-green reject').append("拒绝");
+            var div1 = $('<div />').addClass('ui-poptip fn-hide').attr('data-widget-cid', 'widget-2').css('z-index', '99').css('position', 'absolute').css('left', '320px').css('display', 'none');
+            var div2 = $('<div />').addClass('ui-poptip-shadow');
+            var div3 = $('<div />').addClass('ui-poptip-container');
+            var div4 = $('<div />').addClass('ui-poptip-arrow ui-poptip-arrow-10').append($('<em />')).append($('<span />'));
+            var div5 = $('<div />').addClass('ui-poptip-content').attr('data-role', 'content');
+            var div6 = $('<div />').addClass('fn-clear');
+            var label = $('<label />').addClass('font-nm w80 fn-left text-right');
+            var div7 = $('<div />').addClass('w150 ph10 fn-left');
+            var div8 = $('<div />').addClass('w230 ph10 fn-left');
 
             if (type == 1){ // checking
-              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w50 ph5 fn-left title">开户名</span><span class="ui-list-title w90 ph5 fn-left">提现金额</span><span class="ui-list-title w40 ph5 fn-left">费用</span><span class="ui-list-title w100 ph5 fn-left">银行</span><span class="ui-list-title w180 ph5 fn-left">卡号</span><span class="ui-list-title w80 ph5 fn-left">申请日期</span><span class="ui-list-title w60 ph5 fn-left">转账</span><span class="ui-list-title w60 ph5 fn-left">拒绝</span></li>';
-              for (var i = 0; i < d.withdraws.length; i++){
-                var w = d.withdraws[i];
-                list += '<li class="ui-list-item fn-clear';
-                if (i % 2 == 0){
-                  list += ' dark';
+              if (d.withdraws.length > 0) {
+                for (var i = 0; i < d.withdraws.length; i++){
+                  var w = d.withdraws[i];
+                  var div = div1.clone().css('top', (i * 35 + 36).toString() + 'px').append(div2.clone().append(div3.clone().append(div4.clone()).append(div5.clone()
+                    .append(div6.clone().append(label.clone().append('开户行')).append(div7.clone().append( w.branch)))
+                    .append(div6.clone().append(label.clone().append('开户行所在地')).append(div7.clone().append(w.address)))
+                    .append(div6.clone().append(label.clone().append('银行卡号')).append(div7.clone().append(w.number.replace(/\B(?=(\d{4})+(?!\d))/g, " "))))
+                    .append(div6.clone().append(label.clone().append('申请日期')).append(div7.clone().append(w.time)))
+                    )));
+                  var row = li.clone()
+                    .append(span.clone().addClass('w50').append(a.clone().attr('href', Drupal.settings.basePath + 'user/' + w.user_id).append(w.name)))
+                    .append(span.clone().addClass('w90 text-right').addClass(w.is_owned ? 'red' : '').append(w.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w40 text-right').addClass(w.is_owned ? 'red' : '').append(w.fee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w100 text-center').append(map_id_name(banks, w.bank)))
+                    .append(span.clone().addClass('w180').append(w.number.replace(/\B(?=(\d{4})+(?!\d))/g, " ")))
+                    .append(span.clone().addClass('w80 text-center').append(w.time.slice(0,10)))
+                    .append(span.clone().addClass('w60 text-center').append(btn1.clone().attr('data-user-id', w.user_id).attr('data-number', w.number).attr('data-amount', w.amount).attr('data-fee', w.fee)))
+                    .append(span.clone().addClass('w60 text-center').append(btn2.clone().attr('data-user-id', w.user_id).attr('data-number', w.number).attr('data-amount', w.amount).attr('data-fee', w.fee)))
+                    .append(div);
+                  if (i % 2 == 0){
+                    row.addClass('dark');
+                  }
+                  row.appendTo(list);
                 }
-                list += '"><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
-                  + w.user_id + '" target="_blank">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right';
-                if (w.is_owned){
-                  list += ' red';
-                }
-                list += '">' + w.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w40 ph5 fn-left text-right';
-                if (w.is_owned){
-                  list += ' red';
-                }
-                list += '">' + w.fee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w100 ph5 fn-left text-center">' 
-                  + map_id_name(banks, w.bank) + '</span><span class="ui-list-field w180 ph5 fn-left">' 
-                  + w.number.replace(/\B(?=(\d{4})+(?!\d))/g, " ") + '</span><span class="ui-list-field w80 ph5 fn-left">'
-                  + w.time.slice(0, 10) + '</span><span class="ui-list-title w60 ph5 fn-left"><a class="ui-button ui-button-small ui-button-green transfer" data-user-id="'
-                  + w.user_id + '" data-number="'
-                  + w.number + '" data-amount="'
-                  + w.amount + '" data-fee="'
-                  + w.fee + '">转账</a></span><span class="ui-list-title w60 ph5 fn-left"><a class="ui-button ui-button-small ui-button-green reject" data-user-id="'
-                  + w.user_id + '" data-number="'
-                  + w.number + '" data-amount="'
-                  + w.amount + '" data-fee="'
-                  + w.fee + '">拒绝</a></span><div class="ui-poptip fn-hide" id="tipCon" data-widget-cid="widget-2" style="z-index: 99; position: absolute; left: 320px; top: '
-                  + (i * 35 + 36).toString() + 'px; display: none;"><div class="ui-poptip-shadow"><div class="ui-poptip-container"><div class="ui-poptip-arrow ui-poptip-arrow-10"><em></em><span></span></div><div class="ui-poptip-content" data-role="content"><div class="fn-clear"><label class="font-nm w80 fn-left text-right">开户行</label><div class="w150 ph10 fn-left">'
-                  + w.branch + '</div></div><div class="fn-clear"><label class="font-nm w80 fn-left text-right">开户行所在地</label><div class="w150 ph10 fn-left">'
-                  + w.address + '</div></div><div class="fn-clear"><label class="font-nm w80 fn-left text-right">银行卡号</label><div class="w150 ph10 fn-left">'
-                  + w.number.replace(/\B(?=(\d{4})+(?!\d))/g, " ") + '</div></div><div class="fn-clear"><label class="font-nm w80 fn-left text-right">申请日期</label><div class="w150 ph10 fn-left">'
-                  + w.time + '</div></div></div></div></div></div></li>';
+
+                $('.transfer').click(function(event){
+                  if (confirm("确定转账吗？")) {
+                    var user_id = $(this).attr("data-user-id");
+                    var number = $(this).attr("data-number");
+                    var amount = $(this).attr("data-amount");
+                    var fee = $(this).attr("data-fee");
+                    var time = (new Date()).format("yyyy-MM-dd hh:mm:ss.S");
+                    $.getJSON( Drupal.settings.basePath + "api/m_set_withdraw?type=1&id=" + user_id + '&time=' + time + '&number=' + number + '&amount=' + amount + '&fee=' + fee, 
+                      function(d) {
+                        if (d.result == 1){
+                          location.reload();
+                        }
+                        else {
+                          alert( "设置出现问题，请重新设置。");
+                        }
+                    })
+                    .fail(function( jqxhr, textStatus, error ) {
+                      var err = textStatus + ", " + error;
+                      alert( "设置出现问题，请刷新页面。");
+                    });
+                  }
+                });
+
+                $('.reject').click(function(event){
+                  if (confirm("确定拒绝吗？")) {
+                    var user_id = $(this).attr("data-user-id");
+                    var number = $(this).attr("data-number");
+                    var amount = $(this).attr("data-amount");
+                    var fee = $(this).attr("data-fee");
+                    var time = (new Date()).format("yyyy-MM-dd hh:mm:ss.S");
+                    $.getJSON( Drupal.settings.basePath + "api/m_set_withdraw?type=0&id=" + user_id + '&time=' + time + '&number=' + number + '&amount=' + amount + '&fee=' + fee, 
+                      function(d) {
+                        if (d.result == 1){
+                          location.reload();
+                        }
+                        else {
+                          alert( "设置出现问题，请重新设置。");
+                        }
+                    })
+                    .fail(function( jqxhr, textStatus, error ) {
+                      var err = textStatus + ", " + error;
+                      alert( "设置出现问题，请刷新页面。");
+                    });
+                  }
+                });
               }
-              $('#withdrawapp-list-1').html(list_title + list);
-
-              $('.transfer').click(function(event){
-                if (confirm("确定转账吗？")) {
-                  var user_id = $(this).attr("data-user-id");
-                  var number = $(this).attr("data-number");
-                  var amount = $(this).attr("data-amount");
-                  var fee = $(this).attr("data-fee");
-                  var time = (new Date()).format("yyyy-MM-dd hh:mm:ss.S");
-                  $.getJSON( Drupal.settings.basePath + "api/m_set_withdraw?type=1&id=" + user_id + '&time=' + time + '&number=' + number + '&amount=' + amount + '&fee=' + fee, 
-                    function(d) {
-                      if (d.result == 1){
-                        location.reload();
-                      }
-                      else {
-                        alert( "设置出现问题，请重新设置。");
-                      }
-                  })
-                  .fail(function( jqxhr, textStatus, error ) {
-                    var err = textStatus + ", " + error;
-                    alert( "设置出现问题，请刷新页面。");
-                  });
-                }
-              });
-
-              $('.reject').click(function(event){
-                if (confirm("确定拒绝吗？")) {
-                  var user_id = $(this).attr("data-user-id");
-                  var number = $(this).attr("data-number");
-                  var amount = $(this).attr("data-amount");
-                  var fee = $(this).attr("data-fee");
-                  var time = (new Date()).format("yyyy-MM-dd hh:mm:ss.S");
-                  $.getJSON( Drupal.settings.basePath + "api/m_set_withdraw?type=0&id=" + user_id + '&time=' + time + '&number=' + number + '&amount=' + amount + '&fee=' + fee, 
-                    function(d) {
-                      if (d.result == 1){
-                        location.reload();
-                      }
-                      else {
-                        alert( "设置出现问题，请重新设置。");
-                      }
-                  })
-                  .fail(function( jqxhr, textStatus, error ) {
-                    var err = textStatus + ", " + error;
-                    alert( "设置出现问题，请刷新页面。");
-                  });
-                }
-              });
+              else {
+                $(list).append(empty);
+              }
             }
             else{ // checked
-              list_title = '<li class="ui-list-header color-gray-text fn-clear"><span class="ui-list-title w50 ph5 fn-left title">开户名</span><span class="ui-list-title w90 ph5 fn-left">提现金额</span><span class="ui-list-title w40 ph5 fn-left">费用</span><span class="ui-list-title w100 ph5 fn-left">银行</span><span class="ui-list-title w180 ph5 fn-left">卡号</span><span class="ui-list-title w80 ph5 fn-left">申请日期</span><span class="ui-list-title w80 ph5 fn-left">转账日期</span><span class="ui-list-field w40 ph5 fn-left">转账</span></li>';
-              for (var i = 0; i < d.withdraws.length; i++){
-                var w = d.withdraws[i];
-                list += '<li class="ui-list-item fn-clear';
-                if (i % 2 == 0){
-                  list += ' dark';
+              if (d.withdraws.length > 0) {
+                for (var i = 0; i < d.withdraws.length; i++){
+                  var w = d.withdraws[i];
+                  var div = div1.clone().css('top', (i * 35 + 36).toString() + 'px').append(div2.clone().append(div3.clone().append(div4.clone()).append(div5.clone()
+                    .append(div6.clone().append(label.clone().append('开户行')).append(div8.clone().append( w.branch)))
+                    .append(div6.clone().append(label.clone().append('开户行所在地')).append(div8.clone().append(w.address)))
+                    .append(div6.clone().append(label.clone().append('银行卡号')).append(div8.clone().append(w.number.replace(/\B(?=(\d{4})+(?!\d))/g, " "))))
+                    .append(div6.clone().append(label.clone().append('申请日期')).append(div8.clone().append(w.time)))
+                    .append(div6.clone().append(label.clone().append('转账日期')).append(div8.clone().append(w.done)))
+                    )));
+                  var row = li.clone()
+                    .append(span.clone().addClass('w50').append(a.clone().attr('href', Drupal.settings.basePath + 'user/' + w.user_id).append(w.name)))
+                    .append(span.clone().addClass('w90 text-right').append(w.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w40 text-right').append(w.fee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w100 text-center').append(map_id_name(banks, w.bank)))
+                    .append(span.clone().addClass('w180').append(w.number.replace(/\B(?=(\d{4})+(?!\d))/g, " ")))
+                    .append(span.clone().addClass('w80 text-center').append(w.time.slice(0,10)))
+                    .append(span.clone().addClass('w80 text-center').append(w.done.slice(0,10)))
+                    .append(span.clone().addClass('w40 text-center').append((w.is_done ? '是' : '否')))
+                    .append(div);
+                  if (i % 2 == 0){
+                    row.addClass('dark');
+                  }
+                  row.appendTo(list);
                 }
-                list += '"><span class="ui-list-field w50 ph5 fn-left"><a href="/user/'
-                  + w.user_id + '" target="_blank">' + w.name + '</a></span><span class="ui-list-field w90 ph5 fn-left text-right">'
-                  + w.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w40 ph5 fn-left text-right">'
-                  + w.fee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</span><span class="ui-list-field w100 ph5 fn-left text-center">'
-                  + map_id_name(banks, w.bank) + '</span><span class="ui-list-field w180 ph5 fn-left">'
-                  + w.number.replace(/\B(?=(\d{4})+(?!\d))/g, " ") + '</span><span class="ui-list-field w80 ph5 fn-left">'
-                  + w.time.slice(0, 10) + '</span><span class="ui-list-field w80 ph5 fn-left">'
-                  + w.done.slice(0, 10) + '</span><span class="ui-list-field w40 ph5 fn-left">'
-                  + (w.is_done ? '是' : '否') + '</span><div class="ui-poptip fn-hide" id="tipCon" data-widget-cid="widget-2" style="z-index: 99; position: absolute; left: 320px; top: '
-                  + (i * 35 + 36).toString() + 'px; display: none;"><div class="ui-poptip-shadow"><div class="ui-poptip-container"><div class="ui-poptip-arrow ui-poptip-arrow-10"><em></em><span></span></div><div class="ui-poptip-content" data-role="content"><div class="fn-clear"><label class="font-nm w80 fn-left text-right">开户行</label><div class="w230 ph10 fn-left">'
-                  + w.branch + '</div></div><div class="fn-clear"><label class="font-nm w80 fn-left text-right">开户行所在地</label><div class="w230 ph10 fn-left">'
-                  + w.address + '</div></div><div class="fn-clear"><label class="font-nm w80 fn-left text-right">银行卡号</label><div class="w230 ph10 fn-left">'
-                  + w.number.replace(/\B(?=(\d{4})+(?!\d))/g, " ") + '</div></div><div class="fn-clear"><label class="font-nm w80 fn-left text-right">申请日期</label><div class="w230 ph10 fn-left">'
-                  + w.time + '</div></div><div class="fn-clear"><label class="font-nm w80 fn-left text-right">转账日期</label><div class="w230 ph10 fn-left">'
-                  + w.done + '</div></div></div></div></div></div></li>';
               }
-              $('#withdrawapp-list-2').html(list_title + list);
+              else {
+                $(list).append(empty);
+              }
             }
 
             $(".ui-list-item").hover(function(event){
@@ -273,7 +217,7 @@
             }, function(event){
               $(this).find('.ui-poptip').hide();
             });
-
+          }
         })
         .fail(function( jqxhr, textStatus, error ) {
           var err = textStatus + ", " + error;
@@ -284,13 +228,23 @@
       $(window).trigger('hashchange');
 
       $(".ui-tab-item[data-name=checking]").click(function(event){
-        if (window.location.hash != "#type=1" && window.location.hash != ""){
-          window.location.hash = "#type=1";
+        if (window.location.hash.indexOf("#type=1") < 0 && window.location.hash != ""){
+          var current_page_type_1 = $("#withdrawapp-list-pagination-1").pagination('getCurrentPage');
+          if (current_page_type_1 > 1){
+            window.location.hash = "#type=1&page=" + current_page_type_1;
+          } else {
+            window.location.hash = "#type=1";  
+          }
         }
       });
       $(".ui-tab-item[data-name=checked]").click(function(event){
-        if (window.location.hash != "#type=2") {
-          window.location.hash = "#type=2";
+        if (window.location.hash.indexOf("#type=2") < 0){
+          var current_page_type_2 = $("#withdrawapp-list-pagination-2").pagination('getCurrentPage');
+          if (current_page_type_2 > 1){
+            window.location.hash = "#type=2&page=" + current_page_type_2;
+          } else {
+            window.location.hash = "#type=2";
+          }
         }
       });
 

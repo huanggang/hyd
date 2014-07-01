@@ -17,7 +17,7 @@
       
       $.getJSON( Drupal.settings.basePath + "api/loans", 
         function(d) {
-          if (d.result == 0){
+          if (d.result != null && d.result == 0){
             alert( "获取信息出现问题，请刷新页面。");
           }
           else {
