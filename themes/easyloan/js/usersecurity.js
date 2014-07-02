@@ -474,8 +474,8 @@ Drupal.behaviors.usersecurity = {
         $("#modMobileByPhoneStepTwoForm").submit();
         return; 
       }
-
-      $('#getMobileCode').prop('disabled', true).addClass('ui-button-disabled');
+      var getMobileCodeBtn = $("#getMobileCode");
+      getMobileCodeBtn.prop('disabled', true).addClass('ui-button-disabled');
 
       $.post(
         Drupal.settings.basePath + 'api/security', 
@@ -484,7 +484,7 @@ Drupal.behaviors.usersecurity = {
           type: 5,
         },
         function(d) {
-          var getMobileCodeBtn = $("#getMobileCode");
+          
           if (d.result==1) {
             var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功发送，请注意查收验证码。</span>');
             getMobileCodeBtn.after(msg.delay(1000).fadeOut().queue(

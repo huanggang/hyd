@@ -14,25 +14,21 @@ Drupal.behaviors.valid_methods = {
 	      }
 	      return !0
 	    }
-	/*
-	    $.validator.addMethod("isIdCardNo", function (value, element) {
-	        return this.optional(element) || isIdCardNo(value);
-	    }, "请正确输入您的身份证号码");
-	*/
+
     $.validator.addMethod("isRealName", function (value, element) {
-        return /^[\u4E00-\u9FA5]+$/.test(value);
+        return this.optional(element) || /^[\u4E00-\u9FA5]+$/.test(value);
     }, "包含非法字符");
 
     $.validator.addMethod("isIdCardNo", function (value, element) {
-      if (18 != value.length) return !1;
+      if (18 != value.length) return this.optional(element) || !1;
       var b;
-      if (b = /^\d{17}(\d|x|X)$/, !b.exec(value)) return !1;
-      if (!isDate(value.substring(6, 10), value.substring(10, 12), value.substring(12, 14))) return !1;
+      if (b = /^\d{17}(\d|x|X)$/, !b.exec(value)) return this.optional(element) || !1;
+      if (!isDate(value.substring(6, 10), value.substring(10, 12), value.substring(12, 14))) return this.optional(element) || !1;
 
       for (var c = ["1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"], 
               d = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1], 
               f = 0, g = 0; g < value.length - 1; g++) f += value.substring(g, g + 1) * d[g];
-      return f %= 11, value.substring(value.length - 1, value.length).toUpperCase() != c[f] ? !1 : !0
+      return this.optional(element) || (f %= 11, value.substring(value.length - 1, value.length).toUpperCase() != c[f] ? !1 : !0)
 
     }, "请输入正确的二代身份证号码");
 	/*
@@ -48,7 +44,7 @@ Drupal.behaviors.valid_methods = {
     $.validator.addMethod("isMobile", function(value, element) {
       var length = value.length;
       var mobile = /^1[3458]\d{9}$/;
-      return length == 11 && mobile.exec(value);
+      return this.optional(element) || length == 11 && mobile.exec(value);
     }, "请正确填写您的手机号码");
   }
 };

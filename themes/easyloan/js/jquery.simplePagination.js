@@ -140,6 +140,14 @@
 			methods._draw.call(this);
 		},
 
+		updatePrefix: function (newPrefix) {
+			var o = this.data('pagination');
+			o.hrefTextPrefix = newPrefix;
+			o.pages = methods._getPages(o);
+			this.data('pagination', o);
+			methods._draw.call(this);
+		},
+
 		updateItemsOnPage: function (itemsOnPage) {
 			var o = this.data('pagination');
 			o.itemsOnPage = itemsOnPage;
