@@ -50,8 +50,17 @@
           function(d) {
             if (d.result==1) {
               dialogGuiding();
-              // open a new window, which redirect to the recharge page of the third party
 
+              // open a new window, which redirect to the recharge page of the third party
+              var form = $('<form />').attr('method', 'post').attr('target', '_blank').attr('action', Drupal.settings.basePath + 'chinabank/send').attr('id', 'bankform').attr('name', 'bankform');
+              var field1 = $('<input />').attr('type', 'hidden').attr('name', 'bank').attr('value', bankid);
+              var field2 = $('<input />').attr('type', 'hidden').attr('name', 'amount').attr('value', amount);
+              var field3 = $('<input />').attr('type', 'hidden').attr('name', 'fee').attr('value', fee);
+              $('body').append(form.append(field1).append(field2).append(field3));
+              $('#bankform').submit();
+            }
+            else{
+              alert( "后台验证出现问题，请刷新页面" );
             }
           }, "json"
         )

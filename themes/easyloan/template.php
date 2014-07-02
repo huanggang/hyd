@@ -131,6 +131,10 @@ function easyloan_theme() {
         'path'     => $path . '/borrow',
         'template' => 'else-apply',),
 
+    'chinabank-send' => array(
+        'path'     => $path . '/chinabank',
+        'template' => 'send',),
+
     'account-recharge' => array(
         'path'     => $path . '/account',
         'template' => 'recharge',),

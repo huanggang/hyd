@@ -25,6 +25,12 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/chinabank_receive'] = array(
+    'page callback'   => 'chinabank_receive', 
+    'access callback' => TRUE,
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/chinabank_receive.php',
+  );
   $items['api/transaction_summary'] = array(
     'page callback'   => 'transaction_summary', 
     'access callback' => 'authenticated_access',
@@ -182,6 +188,14 @@ function easyloan_menu() {
     'file'            => 'api/account_status.php',
   );
 
+  // recharge bank
+  $items['chinabank/send'] = array(
+    'title'           => t('在线支付接口'), 
+    'page callback'   => 'menu_callback', 
+    'page arguments'  => array('chinabank_send'), 
+    'access callback' => 'authenticated_access', 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
 
   // real menus
   $items['invest'] = array(
@@ -208,7 +222,7 @@ function easyloan_menu() {
     'title'           => t('房屋商铺抵押申请'), 
     'page callback'   => 'menu_callback', 
     'page arguments'  => array('borrow_estate_apply'), 
-    'access callback' => TRUE, 
+    'access callback' => 'authenticated_access', 
     'type'            => MENU_NORMAL_ITEM, 
   );
   $items['borrow/car'] = array(
@@ -222,7 +236,7 @@ function easyloan_menu() {
     'title'           => t('机动车抵押申请'), 
     'page callback'   => 'menu_callback', 
     'page arguments'  => array('borrow_car_apply'),
-    'access callback' => TRUE, 
+    'access callback' => 'authenticated_access', 
     'type'            => MENU_NORMAL_ITEM, 
   );
   $items['borrow/gold'] = array(
@@ -236,7 +250,7 @@ function easyloan_menu() {
     'title'           => t('黄金抵押申请'), 
     'page callback'   => 'menu_callback', 
     'page arguments'  => array('borrow_gold_apply'),
-    'access callback' => TRUE, 
+    'access callback' => 'authenticated_access', 
     'type'            => MENU_NORMAL_ITEM, 
   );
   $items['borrow/credit'] = array(
@@ -250,7 +264,7 @@ function easyloan_menu() {
     'title'           => t('信用贷申请'), 
     'page callback'   => 'menu_callback', 
     'page arguments'  => array('borrow_credit_apply'),
-    'access callback' => TRUE, 
+    'access callback' => 'authenticated_access', 
     'type'            => MENU_NORMAL_ITEM, 
   );
   $items['borrow/else'] = array(
@@ -264,7 +278,7 @@ function easyloan_menu() {
     'title'           => t('其他抵押申请'), 
     'page callback'   => 'menu_callback', 
     'page arguments'  => array('borrow_else_apply'),
-    'access callback' => TRUE, 
+    'access callback' => 'authenticated_access', 
     'type'            => MENU_NORMAL_ITEM, 
   );
   $items['notfound'] = array( 
@@ -887,6 +901,9 @@ function menu_callback($menu, $param = ''){
     case 'borrow_else_apply':
       return theme('borrow-else-apply', $content);
   
+    case 'chinabank_send':
+      return theme('chinabank-send', $content);
+
     default:
       # code...
       return theme('notfound', $content);
