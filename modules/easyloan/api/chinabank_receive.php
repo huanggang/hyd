@@ -5,6 +5,7 @@ function chinabank_receive(){
   include_once 'util_global.php';
   include_once 'util_compute_fine.php';
   include_once 'util_compute_average_interest_rate.php';
+  include_once 'util_hyd_log.php';
 
 //****************************************  //MD5密钥要跟订单提交页相同，如Send.asp里的 key = "test" ,修改""号内 test 为您的密钥
                                             //如果您还没有设置MD5密钥请登陆我们为您提供商户后台，地址：https://merchant3.chinabank.com.cn/
@@ -39,6 +40,11 @@ function chinabank_receive(){
       //商户系统的逻辑处理（例如判断金额，判断支付状态，更新订单状态等等）......
       list($uid, $bank) = split(';', $remark1);
       list($amount, $fee) = split(';', $remark2);
+      $v_amount = intval($v_amount);
+      $amount = intval($amount);
+      $fee = intval($fee);
+      $uid = intval($uid);
+      $bank = intval($bank);
       if ($v_amount == ($amount + $fee)){
         $con=mysqli_connect($db_host, $db_user, $db_pwd, $db_name);
         // Check connection
@@ -48,9 +54,29 @@ function chinabank_receive(){
           exit;
         }
         mysqli_set_charset($con, "UTF8");
-        echo save($con, $uid, $bank, $amount, $fee);
+
+        $json = save($con, $uid, $bank, $amount, $fee);
+        mysqli_kill($con, mysqli_thread_id($con));
+        mysqli_close($con);
+
+        $obj = json_decode($json);
+        $result = $obj->{'result'};
+        if ($result == '1')
+        {
+          echo "成功";
+        }
+        else
+        {
+          hyd_log(new DateTime, 0, 'account_recharge', 'chinabank_receive - save($con, $uid, $bank, $amount, $fee)', '$uid='.strval($usr_id).',$bank='.strval($bank).',$amount='.strval($amount).',$fee='.strval($fee));
+          echo "保存失败";
+        }
       }
-    } 
+      else
+      {
+        hyd_log(new DateTime, 0, 'account_recharge', 'chinabank_receive - illegal fee', '$uid='.strval($usr_id).',$bank='.strval($bank).',$v_amount='.strval($v_amount).'$amount='.strval($amount).',$fee='.strval($fee));
+        echo "非法金额手续费";
+      }
+    }
     else
     {
       echo "支付失败";

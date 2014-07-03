@@ -130,7 +130,7 @@ function update_account($id)
             $act_trn_owned += $act_ln_n_amount;
             $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 8, ".sqlstrval($act_ln_n_amount).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
           }
-          $days = (new DateTime($act_ln_n_date))->diff($today)->days;
+          $days = str2date($act_ln_n_date)->diff($today)->days;
           if ($days > 0)
           {
             $delta_fine = compute_fine($act_trn_owned, $act_trn_fine, $lns_fine_rate, $lns_fine_rate_is_single, $days);
@@ -171,7 +171,7 @@ function update_account($id)
             $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 8, ".sqlstrval($act_ln_n_amount).", ".sqlstrval($act_trn_available).", ".sqlstrval($act_trn_owned).", 0, NULL)") != false);
           }
           // check if there are days passed $act_ln_n_date
-          $days = (new DateTime($act_ln_n_date))->diff($today)->days;
+          $days = str2date($act_ln_n_date)->diff($today)->days;
           if ($days > 0)
           {
             $delta_fine = compute_fine($act_mny_owned, $act_mny_fine, $lns_fine_rate, $lns_fine_rate_is_single, $days);
@@ -196,7 +196,7 @@ function update_account($id)
       if ($act_mny_is_owned)
       {
         $is_owned = true;
-        $days = (new DateTime($act_mny_updated))->diff($today)->days;
+        $days = str2date($act_mny_updated)->diff($today)->days;
         if ($days > 0)
         {
           $delta_fine = compute_fine($act_mny_owned, $act_mny_fine, $lns_fine_rate, $lns_fine_rate_is_single, $days);

@@ -193,6 +193,13 @@
           location.reload();
         });
 
+        $('.ui-dialog-close').click(function(){
+          $('.ui-mask').remove();
+          $('.ui-dialog').remove();
+
+          location.reload();
+        })
+
       }
 
     }

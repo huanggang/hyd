@@ -218,7 +218,7 @@ function manage_set_withdraw(){
               $inv_fine = $row['inv_fine'];
               mysqli_free_result($result);
 
-              $days = (new DateTime($hyd_ln_updated))->diff($today)->$days;
+              $days = str2date($hyd_ln_updated)->diff($today)->days;
               if ($days > 0)
               {
                 $fine_new = compute_fine($hyd_ln_w_owned, $hyd_ln_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
@@ -255,7 +255,7 @@ function manage_set_withdraw(){
                     $act_invs_updated = $row1['act_invs_updated'];
                     mysqli_free_result($result1);
 
-                    $days = (new DateTime($act_invs_updated))->diff($today)->$days;
+                    $days = str2date($act_invs_updated)->diff($today)->days;
                     if ($days > 0)
                     {
                       $delta_fine_new = compute_fine($act_invs_w_owned, $act_invs_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
@@ -321,7 +321,7 @@ function manage_set_withdraw(){
                   $act_invs_updated = $row1['act_invs_updated'];
                   mysqli_free_result($result1);
 
-                  $days = (new DateTime($act_invs_updated))->diff($today)->$days;
+                  $days = str2date($act_invs_updated)->diff($today)->days;
                   if ($days > 0)
                   {
                     $delta_fine_new = compute_fine($act_invs_w_owned, $act_invs_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);

@@ -131,6 +131,27 @@ function str2datetime($str, $default = null)
   return $value;
 }
 
+// convert string to date with default value
+function str2date($str, $default = null)
+{
+  if (!is_null($str) && strlen($str) != 0)
+  {
+    try
+    {
+      $value = new DateTime((new DateTime($str))->format("Y-m-d"));
+    }
+    catch (Exception $e)
+    {
+      $value = $default;
+    }
+  }
+  else
+  {
+    $value = $default;
+  }
+  return $value;
+}
+
 // check if the current time (now) is in the rage: $start - $end
 function is_now_valid($start, $end)
 {

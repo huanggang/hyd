@@ -170,7 +170,7 @@ function update_hyd($app_id)
         $repay_amount = $temp_owned - $hyd_ln_w_owned;
         if ($hyd_ln_w_owned > 0)
         {
-          $days = (new DateTime($hyd_ln_n_date))->diff($today)->days;
+          $days = str2date($hyd_ln_n_date)->diff($today)->days;
           if ($days > 0)
           {
             $delta_fine = compute_fine($hyd_ln_w_owned, $hyd_ln_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
@@ -234,7 +234,7 @@ function update_hyd($app_id)
           $act_invs_w_owned += $act_invs_n_amount + $act_invs_n_interest - $act_repay_amount;
           if ($act_invs_w_owned > 0)
           {
-            $days = (new DateTime($hyd_ln_n_date))->diff($today)->days;
+            $days = str2date($hyd_ln_n_date)->diff($today)->days;
             if ($days > 0)
             {
               $delta_fine = compute_fine($act_invs_w_owned, $act_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
@@ -301,7 +301,7 @@ function update_hyd($app_id)
       if ($hyd_ln_w_owned > 0)
       {
         $is_owned = true;
-        $days = (new DateTime($hyd_ln_updated))->diff($today)->days;
+        $days = str2date($hyd_ln_updated)->diff($today)->days;
         if ($days > 0)
         {
           $delta_fine = compute_fine($hyd_ln_w_owned, $hyd_ln_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
@@ -334,7 +334,7 @@ function update_hyd($app_id)
           $act_fine = $act_invs_w_fine;
           if ($act_invs_w_owned > 0)
           {
-            $days = (new DateTime($act_invs_updated))->diff($today)->days;
+            $days = str2date($act_invs_updated)->diff($today)->days;
             if ($days > 0)
             {
               $delta_fine = compute_fine($act_invs_w_owned, $act_invs_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);

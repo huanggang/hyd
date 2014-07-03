@@ -25,6 +25,10 @@ global $base_url;
   $remark1 = strval($user->uid).";".strval($bank);                 //备注字段1
   $remark2 = strval($amount).";".strval($fee);                     //备注字段2
 
+  // for testing only
+  // $v_pstatus = "20";
+  // $md5string=strtoupper(md5($v_oid.$v_pstatus.$v_amount.$v_moneytype.$key));
+
   drupal_add_js('window.onload = function(){document.E_FORM.submit();}', 'inline');
 ?>
 <div class="pg-loan" id="pg-loan">
@@ -42,12 +46,26 @@ global $base_url;
           <input type="hidden" name="v_url"         value="<?php echo $v_url;?>">
           <input type="hidden" name="v_md5info"     value="<?php echo $v_md5info;?>">
          
-          <!--以下几项项为网上支付完成后，随支付反馈信息一同传给信息接收页 --> 
-          
           <input type="hidden" name="remark1"       value="<?php echo $remark1;?>">
           <input type="hidden" name="remark2"       value="<?php echo $remark2;?>">
 
         </form>
+
+        <!-- for testing -->
+        <!--form method="post" name="E_FORM" action="<?php echo $v_url; ?>">
+          <input type="hidden" name="v_oid"         value="<?php echo $v_oid;?>">
+          <input type="hidden" name="v_pmode"       value="借记卡">
+          <input type="hidden" name="v_pstatus"     value="<?php echo $v_pstatus;?>">
+          <input type="hidden" name="v_pstring"     value="OK">
+          <input type="hidden" name="v_amount"      value="<?php echo $v_amount;?>">
+          <input type="hidden" name="v_moneytype"   value="<?php echo $v_moneytype;?>">
+         
+          <input type="hidden" name="remark1"       value="<?php echo $remark1;?>">
+          <input type="hidden" name="remark2"       value="<?php echo $remark2;?>">
+
+          <input type="hidden" name="v_md5str"      value="<?php echo $md5string;?>">
+
+        </form-->
       </div>
     </div>
   </div>
