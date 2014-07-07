@@ -25,6 +25,12 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/m_notices'] = array(
+    'page callback'   => 'manage_notices', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_notices.php',
+  );
   $items['api/chinabank_receive'] = array(
     'page callback'   => 'chinabank_receive', 
     'access callback' => TRUE,
