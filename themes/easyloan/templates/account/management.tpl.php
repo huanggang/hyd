@@ -36,7 +36,7 @@ global $base_url;
         <span class="ui-list-title w95 fn-left balance">账户欠款</span>
         <span class="ui-list-title w95 fn-left note">冻结资金</span>
         <span class="ui-list-title w140 fn-left note ui-list-title-sortable sortable" id="registerSort">注册时间</span>
-        <span class="ui-list-title w140 fn-left note ui-list-title-sortable sortable" id="loginSort">登陆时间</span>
+        <span class="ui-list-title w140 fn-left note ui-list-title-sortable sortable" id="loginSort">登录时间</span>
       </li>
     </ul>
     <div class="fn-left mt10 fn-hide">共<span id="users-total">0</span>条</div>
