@@ -5,7 +5,7 @@ Drupal.behaviors.manage_users = {
   attach: function(context, settings) {
 
     var max_pages = 50;
-    var per_page = 2;
+    var per_page = 20;
     var display_pages = 7;
     var max_items = max_pages * per_page;
     var pagination = '#users-list-pagination';
