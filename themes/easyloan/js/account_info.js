@@ -86,7 +86,7 @@ Drupal.behaviors.account_info = {
           $("#amount_fine_0").html(f(d.amount_fine));
           $("#amount_investment").html(f(d.amount_investment));
           $("#amount_loaned").html(f(d.amount_loaned));
-          $("#amount_available").html(f(d.amount_available));
+          $("#amount_available_0").html(f(d.amount_available));
           $("#amount_interest").html(f(d.amount_interest));
 
           $("#i_interest").html(f(d.investment.interest));
@@ -120,12 +120,12 @@ Drupal.behaviors.account_info = {
             $('#icon-email').addClass('light').children().addClass('light').attr('title', user.email);
           }
 
-      $('#education').html(getJsonValueById(user.education, educations));
-      $('#marital').html(getJsonValueById(user.marital, marital_status));
-      $('#province').html(getJsonValueById(user.province, provinces));
-      $('#address').html(user.address);
-      $('#dob').html(user.dob);
-      getCity(user.province, user.city);
+          $('#education').html(getJsonValueById(user.education, educations));
+          $('#marital').html(getJsonValueById(user.marital, marital_status));
+          $('#province').html(getJsonValueById(user.province, provinces));
+          $('#address').html(user.address);
+          $('#dob').html(user.dob);
+          getCity(user.province, user.city);
 
           $("#amount_total").html(f(user.amount_total));
           $("#amount_available").html(f(user.amount_available));
@@ -138,7 +138,6 @@ Drupal.behaviors.account_info = {
           $("#amount_fine_0").html(f(user.amount_fine));
           $("#amount_investment").html(f(user.amount_investment));
           $("#amount_loaned").html(f(user.amount_loaned));
-          $("#amount_available").html(f(user.amount_available));
           $("#amount_interest").html(f(user.amount_interest));
 
           $("#i_interest").html(f(user.inv_interest));

@@ -41,16 +41,7 @@ $lo_url = $is_my_page ? $base_url . '/loan_management' : '#';
 var uid = <?php print $current_user->uid; ?>;
 var is_my_page = <?php print $is_my_page? "true":"false"; ?>;
 </script>
-<script>
-(function ($, Drupal, window, document, undefined) {
-// To understand behaviors, see https://drupal.org/node/756722#behaviors 
-Drupal.behaviors.tip = {
-  attach: function(context, settings) {
-  //$('#tips_1').powerTip({ placement: 'e' });
-  }
-};
-})(jQuery, Drupal, this, this.document);
-</script>
+
 <div class="grid_10">
 <div class="ui-poptip fn-hide" id="tipCon_3" style="position: absolute; left: 260px; top: 156px; display: block;">
   <div class="ui-poptip-shadow">
@@ -95,7 +86,7 @@ Drupal.behaviors.tip = {
       <div class="surplus fn-clear">
         <span class="fn-left text-l mr10">账户余额</span>
         <span class="fn-left num-xl color-orange-text">
-          <em id="amount_available_0">0.00</em>
+          <em id="amount_available_0"></em>
         </span>
         <?php if ($is_my_page){ ?>
         <a class="fn-left ui-button ui-button-green ui-button-mid mr4" href="<?php print $base_url;?>/capital_management/recharge">充值</a>
@@ -109,20 +100,20 @@ Drupal.behaviors.tip = {
         <div class="fn-left mr30">
           <span class="fn-left text mr10">冻结金额</span>
           <span class="fn-left num last">
-            <em id="amount_frozen_0">0.00</em>
+            <em id="amount_frozen_0"></em>
           </span>
         </div>
       <?php } ?>
         <div class="fn-left mr30">
           <span class="fn-left text mr10">账户欠款</span>
           <span class="fn-left num">
-            <em id="amount_owned_0">0.00</em>
+            <em id="amount_owned_0"></em>
           </span>
         </div>
         <div class="fn-left last">
           <span class="fn-left text mr10">欠款罚金</span>
           <span class="fn-left num last">
-            <em id="amount_fine_0">0.00</em>
+            <em id="amount_fine_0"></em>
           </span>
         </div>
       </div>
@@ -148,56 +139,56 @@ Drupal.behaviors.tip = {
   <div class="fn-left text-center">
     <h5>账户净资产</h5>
     <p class="num-l">
-      <em id="amount_total">0.00</em>
+      <em id="amount_total"></em>
     </p>
   </div>
   <div class="fn-left symbol">=</div>
   <div class="fn-left text-center">
     <h5>投资金额</h5>
     <p class="num-l">
-      <em id="amount_investment">0.00</em>
+      <em id="amount_investment"></em>
     </p>
   </div>
   <div class="fn-left symbol">+</div>
   <div class="fn-left text-center">
     <h5>冻结金额</h5>
     <p class="num-l">
-      <em id="amount_frozen">0.00</em>
+      <em id="amount_frozen"></em>
     </p>
   </div>
   <div class="fn-left symbol">+</div>
   <div class="fn-left text-center">
     <h5>账户余额</h5>
     <p class="num-l">
-      <em id="amount_available">0.00</em>
+      <em id="amount_available"></em>
     </p>
   </div>
   <div class="fn-left symbol">-</div>
   <div class="fn-left text-center">
     <h5>待还本金</h5>
     <p class="num-l rrdcolor-red-text">
-      <em id="amount_loaned">-0.00</em>
+      <em id="amount_loaned"></em>
     </p>
   </div>
   <div class="fn-left symbol">-</div>
   <div class="fn-left text-center">
     <h5>待付利息</h5>
     <p class="num-l rrdcolor-red-text">
-      <em id="amount_interest">-0.00</em>
+      <em id="amount_interest"></em>
     </p>
   </div>
   <div class="fn-left symbol">-</div>
   <div class="fn-left text-center">
     <h5>账户欠款</h5>
     <p class="num-l rrdcolor-red-text">
-      <em id="amount_owned">-0.00</em>
+      <em id="amount_owned"></em>
     </p>
   </div>
   <div class="fn-left symbol">-</div>
   <div class="fn-left text-center">
     <h5>欠款罚金</h5>
     <p class="num-l rrdcolor-red-text">
-      <em id="amount_fine">-0.00</em>
+      <em id="amount_fine"></em>
     </p>
   </div>
 </div>
@@ -211,12 +202,10 @@ Drupal.behaviors.tip = {
       <span class="ui-list-title fn-left color-gray-text w240">已结束投资总逾期罚金</span>
       <span class="ui-list-title fn-left color-gray-text w220">已结束投资加权平均年收益</span>
     </li>
-    
-
     <li class="ui-list-item fn-clear">
-      <span class="ui-list-field fn-left num-s text-center w220 pr20"><em id="i_interest">0.00</em></span>
-      <span class="ui-list-field fn-left num-s text-center w220 pr20"><em id="i_fine">0.00</em></span>
-      <span class="ui-list-field fn-left num-s text-center w200 pr20"><em id="i_rate">0.0</em>%</span>
+      <span class="ui-list-field fn-left num-s text-center w220 pr20"><em id="i_interest"></em></span>
+      <span class="ui-list-field fn-left num-s text-center w220 pr20"><em id="i_fine"></em></span>
+      <span class="ui-list-field fn-left num-s text-center w200 pr20"><em id="i_rate"></em>%</span>
     </li>
   </ul>
 </div>
@@ -249,20 +238,20 @@ Drupal.behaviors.tip = {
 
 <li class="ui-list-item fn-clear">
 <?php if ($is_my_page){ ?>
-  <span class="ui-list-field fn-left num-s text-center w100 pr10 pl10"><em id="w_amount">0.00</em></span>
-  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="w_interest">0.00</em></span>
-  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="w_owned">0.0</em></span>
-  <span class="ui-list-field fn-left num-s text-center w100 pr20"><em id="w_fine">0.0</em></span>
-  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="l_interest">0.00</em></span>
-  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="l_fine">0.00</em></span>
-  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="l_rate">0.0</em>%</span>
+  <span class="ui-list-field fn-left num-s text-center w100 pr10 pl10"><em id="w_amount"></em></span>
+  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="w_interest"></em></span>
+  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="w_owned"></em></span>
+  <span class="ui-list-field fn-left num-s text-center w100 pr20"><em id="w_fine"></em></span>
+  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="l_interest"></em></span>
+  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="l_fine"></em></span>
+  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="l_rate"></em>%</span>
   <!--span class="ui-list-field fn-left text-center w100 last"><a href="#">查看</a></span-->
 <?php } else { ?>
-  <span class="ui-list-field fn-left num-s text-center w90 pl10 pr10"><em id="w_amount">0.00</em></span>
-  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="w_interest">0.00</em></span>
-  <span class="ui-list-field fn-left num-s text-center w180 pr20"><em id="l_interest">0.00</em></span>
-  <span class="ui-list-field fn-left num-s text-center w180 pr20"><em id="l_fine">0.00</em></span>
-  <span class="ui-list-field fn-left num-s text-center w150 pr20"><em id="l_rate">0.0</em>%</span>
+  <span class="ui-list-field fn-left num-s text-center w90 pl10 pr10"><em id="w_amount"></em></span>
+  <span class="ui-list-field fn-left num-s text-center w80 pr20"><em id="w_interest"></em></span>
+  <span class="ui-list-field fn-left num-s text-center w180 pr20"><em id="l_interest"></em></span>
+  <span class="ui-list-field fn-left num-s text-center w180 pr20"><em id="l_fine"></em></span>
+  <span class="ui-list-field fn-left num-s text-center w150 pr20"><em id="l_rate"></em>%</span>
 <?php } ?>
 </li>
 
