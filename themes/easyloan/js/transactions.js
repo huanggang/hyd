@@ -28,11 +28,12 @@
             alert( "获取信息出现问题，请刷新页面。");
           }
           else {
-            $('#total').text((d.available + d.frozen).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $('#available').text(d.available.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $('#frozen').text(d.frozen.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $('#savings').text(d.sv_amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $('#withdraws').text(d.wth_amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            $('#sv_fee').text(d.sv_fee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            $('#wth_fee').text(d.wth_fee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
           }
       })
       .fail(function( jqxhr, textStatus, error ) {
