@@ -25,6 +25,18 @@ function easyloan_permission() {
 */
 function easyloan_menu() { 
   // api function calls
+  $items['api/m_owned_user'] = array(
+    'page callback'   => 'manage_owned_user', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_owned_user.php',
+  );
+  $items['api/m_owned_users'] = array(
+    'page callback'   => 'manage_owned_users', 
+    'access callback' => 'authenticated_access',
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/manage_owned_users.php',
+  );
   $items['api/m_notices'] = array(
     'page callback'   => 'manage_notices', 
     'access callback' => 'authenticated_access',
@@ -774,7 +786,7 @@ function menu_callback($menu, $param = ''){
     case 'management_applications':
       return theme('management-applications', $content);
     case 'management_accountsindebt':
-      if (intval($param) > 0) {
+      if ($param=='detail'){
         return theme('management-accountsindebt-detail', $content);
       } else {
         return theme('management-accountsindebt', $content);

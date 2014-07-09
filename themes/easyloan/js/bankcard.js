@@ -122,7 +122,7 @@
                   else {
                     alert( "后台出现问题，请稍后重试" );
                   }
-              })
+              }, "json")
               .fail(function( jqxhr, textStatus, error ) {
                 var err = textStatus + ", " + error;
                 alert( "网络出现问题，请重新刷新页面。");

@@ -16,17 +16,19 @@ drupal_add_js($theme_path . '/js/transactions.js');
 <div class="fn-clear p20bs color-orange-bg">
   <div class="fn-left box-summary-left">
     <h3 class="text-xl">账户余额</h3>
-    <p class="num color-orange-text"><em id="total"></em>元</p>
+    <p class="num color-orange-text"><em id="available"></em>元</p>
+    <h3 class="text-xl">冻结资金</h3>
+    <p class="num color-orange-text"><em id="frozen"></em>元</p>
   </div>
   <div class="fn-left box-summary-right last mt10">
     <div class="fn-clear color-dimgray-text">
       <div class="grid_2 alpha">
-        <h5 class="text-big">可用资金</h5>
-        <p class="num-s"><em id="available"></em>元</p>
-      </div>
-      <div class="grid_2">
         <h5 class="text-big">已充值总额</h5>
         <p class="num-s"><em id="savings"></em>元</p>
+      </div>
+      <div class="grid_2">
+        <h5 class="text-big">充值总费用</h5>
+        <p class="num-s"><em id="sv_fee"></em>元</p>
       </div>
       <div class="grid_2 omega">
         <a class="summary-button ui-button ui-button-small ui-button-green" href="<?php print $base_url;?>/capital_management/recharge">充值</a>
@@ -35,12 +37,12 @@ drupal_add_js($theme_path . '/js/transactions.js');
     <hr class="mt10">
     <div class="fn-clear color-dimgray-text mt10">
       <div class="grid_2 alpha">
-        <h5 class="text-big">冻结资金</h5>
-        <p class="num-s"><em id="frozen"></em>元</p>
-      </div>
-      <div class="grid_2">
         <h5 class="text-big">已提现总额</h5>
         <p class="num-s"><em id="withdraws"></em>元</p>
+      </div>
+      <div class="grid_2">
+        <h5 class="text-big">提现总费用</h5>
+        <p class="num-s"><em id="wth_fee"></em>元</p>
       </div>
       <div class="grid_2 omega">
         <a class="summary-button ui-button ui-button-small ui-button-blue" href="<?php print $base_url;?>/capital_management/withdraw">提现</a>
