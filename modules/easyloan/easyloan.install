@@ -215,54 +215,69 @@ function _installed_fields($type) {
   		$fields = array(
 	    // date field (date module required)
 		'explanation_group' => array(
-		'field_name'        => 'explanation_group',
-		'type'              => 'taxonomy_term_reference',
-		'label'             => $t('分组标签'),
-		'cardinality'       => 1,
-		'settings' 			=> array(
-				'allowed_values' => array(
-					array(
-					'vocabulary' => 'help',
-					'parent'     => 0
+			'field_name'        => 'explanation_group',
+			'type'              => 'taxonomy_term_reference',
+			'label'             => $t('分组标签'),
+			'cardinality'       => 1,
+			'settings' 			=> array(
+					'allowed_values' => array(
+						array(
+						'vocabulary' => 'help',
+						'parent'     => 0
+					)
 				)
 			)
-		)
   	      ),
 	  	);
 
 	  return $fields;
   	case 'slideshow':
   		$fields = array(
-	    'field_img' => array(
-	      'field_name'   => 'field_img',
-	      'label'        => $t('幻灯片图片'),
-	      'cardinality'  => 1,
-	      'type'         => 'image', // image_image
-	    ),
-	    'field_link' => array(
-	      'field_name'   => 'field_link',
-	      'label'        => $t('链接'),
-	      'cardinality'  => 1,
-	      'type'         => 'link_field', // link_field
-	    ),
+		    'field_img' => array(
+		      'field_name'   => 'field_img',
+		      'label'        => $t('幻灯片图片'),
+		      'cardinality'  => 1,
+		      'type'         => 'image', // image_image
+		    ),
+		    'field_link' => array(
+		      'field_name'   => 'field_link',
+		      'label'        => $t('链接'),
+		      'cardinality'  => 1,
+		      'type'         => 'link_field', // link_field
+		    ),
 	  );
 	  return $fields;
 	case 'guide':
   		$fields = array(
-	    'field_group' => array(
-	      'field_name'   => 'field_group',
-	      'label'        => $t('标签'),
-	      'cardinality'  => 1,
-	      'type'         => 'taxonomy_term_reference',
-	      'settings' 	 => array(
-				'allowed_values' => array(
-					array(
-					'vocabulary' => 'help',
-					'parent'     => 0
-				)
-			)
-		)
-	    ),
+
+		    'field_group' => array(
+		      'field_name'   => 'field_group',
+		      'label'        => $t('标签'),
+		      'cardinality'  => 1,
+		      'type'         => 'taxonomy_term_reference',
+		      'settings' 	 => array(
+					'allowed_values' => array(
+						array(
+							'vocabulary' => 'help',
+							'parent'     => 0
+						)
+					)
+				),
+	      	),
+
+		    'field_invest_img' => array(
+				'field_name'   => 'field_invest_img',
+				'label'        => $t('新手指导-图片'),
+				'cardinality'  => 1,
+				'type'         => 'image', // image_image
+			),
+
+			'field_weight' => array(
+				'field_name'   => 'field_weight',
+				'label'        => $t('权重'),
+				'cardinality'  => 1,
+				'type'         => 'number_integer',
+	    	),
 	  );
 	  return $fields;
   	default:
@@ -351,22 +366,43 @@ function _installed_instances($type) {
 	  return $instances;
   	case 'guide':
 		$instances = array(
-		'field_group' => array(
-	      'field_name'   => 'field_group',
-	      'label'        => $t('标签'),
-			'required' => TRUE,
-		    'widget' => array(
-		      'type' => 'options_select',
-		      'weight' => -10,
-		    )
-	      ),
+
+			'field_group' => array(
+		      'field_name'   => 'field_group',
+		      'label'        => $t('标签'),
+				'required' => TRUE,
+			    'widget' => array(
+			      'type' => 'options_select',
+			      'weight' => -10,
+			    )
+		    ),
+
+			'field_invest_img' => array(
+		      'field_name'  => 'field_invest_img',
+		      'label'       => $t('新手指导-图片'),
+		      'required' => TRUE,
+		      'cardinality' => 1,
+		      'widget'      => array(
+		        'type'       => 'image_image',
+		      ),
+		    ),
+
+	    	'field_weight' => array(
+				'field_name'   => 'field_weight',
+				'required' => TRUE,
+				'label'        => $t('权重'),
+				'cardinality'  => 1,
+				'widget'      => array(
+		        	'type'       => 'number',
+		      	),
+	    	),
+
 	  	);
 	  return $instances;
   	default:
   		# code...
   		break;
   }
-  
 }
 
 

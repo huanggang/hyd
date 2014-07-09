@@ -1,12 +1,5 @@
 <?php
 
-/**
- * @file
- * Forget password
- *
- * Complete documentation for this file is available online.
- * @see https://drupal.org/node/1728148
- */
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/guide.css');
 
 global $base_url;
