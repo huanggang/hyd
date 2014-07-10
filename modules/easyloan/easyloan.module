@@ -603,22 +603,6 @@ function easyloan_menu() {
   /*******************新手指引 end*************************/
 
   /*******************关于我们 begin***********************/
-  /*
-  $items['about'] = array( 
-    'page callback'   => 'drupal_goto', 
-    'page arguments'  => array('about/company', array()), 
-    'access callback' => TRUE, 
-    'type'            => MENU_NORMAL_ITEM, 
-  );*/
-  $items['about/company'] = array(
-    'title'           => t('公司简介'),
-    'page callback'   => 'menu_callback', 
-    'page arguments'  => array('about_about'),
-    'access callback' => TRUE, 
-    'type'            => MENU_NORMAL_ITEM, 
-    'menu_name'       => 'easyloan_about', 
-    'weight'          => '0'
-  );
   $items['about/news'] = array( 
     'title'           => t('最新动态'), 
     'page callback'   => 'menu_callback', 
@@ -637,24 +621,7 @@ function easyloan_menu() {
     'menu_name'       => 'easyloan_about', 
     'weight'          => '20'
   );
-  $items['about/invite'] = array( 
-    'title'           => t('招贤纳士'), 
-    'page callback'   => 'menu_callback', 
-    'page arguments'  => array('about_invite'),
-    'access callback' => TRUE, 
-    'type'            => MENU_NORMAL_ITEM, 
-    'menu_name'       => 'easyloan_about', 
-    'weight'          => '30'
-  );
-  $items['about/contact'] = array( 
-    'title'           => t('联系我们'), 
-    'page callback'   => 'menu_callback', 
-    'page arguments'  => array('about_contact'),
-    'access callback' => TRUE, 
-    'type'            => MENU_NORMAL_ITEM, 
-    'menu_name'       => 'easyloan_about', 
-    'weight'          => '40'
-  );
+  
   /*******************关于我们 end***********************/
   return $items; 
 } 
@@ -867,14 +834,6 @@ function menu_callback($menu, $param = ''){
       } else {*/
         return theme('about-notices', $content);
       //}
-
-    case 'about_invite':
-      return theme('about-invite', $content);
-    case 'about_contact':
-      return theme('about-contact', $content);
-    case 'about_about':
-      return theme('about', $content);
-
     case 'guide_guide':
       return theme('guide', $content);
     case 'guide_borrow':
@@ -970,6 +929,15 @@ function easyloan_menu_link($variables){
             if ($element['#href']=='about/news'){
               $is_active = true;
             }
+            break;
+          case 'normal':
+            if(arg(0) == 'node' && is_numeric(arg(1))){
+              $node = node_load(arg(1));
+              if($node->title == $element['#title']){
+                $is_active = true;    
+              }
+            }
+            
             break;
 
           default:

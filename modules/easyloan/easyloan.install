@@ -506,7 +506,7 @@ function easyloan_enable() {
 			'pages'      => '<?php
 if ((arg(0) == "node") && is_numeric(arg(1))) {
     $node = node_load(arg(1));
-    if ($node->type=="notice" || $node->type=="news"){
+    if ($node->type=="notice" || $node->type=="news" || $node->type=="normal"){
       return true;
     }
 }
