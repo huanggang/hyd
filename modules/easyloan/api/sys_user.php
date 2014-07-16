@@ -19,7 +19,7 @@ function set_user($type, $id, $value = null)
         return false;
       }
 
-      $namepass = split(';', $value);
+      $namepass = preg_split('/;/', $value);
       $name = $namepass[0];
       $pass = $namepass[1];
 
@@ -60,6 +60,7 @@ function set_user($type, $id, $value = null)
       break;
   }
   global $db_host, $db_user, $db_pwd, $db_name;
+
   $con=mysqli_connect($db_host, $db_user, $db_pwd, $db_name);
   if (mysqli_connect_errno())
   {
@@ -67,18 +68,17 @@ function set_user($type, $id, $value = null)
   }
   mysqli_set_charset($con, "UTF8");
 
-  mysqli_query($con, "LOCK TABLES users_usr WRITE");
-
   if ($type==1){
-    mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
+    mysqli_query($con, "LOCK TABLES users_usr WRITE, account_info_act_info WRITE");
+    $flag = mysqli_multi_query($con, $query) != false;
+  } else {
+    mysqli_query($con, "LOCK TABLES users_usr WRITE");
+    $flag = mysqli_query($con, $query) != false;
   }
-
-  $flag = mysqli_query($con, $query) != false;
-
+  
   mysqli_query($con, "UNLOCK TABLES");
   mysqli_kill($con, mysqli_thread_id($con));
   mysqli_close($con);
 
   return $flag;
 }
-?>
