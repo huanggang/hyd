@@ -25,9 +25,8 @@ function easyloan_theme() {
         //'arguments'            => array('form' => NULL), 
         //'preprocess functions' => array('easyloan_preprocess_user_pass'), 
         ),
-
-    'form_easyloan_wizard' => array(
-        //'user_register_form' => array(
+    //'form_easyloan_wizard' => array(
+    'user_register_form' => array(
         'path'                 => $path, 
         'template'             => 'user-register',
         'render element'       => 'form',
@@ -205,41 +204,6 @@ function easyloan_theme() {
     );
 }
 
-
-function easyloan_form_alter(&$form, &$form_state, $form_id) {
-
-    if($form_id == 'form_easyloan_wizard'){
-        $ui_button = array('ui-button', 'ui-button-blue', 'ui-button-mid');
-
-        if ($form_state['step'] == 1) {
-
-            $form['account']['mail']['#value'] = "a@b.com"; // set to a fake value to cheat the validation for email
-            $form['account']['phone'] = array( 
-                    '#title' => t('手机号'), 
-                    '#type' => 'textfield', 
-                    '#description' => t('请输入11位手机号码'), 
-                    '#size' => 11, 
-                    '#weight' => 10,); 
-
-            $form['actions']['submit']['#attributes']['class'] = $ui_button; 
-            $form['next']['#attributes']['class'] = $ui_button;
-
-            // when press 'previous' button, save the submitted user name and phone 
-            if (array_key_exists('step_information', $form_state) && 
-                    array_key_exists('stored_values', $form_state['step_information'][1])
-                ) {
-                $form['account']['name']['#value']  = $form_state['step_information'][1]['stored_values']['name'];
-                $form['account']['phone']['#value'] = $form_state['step_information'][1]['stored_values']['phone'];
-            }
-
-            // Clean up the form a bit by removing 'create new account' submit button
-            unset($form['actions']); 
-        } else if ($form_state['step'] == 2) {
-            $form['prev']['#attributes']['class']   = $ui_button;
-            $form['finish']['#attributes']['class'] = $ui_button;
-        }
-    }
-}
 
 /*
  * The following two methods are really heart-bleeding bug for the developer himself T_T

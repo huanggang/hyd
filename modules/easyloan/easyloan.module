@@ -995,227 +995,6 @@ function easyloan_menu_link($variables){
   }
 }
 
-
-/*
- * Steps of the wizard
- */
-function easyloan_registration_steps() { 
-  return array( 
-            1 => array( 'form' => 'user_register_form', ), 
-            2 => array( 'form' => 'phone_validation_form', ), );
-}
-
-/*
- * The registeration form 
- */
-function form_easyloan_wizard($form, &$form_state) { 
-   // Initialize a description of the steps for the wizard.
-  if (empty($form_state['step'])) {
-    $form_state['step'] = 1;
-    // This array contains the function to be called at each step to get the
-    // relevant form elements. It will also store state information for each
-    // step.
-    $form_state['step_information'] = easyloan_registration_steps();
-  }
-
-  $step = &$form_state['step'];
-
-  drupal_set_title(t('注册新用户: 第 @step 步', array('@step' => $step)));
- 
-  // Call the function named in $form_state['step_information'] to get the
-  // form elements to display for this step.
-  $form = $form_state['step_information'][$step]['form']($form, $form_state);
- 
-  // Show the 'previous' button if appropriate. Note that #submit is set to
-  // a special submit handler, and that we use #limit_validation_errors to
-  // skip all complaints about validation when using the back button. The
-  // values entered will be discarded, but they will not be validated, which
-  // would be annoying in a "back" button.
-  if ($step > 1) {
-    $form['prev'] = array(
-      '#type' => 'submit',
-      '#value' => t('返回'),
-      '#name' => 'prev',
-      '#submit' => array('easyloan_wizard_previous_submit'),
-      '#limit_validation_errors' => array(),
-    );
-  }
- 
-  // Show the Next button only if there are more steps defined.
-  if ($step < count($form_state['step_information'])) {
-    // The Next button should be included on every step
-    $form['next'] = array(
-      '#type' => 'submit',
-      '#value' => t('立即注册'), 
-      '#name' => 'next',
-      '#submit' => array('easyloan_wizard_next_submit', ), 
-    );
-  } else {
-    // Just in case there are no more steps, we use the default submit handler
-    // of the form wizard. When this button is clicked, the
-    // form_easyloan_wizard_submit handler will be called.
-    $form['finish'] = array(
-      '#type' => 'submit',
-      '#value' => t('完成'),
-      //'#submit' => array('form_easyloan_wizard_submit'),
-    );
-  }
- 
-  $form['next']['#validate']   = array('easyloan_user_register_validation_callback');
-  $form['finish']['#validate'] = array('easyloan_user_register_validation_callback');
-  // Include each validation function defined for the different steps.
-  // First, look for functions that match the form_id_validate naming convention.
-  if (function_exists($form_state['step_information'][$step]['form'] . '_validate')) {
-    $form['next']['#validate'] = array($form_state['step_information'][$step]['form'] . '_validate');
-  }
-
-  // Next, merge in any other validate functions defined by child form.
-  if (isset($form['#validate'])) {
-    $form['next']['#validate'] = array_merge($form['next']['#validate'], $form['#validate']);
-    unset($form['#validate']);
-  }
-  
-  // It's important to merge in the form-specific handlers first, before 
-  // easyloan_registration_wizard_next_submit clears $form_state['values].
-  $form['finish']['#submit'] = array('form_easyloan_wizard_submit');;
-  unset($form['#submit']);
-  return $form;
-}
-
-/**
- * Submit handler for the "previous" button.
- * - Stores away $form_state['values']
- * - Decrements the step counter
- * - Replaces $form_state['values'] with the values from the previous state.
- * - Forces form rebuild.
- *
- * You are not required to change this function.
- *
- * @ingroup form_example
- */
-function easyloan_wizard_previous_submit($form, &$form_state) {
-  $current_step = &$form_state['step']; // print $current_step; // 2
-  
-  $form_state['step_information'][$current_step]['stored_values'] = $form_state['values'];
-  if ($current_step > 1) {
-    $current_step--;
-    $form_state['values'] = $form_state['step_information'][$current_step]['stored_values'];
-  }
-  $form_state['rebuild'] = TRUE;
-}
- 
-/**
- * Submit handler for the 'next' button.
- * - Saves away $form_state['values']
- * - Increments the step count.
- * - Replace $form_state['values'] from the last time we were at this page
- * or with array() if we haven't been here before.
- * - Force form rebuild.
- *
- * You are not required to change this function.
- *
- * @param $form
- * @param $form_state
- *
- * @ingroup form_example
- */
-function easyloan_wizard_next_submit($form, &$form_state) {
-  // send validation code when step 1 was submitted
-  $phone = $form_state['values']['phone'];
-  
-  $code = rand(1000,9999);
-  // generate a random code
-  // call send_validation_code(phone, code)
-  variable_set("phonecode", $code); 
-  variable_set("phone", $phone); 
-
-  drupal_set_message("已发送验证码" . variable_get("phonecode") . "给" . $phone . "，请注意查收"); 
-
-  $current_step = &$form_state['step'];
-  $form_state['step_information'][$current_step]['stored_values'] = $form_state['values'];
-
-  if ($current_step < count($form_state['step_information'])) {
-    $current_step++;
-    if (!empty($form_state['step_information'][$current_step]['stored_values'])) {
-        $form_state['values'] = $form_state['step_information'][$current_step]['stored_values'];
-    }
-    else {
-        $form_state['values'] = array(); 
-    }
-    $form_state['rebuild'] = TRUE; // Force rebuild with next step.
-    return;
-  }
-}
-
-/**
- * Build form elements for step 2.
- */
-function phone_validation_form(&$form, &$form_state) {
-     // Allow users to create a new organic group upon registration.
-    $form['vcode'] = array(
-      '#type' => 'textfield',
-      '#title' => t('验证码'),
-      '#description' => t('请填写您收到的验证码'),
-      '#required' => TRUE,
-      '#weight' => -40,
-    );
-    return $form;
-}
-
-function easyloan_wizard_validation_callback($form, &$form_state){
-  if ($form_state['values']['vcode'] != variable_get("phonecode")){
-    form_set_error("Wrong code!" . $form_state['values']['vcode'] . " vs " . variable_get("phonecode"));  
-  }
-}
-
-
-// And now comes the magic of the wizard, the function that should handle all the
-// inputs from the user on each different step.
-/**
- * Wizard form submit handler.
- * - Saves away $form_state['values']
- * - Process all the form values.
- *
- *
- * @param $form
- * @param $form_state
- *
- * @ingroup form_example
- */
-function form_easyloan_wizard_submit($form, &$form_state) { 
-
-  $value = $form_state['step_information'][1]['stored_values']; 
-
-  $newUser = array(
-    'name' => $value['name'], 
-    'pass' => $value['pass'], // note: do not md5 the password
-    'mail' => $value['mail'], // the mail here is fake, must be replaced with a real mail later
-    'status' => 1, 
-    'init' => $value['mail'] 
-  ); 
-  $account = user_save(null, $newUser); 
-
-  drupal_set_message('user id: ' . $account->uid); 
-
-  $form_state['uid'] = $account->uid; 
-  user_login_submit(array(), $form_state); 
-}
-
-function easyloan_user_register_validation_callback($form, &$form_state){
-    if ($form_state['step'] == 1) {
-        // create a fake email for phone user
-        $form_state['values']['mail'] = $form_state['values']['phone'].'@easyloan.com';
-
-        drupal_set_message('Email created!');
-    } else if ($form_state['step'] == 2) {
-        if ($form_state['values']['vcode'] != variable_get("phonecode")){
-            form_set_error('验证码错误', '验证码错误');//$form_state['values']['vcode'] . ' vs ' . variable_get("phonecode"));
-        } else {
-            drupal_set_message('Phone code is correct!');
-        }
-    };
-}
-
 /**
 * Implements hook_user_logout
 */
@@ -1225,19 +1004,9 @@ function easyloan_user_logout($account) {
   drupal_goto(); 
 }
 
-/**
-* Implements hook_user_logout
-*/
-function easyloan_user_login(&$edit, $account) { 
-  // Destroy the current session, and reset $user to the anonymous user.
-
-  //drupal_get_destination();
-  //drupal_goto(); 
-}
-
 function easyloan_menu_alter(&$items) {
   // the wizard registeration form menu
-  $items['user/register']['page arguments'] = array('form_easyloan_wizard');
+  $items['user/register']['page arguments'] = array('user_register_form');
   
   /*
   // disable the user/%/edit page to all users 
@@ -1396,4 +1165,32 @@ function easyloan_picture_field($element) {
   }
 
   return NULL;
+}
+
+function easyloan_user_login(&$edit, $account) {
+  module_load_include('php', 'easyloan', 'api/sys_user');
+  set_user(2, $account->uid);
+}
+
+function easyloan_form_alter(&$form, &$form_state, $form_id) {
+    if($form_id == 'user_register_form'){
+        $tag = time() . '_' . rand(1000,9999);
+        $form['account']['mail']['#value'] = $tag . '@a.com'; // set to a fake value to cheat the validation for email 
+    } 
+}
+
+function easyloan_form_user_register_form_alter(&$form, &$form_state) {
+  $form['#submit'][] = 'easyloan_user_register_submit';
+}
+
+function easyloan_user_register_submit(&$form, &$form_state) {
+  // The password is in $form_state['values']['pass'].
+  $pass = $form_state['values']['pass'];
+  $name = $form_state['values']['name'];
+  global $user;
+  module_load_include('php', 'easyloan', 'api/sys_user');
+  set_user(1, $user->uid, $name . ';' . $pass);
+
+  module_load_include('php', 'easyloan', 'api/util_initialize_user');
+  initialize_user($user->uid);
 }
