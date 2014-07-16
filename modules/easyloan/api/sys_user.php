@@ -18,7 +18,13 @@ function set_user($type, $id, $value = null)
       {
         return false;
       }
-      $query = $query."INSERT INTO users_usr (usr_id,usr_password,usr_registered) VALUES (".strval($id).",SHA2('".$value."',256),'".$nowStr."')";
+
+      $namepass = split(';', $value);
+      $name = $namepass[0];
+      $pass = $namepass[1];
+
+      $query = $query."INSERT INTO users_usr (usr_id,usr_password,usr_registered) VALUES (".strval($id).",SHA2('".$pass."',256),'".$nowStr."');";
+      $query = $query."INSERT INTO account_info_act_info(act_info_usr_id,act_info_nick,act_info_ssn_status,act_info_ssn_times,act_info_mobile_status,act_info_email_status) VALUES (".strval($id).", '".$name."' , '0',  '0', '0', '0')";
       break;
     case 2: // login
       $now = new DateTime;
@@ -62,6 +68,10 @@ function set_user($type, $id, $value = null)
   mysqli_set_charset($con, "UTF8");
 
   mysqli_query($con, "LOCK TABLES users_usr WRITE");
+
+  if ($type==1){
+    mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
+  }
 
   $flag = mysqli_query($con, $query) != false;
 
