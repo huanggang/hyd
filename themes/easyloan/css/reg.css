@@ -107,11 +107,9 @@ padding-left:75px;
 
 
 #pg-reg .ui-form-item label.error {
-    display: block;
-    clear: both;
+    clear: left;
     margin-top: 5px;
 }
-
 /***************wizard fixing***************/
 div.steps{
 	display: none;
@@ -125,5 +123,9 @@ div.actions .disabled{
 div.actions li{
 	width: 100px;
 	float: left;
+}
+
+div.captcha img{
+	cursor: pointer;
 }
 

@@ -1,14 +1,12 @@
 (function ($) {
   Drupal.behaviors.imageCaptchaRefresh = {
     attach: function (context) {
-      alert(1);
-      $('.reload-captcha', context).not('.processed').bind('click', function () {
-        alert('refreshing captcha!');
-        $(this).addClass('processed');
+      $('div.captcha', context).bind('click', function () {
         var $form = $(this).parents('form');
         // send post query for getting new captcha data
         var date = new Date();
-        var url = this.href + '?' + date.getTime();
+        var link = $('.reload-captcha');
+        var url = link.prop('href') + '?' + date.getTime();
         $.get(
           url,
           {},
