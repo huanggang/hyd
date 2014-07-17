@@ -8,7 +8,6 @@
 (function($, Drupal, window, document, undefined) {
 	Drupal.behaviors.reg = {
 		attach: function(context, settings) {
-
 			var validateConfig = {
 				errorPlacement: function(error, element) {
 					element.parent().append(error); // default function
@@ -19,9 +18,8 @@
 						minlength: 2,
 						maxlength: 20,
 						isNickname: true,
-/*
 						remote: {
-							url: "../namexists",
+							url: "../exists",
 							type: "post",
 							data: {
 								name: function() {
@@ -29,7 +27,6 @@
 								}
 							}
 						},
-*/
 					},
 					"pass[pass1]": {
 						required: true,
@@ -56,7 +53,7 @@
 					name: {
 						required: "2-20位字符，可包含中文，英文，数字和字符\"-\"与\"_\"。注册完成后不可修改",
 						minlength: "注册名需包含至少两个字符",
-						//remote: "该昵称已经存在",
+						remote: "该昵称已经存在",
 						isNickname: "昵称只能由中文、英文字母、数字、下划线(_)和连词符(-)组成"
 					},
 					"pass[pass1]": {

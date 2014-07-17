@@ -621,10 +621,29 @@ function easyloan_menu() {
     'menu_name'       => 'easyloan_about', 
     'weight'          => '20'
   );
+  $items['exists'] = array( 
+    'page callback'   => 'easyloan_exists', 
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
   
   /*******************关于我们 end***********************/
   return $items; 
 } 
+
+function easyloan_exists(){
+  $name = $_POST['name'];
+
+  $user = user_load_by_name($name);
+  if(!$user){
+    // User doesn't exist
+    echo 'true';
+  } 
+  else {
+    // User exists
+    echo 'false';
+  }
+}
 
 /*
 * Inplementation of the block_info hook
