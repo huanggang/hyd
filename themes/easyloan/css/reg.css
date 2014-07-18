@@ -38,7 +38,7 @@ width:180px;
 }
 
 #pg-reg .ui-form .code {
-width:110px;
+width:50px;
 }
 
 #pg-reg .getMobileCode {
@@ -125,7 +125,8 @@ div.actions li{
 	float: left;
 }
 
-div.captcha img{
+#refresh{
 	cursor: pointer;
+	margin-left: 10px;
 }
 

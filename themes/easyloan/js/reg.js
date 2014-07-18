@@ -1,10 +1,3 @@
-/**
- * @file
- * A JavaScript file for the theme.
- *
- * In order for this JavaScript to be loaded on pages, see the instructions in
- * the README.txt next to this file.
- */
 (function($, Drupal, window, document, undefined) {
 	Drupal.behaviors.reg = {
 		attach: function(context, settings) {
@@ -41,6 +34,21 @@
 						required: true,
 						minlength: 4,
 						maxlength: 4,
+						remote: {
+							url: "../captcha_check", 
+							type: "post",
+							data: { 
+								token: function() { 
+									return $('[name="captcha_token"]').val();
+								},
+								sid: function() { 
+									return $('[name="captcha_sid"]').val();
+								},
+								captcha: function() { 
+									return $("#edit-captcha-response--2").val();
+								},
+							}
+						},
 					},
 					agree: "required",
 					vcode: {
@@ -69,6 +77,7 @@
 						required: "请输入4位验证码",
 						minlength: "请输入4位验证码",
 						maxlength: "请输入4位验证码",
+						remote: "验证码错误",
 					},
 					agree: "请同意条款",
 					vcode: {
@@ -81,7 +90,11 @@
 
 			$("#user-register-form").validate(validateConfig);
 
-			$(".reload-captcha-wrapper").hide();
+			$(".reload-captcha-wrapper").hide(); 
+
+	      	$('div.captcha').append('&nbsp;<span id="refresh"><img id="refreshCode" align="top" src="' 
+	      		+ Drupal.settings.basePath   
+	      		+ 'sites/all/themes/easyloan/images/refresh.png" alt="刷新验证码" /></span>');
 		}
 	};
 })(jQuery, Drupal, this, this.document);

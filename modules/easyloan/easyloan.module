@@ -1,8 +1,8 @@
 <?php
 
-/**
+/** 
  * Implements hook_permission().
- */
+ */ 
 function easyloan_permission() {
   return array(
     'auditor permission' => array(
@@ -622,7 +622,12 @@ function easyloan_menu() {
     'weight'          => '20'
   );
   $items['exists'] = array( 
-    'page callback'   => 'easyloan_exists', 
+    'page callback'   => 'easyloan_exists',
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+  );
+  $items['captcha_check'] = array(
+    'page callback'   => 'captcha_check',
     'access callback' => TRUE, 
     'type'            => MENU_NORMAL_ITEM, 
   );
@@ -632,10 +637,35 @@ function easyloan_menu() {
 } 
 
 function easyloan_exists(){
+
   $name = $_POST['name'];
 
   $user = user_load_by_name($name);
   if(!$user){
+    // User doesn't exist
+    echo 'true';
+  } 
+  else {
+    // User exists
+    echo 'false';
+  }
+}
+
+function captcha_check(){ 
+  $solution = $_POST['captcha'];
+  $csid = $_POST['sid'];
+  $token = $_POST['token'];
+
+  $result = db_select('captcha_sessions', 'cs')
+    ->fields('cs')
+    ->condition('csid', $csid)
+    ->condition('token', $token)
+    ->condition('solution', $solution)
+    ->range(0, 1)
+    ->execute()
+    ->rowCount();
+
+  if($result){
     // User doesn't exist
     echo 'true';
   } 
