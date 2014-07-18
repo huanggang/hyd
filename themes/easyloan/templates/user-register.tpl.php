@@ -1,17 +1,14 @@
 <?php
-/**
- * @file
- * Returns the HTML for a the user-register form.
- *
- */
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.validate.min.js');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.steps.min.js');
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/valid_methods.js');
 
-drupal_add_css(drupal_get_path('theme','easyloan') . '/css/reg.css');
+$theme_path = drupal_get_path('theme','easyloan');
 
-drupal_add_js(drupal_get_path('theme','easyloan') . '/js/reg.js');
+drupal_add_js($theme_path . '/js/jquery.validate.min.js');
+drupal_add_js($theme_path . '/js/jquery.steps.min.js');
+drupal_add_js($theme_path . '/js/valid_methods.js');
+drupal_add_css($theme_path . '/css/reg.css');
+drupal_add_js($theme_path . '/js/reg.js');
 
+global $base_url;
 $f = drupal_get_form('user_register_form'); // use this to retrieve the captcha 
 
 if ($f['captcha']) { 
@@ -75,7 +72,7 @@ if ($f['captcha']) {
         <?php print drupal_render($form['pre']); ?>
         <div class="ui-form-item ui-form-item-check">
           <input type="checkbox" class="form-checkbox" value="0" name="agree" id="edit-agree"><span class="fn-left">我已阅读并同意</span>
-          <a href="/agreement/rv_webservice.html" target="_blank">《好易贷网站服务协议》</a>
+          <a href="<?php print $base_url; ?>/agreement.html" target="_blank">《好易贷网站服务协议》</a>
         </div>
         <div class="ui-form-item">
           <input type="submit" name="submit" class="ui-button ui-button-mid ui-button-blue" value="注册" />
