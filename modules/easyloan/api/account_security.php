@@ -2,6 +2,7 @@
 
 include_once 'util_global.php';
 include_once 'sys_contact.php';
+include_once 'verify_id.php';
 
 function account_security(){
 
@@ -458,6 +459,6 @@ function reset_cash_password($con, $usr_id, $new_cash_pass, $code)
 
 function call_name_ssn_webservice($name, $ssn)
 {
-  return true;
+  $flag = verify_id($name, $ssn);
+  return $flag == 1;
 }
-?>

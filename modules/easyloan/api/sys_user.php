@@ -82,3 +82,4 @@ function set_user($type, $id, $value = null)
 
   return $flag;
 }
+?>
