@@ -55,7 +55,8 @@ drupal_add_js($theme_path . '/js/withdraw.js');
         </div>
         <div class="ui-form-item">
           <label class="ui-label"><span class="ui-form-required">*</span>提现金额</label>
-          <input class="ui-input" type="text" name="amount" id="withdrawAmount" data-is="isAmount isEnough" autocomplete="off" disableautocomplete="">
+          <input type="text" name="amount" value="" style="display:none">
+          <input class="ui-input" type="text" name="amount" id="withdrawAmount" data-is="isAmount isEnough" autocomplete="off">
           <label for="withdrawAmount" class="error" style="display: none;">提现金额不能为空</label>
         </div>
         <div class="ui-form-item">

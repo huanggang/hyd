@@ -38,7 +38,8 @@ drupal_add_js($theme_path . '/js/investments.js');
           <span class="ui-list-title w55 ph5 fn-left">年利率</span>
           <span class="ui-list-title w30 ph5 fn-left">月数</span>
           <span class="ui-list-title w80 ph5 fn-left">放款日期</span>
-          <span class="ui-list-title w110 ph5 fn-left">募集资金</span>
+          <span class="ui-list-title w50 ph5 fn-left"></span>
+          <span class="ui-list-title w50 ph5 fn-left"></span>
         </li>
       </ul>
       <div class="fn-left mt10 fn-hide">共<span id="investment-total-1">0</span>条</div>
