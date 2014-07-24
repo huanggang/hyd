@@ -70,11 +70,46 @@ top:10px;
 	margin-top: 5px;
 }
 #pg-login .ui-form-item-check label{
-	width:90px;
-	display:block;
-	float:left;
+	width: 90px;
+	float: left;
+	display: block;
 }
 
 #pg-login input.input-icon{
 	padding-left: 30px;
+	margin-right: 10px;
+}
+
+#pg-login .loginbox .captcha .ui-input {
+	width: 50px;
+}
+
+#edit-captcha-response{
+	float:left;
+}
+
+.captcha div.form-item{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+div.captcha input {
+	float: left;
+}
+
+#pg-login .ui-form-item label.error {
+    clear: left;
+    float: left;
+    margin-top: 5px;
+    color: red;
+    font-weight: normal;
+}
+
+#pg-login .form-item input.error{
+	border: 1px solid #dd4a38;
+}
+
+#refresh{
+	cursor: pointer;
+	margin-left: 10px;
 }

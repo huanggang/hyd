@@ -51,11 +51,6 @@
 						},
 					},
 					agree: "required",
-					vcode: {
-						required: true,
-						minlength: 4,
-						maxlength: 4,
-					},
 				},
 				messages: {
 					name: {
@@ -80,17 +75,10 @@
 						remote: "验证码错误",
 					},
 					agree: "请同意条款",
-					vcode: {
-						required: "请输入4位验证码",
-						minlength: "请输入4位验证码",
-						maxlength: "请输入4位验证码",
-					},
 				}
 			};
 
 			$("#user-register-form").validate(validateConfig);
-
-			$(".reload-captcha-wrapper").hide(); 
 
 	      	$('div.captcha').append('&nbsp;<span id="refresh"><img id="refreshCode" align="top" src="' 
 	      		+ Drupal.settings.basePath   

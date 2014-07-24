@@ -1219,6 +1219,8 @@ function easyloan_picture_field($element) {
 function easyloan_user_login(&$edit, $account) {
   module_load_include('php', 'easyloan', 'api/sys_user');
   set_user(2, $account->uid);
+  global $base_path;
+  drupal_goto($base_path . "/user/" . $account->uid);
 }
 
 function easyloan_form_alter(&$form, &$form_state, $form_id) {
