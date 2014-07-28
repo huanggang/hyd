@@ -43,19 +43,9 @@ var is_my_page = <?php print $is_my_page? "true":"false"; ?>;
 </script>
 
 <div class="grid_10">
-<div class="ui-poptip fn-hide" id="tipCon_3" style="position: absolute; left: 260px; top: 156px; display: block;">
-  <div class="ui-poptip-shadow">
-      <div class="ui-poptip-container">
-          <div class="ui-poptip-arrow ui-poptip-arrow-11">
-          <em></em>
-          <span></span>
-      </div>
+  <div class="top-section">
+    <img src="<?php print $img_path; ?>default-banner.png">
   </div>
-</div>
-</div>
-<div class="ad-section">
-<img src="<?php print $img_path; ?>default-banner.png">
-</div>
 
 <div class="box box-user-info"> 
 <div class="user-avatar-container"> 
