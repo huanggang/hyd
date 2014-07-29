@@ -1,6 +1,6 @@
 <?php
 
-$theme_path = drupal_get_path('theme','easyloan');
+$theme_path = drupal_get_path('theme','hyd');
 
 drupal_add_js($theme_path . '/js/jquery.validate.min.js');
 drupal_add_js($theme_path . '/js/jquery.steps.min.js');
@@ -9,10 +9,7 @@ drupal_add_css($theme_path . '/css/reg.css');
 drupal_add_js($theme_path . '/js/reg.js');
 
 global $base_url;
-$f = drupal_get_form('user_register_form'); // use this to retrieve the captcha 
-
-if ($f['captcha']) { 
-  $form['captcha'] = $f['captcha'];
+if (isset($form['captcha'])) { 
   $form['captcha']['#theme_wrappers']                                       = NULL; 
   $form['captcha']['captcha_widgets']['captcha_response']['#title']         ='';
   $form['captcha']['captcha_widgets']['captcha_response']['#weight']        =-10; // for style 
