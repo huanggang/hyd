@@ -23,11 +23,11 @@
 					},
 					"pass[pass1]": {
 						required: true,
-						minlength: 6
+						minlength: 6,
+						maxlength: 16
 					},
 					"pass[pass2]": {
 						required: true,
-						minlength: 6,
 						equalTo: "#edit-pass-pass1"
 					},
 					captcha_response: {
@@ -45,7 +45,7 @@
 									return $('[name="captcha_sid"]').val();
 								},
 								captcha: function() { 
-									return $("#edit-captcha-response--2").val();
+									return $("#edit-captcha-response").val();
 								},
 							}
 						},
@@ -63,10 +63,10 @@
 					"pass[pass1]": {
 						required: "密码须为6-16位英文字母、数字和符号(不包括空格)",
 						minlength: "密码至少为6个字符",
+						maxlength: "密码不要超过16个字符"
 					},
 					"pass[pass2]": {
 						required: "请重复输入密码",
-						minlength: "密码至少为6个字符",
 						equalTo: "请输入相同的密码",
 					},
 					captcha_response: {
