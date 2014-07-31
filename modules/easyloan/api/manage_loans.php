@@ -123,7 +123,7 @@ function manage_loans(){
       mysqli_query($con, "LOCK TABLES loans_lns READ, account_info_act_info READ");
       if ($page == 1)
       {
-        $query = "SELECT COUNT(lns_usr_id) AS cnt FROM loans_lns WHERE lns_is_done = 0";
+        $query = "SELECT COUNT(lns_usr_id) AS cnt FROM loans_lns WHERE lns_is_done = 1";
         $result = mysqli_query($con, $query);
         if ($row = mysqli_fetch_array($result))
         {

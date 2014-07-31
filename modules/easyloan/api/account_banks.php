@@ -51,10 +51,10 @@ function account_banks(){
     switch ($type)
     {
       case 1:
-        $query = "INSERT IGNORE INTO account_banks_act_bnk (act_bnk_usr_id, act_bnk_number, act_bnk_bank, act_bnk_branch, act_bnk_address, act_bnk_added, act_bnk_updated) VALUES (?,?,?,?,?,?,?)";
+        $query = "INSERT INTO account_banks_act_bnk (act_bnk_usr_id, act_bnk_number, act_bnk_bank, act_bnk_branch, act_bnk_address, act_bnk_added, act_bnk_updated) VALUES (?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE act_bnk_deleted = 0, act_bnk_bank=?, act_bnk_branch=?, act_bnk_address=?,act_bnk_updated=?";
         if ($stmt = mysqli_prepare($con, $query))
         {
-          mysqli_stmt_bind_param($stmt, "isissss", $usr_id, $number, $bank, $branch, $address, $nowStr, $nowStr);
+          mysqli_stmt_bind_param($stmt, "isissssisss", $usr_id, $number, $bank, $branch, $address, $nowStr, $nowStr, $bank, $branch, $address, $nowStr);
 
           mysqli_query($con, "LOCK TABLES account_banks_act_bnk WRITE");
           $flag = mysqli_stmt_execute($stmt) != false;
@@ -75,7 +75,7 @@ function account_banks(){
         }
         break;
       case 3:
-        $query = "DELETE FROM account_banks_act_bnk WHERE act_bnk_usr_id=? AND act_bnk_number=?";
+        $query = "UPDATE account_banks_act_bnk SET act_bnk_deleted = 1 WHERE act_bnk_usr_id=? AND act_bnk_number=?";
         if ($stmt = mysqli_prepare($con, $query))
         {
           mysqli_stmt_bind_param($stmt, "is", $usr_id, $number);
@@ -114,7 +114,7 @@ function account_banks(){
     mysqli_query($con, "LOCK TABLES account_banks_act_bnk READ");
 
     $total = 0;
-    $query = "SELECT COUNT(act_bnk_number) AS cnt FROM account_banks_act_bnk WHERE act_bnk_usr_id = ".strval($usr_id);
+    $query = "SELECT COUNT(act_bnk_number) AS cnt FROM account_banks_act_bnk WHERE act_bnk_usr_id = ".strval($usr_id)." AND act_bnk_deleted <> 1";
     $result = mysqli_query($con, $query);
     if ($row = mysqli_fetch_array($result))
     {
@@ -124,7 +124,7 @@ function account_banks(){
 
     $json = "";
 
-    $query = "SELECT act_bnk_number, act_bnk_bank, act_bnk_branch, act_bnk_address FROM account_banks_act_bnk WHERE act_bnk_usr_id = ".strval($usr_id);
+    $query = "SELECT act_bnk_number, act_bnk_bank, act_bnk_branch, act_bnk_address FROM account_banks_act_bnk WHERE act_bnk_usr_id = ".strval($usr_id)." AND act_bnk_deleted <> 1";
     $result = mysqli_query($con, $query);
     mysqli_query($con, "UNLOCK TABLES");
     while ($row = mysqli_fetch_array($result))
