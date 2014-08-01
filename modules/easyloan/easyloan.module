@@ -566,13 +566,6 @@ function easyloan_menu() {
   /*******************帮助中心 end*************************/
 
   /*******************新手指引 begin***********************/
-  /*
-  $items['guide'] = array( 
-    'page callback'   => 'drupal_goto', 
-    'page arguments'  => array('guide/guide', array()), 
-    'access callback' => TRUE, 
-    'type'            => MENU_NORMAL_ITEM, 
-  );*/
   $items['guide/guide'] = array(
     'title'           => t('我要投资'), 
     'page callback'   => 'menu_callback', 
@@ -949,12 +942,11 @@ function menu_invest($investmentid = ''){
   return theme('invest', array());
 }
 
-function easyloan_menu_tree__menu_account_second($variables){
+function hyd_menu_tree__menu_account_second($variables){
   return '<ul class="ui-side-sub-list">' . $variables['tree'] . '</ul>';
 }
 
-function easyloan_menu_link($variables){ 
-
+function hyd_menu_link($variables){ 
   $element = $variables['element']; 
   $sub_menu = ''; 
   
@@ -1133,7 +1125,7 @@ function easyloan_views_api() {
 
 function easyloan_init(){
   // Set theme's path
-  $themepath = drupal_get_path('theme', 'easyloan');
+  $themepath = drupal_get_path('theme', 'hyd');
   // add theme css in group CSS_SYSTEM
   drupal_add_css($themepath . '/css/one.css', 
     array('group' => CSS_SYSTEM, 'type' => 'file', 'weight' => -100));
@@ -1219,28 +1211,32 @@ function easyloan_picture_field($element) {
 function easyloan_user_login(&$edit, $account) {
   module_load_include('php', 'easyloan', 'api/sys_user');
   set_user(2, $account->uid);
+/*
+  // we can't set drupal_goto here, because it will 
+  // interrupt the registering form from submitting
   drupal_goto("user/" . $account->uid);
+*/
 }
 
-function easyloan_form_alter(&$form, &$form_state, $form_id) {
-    if($form_id == 'user_register_form'){
-        $tag = time() . '_' . rand(1000,9999);
-        $form['account']['mail']['#value'] = $tag . '@a.com'; // set to a fake value to cheat the validation for email 
-    } 
-}
-
-function easyloan_form_user_register_form_alter(&$form, &$form_state) {
-  $form['#submit'][] = 'easyloan_user_register_submit';
-}
-
-function easyloan_user_register_submit(&$form, &$form_state) {
+function easyloan_user_register_submit(&$form, &$form_state) { 
   // The password is in $form_state['values']['pass'].
   $pass = $form_state['values']['pass'];
   $name = $form_state['values']['name'];
+
   global $user;
   module_load_include('php', 'easyloan', 'api/sys_user');
   set_user(1, $user->uid, $name . ';' . $pass);
-
+  
   module_load_include('php', 'easyloan', 'api/util_initialize_user');
-  initialize_user($user->uid);
+  initialize_user($user->uid);  
+}
+
+function easyloan_form_alter(&$form, &$form_state, $form_id) { 
+  if($form_id == 'user_register_form'){ 
+    // the following code doesn't work here 
+    $form['#submit'][] = 'easyloan_user_register_submit';
+
+    $tag = time() . '_' . rand(1000,9999); 
+    $form['account']['mail']['#value'] = $tag . '@a.com'; // set to a fake value to cheat the validation for email 
+  } 
 }

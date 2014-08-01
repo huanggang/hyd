@@ -524,7 +524,7 @@ return false;
 			'cache'      => DRUPAL_CACHE_GLOBAL, // 8 is for DRUPAL_CACHE_GLOBAL
 	    ))
 	    ->condition('module', 'menu')
-	    ->condition('theme', 'easyloan')
+	    ->condition('theme', 'hyd')
 	    ->condition('delta', 'easyloan_about') // always cache 
 	    ->execute();
 
@@ -539,7 +539,7 @@ return false;
 			'cache'      => DRUPAL_CACHE_GLOBAL,
 	    ))
 	    ->condition('module', 'menu')
-	    ->condition('theme', 'easyloan')
+	    ->condition('theme', 'hyd')
 	    ->condition('delta', 'easyloan_guide') // always cache 
 	    ->execute();
 
@@ -554,7 +554,7 @@ return false;
 			'cache'      => DRUPAL_CACHE_GLOBAL,
 	    ))
 	    ->condition('module', 'menu')
-	    ->condition('theme', 'easyloan')
+	    ->condition('theme', 'hyd')
 	    ->condition('delta', 'easyloan_exchange') // always cache 
 	    ->execute();
 
@@ -569,7 +569,7 @@ return false;
 			'cache'      => DRUPAL_CACHE_GLOBAL,
 	    ))
 	    ->condition('module', 'menu')
-	    ->condition('theme', 'easyloan')
+	    ->condition('theme', 'hyd')
 	    ->condition('delta', 'easyloan_help') // always cache 
 	    ->execute();
 
@@ -590,7 +590,7 @@ management/*', // Please DO NOT change the 'pages' list, the whitespaces format 
 			'cache'      => DRUPAL_CACHE_PER_ROLE,	// cache per role 
 	    ))
 	    ->condition('module', 'menu')
-	    ->condition('theme', 'easyloan')
+	    ->condition('theme', 'hyd')
 	    ->condition('delta', 'easyloan_account') // always cache 
 	    ->execute();
 }
