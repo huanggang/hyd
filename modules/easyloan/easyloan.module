@@ -614,6 +614,38 @@ function easyloan_menu() {
     'menu_name'       => 'easyloan_about', 
     'weight'          => '20'
   );
+  $items['about/company'] = array( 
+    'title'           => t('公司简介'), 
+    'page callback' => 'node_page_view',
+    'page arguments' => array (node_load(array('title' => '公司简介', 'type' => 'normal'))),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_about', 
+    'weight'          => '0'
+  );
+  $items['about/invite'] = array( 
+    'title'           => t('招贤纳士'), 
+    'page callback' => 'node_page_view',
+    'page arguments' => array (node_load(array('title' => '招贤纳士', 'type' => 'normal'))),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_about', 
+    'weight'          => '30'
+  );
+  $items['about/contact'] = array( 
+    'title'           => t('联系我们'), 
+    'page callback' => 'node_page_view',
+    'page arguments' => array (node_load(array('title' => '联系我们', 'type' => 'normal'))),
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'menu_name'       => 'easyloan_about', 
+    'weight'          => '40'
+  );
+
+
+
+
+  
   $items['exists'] = array( 
     'page callback'   => 'easyloan_exists',
     'access callback' => TRUE, 
