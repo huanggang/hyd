@@ -101,7 +101,7 @@ Drupal.behaviors.usersecurity = {
 
     toggleForm("setname", "pg-account-security-ssn", "设置");
     toggleForm("setemail", "pg-account-security-email", "设置");
-    toggleForm("setmobile", "pg-account-security-mobile", "修改");
+    toggleForm("setmobile", "pg-account-security-mobile", "设置");
     toggleForm("setpass", "pg-account-security-pass", "修改");
 
     var errPlace = function(error, element) {

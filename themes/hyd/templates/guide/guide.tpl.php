@@ -1,10 +1,7 @@
 <?php
 
-drupal_add_css(drupal_get_path('theme','hyd') . '/css/guide.css');
-
-global $base_url;
-$image_path = $base_url . '/sites/all/themes/easyloan/images/';
-
+$theme_path = drupal_get_path('theme','hyd');
+drupal_add_css($theme_path . '/css/guide.css');
 ?>
 <div class="pg-guide-info mt20">
 <?php

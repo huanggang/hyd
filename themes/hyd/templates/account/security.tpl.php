@@ -121,7 +121,7 @@ global $user;
         <div class="icon icon-mobile"></div>
         <h3>绑定手机</h3>
         <p id="mobile" class='red'>未设置</p>
-        <div class="update"><a id="setmobile">修改</a></div>
+        <div class="update"><a id="setmobile">设置</a></div>
         <div id="pg-account-security-mobile" style="height:400px;clear:both;" class="fn-clear fn-hide">
 
           <div id='mobileStep1' class="content">
