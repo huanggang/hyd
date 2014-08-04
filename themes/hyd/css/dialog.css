@@ -1,0 +1,51 @@
+.ui-dialog {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    outline: none;
+    FILTER: progid:DXImageTransform.Microsoft.Gradient(startColorstr=#88000000, endColorstr=#88000000);
+    /* padding: 10px; */
+    box-shadow: 0 0 2px 1px #ccc;
+}
+
+:root .ui-dialog {
+    FILTER: none\9;
+}
+
+.ui-dialog-close {
+    color: #999;
+    cursor: pointer;
+    display: block;
+    font-family: tahoma;
+    font-size: 24px;
+    font-weight: bold;
+    height: 18px;
+    line-height: 14px;
+    position: absolute;
+    right: 16px;
+    text-decoration: none;
+    top: 16px;
+    z-index: 10;
+}
+.ui-dialog-close:hover {
+    color: #666;
+    text-shadow: 0 0 2px #aaa;
+}
+
+.ui-button {
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 15px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+.ui-button-mid {
+    border-radius: 15px;
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    min-width: 50px;
+    text-align: center;
+}
