@@ -10,17 +10,22 @@ configure=admin/config/content/easyloan/settings
 
 
 dependencies[] = captcha
+dependencies[] = captcha_after
+dependencies[] = image_captcha_refresh
 dependencies[] = ckeditor
 ;dependencies[] = csna
 dependencies[] = ctools
 dependencies[] = date
+dependencies[] = features
 dependencies[] = flippy
 dependencies[] = imce
 dependencies[] = pagerer
+dependencies[] = php
 dependencies[] = jquery_update
 dependencies[] = link
 dependencies[] = pagerer
 dependencies[] = views
+dependencies[] = userprotect
 
 
 
