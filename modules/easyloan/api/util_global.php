@@ -3,6 +3,8 @@ global $user;
 
 global $db_host, $db_user, $db_pwd, $db_name;
 
+global $sms_url, $sms_user, $sms_password, $sms_reset_pass_code;
+
 global $web_js, $site_js;
 
 $site_name = "清远好易贷";
@@ -73,6 +75,7 @@ $email_content_verification = "请点击下面链接激活帐户，完成邮箱�
 
 // mobile security code sms-message
 $sms_security_code = $site_name."手机验证码: [{CODE}]";
+$sms_reset_pass_code = $site_name."手机验证码: [{CODE}], 用户名: [{NICKNAME}]";
 
 date_default_timezone_set('Asia/Chongqing');
 
@@ -343,6 +346,23 @@ function generate_mobile_code()
   for ($i = 0; $i < 6; $i++)
   {
     $num = rand() % 10;
+    $tmp = substr($chars, $num, 1);
+    $code = $code . $tmp;
+  }
+  return $code;
+}
+
+// Randomly generate 6 digits user password
+function generate_user_password()
+{
+  $chars = "0123456789abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ";
+
+  srand((double)microtime()*1000000);
+  $code = "";
+  
+  for ($i = 0; $i < 6; $i++)
+  {
+    $num = rand() % 60;
     $tmp = substr($chars, $num, 1);
     $code = $code . $tmp;
   }

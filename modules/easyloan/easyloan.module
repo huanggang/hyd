@@ -187,6 +187,12 @@ function easyloan_menu() {
     'type'            => MENU_NORMAL_ITEM, 
     'file'            => 'api/account_security.php',
   );
+  $items['api/findpwd'] = array(
+    'page callback'   => 'account_findpwd', 
+    'access callback' => TRUE, 
+    'type'            => MENU_NORMAL_ITEM, 
+    'file'            => 'api/account_findpwd.php',
+  );
   $items['api/manage_user'] = array(
     'page callback'   => 'manage_user', 
     'access callback' => 'authenticated_access', 

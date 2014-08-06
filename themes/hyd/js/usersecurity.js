@@ -617,7 +617,7 @@ Drupal.behaviors.usersecurity = {
       .fail(function( jqxhr, textStatus, error) {
         var err = textStatus + ", " + error;
         alert( "绑定手机请求出现问题，请重试" );
-        getMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
+        $("#getNewMobileCode").prop('disabled', false).removeClass('ui-button-disabled');
       });
 
     })
