@@ -138,37 +138,38 @@ function account_security(){
   mysqli_set_charset($con, "UTF8");
   $flag = false;
   $times = 0;
+  $message = "";
   switch ($type)
   {
     case 1:
       $flag = verify_name_ssn($con, $usr_id, $name, $ssn, &$times);
       break;
     case 2:
-      $flag = change_password($con, $usr_id, $password, $new_password);
+      $flag = change_password($con, $usr_id, $password, $new_password, &$message);
       break;
     case 3:
-      $flag = set_email($con, $usr_id, $email);
+      $flag = set_email($con, $usr_id, $email, &$message);
       break;
     case 4:
       $flag = bind_email($con, $usr_id, $code);
       break;
     case 5:
-      $flag = send_mobile_code($con, $usr_id, $mobile);
+      $flag = send_mobile_code($con, $usr_id, $mobile, &$message);
       break;
     case 6:
-      $flag = bind_mobile($con, $usr_id, $mobile, $code);
+      $flag = bind_mobile($con, $usr_id, $mobile, $code, &$message);
       break;
     case 7:
-      $flag = unbind_mobile($con, $usr_id, $mobile, $code);
+      $flag = unbind_mobile($con, $usr_id, $mobile, $code, &$message);
       break;
     case 8:
-      $flag = set_cash_password($con, $usr_id, $cash_pass);
+      $flag = set_cash_password($con, $usr_id, $cash_pass, &$message);
       break;
     case 9:
-      $flag = change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass);
+      $flag = change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass, &$message);
       break;
     case 10:
-      $flag = reset_cash_password($con, $usr_id, $new_cash_pass, $code);
+      $flag = reset_cash_password($con, $usr_id, $new_cash_pass, $code, &$message);
       break;
   }
   mysqli_kill($con, mysqli_thread_id($con));
@@ -203,7 +204,7 @@ function account_security(){
     }
     else
     {
-      echo "{\"result\":0}";
+      echo "{\"result\":0,\"message\":".jsonstr($message)."}";
     }
   }
 }
@@ -231,7 +232,7 @@ function verify_name_ssn($con, $usr_id, $name, $ssn, $act_info_ssn_times)
         $dob = substr($ssn, 6, 8);
         $dob = substr_replace($dob, '-', 6, 0);
         $dob = substr_replace($dob, '-', 4, 0);
-      	$query = "UPDATE account_info_act_info SET act_info_name = ".sqlstr($name).", act_info_ssn = ".sqlstr($ssn).", act_info_ssn_status = 1, act_info_ssn_times = ".sqlstrval($act_info_ssn_times).", act_info_gender = ".sqlstrval($gender).", act_info_dob = ".sqlstr($dob)." WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_ssn_status = 0";
+        $query = "UPDATE account_info_act_info SET act_info_name = ".sqlstr($name).", act_info_ssn = ".sqlstr($ssn).", act_info_ssn_status = 1, act_info_ssn_times = ".sqlstrval($act_info_ssn_times).", act_info_gender = ".sqlstrval($gender).", act_info_dob = ".sqlstr($dob)." WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_ssn_status = 0";
         mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
         $flag = mysqli_query($con, $query) != false;
         mysqli_query($con, "UNLOCK TABLES");
@@ -240,7 +241,7 @@ function verify_name_ssn($con, $usr_id, $name, $ssn, $act_info_ssn_times)
       }
       else
       {
-      	$query = "UPDATE account_info_act_info SET act_info_ssn_times = ".sqlstrval($act_info_ssn_times)." WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_ssn_status = 0";
+        $query = "UPDATE account_info_act_info SET act_info_ssn_times = ".sqlstrval($act_info_ssn_times)." WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_ssn_status = 0";
         mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
         $flag = mysqli_query($con, $query);
         mysqli_query($con, "UNLOCK TABLES");
@@ -250,7 +251,7 @@ function verify_name_ssn($con, $usr_id, $name, $ssn, $act_info_ssn_times)
   return false;
 }
 
-function change_password($con, $usr_id, $password, $new_password)
+function change_password($con, $usr_id, $password, $new_password, $message)
 {
   $query = "SELECT usr_password FROM users_usr WHERE usr_id = ".strval($usr_id)." AND usr_password = SHA2('".$password."',256)";
   mysqli_query($con, "LOCK TABLES users_usr READ");
@@ -265,36 +266,67 @@ function change_password($con, $usr_id, $password, $new_password)
     $flag = mysqli_query($con, $query) != false;
     mysqli_query($con, "UNLOCK TABLES");
 
-    if ($flag){
+    if ($flag)
+    {
       global $user;
       user_save($user, array('pass' => $new_password));
+    }
+    else
+    {
+      $message = "Failed to update password";
     }
 
     return $flag;
   }
+  else
+  {
+    $message = "Original password is wrong";
+  }
   return false;
 }
 
-function set_email($con, $usr_id, $email)
+function set_email($con, $usr_id, $email, $message)
 {
+  $flag1 = true;
+  $flag2 = true;
+
   $todayStr = date("Y-m-d");
   $today = new DateTime($todayStr);// date_create_from_format('Y-m-d', $todayStr);
   $expired = $today->add(new DateInterval("P7D"));
   $code = generate_mobile_code();
-  $query = "UPDATE account_info_act_info SET act_info_email = ".sqlstr($email).", act_info_email_status = 0, act_info_email_code = ".sqlstr($code).", act_info_email_expired = ".sqlstr($expired->format("Y-m-d"))." WHERE act_info_usr_id = ".strval($usr_id);
+  $query1 = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_email = ".sqlstr($email);
+  $query2 = "UPDATE account_info_act_info SET act_info_email = ".sqlstr($email).", act_info_email_status = 0, act_info_email_code = ".sqlstr($code).", act_info_email_expired = ".sqlstr($expired->format("Y-m-d"))." WHERE act_info_usr_id = ".strval($usr_id);
   mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
-  $flag = mysqli_query($con, $query) != false;
+  $result = mysqli_query($con, $query1);
+  if ($row = mysqli_fetch_array($result))
+  {
+    mysqli_free_result($result);
+
+    $message = "Email exists";
+    $flag1 = false;
+  }
+  else
+  {
+    $flag2 = mysqli_query($con, $query2) != false;
+  }
   mysqli_query($con, "UNLOCK TABLES");
 
-  if ($flag)
+  if ($flag1)
   {
-    global $email_name, $email_account;
-    global $email_subject_verification, $email_content_verification;
+    if ($flag2)
+    {
+      global $email_name, $email_account;
+      global $email_subject_verification, $email_content_verification;
 
-    $content = str_replace("[{ID}]", strval($usr_id), $email_content_verification);
-    $content = str_replace("[{CODE}]", $code, $content);
+      $content = str_replace("[{ID}]", strval($usr_id), $email_content_verification);
+      $content = str_replace("[{CODE}]", $code, $content);
 
-    return mail_utf8($email, $email_name, $email_account, $email_subject_verification, $content);
+      return mail_utf8($email, $email_name, $email_account, $email_subject_verification, $content);
+    }
+    else
+    {
+      $message = "Failed to set email";
+    }
   }
   return false;
 }
@@ -322,81 +354,163 @@ function bind_email($con, $usr_id, $code)
   return false;
 }
 
-function send_mobile_code($con, $usr_id, $mobile)
+function send_mobile_code($con, $usr_id, $mobile, $message)
 {
+  $flag1 = true;
+  $flag2 = true;
+
   $now = new DateTime;
   $expired = $now->add(new DateInterval("PT5M")); // 5 minutes
   $code = generate_mobile_code();
-  $query = "UPDATE account_info_act_info SET act_info_mobile_code = ".sqlstr($code).", act_info_mobile_expired = ".sqlstr($expired->format("Y-m-d\TH:i:sP"))." WHERE act_info_usr_id = ".strval($usr_id);
+  $query1 = "SELECT act_info_mobile, act_info_mobile_expired, act_info_mobile_times FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id);
+  $query2 = "SELECT act_info_mobile FROM account_info_act_info WHERE act_info_mobile = ".sqlstr($mobile);
   mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
-  $flag = mysqli_query($con, $query) != false;
+  $result = mysqli_query($con, $query1);
+  if ($row = mysqli_fetch_array($result))
+  {
+    $act_info_mobile = $row['act_info_mobile'];
+    $act_info_mobile_expired = $row['act_info_mobile_expired'];
+    $act_info_mobile_times = $row['act_info_mobile_times'];
+
+    mysqli_free_result($result);
+
+    if (is_null($act_info_mobile))
+    {
+      $result = mysqli_query($con, $query2);
+      if ($row = mysqli_fetch_array($result))
+      {
+        mysqli_free_result($result);
+        $message = "Mobile exists";
+        $flag1 = false;
+      }
+    }
+    else if ($act_info_mobile != $mobile)
+    {
+      $message = "Unmatched mobile";
+      $flag1 = false;
+    }
+    if ($flag1)
+    {
+      if (is_null($act_info_mobile_expired) || (new DateTime($act_info_mobile_expired)) <= $now->sub(new DateInterval("P1D")))
+      {
+        $act_info_mobile_times = 0;
+      }
+      else if ($act_info_mobile_times >= 3)
+      {
+        $message = "Over 3 times within 24 hours";
+        $flag1 = false;
+      }
+      if ($flag1)
+      {
+        $act_info_mobile_times = $act_info_mobile_times + 1;
+        $query3 = "UPDATE account_info_act_info SET act_info_mobile_code = ".sqlstr($code).", act_info_mobile_expired = ".sqlstr($expired->format("Y-m-d\TH:i:sP")).", act_info_mobile_times = ".strval($act_info_mobile_times)." WHERE act_info_usr_id = ".strval($usr_id);
+        $flag2 = mysqli_query($con, $query3) != false;
+      }
+    }
+  }
   mysqli_query($con, "UNLOCK TABLES");
 
-  if ($flag)
+  if ($flag1)
   {
-    global $sms_url, $sms_user, $sms_password, $sms_security_code;
+    if ($flag2)
+    {
+      global $sms_url, $sms_user, $sms_password, $sms_security_code;
 
-    $text = str_replace("[{CODE}]", $code, $sms_security_code);
-    $url = str_replace("[{USER}]", $sms_user, $sms_url);
-    $url = str_replace("[{PASSWORD}]", $sms_password, $url);
-    $url = str_replace("[{MOBILE}]", $mobile, $url);
+      $text = str_replace("[{CODE}]", $code, $sms_security_code);
+      $url = str_replace("[{USER}]", $sms_user, $sms_url);
+      $url = str_replace("[{PASSWORD}]", $sms_password, $url);
+      $url = str_replace("[{MOBILE}]", $mobile, $url);
 
-    $ch = curl_init();
-    $content = curl_escape($ch, $text);
-    $url = str_replace("[{CONTENT}]", $content, $url);
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $output = curl_exec($ch);
-    curl_close($ch);
+      $ch = curl_init();
+      $content = curl_escape($ch, $text);
+      $url = str_replace("[{CONTENT}]", $content, $url);
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      $output = curl_exec($ch);
+      curl_close($ch);
 
-    return (strpos($output, "OK") !== false);
+      return (strpos($output, "OK") !== false);
+    }
+    else
+    {
+      $message = "Failed to set security code";
+    }
   }
   return false;
 }
 
-function bind_mobile($con, $usr_id, $mobile, $code)
+function bind_mobile($con, $usr_id, $mobile, $code, $message)
 {
+  $flag1 = true;
+  $flag2 = true;
+
   $now = new DateTime;
-  $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_mobile IS NULL AND act_info_mobile_status = 0 AND act_info_mobile_code = '".$code."' AND act_info_mobile_expired >= '".$now->format("Y-m-d\TH:i:s")."'";
-  mysqli_query($con, "LOCK TABLES account_info_act_info READ");
-  $result = mysqli_query($con, $query);
+  $query1 = "SELECT act_info_mobile FROM account_info_act_info WHERE act_info_mobile = ".sqlstr($mobile);
+  $query2 = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_mobile IS NULL AND act_info_mobile_status = 0 AND act_info_mobile_code = '".$code."' AND act_info_mobile_expired >= '".$now->format("Y-m-d\TH:i:s")."'";
+  $query3 = "UPDATE account_info_act_info SET act_info_mobile = ".sqlstr($mobile).", act_info_mobile_status = 1, act_info_mobile_code = null, act_info_mobile_expired = null WHERE act_info_usr_id = ".strval($usr_id);
+  mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
+  $result = mysqli_query($con, $query1);
+  if ($row = mysqli_fetch_array($result))
+  {
+    mysqli_free_result($result);
+    $message = "Mobile exists";
+    $flag1 = false;
+  }
+  else
+  {
+    $result = mysqli_query($con, $query2);
+    if ($row = mysqli_fetch_array($result))
+    {
+      mysqli_free_result($result);
+
+      $flag2 = mysqli_query($con, $query3) != false;
+      if (!$flag2)
+      {
+        $message = "Failed to bind mobile";
+      }
+    }
+    else
+    {
+      $message = "Code is wrong";
+      $flag1 = false;
+    }
+  }
   mysqli_query($con, "UNLOCK TABLES");
+
+  return $flag1 && $flag2;
+}
+
+function unbind_mobile($con, $usr_id, $mobile, $code, $message)
+{
+  $flag1 = true;
+  $flag2 = true;
+
+  $now = new DateTime;
+  $query1 = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_mobile = '".$mobile."' AND act_info_mobile_status = 1 AND act_info_mobile_code = '".$code."' AND act_info_mobile_expired >= '".$now->format("Y-m-d\TH:i:s")."'";
+  $query2 = "UPDATE account_info_act_info SET act_info_mobile = null, act_info_mobile_status = 0, act_info_mobile_times = 0, act_info_mobile_code = null, act_info_mobile_expired = null WHERE act_info_usr_id = ".strval($usr_id);
+  mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
+  $result = mysqli_query($con, $query1);
   if ($row = mysqli_fetch_array($result))
   {
     mysqli_free_result($result);
 
-    $query = "UPDATE account_info_act_info SET act_info_mobile = ".sqlstr($mobile).", act_info_mobile_status = 1, act_info_mobile_code = null, act_info_mobile_expired = null WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_mobile IS NULL AND act_info_mobile_status = 0 AND act_info_mobile_code = '".$code."' AND act_info_mobile_expired >= '".$now->format("Y-m-d\TH:i:s")."'";
-    mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
-    $flag = mysqli_query($con, $query) != false;
-    mysqli_query($con, "UNLOCK TABLES");
-
-    return $flag;
+    $flag2 = mysqli_query($con, $query2) != false;
+    if (!$flag2)
+    {
+      $message = "Failed to unbind mobile";
+    }
   }
-  return false;
-}
-
-function unbind_mobile($con, $usr_id, $mobile, $code)
-{
-  $now = new DateTime;
-  $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_mobile = '".$mobile."' AND act_info_mobile_status = 1 AND act_info_mobile_code = '".$code."' AND act_info_mobile_expired >= '".$now->format("Y-m-d\TH:i:s")."'";
-  mysqli_query($con, "LOCK TABLES account_info_act_info READ");
-  $result = mysqli_query($con, $query);
-  mysqli_query($con, "UNLOCK TABLES");
-  if ($row = mysqli_fetch_array($result))
+  else
   {
-    mysqli_free_result($result);
-
-    $query = "UPDATE account_info_act_info SET act_info_mobile = null, act_info_mobile_status = 0, act_info_mobile_code = null, act_info_mobile_expired = null WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_mobile = '".$mobile."' AND act_info_mobile_status = 1 AND act_info_mobile_code = '".$code."' AND act_info_mobile_expired >= '".$now->format("Y-m-d\TH:i:s")."'";
-    mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
-    $flag = mysqli_query($con, $query) != false;
-    mysqli_query($con, "UNLOCK TABLES");
-
-    return $flag;
+    $message = "Code is wrong";
+    $flag1 = false;
   }
-  return false;
+  mysqli_query($con, "UNLOCK TABLES");
+
+  return $flag1 && $flag2;
 }
 
-function set_cash_password($con, $usr_id, $cash_pass)
+function set_cash_password($con, $usr_id, $cash_pass, $message)
 {
   $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_cash_pass IS NULL";
   mysqli_query($con, "LOCK TABLES account_info_act_info READ");
@@ -411,12 +525,20 @@ function set_cash_password($con, $usr_id, $cash_pass)
     $flag = mysqli_query($con, $query) != false;
     mysqli_query($con, "UNLOCK TABLES");
 
+    if (!$flag)
+    {
+      $message = "Failed to set cash password";
+    }
     return $flag;
+  }
+  else
+  {
+    $message = "Already set cash password";
   }
   return false;
 }
 
-function change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass)
+function change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass, $message)
 {
   $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_cash_pass = SHA2('".$cash_pass."',256)";
   mysqli_query($con, "LOCK TABLES account_info_act_info READ");
@@ -431,12 +553,20 @@ function change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass)
     $flag = mysqli_query($con, $query) != false;
     mysqli_query($con, "UNLOCK TABLES");
 
+    if (!$flag)
+    {
+      $message = "Failed to set new cash password";
+    }
     return $flag;
+  }
+  else 
+  {
+    $message = "Original cash password is wrong";
   }
   return false;
 }
 
-function reset_cash_password($con, $usr_id, $new_cash_pass, $code)
+function reset_cash_password($con, $usr_id, $new_cash_pass, $code, $message)
 {
   $now = new DateTime;
   $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_mobile IS NOT NULL AND act_info_mobile_status = 1 AND act_info_mobile_code = '".$code."' AND act_info_mobile_expired >= '".$now->format("Y-m-d\TH:i:s")."'";
@@ -452,7 +582,15 @@ function reset_cash_password($con, $usr_id, $new_cash_pass, $code)
     $flag = mysqli_query($con, $query) != false;
     mysqli_query($con, "UNLOCK TABLES");
 
+    if (!$flag)
+    {
+      $message = "Failed to reset cash password";
+    }
     return $flag;
+  }
+  else
+  {
+    $message = "Code is wrong";
   }
   return false;
 }
