@@ -1086,22 +1086,22 @@ function easyloan_user_logout($account) {
 function easyloan_menu_alter(&$items) {
   // the wizard registeration form menu
   $items['user/register']['page arguments'] = array('user_register_form');
-  
-  /*
   // disable the user/%/edit page to all users 
   $items['user/%/edit'] = array(
-    //'access callback' => FALSE,
-  );*/
+    'access callback' => 'super_admin_access',
+  );
   return $items;
 }
 
+
 /*
- * Only super admin get accessed 
+ * Only super admin can get accessed
  */
-function super_admin_access(){  
-  global $user; 
-  return $user->uid == '1'; 
-} 
+function super_admin_access() {
+  global $user;
+  return $user->uid == 1;
+}
+
 
 /*
  * Any easyloan manager can get accessed 
@@ -1129,7 +1129,6 @@ function authenticated_access() {
   global $user;
   return in_array("authenticated user", $user->roles);
 }
-
 
 function easyloan_block_list_alter(&$blocks){
   // var_dump($blocks); 
@@ -1264,9 +1263,11 @@ function easyloan_user_register_submit(&$form, &$form_state) {
   global $user;
   module_load_include('php', 'easyloan', 'api/sys_user');
   set_user(1, $user->uid, $name . ';' . $pass);
+  watchdog('easyloan', 'user has been set');
   
   module_load_include('php', 'easyloan', 'api/util_initialize_user');
-  initialize_user($user->uid);  
+  initialize_user($user->uid);
+  watchdog('easyloan', 'user has been initialized');
 }
 
 function easyloan_form_alter(&$form, &$form_state, $form_id) { 
