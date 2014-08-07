@@ -121,8 +121,8 @@
                     .append(span.clone().addClass('w100 text-center').append(map_id_name(banks, w.bank)))
                     .append(span.clone().addClass('w180').append(w.number.replace(/\B(?=(\d{4})+(?!\d))/g, " ")))
                     .append(span.clone().addClass('w80 text-center').append(w.time.slice(0,10)))
-                    .append(span.clone().addClass('w60 text-center').append(btn1.clone().attr('data-user-id', w.user_id).attr('data-number', w.number).attr('data-amount', w.amount).attr('data-fee', w.fee)))
-                    .append(span.clone().addClass('w60 text-center').append(btn2.clone().attr('data-user-id', w.user_id).attr('data-number', w.number).attr('data-amount', w.amount).attr('data-fee', w.fee)))
+                    .append(span.clone().addClass('w60 text-center').append(btn1.clone().attr('data-user-id', w.user_id).attr('data-number', w.number).attr('data-amount', w.amount).attr('data-fee', w.fee).attr('data-time', w.time)))
+                    .append(span.clone().addClass('w60 text-center').append(btn2.clone().attr('data-user-id', w.user_id).attr('data-number', w.number).attr('data-amount', w.amount).attr('data-fee', w.fee).attr('data-time', w.time)))
                     .append(div);
                   if (i % 2 == 0){
                     row.addClass('dark');
@@ -136,7 +136,7 @@
                     var number = $(this).attr("data-number");
                     var amount = $(this).attr("data-amount");
                     var fee = $(this).attr("data-fee");
-                    var time = (new Date()).format("yyyy-MM-dd hh:mm:ss.S");
+                    var time = $(this).attr("data-time");
                     $.getJSON( Drupal.settings.basePath + "api/m_set_withdraw?type=1&id=" + user_id + '&time=' + time + '&number=' + number + '&amount=' + amount + '&fee=' + fee, 
                       function(d) {
                         if (d.result == 1){
@@ -159,7 +159,7 @@
                     var number = $(this).attr("data-number");
                     var amount = $(this).attr("data-amount");
                     var fee = $(this).attr("data-fee");
-                    var time = (new Date()).format("yyyy-MM-dd hh:mm:ss.S");
+                    var time = $(this).attr("data-time");
                     $.getJSON( Drupal.settings.basePath + "api/m_set_withdraw?type=0&id=" + user_id + '&time=' + time + '&number=' + number + '&amount=' + amount + '&fee=' + fee, 
                       function(d) {
                         if (d.result == 1){

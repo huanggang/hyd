@@ -76,7 +76,20 @@
               location.reload();
             }
             else {
-              alert("后台验证出现问题，请稍后重试");
+              var message = "后台验证出现问题，请稍后重试";
+              if (d.message == "Not enough money")
+              {
+                message = "可用资金不足";
+              }
+              else if (d.message == "Invalid bank card number")
+              {
+                message = "银行卡卡号错误";
+              }
+              else if (d.message == "Invalid cash password")
+              {
+                message = "提现密码错误";
+              }
+              alert(message);
             }
           }, "json"
         )

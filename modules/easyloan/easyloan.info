@@ -25,7 +25,6 @@ dependencies[] = jquery_update
 dependencies[] = link
 dependencies[] = pagerer
 dependencies[] = views
-dependencies[] = userprotect
 
 
 
