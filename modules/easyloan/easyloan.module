@@ -1263,11 +1263,9 @@ function easyloan_user_register_submit(&$form, &$form_state) {
   global $user;
   module_load_include('php', 'easyloan', 'api/sys_user');
   set_user(1, $user->uid, $name . ';' . $pass);
-  watchdog('easyloan', 'user has been set');
   
   module_load_include('php', 'easyloan', 'api/util_initialize_user');
   initialize_user($user->uid);
-  watchdog('easyloan', 'user has been initialized');
 }
 
 function easyloan_form_alter(&$form, &$form_state, $form_id) { 
