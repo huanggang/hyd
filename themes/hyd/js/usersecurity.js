@@ -326,7 +326,7 @@ Drupal.behaviors.usersecurity = {
                 )
               )
 
-              btnCountDown("getMobileCodeWithoutMobile", 29);
+              btnCountDown("getMobileCodeWithoutMobile", 59);
 
             } else {
               var msg;

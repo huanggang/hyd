@@ -142,34 +142,34 @@ function account_security(){
   switch ($type)
   {
     case 1:
-      $flag = verify_name_ssn($con, $usr_id, $name, $ssn, &$times);
+      $flag = verify_name_ssn($con, $usr_id, $name, $ssn, $times);
       break;
     case 2:
-      $flag = change_password($con, $usr_id, $password, $new_password, &$message);
+      $flag = change_password($con, $usr_id, $password, $new_password, $message);
       break;
     case 3:
-      $flag = set_email($con, $usr_id, $email, &$message);
+      $flag = set_email($con, $usr_id, $email, $message);
       break;
     case 4:
       $flag = bind_email($con, $usr_id, $code);
       break;
     case 5:
-      $flag = send_mobile_code($con, $usr_id, $mobile, &$message);
+      $flag = send_mobile_code($con, $usr_id, $mobile, $message);
       break;
     case 6:
-      $flag = bind_mobile($con, $usr_id, $mobile, $code, &$message);
+      $flag = bind_mobile($con, $usr_id, $mobile, $code, $message);
       break;
     case 7:
-      $flag = unbind_mobile($con, $usr_id, $mobile, $code, &$message);
+      $flag = unbind_mobile($con, $usr_id, $mobile, $code, $message);
       break;
     case 8:
-      $flag = set_cash_password($con, $usr_id, $cash_pass, &$message);
+      $flag = set_cash_password($con, $usr_id, $cash_pass, $message);
       break;
     case 9:
-      $flag = change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass, &$message);
+      $flag = change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass, $message);
       break;
     case 10:
-      $flag = reset_cash_password($con, $usr_id, $new_cash_pass, $code, &$message);
+      $flag = reset_cash_password($con, $usr_id, $new_cash_pass, $code, $message);
       break;
   }
   mysqli_kill($con, mysqli_thread_id($con));
@@ -209,7 +209,7 @@ function account_security(){
   }
 }
 
-function verify_name_ssn($con, $usr_id, $name, $ssn, $act_info_ssn_times)
+function verify_name_ssn($con, $usr_id, $name, $ssn, &$act_info_ssn_times)
 {
   $act_info_ssn_times = 0;
   $query = "SELECT act_info_ssn_times FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_ssn_status = 0";
@@ -251,7 +251,7 @@ function verify_name_ssn($con, $usr_id, $name, $ssn, $act_info_ssn_times)
   return false;
 }
 
-function change_password($con, $usr_id, $password, $new_password, $message)
+function change_password($con, $usr_id, $password, $new_password, &$message)
 {
   $query = "SELECT usr_password FROM users_usr WHERE usr_id = ".strval($usr_id)." AND usr_password = SHA2('".$password."',256)";
   mysqli_query($con, "LOCK TABLES users_usr READ");
@@ -285,7 +285,7 @@ function change_password($con, $usr_id, $password, $new_password, $message)
   return false;
 }
 
-function set_email($con, $usr_id, $email, $message)
+function set_email($con, $usr_id, $email, &$message)
 {
   $flag1 = true;
   $flag2 = true;
@@ -354,13 +354,13 @@ function bind_email($con, $usr_id, $code)
   return false;
 }
 
-function send_mobile_code($con, $usr_id, $mobile, $message)
+function send_mobile_code($con, $usr_id, $mobile, &$message)
 {
   $flag1 = true;
   $flag2 = true;
 
   $now = new DateTime;
-  $expired = $now->add(new DateInterval("PT5M")); // 5 minutes
+  $expired = $now->add(new DateInterval("PT5M"))->format("Y-m-d\TH:i:sP"); // 5 minutes
   $code = generate_mobile_code();
   $query1 = "SELECT act_info_mobile, act_info_mobile_expired, act_info_mobile_times FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id);
   $query2 = "SELECT act_info_mobile FROM account_info_act_info WHERE act_info_mobile = ".sqlstr($mobile);
@@ -403,7 +403,7 @@ function send_mobile_code($con, $usr_id, $mobile, $message)
       if ($flag1)
       {
         $act_info_mobile_times = $act_info_mobile_times + 1;
-        $query3 = "UPDATE account_info_act_info SET act_info_mobile_code = ".sqlstr($code).", act_info_mobile_expired = ".sqlstr($expired->format("Y-m-d\TH:i:sP")).", act_info_mobile_times = ".strval($act_info_mobile_times)." WHERE act_info_usr_id = ".strval($usr_id);
+        $query3 = "UPDATE account_info_act_info SET act_info_mobile_code = ".sqlstr($code).", act_info_mobile_expired = ".sqlstr($expired).", act_info_mobile_times = ".strval($act_info_mobile_times)." WHERE act_info_usr_id = ".strval($usr_id);
         $flag2 = mysqli_query($con, $query3) != false;
       }
     }
@@ -439,7 +439,7 @@ function send_mobile_code($con, $usr_id, $mobile, $message)
   return false;
 }
 
-function bind_mobile($con, $usr_id, $mobile, $code, $message)
+function bind_mobile($con, $usr_id, $mobile, $code, &$message)
 {
   $flag1 = true;
   $flag2 = true;
@@ -480,7 +480,7 @@ function bind_mobile($con, $usr_id, $mobile, $code, $message)
   return $flag1 && $flag2;
 }
 
-function unbind_mobile($con, $usr_id, $mobile, $code, $message)
+function unbind_mobile($con, $usr_id, $mobile, $code, &$message)
 {
   $flag1 = true;
   $flag2 = true;
@@ -510,7 +510,7 @@ function unbind_mobile($con, $usr_id, $mobile, $code, $message)
   return $flag1 && $flag2;
 }
 
-function set_cash_password($con, $usr_id, $cash_pass, $message)
+function set_cash_password($con, $usr_id, $cash_pass, &$message)
 {
   $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_cash_pass IS NULL";
   mysqli_query($con, "LOCK TABLES account_info_act_info READ");
@@ -538,7 +538,7 @@ function set_cash_password($con, $usr_id, $cash_pass, $message)
   return false;
 }
 
-function change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass, $message)
+function change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass, &$message)
 {
   $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_cash_pass = SHA2('".$cash_pass."',256)";
   mysqli_query($con, "LOCK TABLES account_info_act_info READ");
@@ -566,7 +566,7 @@ function change_cash_password($con, $usr_id, $cash_pass, $new_cash_pass, $messag
   return false;
 }
 
-function reset_cash_password($con, $usr_id, $new_cash_pass, $code, $message)
+function reset_cash_password($con, $usr_id, $new_cash_pass, $code, &$message)
 {
   $now = new DateTime;
   $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_mobile IS NOT NULL AND act_info_mobile_status = 1 AND act_info_mobile_code = '".$code."' AND act_info_mobile_expired >= '".$now->format("Y-m-d\TH:i:s")."'";

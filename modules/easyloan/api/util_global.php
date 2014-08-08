@@ -3,7 +3,7 @@ global $user;
 
 global $db_host, $db_user, $db_pwd, $db_name;
 
-global $sms_url, $sms_user, $sms_password, $sms_reset_pass_code;
+global $sms_url, $sms_user, $sms_password, $sms_reset_pass_code, $sms_security_code;
 
 global $web_js, $site_js;
 
