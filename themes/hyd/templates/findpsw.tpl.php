@@ -5,6 +5,7 @@ drupal_add_css($theme_path . '/css/findpwd.css');
 
 drupal_add_js($theme_path . '/js/jquery.validate.min.js');
 drupal_add_js($theme_path . '/js/valid_methods.js');
+drupal_add_js($theme_path . '/js/messages.js');
 drupal_add_js($theme_path . '/js/findpwd.js');
 
 ?>

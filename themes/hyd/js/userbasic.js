@@ -146,6 +146,10 @@ Drupal.behaviors.userbasic = {
         });
     });
 
+    if ($('.user-picture a').size() == 0){
+      // to fix the bug that drupal has no view profile 
+      $('.user-picture img').wrap('<a href="' + Drupal.settings.basePath + 'user"><a/>');
+    }
 
     $('.user-picture a').click(function(){
         if ($(this).prop('href').indexOf('#') !== -1){

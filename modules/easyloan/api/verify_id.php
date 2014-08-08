@@ -1,6 +1,6 @@
 <?php
 // 1: matched; 0: unmatched; -1: notice administrator for the error
-fuction verify_id($name, $ssn)
+function verify_id($name, $ssn)
 {
 
   $flag = -1;

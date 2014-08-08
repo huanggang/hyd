@@ -26,8 +26,6 @@ if (isset($form['captcha'])) {
       <fieldset>
         <input id="edit-user-register-timezone" name="timezone" value="28800" type="hidden">
         <?php 
-          print $theme_path;
-          print 'test';
           print drupal_render($form['form_build_id']);
           print drupal_render($form['form_id']);
           print drupal_render($form['account']['timezone']); 
