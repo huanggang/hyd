@@ -42,6 +42,11 @@ Drupal.behaviors.valid_methods = {
         return /^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{1,}$/.test(value);
     }, "包含非法字符");
 
+
+    $.validator.addMethod("noSpace", function(value, element) { 
+        return value.indexOf(" ") < 0 && value != ""; 
+    }, "不允许输入空格");
+
     $.validator.addMethod("isNickname", function(value, element) {
       var length = value.length;
       var nickname = /^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9_-]){2,}$/;

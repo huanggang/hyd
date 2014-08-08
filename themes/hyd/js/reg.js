@@ -8,6 +8,7 @@
 				rules: {
 					name: {
 						required: true,
+						noSpace: true,
 						minlength: 2,
 						maxlength: 20,
 						isNickname: true,
@@ -23,8 +24,9 @@
 					},
 					"pass[pass1]": {
 						required: true,
+						noSpace: true,
 						minlength: 6,
-						maxlength: 16
+						maxlength: 16,
 					},
 					"pass[pass2]": {
 						required: true,
@@ -55,6 +57,7 @@
 				messages: {
 					name: {
 						required: "2-20位字符，可包含中文，英文，数字和字符\"-\"与\"_\"。注册完成后不可修改",
+						noSpace: "昵称不能包含空格",
 						minlength: "注册名需包含至少两个字符",
 						maxlength: "注册名不能超过20个字符",
 						remote: "该昵称已经存在",
@@ -62,6 +65,7 @@
 					},
 					"pass[pass1]": {
 						required: "密码须为6-16位英文字母、数字和符号(不包括空格)",
+						noSpace: "密码不能包含空格",
 						minlength: "密码至少为6个字符",
 						maxlength: "密码不要超过16个字符"
 					},
