@@ -36,6 +36,7 @@
 						required: true,
 						minlength: 4,
 						maxlength: 4,
+						/*
 						remote: {
 							url: "../captcha_check", 
 							type: "post",
@@ -51,6 +52,7 @@
 								},
 							}
 						},
+						*/
 					},
 					agree: "required",
 				},
@@ -77,7 +79,7 @@
 						required: "请输入4位验证码",
 						minlength: "请输入4位验证码",
 						maxlength: "请输入4位验证码",
-						remote: "验证码错误",
+						//remote: "验证码错误",
 					},
 					agree: "请同意条款",
 				}

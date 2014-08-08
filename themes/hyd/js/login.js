@@ -20,6 +20,7 @@
 						required: true,
 						minlength: 4,
 						maxlength: 4,
+						/*
 						remote: {
 							url: Drupal.settings.basePath + "captcha_check", 
 							type: "post",
@@ -34,7 +35,7 @@
 									return $("#edit-captcha-response").val();
 								}, 
 							} 
-						}, 
+						}, */
 					}, 
 				}, 
 				messages: { 
@@ -52,7 +53,7 @@
 						required: "请输入验证码", 
 						minlength: "请输入4位验证码", 
 						maxlength: "请输入4位验证码", 
-						remote: "验证码错误", 
+						//remote: "验证码错误", 
 					}, 
 				}, 
 			}; 

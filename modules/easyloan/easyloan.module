@@ -436,7 +436,7 @@ function easyloan_menu() {
     'title'           => t('用户管理'), 
     'page callback'   => 'menu_callback', 
     'page arguments'  => array('account_management', 2),
-    'access arguments' => array('auditor permission'),
+    'access arguments' => array('manager permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
     'weight'          => '0'
@@ -454,7 +454,7 @@ function easyloan_menu() {
     'title'           => t('欠款账户'), 
     'page callback'   => 'menu_callback', 
     'page arguments'  => array('management_accountsindebt', 2),
-    'access arguments' => array('auditor permission'),
+    'access arguments' => array('accountant permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
     'weight'          => '10'
@@ -1087,8 +1087,8 @@ function easyloan_menu_alter(&$items) {
   // the wizard registeration form menu
   $items['user/register']['page arguments'] = array('user_register_form');
   // disable the user/%/edit page to all users 
-  $items['user/%/edit'] = array(
-    'access callback' => 'super_admin_access',
+  $items['user/%user/edit'] = array(
+    'access callback' => 'super_admin_access', 
   );
   return $items;
 }
