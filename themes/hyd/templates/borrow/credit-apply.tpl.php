@@ -7,6 +7,9 @@ drupal_add_css($theme_path . '/css/loan.css');
 
 drupal_add_js($theme_path . '/js/jquery.validate.min.js');
 drupal_add_js($theme_path . '/js/borrow_credit.js');
+drupal_add_js($theme_path . '/js/borrow_validate.js');
+
+drupal_add_js('var uid=' . strval($user->uid), 'inline');
 ?>
 <div class="pg-loan" id="pg-loan">
   <div class="container_12 mt10">

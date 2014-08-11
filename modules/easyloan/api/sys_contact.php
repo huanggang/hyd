@@ -20,6 +20,13 @@ function does_contact_exist($type, $value)
         return true;
       }
       $query = $query."act_info_email FROM account_info_act_info WHERE act_info_email=?";
+
+      $now = new DateTime;
+      $nowStr = $now->format("Y-m-d\TH:i:sP");
+      $query1 = "UPDATE account_info_act_info SET act_info_email = NULL, act_info_email_status = NULL WHERE act_info_email=".sqlstr($value)." AND act_info_email_status=0 AND act_info_email_expired<=".sqlstr($nowStr);
+      mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
+      mysqli_query($con, $query1);
+      mysqli_query($con, "UNLOCK TABLES");
       break;
     case 3: // QQ
       if (!is_valid_qq($value))

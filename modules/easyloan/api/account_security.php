@@ -27,6 +27,18 @@ function account_security(){
     echo "{\"result\":0}";
     exit;
   }
+
+  if ($type != 4)
+  {
+    global $user;
+    if ($user->uid <= 0) // except verify email address
+    {
+      echo "{\"result\":0}";
+      exit;
+    }
+    $usr_id = $user->uid;
+  }
+
   switch ($type)
   {
     case 1: // verify name and ssn
@@ -54,7 +66,7 @@ function account_security(){
         echo "{\"result\":0}";
         exit;
       } 
-      else if (does_contact_exist(2, $email))
+      else if (does_contact_exist(2, $email) && !is_user_email($usr_id, $email))
       {
         echo "{\"result\":0, \"exists\": 1}";
         exit;
@@ -114,17 +126,6 @@ function account_security(){
         exit;
       }
       break;
-  }
-
-  if ($type != 4)
-  {
-    global $user;
-    if ($user->uid <= 0) // except verify email address
-    {
-      echo "{\"result\":0}";
-      exit;
-    }
-    $usr_id = $user->uid;
   }
 
   global $db_host, $db_user, $db_pwd, $db_name;
@@ -228,11 +229,12 @@ function verify_name_ssn($con, $usr_id, $name, $ssn, &$act_info_ssn_times)
       if (call_name_ssn_webservice($name, $ssn))
       {
         // parse gender and date of birth
-        $gender = strval(substr($ssn, -2)) % 2 == 1;
+        $gender = strval(substr($ssn, -2, 1)) % 2 == 1;
+        $gender = $gender ? "1" : "0";
         $dob = substr($ssn, 6, 8);
         $dob = substr_replace($dob, '-', 6, 0);
         $dob = substr_replace($dob, '-', 4, 0);
-        $query = "UPDATE account_info_act_info SET act_info_name = ".sqlstr($name).", act_info_ssn = ".sqlstr($ssn).", act_info_ssn_status = 1, act_info_ssn_times = ".sqlstrval($act_info_ssn_times).", act_info_gender = ".sqlstrval($gender).", act_info_dob = ".sqlstr($dob)." WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_ssn_status = 0";
+        $query = "UPDATE account_info_act_info SET act_info_name = ".sqlstr($name).", act_info_ssn = ".sqlstr($ssn).", act_info_ssn_status = 1, act_info_ssn_times = ".sqlstrval($act_info_ssn_times).", act_info_gender = ".$gender.", act_info_dob = ".sqlstr($dob)." WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_ssn_status = 0";
         mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
         $flag = mysqli_query($con, $query) != false;
         mysqli_query($con, "UNLOCK TABLES");
@@ -282,6 +284,20 @@ function change_password($con, $usr_id, $password, $new_password, &$message)
   {
     $message = "Original password is wrong";
   }
+  return false;
+}
+
+function is_user_email($usr_id, $email)
+{
+  $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_email = ".sqlstr($email);
+  mysqli_query($con, "LOCK TABLES account_info_act_info READ");
+  $result = mysqli_query($con, $query);
+  mysqli_query($con, "UNLOCK TABLES");
+  if ($row = mysqli_fetch_array($result))
+  {
+    mysqli_free_result($result);
+    return true;
+  }  
   return false;
 }
 
