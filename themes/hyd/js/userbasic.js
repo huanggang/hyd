@@ -85,7 +85,7 @@ Drupal.behaviors.userbasic = {
                                               .find('span.noauth').removeClass('icon-status');
         }
 
-        if (d.gender){
+        if (d.gender != null){
           $("span#gender").html(d.gender==1?"男":"女");
         }
         $("span#dob").html(d.dob);
