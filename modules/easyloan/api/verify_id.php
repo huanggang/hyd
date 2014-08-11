@@ -19,7 +19,7 @@ function verify_id($name, $ssn)
                                                 'exceptions' => 0,
                                         'connection_timeout' => 2000));
 
-    $licensecode = file_get_contents("授权文件_清远市好易货网络财务有限公司_qyhy.txt");
+    $licensecode = file_get_contents(substr(__FILE__, 0, strrpos(__FILE__, '/')+1)."授权文件_清远市好易货网络财务有限公司_qyhy.txt");
 
     $condition = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ROWS><INFO><SBM>清远市好易货网络财务有限公司</SBM></INFO><ROW><GMSFHM>公民身份号码</GMSFHM><XM>姓名</XM></ROW><ROW FSD=\"清远\" YWLX=\"好易货身份认证\"><GMSFHM>" . $ssn . "</GMSFHM><XM>" . $name . "</XM></ROW></ROWS>";
 
@@ -92,7 +92,7 @@ function verify_id($name, $ssn)
 
   if ($flag == -1)
   {
-    $file = fopen("error_verify_id.log", "a");
+    $file = fopen("/tmp/error_verify_id.log", "a");
     fwrite($file, "\r\n" . $error_msg);
     fclose($file);
   }
