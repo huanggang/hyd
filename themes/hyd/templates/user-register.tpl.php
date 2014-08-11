@@ -66,7 +66,6 @@ if (isset($form['captcha'])) {
           <span class="icon input-icon-lock"></span>
         </div>
         <?php } ?>
-        <?php print drupal_render($form['pre']); ?>
         <div class="ui-form-item ui-form-item-check">
           <input type="checkbox" class="form-checkbox" value="0" name="agree" id="edit-agree"><span class="fn-left">我已阅读并同意</span>
           <a href="<?php print $base_url . '/' . $theme_path; ?>/agreement.html" target="_blank">《好易贷网站服务协议》</a>

@@ -9,6 +9,7 @@ drupal_add_js($theme_path . '/js/account.js');
 
 drupal_add_js($theme_path . '/js/jquery.validate.min.js');
 drupal_add_js($theme_path . '/js/valid_methods.js');
+drupal_add_js($theme_path . '/js/messages.js');
 drupal_add_js($theme_path . '/js/usersecurity.js');
 
 $img_path = $base_url . '/' . $theme_path . '/images/';

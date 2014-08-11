@@ -1,0 +1,20 @@
+var msg = {
+    'Failed to update password': '更改密码失败，请重试',
+    "Failed to update password" : "更改密码失败，请重试",
+    "Original password is wrong" : "原始密码不正确",
+    "Email exists" : "该邮箱地址已存在",
+    "Failed to set email" : "绑定邮箱地址失败，请重试",
+    "Mobile exists" : "该手机号码已存在",
+    "Unmatched mobile" : "手机号码不匹配",
+    "Over 3 times within 24 hours" : "24小时内只能发送三次",
+    "Failed to set security code" : "设置安全密码失败，请重试",
+    "Failed to bind mobile" : "绑定手机号码失败，请重试",
+    "Failed to unbind mobile" : "解除绑定失败，请重试",
+    "Code is wrong" : "验证码不正确，请重试",
+    "Failed to set cash password" : "设置提现密码失败，请重试",
+    "Already set cash password" : "提现密码设置成功",
+    "Failed to set new cash password" : "设置新提现密码失败，请重试",
+    "Failed to reset cash password" : "重置提现密码失败，请重试",
+    "Original cash password is wrong" : "原始提现密码不正确",
+}
+

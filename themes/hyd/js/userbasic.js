@@ -6,7 +6,7 @@
 ///  value  - the default value
 function setSelectOptions(json, target, value){
   var len = json.length;
-  $('#' + target).empty().append('<option value="">请选择</option>');
+  $('#' + target).empty().append('<option value="">-</option>');
   for(var j = 0; j < len; j++) {
       var option = $('<option/>');
       option.attr('value', json[j].id); // fixed typo
@@ -42,6 +42,9 @@ Drupal.behaviors.userbasic = {
       ///  provinceid - the id of the province
       ///  value      - the default city value
       function setCities(provinceid, value, async){ 
+        if (provinceid == null){
+          return;
+        }
         if (async == undefined) { async = true; } 
         var url = js_path + 'city/cities_' + provinceid + '.js'; 
 
@@ -123,7 +126,6 @@ Drupal.behaviors.userbasic = {
 
 
     $('#savebt').click(function(event) {
-
         $('#savebt').prop('disabled', true).removeClass('.ui-button-green:hover');
         $.post(Drupal.settings.basePath + "api/basic", 
               {

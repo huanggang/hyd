@@ -96,25 +96,21 @@ $picture = theme('user_picture', array('account' =>$user));
     <div class="ui-form-item">
       <label class="ui-label"><span class="ui-form-required">*</span>最高学历</label>
         <select name="education" id="education">
-          <option value="">请选择</option>
         </select>
       </div>
       <div class="ui-form-item">
         <label class="ui-label"><span class="ui-form-required">*</span>婚姻状况</label>
           <select name="marital" id="marital">
-          <option value="">请选择</option>
         </select>
       </div>
       <div class="ui-form-item">
         <label class="ui-label"><span class="ui-form-required">*</span>所在省份</label>
         <select name="province" id="province">
-          <option value="">请选择</option>
         </select>
       </div>
       <div class="ui-form-item">
         <label class="ui-label"><span class="ui-form-required">*</span>所在城市</label>
         <select name="city" id="city">
-          <option value="">请选择</option>
         </select>
       </div>
       <div class="ui-form-item">
