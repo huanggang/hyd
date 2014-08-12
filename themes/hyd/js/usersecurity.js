@@ -677,6 +677,8 @@ Drupal.behaviors.usersecurity = {
         cashPassword: {
           required: !0,
           isPassWord: !0,
+          minlength: 6,
+          maxlength: 40,
         },
         cashPassword2:{
           equalTo: '#cashPassword'
@@ -686,6 +688,8 @@ Drupal.behaviors.usersecurity = {
         cashPassword: {
           required: "提现密码不能为空",
           isPassWord: "密码含有非法字符",
+          minlength: "提现密码不能少于6位",
+          maxlength: "提现密码不能大于40位",
         },
         cashPassword2:{
     		  equalTo: "您输入的密码不一致"
