@@ -130,7 +130,9 @@
               html += '<li class="bankli" data-bank="' + bankId + '" data-number="' + number + '"><img alt="" title="" src="' + image_path + 'bank_' + bankId + '.jpg"><div class="card">' + number + '</div><em></em></li>';
             }
           }
-          $('#banklis ul').html(html);
+          var addCard = $('#banklis ul').children().last();
+          $(addCard).prevAll().remove();
+          $('#banklis ul').prepend(html);
           
           $('.bankli').click(function(event) {
             $("label[for='bankId']").hide();

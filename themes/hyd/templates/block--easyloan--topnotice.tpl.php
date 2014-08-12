@@ -13,7 +13,7 @@ drupal_add_js(drupal_get_path('theme','hyd') . '/js/topnotice.js');
 <div class="notice mb fn-clear">
   <div class="notice-wrapper grid_12">
     <div class="notice-head fn-clear">
-      <a href="javascript:void;" target="_blank" class="notice-title h5 fn-left color-gray-text w700 fn-text-overflow" id="notice-title">好易贷2013年2月16日系统维护公告</a>
+      <a href="javascript:void(0);" target="_blank" class="notice-title h5 fn-left color-gray-text w700 fn-text-overflow" id="notice-title">好易贷2013年2月16日系统维护公告</a>
       <span class="notice-date fn-left color-silver-text">2014-02-14</span>
       <a class="notice-more fn-right ui-button ui-button-transparent ui-button-small darkgray" href="about/notices" target="_blank">更多公告</a>
     </div>

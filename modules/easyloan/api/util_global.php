@@ -251,7 +251,7 @@ function is_valid_mobile($mobile)
   {
     return false;
   }
-  $pattern = "/^1(3|5|8)\d{9}$/";
+  $pattern = "/^1(3|4|5|7|8)\d{9}$/";
   return preg_match($pattern, $mobile) == 1;
 }
 

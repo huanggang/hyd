@@ -229,8 +229,8 @@ Drupal.behaviors.manage_users = {
                           .append(span.clone().addClass('w85 ph5 debit text-right').append(f(u.amount_available)))
                           .append(span.clone().addClass('w85 ph5 balance text-right').append(f(u.amount_owned)))
                           .append(span.clone().addClass('w85 ph5 text-right').append(f(u.amount_frozen)))
-                          .append(span.clone().addClass('w135 ph5 text-right').append(u.registered))
-                          .append(span.clone().addClass('w135 ph5 text-right').append(u.logined));
+                          .append(span.clone().addClass('w135 ph5 text-right').append(u.registered == null ? "" : u.registered.slice(0,16)))
+                          .append(span.clone().addClass('w135 ph5 text-right').append(u.logined == null ? "" : u.logined.slice(0,16)));
 
                 if (i % 2 == 0){
                   row.addClass('dark');
