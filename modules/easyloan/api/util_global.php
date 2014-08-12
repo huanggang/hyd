@@ -371,7 +371,7 @@ function generate_user_password()
 
 function jsonstr($str)
 {
-  return (is_null($str) || empty($str)) ? "null" : "\"".str_replace("\"", "\\\"", $str)."\"";
+  return (is_null($str) || empty($str)) ? "null" : "\"".str_replace("\"", "\\\"", str_replace("\r", "", str_replace("\n", "<br/>", $str)))."\"";
 }
 
 function jsonstrval($val)

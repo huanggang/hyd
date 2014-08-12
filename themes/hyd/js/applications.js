@@ -181,7 +181,7 @@
 
             $('.check').click(function(event){
               var app_id = $(this).attr("data-app-id");
-              var comment = $(this).attr("data-comment");
+              var comment = $(this).attr("data-comment").replace(/<br\/>/g, "\n");
               var status = Number($(this).attr("data-status"));
 
               var html = '<div id="dialog-form" title="审核借款申请"><form class="ui-form"><fieldset><div class="inputs"><div class="ui-form-item"><label class="ui-label">借款编号</label><span id="app_id">' + app_id + '</span></div><div class="ui-form-item"><label class="ui-label">选择状态</label><select name="statusId" style="width:80px" id="status">';

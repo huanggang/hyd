@@ -2,9 +2,11 @@
 global $base_url;
 global $user;
 
-$current_user = $variables["elements"]["#account"];
-
-$is_my_page = ($current_user->uid == $user->uid);
+$url = $_SERVER['REQUEST_URI'];
+$index = strrpos($url, "/") + 1;
+$idStr = substr($url, $index);
+$id = intval($idStr);
+$is_my_page = $id == 0 || $id == $user->uid;
 
 $theme_path = drupal_get_path('theme','hyd');
 
