@@ -16,5 +16,7 @@ var msg = {
     "Failed to set new cash password" : "设置新提现密码失败，请重试",
     "Failed to reset cash password" : "重置提现密码失败，请重试",
     "Original cash password is wrong" : "原始提现密码不正确",
+    "request too many times" : "请求次数过多，24小时内只能发送三次",
+    "no such mobile found" : "请使用您已绑定的手机号码",
 }
 

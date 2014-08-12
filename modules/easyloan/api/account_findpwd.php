@@ -12,7 +12,7 @@ function account_findpwd(){
   {
     $type = str2int($_POST['type']);
   }
-  else
+  else 
   {
     $type = str2int($_GET['type']);
   }
@@ -57,10 +57,10 @@ function account_findpwd(){
   switch ($type)
   {
     case 1:
-      $flag = send_mobile_code($con, $mobile);
+      $flag = send_mobile_code($con, $mobile, $message);
       break;
     case 2:
-      $flag = reset_password($con, $mobile, $code);
+      $flag = reset_password($con, $mobile, $code, $message);
       break;
   }
   mysqli_kill($con, mysqli_thread_id($con));
@@ -72,16 +72,16 @@ function account_findpwd(){
   }
   else
   {
-    echo "{\"result\":0}";
+    echo "{\"result\":0,\"message\":".jsonstr($message)."}";
   }
 }
 
-function send_mobile_code($con, $mobile)
+function send_mobile_code($con, $mobile, &$message)
 {
   $now = new DateTime;
   $expired = $now->add(new DateInterval("PT5M")); // 5 minutes
 
-  $query = "SELECT act_info_usr_id, act_info_mobile_times FROM account_info_act_info WHERE act_info_mobile = '" . strval($mobile) . "'";
+  $query = "SELECT act_info_usr_id, act_info_mobile_times FROM account_info_act_info WHERE act_info_mobile_status = 1 AND act_info_mobile = '" . strval($mobile) . "'";
   mysqli_query($con, "LOCK TABLES account_info_act_info READ");
   $result = mysqli_query($con, $query);
   mysqli_query($con, "UNLOCK TABLES");
@@ -117,7 +117,7 @@ function send_mobile_code($con, $mobile)
       //if (1)
       if (strpos($output, "OK") !== false)
       {
-        $query = "UPDATE account_info_act_info SET act_info_mobile_times = $act_info_mobile_times, act_info_mobile_code = ".sqlstr($code).", act_info_mobile_expired = ".sqlstr($expired->format("Y-m-d\TH:i:sP"))." WHERE act_info_mobile = '" . strval($mobile) . "'";
+        $query = "UPDATE account_info_act_info SET act_info_mobile_times = $act_info_mobile_times, act_info_mobile_code = ".sqlstr($code).", act_info_mobile_expired = ".sqlstr($expired->format("Y-m-d\TH:i:sP"))." WHERE act_info_mobile_status = 1 AND act_info_mobile = '" . strval($mobile) . "'";
         mysqli_query($con, "LOCK TABLES account_info_act_info WRITE");
         $flag = mysqli_query($con, $query) != false;
         mysqli_query($con, "UNLOCK TABLES");
@@ -125,20 +125,20 @@ function send_mobile_code($con, $mobile)
       }
     } else {
       // request too many times 
-      // echo 'request too many times';
+      $message = 'request too many times';
       return false;
     }
   } else { 
     // no such mobile found 
-    // echo 'no such mobile found';
+    $message = 'no such mobile found';
     return false;
   } 
 }
 
-function reset_password($con, $mobile, $code)
+function reset_password($con, $mobile, $code, &$message)
 {
   $now = new DateTime;
-  $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_mobile = ".sqlstr($mobile)." AND act_info_mobile_code = '".$code."' AND act_info_mobile_expired >= '".$now->format("Y-m-d\TH:i:s")."'";
+  $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_mobile_status = 1 AND act_info_mobile = ".sqlstr($mobile)." AND act_info_mobile_code = '".$code."' AND act_info_mobile_expired >= '".$now->format("Y-m-d\TH:i:s")."'";
   mysqli_query($con, "LOCK TABLES account_info_act_info READ");
   $result = mysqli_query($con, $query);
   mysqli_query($con, "UNLOCK TABLES");

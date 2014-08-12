@@ -2,6 +2,16 @@
 
 Drupal.behaviors.findpwd = {
   attach: function(context, settings) {
+    var delaytime = 3000;
+
+    function showInfo(text, newline){
+      var pre = '<span class="ui-form-required pl5">';
+      if (newline){
+        pre = '<br />' + pre;
+      }
+      var app = '</span>';
+      return $(pre + text + app);
+    }
 
     /*
      * A count down method for a input button getting validation mobile code 
@@ -11,7 +21,6 @@ Drupal.behaviors.findpwd = {
         return;
       }
       var btnObj = $("input#" + target);
-      
       // count down to make sure that client won't send sms so frequently 
       var countdown = setInterval(function(){
         if (seconds > -1){ 
@@ -28,7 +37,7 @@ Drupal.behaviors.findpwd = {
     }
 
     $('#getMobileCode').click(function(){
-      var phone = $('#phone').val(); 
+      var phone = $('#phone').val();
       if (!/^1[34578]\d{9}$/.test(phone) || phone.length!==11) {
         // invalid phone number, trigger form submit to display errors
         $("#user-pass").submit();
@@ -46,8 +55,8 @@ Drupal.behaviors.findpwd = {
         },
         function(d) {
             if (d.result==1) {
-            var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功发送，请注意查收验证码。</span>');
-            getMobileCodeBtn.after(msg.delay(1000).fadeOut().queue(
+            var m = showInfo('恭喜您，您的手机号码已成功发送，请注意查收验证码', true);
+            getMobileCodeBtn.after(m.delay(delaytime).fadeOut().queue(
                 function() { 
                   $(this).remove();
                 }
@@ -55,8 +64,8 @@ Drupal.behaviors.findpwd = {
             )
             btnCountDown("getMobileCode", 59);
           } else {
-            var msg = $('<span class="ui-form-required pl5">验证码发送失败，请重试</span>');
-            getMobileCodeBtn.after(msg.delay(1000).fadeOut());
+            var m = showInfo(msg[d.message]);
+            getMobileCodeBtn.after(m.delay(delaytime).fadeOut());
             getMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
           } 
         }, 
@@ -64,7 +73,7 @@ Drupal.behaviors.findpwd = {
       )
       .fail(function(jqxhr, textStatus, error) {
         var err = textStatus + ", " + error;
-        alert( "绑定手机请求出现问题，请重试" );
+        alert( "发送验证码请求出现问题，请重试" );
         getMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
       });
     })
@@ -84,11 +93,9 @@ Drupal.behaviors.findpwd = {
             function(d) {
               var setMobileCodeBtn = $("#subNotLoginFindPswByMobileFormBt");
               if (d.result==1) {
-                var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功绑定</span>');
-                
+                var m = showInfo('恭喜您，密码已发送至手机，请用收到的密码登录', true);
                 $("#phone").html($('#phone').val()).removeClass('red');
-                
-                setMobileCodeBtn.after(msg.delay(2000).fadeOut().queue(
+                setMobileCodeBtn.after(m.delay(delaytime).fadeOut().queue(
                     function() { 
                       $(this).remove();
 
@@ -98,8 +105,8 @@ Drupal.behaviors.findpwd = {
                 )
                 // $('#setmobile').trigger('click');
               } else {
-                var msg = $('<span class="ui-form-required pl5">绑定手机失败，请重试</span>');
-                setMobileCodeBtn.after(msg.delay(1000).fadeOut());
+                var m = showInfo(msg[d.message]);
+                setMobileCodeBtn.after(m.delay(delaytime).fadeOut());
                 setMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
               } 
             }, 
@@ -107,7 +114,7 @@ Drupal.behaviors.findpwd = {
           )
           .fail(function( jqxhr, textStatus, error) {
             var err = textStatus + ", " + error;
-            alert( "绑定手机请求出现问题，请重试" );
+            alert( "找回密码请求失败，请重试" );
             $('#subNotLoginFindPswByMobileFormBt').prop('disabled', false).removeClass('ui-button-disabled');
           });
       },
