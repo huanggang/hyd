@@ -800,6 +800,38 @@ function easyloan_block_view($delta = ''){
     case 'topnotice':
       $block['subject'] = t('');
       $block['content'] = array('#title' => '', );
+
+      // get the latest notice 
+      $query = "SELECT nid, title, notice_date_value, body_value, notice_publisher_value 
+                FROM node AS A
+                LEFT OUTER JOIN field_data_body AS B ON A.nid = B.entity_id
+                LEFT OUTER JOIN field_data_notice_date AS C ON A.nid = C.entity_id
+                LEFT OUTER JOIN field_data_notice_publisher AS D ON A.nid = D.entity_id
+                WHERE TYPE = 'notice'
+                ORDER BY nid DESC LIMIT 0, 1";
+
+      // get the latest notice if exists
+      $result = db_query($query)->fetchObject();
+
+      if ($result){
+        $nid = $result->nid;
+        $title = $result->title;
+        $body = $result->body_value;
+        $publisher = $result->notice_publisher_value;
+
+        $date_array = date_parse($result->notice_date_value);
+        $time = mktime(0, 0, 0, $date_array['month'], $date_array['day'], $date_array['year']);
+        $date = date("Y-m-d", $time); 
+        $date1 = date("Y年m月d日", $time); 
+
+        $block['params'] = array(
+                            'title' => $title,
+                            'date' => $date,
+                            'date1' => $date1,
+                            'body' => $body,
+                            'publisher' => $publisher,
+                            );
+      }
       return $block;
     case 'investlist':
       $block['subject'] = t('');
