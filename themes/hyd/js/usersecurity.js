@@ -3,6 +3,15 @@
 Drupal.behaviors.usersecurity = {
   attach: function(context, settings) {
     var delaytime = 3000;
+
+    function showInfo(text, newline){
+      var pre = '<span class="ui-form-required pl5">';
+      if (newline){
+        pre = '<br />' + pre;
+      }
+      var app = '</span>';
+      return $(pre + text + app);
+    }
     /*
      * A count down method for a input button getting validation mobile code 
     */
@@ -40,7 +49,6 @@ Drupal.behaviors.usersecurity = {
           } else {
             $("#setmobile").unbind('click').text('设置');
             toggleForm("setmobile", "pg-account-security-mobile", "设置");
-
             $("#mobileStep1, #mobileCashPassStep1").addClass('fn-hide');
             $("#mobileStep3").removeClass('fn-hide');
           }
@@ -54,7 +62,7 @@ Drupal.behaviors.usersecurity = {
             //$('#emailResettingForm').show();
           }
           if (d.act_info_cash_pass== 1) {
-			$("#cash_pass").html('已设置').removeClass('red');
+            $("#cash_pass").html('已设置').removeClass('red');
 
           	$("#spModCashPswLink, #modCachePassDiv").removeClass('fn-hide');
           	$("#spSetCashPswLink, #setCachePassDiv").addClass('fn-hide');
@@ -123,8 +131,8 @@ Drupal.behaviors.usersecurity = {
           function(d) {
             var setIdBtn = $('#subSetIdBt');
             if (d.result==1) {
-              var msg = $('<span class="ui-form-required pl5">成功保存用户消息</span>');
-              setIdBtn.after(msg.delay(delaytime).fadeOut().queue(
+              var m = showInfo('成功保存用户信息');
+              setIdBtn.after(m.delay(delaytime).fadeOut().queue(
                   function() { 
                     $(this).remove();
                     loadInfo();
@@ -133,11 +141,11 @@ Drupal.behaviors.usersecurity = {
               );
             } else {
               if (d.verified < 2) {
-                var msg = $('<span class="ui-form-required pl5">认证失败，您还可以免费认证' + (2 - d.verified) + '次</span>');  
-                setIdBtn.prop('disabled', false).after(msg.delay(delaytime).fadeOut());
+                var m = showInfo('认证失败，您还可以免费认证' + (2 - d.verified) + '次');
+                setIdBtn.prop('disabled', false).after(m.delay(delaytime).fadeOut());
               } else {
-                var msg = $('<span class="ui-form-required pl5">您已两次认证失败，请联系客服: 400-***-****</span>');  
-                setIdBtn.after(msg).prop('disabled', true);
+                var m = showInfo('您已两次认证失败，请联系客服: 400-***-****');  
+                setIdBtn.after(m).prop('disabled', true);
               }
             }
           }, 
@@ -187,8 +195,8 @@ Drupal.behaviors.usersecurity = {
           function(d) {
             var setModPswBtn = $('#subModPswBt');
             if (d.result==1) {
-              var msg = $('<span class="ui-form-required pl5">成功修改密码</span>');
-              setModPswBtn.after(msg.delay(delaytime).fadeOut().queue(
+              var m = showInfo('成功修改密码');
+              setModPswBtn.after(m.delay(delaytime).fadeOut().queue(
                   function() { 
                     $(this).remove();
                     $('#setpass').trigger('click'); 
@@ -197,7 +205,7 @@ Drupal.behaviors.usersecurity = {
                 )
               )
             } else {
-              var m = $('<span class="ui-form-required pl5">' + msg[d.message] + '</span>');  
+              var m = showInfo(msg[d.message]);
               setModPswBtn.after(m.delay(delaytime).fadeOut());
             }
           }, 
@@ -247,11 +255,11 @@ Drupal.behaviors.usersecurity = {
     });
 
     function emailSent(){
-      var msg = $('<span class="ui-form-required pl5">验证信息已发送,请前往验证!</span>');
+      var m = showInfo('验证信息已发送,请前往验证!');
       $("#validemail").html('未设置').addClass('red');
       $("#setemail").unbind('click').text('取消设置');
       toggleForm("setemail", "pg-account-security-email", "设置");
-      $('#subSetEmailBt').after(msg.delay(delaytime).fadeOut().queue(
+      $('#subSetEmailBt').after(m.delay(delaytime).fadeOut().queue(
           function() { 
             $(this).remove(); 
             $('#setemail').trigger('click'); 
@@ -279,13 +287,7 @@ Drupal.behaviors.usersecurity = {
                     if (d.result==1) {
                       emailSent();
                     } else {
-                      var msg;
-                      if (d.exists){
-                        msg = $('<span class="ui-form-required pl5">邮箱地址已存在，请选择其它邮箱。</span>');  
-                      } else {
-                        msg = $('<span class="ui-form-required pl5">绑定邮箱失败，请重试</span>');  
-                      }
-                      setEmailBtn.after(msg.delay(delaytime).fadeOut());
+                      setEmailBtn.after(msg[d.message].delay(delaytime).fadeOut());
                     }
                   }, 
                   dataType: "json"
@@ -328,19 +330,16 @@ Drupal.behaviors.usersecurity = {
             var getMobileCodeWithoutMobile = $('#getMobileCodeWithoutMobile');
 
             if (d.result==1) {
-              var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功发送，请注意查收验证码。</span>');
-
-              getMobileCodeWithoutMobile.after(msg.delay(delaytime).fadeOut().queue(
+              var m = showInfo('恭喜您，您的手机号码已成功发送，请注意查收验证码', true);
+              getMobileCodeWithoutMobile.after(m.delay(delaytime).fadeOut().queue(
                   function() { 
                     $(this).remove(); 
                   }
                 )
               )
-
               btnCountDown("getMobileCodeWithoutMobile", 59);
-
             } else {
-              var m = $('<br /><span class="ui-form-required pl5">' + msg[d.message] + '</span>');  
+              var m = showInfo(msg[d.message], true);
               getMobileCodeWithoutMobile.after(m.delay(delaytime).fadeOut());
               $('#getMobileCodeWithoutMobile').prop('disabled', false).removeClass('ui-button-disabled');
             }
@@ -367,8 +366,8 @@ Drupal.behaviors.usersecurity = {
           function(d) {
             var setModPswBtn = $('#subModMobileByPhoneStepOneBt');
             if (d.result==1) {
-              var msg = $('<span class="ui-form-required pl5">成功解绑定手机</span>');
-              setModPswBtn.after(msg.delay(delaytime).fadeOut().queue(
+              var m = showInfo('成功解绑定手机');
+              setModPswBtn.after(m.delay(delaytime).fadeOut().queue(
                   function() { 
                     $(this).remove();
                     $("#mobile").html("未设置").removeClass('red');
@@ -378,7 +377,7 @@ Drupal.behaviors.usersecurity = {
                 )
               )
             } else {
-              var m = $('<span class="ui-form-required pl5">' + msg[d.message] + '</span>');
+              var m = showInfo(msg[d.message]);
               setModPswBtn.after(m.delay(delaytime).fadeOut());
             } 
           }, 
@@ -422,11 +421,10 @@ Drupal.behaviors.usersecurity = {
             function(d) {
               var setMobileCodeBtn = $("#subModMobileByPhoneStepTwoBt");
               if (d.result==1) {
-                var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功绑定</span>');
-                
+                var m = showInfo(msg[d.message], true);
                 $("#mobile").html($('#phone').val()).removeClass('red');
                 
-                setMobileCodeBtn.after(msg.delay(delaytime).fadeOut().queue(
+                setMobileCodeBtn.after(m.delay(delaytime).fadeOut().queue(
                     function() { 
                       $(this).remove();
 
@@ -436,7 +434,7 @@ Drupal.behaviors.usersecurity = {
                 )
                 // $('#setmobile').trigger('click');
               } else {
-                var m = $('<span class="ui-form-required pl5">' + msg[d.message] + '</span>');
+                var m = showInfo(msg[d.message]);
                 setMobileCodeBtn.after(m.delay(delaytime).fadeOut());
                 setMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
               } 
@@ -496,8 +494,8 @@ Drupal.behaviors.usersecurity = {
         function(d) {
           
           if (d.result==1) {
-            var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功发送，请注意查收验证码。</span>');
-            getMobileCodeBtn.after(msg.delay(delaytime).fadeOut().queue(
+            var m = showInfo('恭喜您，您的手机号码已成功发送，请注意查收验证码', true);
+            getMobileCodeBtn.after(m.delay(delaytime).fadeOut().queue(
                 function() { 
                   $(this).remove();
                 }
@@ -505,7 +503,7 @@ Drupal.behaviors.usersecurity = {
             )
             btnCountDown("getMobileCode", 59);
           } else {
-            var m = $('<span class="ui-form-required pl5">' + msg[d.message] + '</span>');
+            var m = showInfo(msg[d.message]);
             getMobileCodeBtn.after(m.delay(delaytime).fadeOut());
             getMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
           } 
@@ -534,14 +532,13 @@ Drupal.behaviors.usersecurity = {
             function(d) {
               var setMobileCodeBtn = $("#subModMobileByPhoneStepThreeBt");
               if (d.result==1) {
-                var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功绑定</span>');
-                
+                var m = showInfo('恭喜您，您的手机号码已成功绑定', true);
+
                 $("#mobile").html($('#newphone').val()).removeClass('red');
                 $("#setmobile").unbind('click').text('修改');
                 toggleForm("setmobile", "pg-account-security-mobile", "修改");
 
-
-                setMobileCodeBtn.after(msg.delay(delaytime).fadeOut().queue(
+                setMobileCodeBtn.after(m.delay(delaytime).fadeOut().queue(
                     function() { 
                       $(this).remove();
                       //$('#setmobile').trigger('click');
@@ -551,7 +548,7 @@ Drupal.behaviors.usersecurity = {
                 )
 
               } else {
-                var m = $('<span class="ui-form-required pl5">' + msg[d.message] + '</span>');
+                var m = showInfo(msg[d.message]);
                 setMobileCodeBtn.after(m.delay(delaytime).fadeOut());
                 setMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
               } 
@@ -608,8 +605,8 @@ Drupal.behaviors.usersecurity = {
         function(d) {
           var getMobileCodeBtn = $("#getNewMobileCode");
           if (d.result==1) {
-            var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功发送，请注意查收验证码。</span>');
-            getMobileCodeBtn.after(msg.delay(delaytime).fadeOut().queue(
+            var m = showInfo('恭喜您，您的手机号码已成功发送，请注意查收验证码', true);
+            getMobileCodeBtn.after(m.delay(delaytime).fadeOut().queue(
                 function() { 
                   $(this).remove();
                 }
@@ -617,7 +614,7 @@ Drupal.behaviors.usersecurity = {
             )
             btnCountDown("getNewMobileCode", 59);
           } else {
-            var m = $('<span class="ui-form-required pl5">' + msg[d.message] + '</span>');
+            var m = showInfo(msg[d.message]);
             getMobileCodeBtn.after(m.delay(delaytime).fadeOut());
             getMobileCodeBtn.prop('disabled', false).removeClass('ui-button-disabled');
           } 
@@ -629,7 +626,6 @@ Drupal.behaviors.usersecurity = {
         alert( "绑定手机请求出现问题，请重试" );
         $("#getNewMobileCode").prop('disabled', false).removeClass('ui-button-disabled');
       });
-
     })
 
 
@@ -647,13 +643,13 @@ Drupal.behaviors.usersecurity = {
             function(d) {
               var setCashPassBtn = $("#subSetCashPswBt");
               if (d.result==1) {
-                var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的提现密码已成功设置</span>');
+                var m = showInfo('恭喜您，您的提现密码已成功设置', true);
                 
                 $("#cash_pass").html("已设置").removeClass('red');
                 $("#spSetCashPswLink").hide();
                 $("#spModCashPswLink").show();
 
-                setCashPassBtn.after(msg.delay(delaytime).fadeOut().queue(
+                setCashPassBtn.after(m.delay(delaytime).fadeOut().queue(
                     function() { 
                       $(this).remove();
                       //$('#setmobile').trigger('click');
@@ -663,7 +659,7 @@ Drupal.behaviors.usersecurity = {
                 )
 
               } else {
-                var m = $('<span class="ui-form-required pl5">' + msg[d.message] + '</span>');
+                var m = showInfo(msg[d.message]);
                 setCashPassBtn.after(m.delay(delaytime).fadeOut());
                 setCashPassBtn.prop('disabled', false).removeClass('ui-button-disabled');
               } 
@@ -712,13 +708,13 @@ Drupal.behaviors.usersecurity = {
             function(d) {
               var setCashPassBtn = $("#subModCashPswBt");
               if (d.result==1) {
-                var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的提现密码已成功设置</span>');
+                var m = showInfo('恭喜您，您的提现密码已成功设置', true);
                 
                 $("#cash_pass").html("已设置").removeClass('red');
             	$("#spSetCashPswLink").hide();
             	$("#spModCashPswLink").show();
 
-                setCashPassBtn.after(msg.delay(delaytime).fadeOut().queue(
+                setCashPassBtn.after(m.delay(delaytime).fadeOut().queue(
                     function() { 
                       $(this).remove();
                       //$('#setmobile').trigger('click');
@@ -726,9 +722,8 @@ Drupal.behaviors.usersecurity = {
                     }
                   )
                 )
-
               } else {
-                var m = $('<span class="ui-form-required pl5">' + msg[d.message] + '</span>');
+                var m = showInfo(msg[d.message]);
                 setCashPassBtn.after(m.delay(delaytime).fadeOut());
                 setCashPassBtn.prop('disabled', false).removeClass('ui-button-disabled');
               } 
@@ -794,8 +789,8 @@ $("#findCashPswFormStepOneForm").validate({
               function(d) { 
                 var setModPswBtn = $('#subFindCashPswStepOneBt');
                 if (d.result==1) {
-                  var msg = $('<span class="ui-form-required pl5">设置成功</span>');
-                  setModPswBtn.after(msg.delay(delaytime).fadeOut().queue(
+                  var m = showInfo('设置成功');
+                  setModPswBtn.after(m.delay(delaytime).fadeOut().queue(
                       function() { 
                         $(this).remove();
                         location.reload();
@@ -803,7 +798,7 @@ $("#findCashPswFormStepOneForm").validate({
                     )
                   )
                 } else {
-                  var m = $('<span class="ui-form-required pl5">' + msg[d.message] + '</span>');
+                  var m = showInfo(msg[d.message]);
                   setModPswBtn.after(m.delay(delaytime).fadeOut());
                   $('#subFindCashPswStepOneBt').prop('disabled', false).removeClass('ui-button-disabled');
                 } 
@@ -865,16 +860,16 @@ $("#findCashPswFormStepOneForm").validate({
             var getMobileCodeWithoutMobile = $('#getMobileCodeFindCashPass');
 
             if (d.result==1) {
-              var msg = $('<br /><span class="ui-form-required pl5">恭喜您，您的手机号码已成功发送，请注意查收验证码。</span>');
+              var m = showInfo('恭喜您，您的手机号码已成功发送，请注意查收验证码', true);
               btnCountDown("getMobileCodeFindCashPass", 59);
-              getMobileCodeWithoutMobile.after(msg.delay(delaytime).fadeOut().queue(
+              getMobileCodeWithoutMobile.after(m.delay(delaytime).fadeOut().queue(
                   function() { 
                     $(this).remove(); 
                   }
                 )
               )
             } else {
-              var m = $('<br /><span class="ui-form-required pl5">' + msg[d.message] + '</span>');  
+              var m = showInfo(msg[d.message]);
               getMobileCodeWithoutMobile.after(m.delay(delaytime).fadeOut());
               $('#getMobileCodeFindCashPass').prop('disabled', false).removeClass('ui-button-disabled');
             }
