@@ -43,9 +43,11 @@ Drupal.behaviors.account_info = {
   ///  provinceid - the id of the province
   ///  value      - the default city value
   function getCity(provinceid, value, async) { 
+    if (provinceid == null){
+      return;
+    }
     if (async == undefined) { async = true; } 
     var url = js_path + '/city/cities_' + provinceid + '.js'; 
-    console.log(url);
     $.cachedScript(url, {async:async}).done(function(data, textStatus) { 
       var cities = eval('cities_' + provinceid);
       cityCache[provinceid] = cities;
