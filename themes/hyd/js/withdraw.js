@@ -107,11 +107,15 @@
               var message = '充值服务时间：9:00 ~ 23:00。';
               dialogError(message);
             } else {
-              var message = '尚未完成<em>实名认证</em>，请前往<a href="/account_management/security">安全信息</a>进行认证。';
+              var message = '尚未完成<em>实名认证</em>，请前往<a href="/account_management/security">安全信息</a>认证。';
               dialogError(message);
             }
           } else {
             $('#withdrawRemain').text(d.available.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            if (d.has_cash_pass == 0){
+              var message = '尚未设置<em>提现密码</em>，请前往<a href="/account_management/security">安全信息</a>设置。';
+              dialogError(message);
+            }
           }
       })
       .fail(function( jqxhr, textStatus, error ) {

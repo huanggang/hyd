@@ -1,5 +1,10 @@
 <?php
 global $base_url;
+global $user;
+
+$current_user = $variables["elements"]["#account"];
+
+$is_my_page = ($current_user->uid == $user->uid);
 
 $theme_path = drupal_get_path('theme','hyd');
 
@@ -31,7 +36,9 @@ drupal_add_js($theme_path . '/js/transactions.js');
         <p class="num-s"><em id="sv_fee"></em>元</p>
       </div>
       <div class="grid_2 omega">
+        <?php if ($is_my_page){ ?>
         <a class="summary-button ui-button ui-button-small ui-button-green" href="<?php print $base_url;?>/capital_management/recharge">充值</a>
+        <?php } ?>
       </div>
     </div>
     <hr class="mt10">
@@ -45,7 +52,9 @@ drupal_add_js($theme_path . '/js/transactions.js');
         <p class="num-s"><em id="wth_fee"></em>元</p>
       </div>
       <div class="grid_2 omega">
+        <?php if ($is_my_page){ ?>
         <a class="summary-button ui-button ui-button-small ui-button-blue" href="<?php print $base_url;?>/capital_management/withdraw">提现</a>
+        <?php } ?>
       </div>
     </div>
   </div>
