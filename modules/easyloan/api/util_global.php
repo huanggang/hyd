@@ -3,7 +3,7 @@ global $user;
 
 global $db_host, $db_user, $db_pwd, $db_name;
 
-global $sms_url, $sms_user, $sms_password, $sms_reset_pass_code, $sms_security_code;
+global $sms_url, $sms_user, $sms_password, $sms_reset_pass_code, $sms_security_code, $sms_login_code;
 
 global $web_js, $site_js;
 
@@ -76,6 +76,7 @@ $email_content_verification = "请点击下面链接激活帐户，完成邮箱�
 // mobile security code sms-message
 $sms_security_code = $site_name."手机验证码: [{CODE}]";
 $sms_reset_pass_code = $site_name."手机验证码: [{CODE}], 用户名: [{NICKNAME}]";
+$sms_login_code = $site_name."请用新密码: [{CODE}]进行登录";
 
 date_default_timezone_set('Asia/Chongqing');
 

@@ -99,11 +99,10 @@ Drupal.behaviors.findpwd = {
                     function() { 
                       $(this).remove();
 
-                      location.reload();
+                      window.location.href = Drupal.settings.basePath + 'user/login';
                     }
                   )
                 )
-                // $('#setmobile').trigger('click');
               } else {
                 var m = showInfo(msg[d.message]);
                 setMobileCodeBtn.after(m.delay(delaytime).fadeOut());

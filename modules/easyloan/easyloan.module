@@ -722,12 +722,6 @@ function easyloan_block_info() {
     'status' => 1,
     'region' => 'bottom',
   );
-  $blocks['slide'] = array(
-    'info'   => t('好易贷的首页幻灯片'),
-    'cache'  => DRUPAL_CACHE_GLOBAL,
-    'status' => 1,
-    'region' => 'slide',
-  );
   $blocks['intro'] = array(
     'info'       => t('好易贷的首页的功能介绍'),
     'cache'      => DRUPAL_NO_CACHE,

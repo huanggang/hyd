@@ -18,5 +18,7 @@ var msg = {
     "Original cash password is wrong" : "原始提现密码不正确",
     "request too many times" : "请求次数过多，24小时内只能发送三次",
     "no such mobile found" : "请使用您已绑定的手机号码",
+    "failed to send password" : "密码发送失败",
+    "invalid mobile or code expired" : "手机号码不匹配或验证码已过期",
 }
 

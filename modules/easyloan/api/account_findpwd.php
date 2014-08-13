@@ -159,7 +159,29 @@ function reset_password($con, $mobile, $code, &$message)
     if ($flag){
       user_save($user, array('pass' => $new_password));
     }
-    return $flag;
+
+    global $sms_url, $sms_user, $sms_password, $sms_login_code;
+
+    $text = str_replace("[{CODE}]", $new_password, $sms_login_code);
+    $url = str_replace("[{USER}]", $sms_user, $sms_url);
+    $url = str_replace("[{PASSWORD}]", $sms_password, $url);
+    $url = str_replace("[{MOBILE}]", $mobile, $url);
+
+    $ch = curl_init();
+    $content = curl_escape($ch, $text);
+    $url = str_replace("[{CONTENT}]", $content, $url);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $output = curl_exec($ch);
+    curl_close($ch);
+
+    if (strpos($output, "OK") !== false){
+      return true;
+    } else {
+      $message = 'failed to send password';
+      return false;
+    }
   }
+  $message = 'invalid mobile or code expired';
   return false;
 }
