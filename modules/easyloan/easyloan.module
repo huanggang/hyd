@@ -783,17 +783,14 @@ function easyloan_block_view($delta = ''){
       $block['subject'] = t('');
       $block['content'] = array('#title' => '', );
       return $block;
-    case 'slide':
-      $block['subject'] = t('');
-      $block['content'] = array('#title' => '', );
-      return $block;
     case 'intro':
       $block['subject'] = t('');
       $block['content'] = array('#title' => '', );
       return $block;
-    case 'topnotice':
-      $block['subject'] = t('');
-      $block['content'] = array('#title' => '', );
+    case 'topnotice': 
+      $block['subject'] = t(''); 
+      $block['content'] = array('#title' => '', ); 
+      $block['params'] = array(); 
 
       // get the latest notice 
       $query = "SELECT nid, title, notice_date_value, body_value, notice_publisher_value 
@@ -834,6 +831,32 @@ function easyloan_block_view($delta = ''){
     case 'newslist':
       $block['subject'] = t('asdfasdf');
       $block['content'] = array('#title' => '', );
+      $block['params'] = array(); 
+
+      // get the latest 4 news  
+      $query = "SELECT nid, title, news_date_value 
+                FROM node AS A
+                LEFT OUTER JOIN field_data_news_date AS C ON A.nid = C.entity_id
+                WHERE TYPE = 'news'
+                ORDER BY nid DESC LIMIT 0, 4";
+
+      // get the latest notice if exists
+      $results = db_query($query);
+      foreach ($results as $result) {
+        $nid = $result->nid;
+        $title = $result->title;
+
+        $date_array = date_parse($result->news_date_value);
+        $time = mktime(0, 0, 0, $date_array['month'], $date_array['day'], $date_array['year']);
+        $date = date("Y-m-d", $time); 
+
+        $block['params'][] = array(
+                              'nid' => $nid,
+                              'title' => $title,
+                              'date' => $date,
+                            );
+      }
+
       return $block;
     case 'noticeslist':
       $block['subject'] = t('hahah');
@@ -1116,7 +1139,40 @@ function easyloan_menu_alter(&$items) {
   $items['user/%user/edit'] = array(
     'access callback' => 'super_admin_access', 
   );
+  $items['node/%node'] = array(
+    'title callback' => 'node_page_title',
+    'title arguments' => array(1),
+    'page callback' => 'node_page_view',
+    'page arguments' => array(1),
+    'access callback' => 'easyloan_node_access', 
+    'access arguments' => array('view', 1),
+  );
   return $items;
+}
+
+
+function easyloan_node_access($op, $node, $account = NULL){
+  if (!$node || !in_array($op, array('view', 'update', 'delete', 'create'), TRUE)) {
+    // If there was no node to check against, or the $op was not one of the
+    // supported ones, we return access denied.
+    return FALSE;
+  }
+/*
+  // If no user object is supplied, the access check is for the current user.
+  if (empty($account)) {
+    global $user;
+    $account = $user;
+  }
+*/
+  $forbidden = array();
+  $forbidden[] = 'slideshow';
+  $forbidden[] = 'guide';
+  $forbidden[] = 'explanation';
+
+  if (in_array($node->type, $forbidden)){
+    return FALSE;
+  }
+  return TRUE;
 }
 
 
