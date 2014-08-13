@@ -197,7 +197,7 @@ function save($con, $usr_id, $bank, $amount, $fee)
         $act_trn_available += $amount - ($act_mny_owned + $act_mny_fine + $fine_new);
       }
       
-      $query = "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($usr_id).", ".sqlstr($nowStr).", 1, ".sqlstrval($amount).", ".sqlstrval($act_trn_available).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", '".sqlstrval($fee)."')";
+      $query = "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($usr_id).", ".sqlstr($nowStr).", 1, ".sqlstrval($amount).", ".sqlstrval($act_trn_available).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", ".sqlstr(sqlstrval($fee)).")";
       $flag = $flag && (mysqli_query($con, $query) != false);
 
       if ($act_trn_fine > 0)

@@ -102,8 +102,16 @@
                 for (var i = 0; i < d.applications.length; i++){
                   var w = d.applications[i];
                   var row = li.clone()
-                    .append(span.clone().addClass('w260 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'loanapp_view#id=' + w.app_id).attr('title', w.title).append(cats[w.category] + w.title)))
-                    .append(span.clone().addClass('w50').append(a.clone().attr('href', Drupal.settings.basePath + 'user/' + w.user_id).attr('title', w.nick).append(w.name)))
+                    .append(span.clone().addClass('w260 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'loanapp_view#id=' + w.app_id).attr('title', w.title).append(cats[w.category] + w.title)));
+                  if (w.user_id != null && w.user_id > 0){
+                    row = row
+                      .append(span.clone().addClass('w50').append(a.clone().attr('href', Drupal.settings.basePath + 'user/' + w.user_id).attr('title', w.nick).append(w.name)));
+                  }
+                  else {
+                    row = row
+                      .append(span.clone().addClass('w50').append(a.clone().attr('title', w.nick).append(w.name)));
+                  }
+                  row = row
                     .append(span.clone().addClass('w85 text-right').append(w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
                     .append(span.clone().addClass('w30 text-right').append(w.duration.toFixed(0)))
                     .append(span.clone().addClass('w30 text-center').append(map_id_name(application_status, w.status)))
@@ -133,8 +141,16 @@
                 for (var i = 0; i < d.applications.length; i++){
                   var w = d.applications[i];
                   var row = li.clone()
-                    .append(span.clone().addClass('w300 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'loanapp_view#id=' + w.app_id).attr('title', w.title).append(cats[w.category] + w.title)))
-                    .append(span.clone().addClass('w50').append(a.clone().attr('href', Drupal.settings.basePath + 'user/' + w.user_id).attr('title', w.nick).append(w.name)))
+                    .append(span.clone().addClass('w300 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'loanapp_view#id=' + w.app_id).attr('title', w.title).append(cats[w.category] + w.title)));
+                  if (w.user_id != null && w.user_id > 0){
+                    row = row
+                      .append(span.clone().addClass('w50').append(a.clone().attr('href', Drupal.settings.basePath + 'user/' + w.user_id).attr('title', w.nick).append(w.name)))
+                  }
+                  else {
+                    row = row
+                      .append(span.clone().addClass('w50').append(a.clone().attr('title', w.nick).append(w.name)));
+                  }
+                  row = row
                     .append(span.clone().addClass('w85 text-right').append(w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
                     .append(span.clone().addClass('w30 text-right').append(w.duration.toFixed(0)))
                     .append(span.clone().addClass('w30 text-center').append(map_id_name(application_status, w.status)))

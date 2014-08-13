@@ -111,6 +111,46 @@
           var fine_rate = $("#fine_rate").val() / 100.0;
           var fine_rate_is_single = $("input[name=fine_rate_is_single]:checked").val();
 
+          // check end-date > today, start-date < end-date, loaned-date < end-date, today - start-date < 1 month
+          var dtoday = new Date();
+          var dloaned = new Date(loaned);
+          var dstart = new Date(start);
+          var dend = new Date(end);
+          if (dloaned.getTime() >= dend.getTime()) {
+            alert('还款日期必须在放款日期之后');
+            return;
+          }
+          if (dstart.getTime() >= dend.getTime()) {
+            alert('还款日期必须在借款日期之后');
+            return;
+          }
+          if (dend.getTime() <= dtoday.getTime()) {
+            alert('还款日期必须在今日之后');
+            return;
+          }
+          if (dtoday.getTime() - dstart.getTime() >= (28 * 24 * 3600 * 1000)) {
+            alert('借款日期必须在今日之前的28日内');
+            return;
+          }
+          if (repayment_method == 1) {
+            if (dend.getTime() - dstart.getTime() < (3 * 24 * 3600 * 1000)){
+              alert('借款期限必须在3日以上');
+              return;
+            }
+          }
+          else if (repayment_method == 2 || repayment_method == 3) {
+            if (dend.getTime() - dstart.getTime() < (59 * 24 * 3600 * 1000)){
+              alert('借款期限必须在2月以上');
+              return;
+            }
+          }
+          else if (repayment_method == 4 || repayment_method == 5) {
+            if (dend.getTime() - dstart.getTime() < (89 * 24 * 3600 * 1000)){
+              alert('借款期限必须在3月以上');
+              return;
+            }
+          }
+
           $.getJSON(Drupal.settings.basePath + "api/m_set_loan?app_id=" + app_id + "&loaned=" + loaned + "&amount=" + amount + "&rate=" + rate + "&repayment_method=" + repayment_method + "&start=" + start + "&end=" + end + "&fine_rate=" + fine_rate + "&fine_rate_is_single=" + fine_rate_is_single,
             function(d) {
               if (d.result==1) {

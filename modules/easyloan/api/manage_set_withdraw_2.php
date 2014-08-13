@@ -90,7 +90,7 @@ function manage_set_withdraw(){
     case 1: // granted
       mysqli_query($con, "LOCK TABLES account_withdraws_act_wths WRITE, account_withdraw_act_wth WRITE, account_money_act_mny WRITE, account_transactions_act_trn WRITE");
 
-      $query = "SELECT act_wths_usr_id FROM account_withdraws_act_wths WHERE act_wths_usr_id = ".strval($id)." AND act_wths_time = '".$time->format("Y-m-d\TH:i:s")."' AND act_wths_bnk_number = '".$number."' AND act_wths_amount = ".strval($amount)." AND act_wths_fee = ".strval($fee)." AND act_wths_is_done IS NULL AND act_wths_done IS NULL";
+      $query = "SELECT act_wths_usr_id FROM account_withdraws_act_wths WHERE act_wths_usr_id = ".strval($id)." AND act_wths_time = ".sqlstr($time->format("Y-m-d\TH:i:s"))." AND act_wths_bnk_number = ".sqlstr($number)." AND act_wths_amount = ".strval($amount)." AND act_wths_fee = ".strval($fee)." AND act_wths_is_done IS NULL AND act_wths_done IS NULL";
       $result = mysqli_query($con, $query);
       if ($row = mysqli_fetch_array($result))
       {
@@ -123,7 +123,7 @@ function manage_set_withdraw(){
 
             if ($act_mny_frozen >= ($amount + $fee))
             {
-              $query = "UPDATE account_withdraws_act_wths SET act_wths_is_done = 1, act_wths_done = ".sqlstr($nowStr).", act_wths_mng_usr_id = ".sqlstrval($usr_id)." WHERE act_wths_usr_id = ".strval($id)." AND act_wths_time = '".$time->format("Y-m-d\TH:i:s")."' AND act_wths_bnk_number = ".$number." AND act_wths_amount = ".strval($amount)." AND act_wths_fee = ".strval($fee)." AND act_wths_is_done IS NULL AND act_wths_done IS NULL";
+              $query = "UPDATE account_withdraws_act_wths SET act_wths_is_done = 1, act_wths_done = ".sqlstr($nowStr).", act_wths_mng_usr_id = ".sqlstrval($usr_id)." WHERE act_wths_usr_id = ".strval($id)." AND act_wths_time = ".sqlstr($time->format("Y-m-d\TH:i:s"))." AND act_wths_bnk_number = ".sqlstr($number)." AND act_wths_amount = ".strval($amount)." AND act_wths_fee = ".strval($fee)." AND act_wths_is_done IS NULL AND act_wths_done IS NULL";
               $flag = mysqli_query($con, $query) != false;
 
               $query = "UPDATE account_withdraw_act_wth SET act_wth_amount = ".sqlstrval($act_wth_amount).", act_wth_fee = ".sqlstrval($act_wth_fee).", act_wth_bnk_times = ".sqlstrval($act_wth_bnk_times).", act_wth_updated = ".sqlstr($nowStr)." WHERE act_wth_usr_id = ".strval($id);
@@ -136,7 +136,7 @@ function manage_set_withdraw(){
 
               $total = $amount + $fee;
               $act_trn_available = $act_mny_available + $act_mny_frozen;
-              $query = "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).",".sqlstr($nowStr).",2,".sqlstrval($total).",".sqlstrval($act_trn_available).",".sqlstrval($act_mny_owned).",".sqlstrval($act_mny_fine).",'".sqlstrval($fee)."')";
+              $query = "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).",".sqlstr($nowStr).",2,".sqlstrval($total).",".sqlstrval($act_trn_available).",".sqlstrval($act_mny_owned).",".sqlstrval($act_mny_fine).",".sqlstr(sqlstrval($fee)).")";
               $flag = $flag && (mysqli_query($con, $query) != false);
             }
           }
@@ -146,7 +146,7 @@ function manage_set_withdraw(){
     default: // rejected
       mysqli_query($con, "LOCK TABLES account_withdraws_act_wths WRITE, account_money_act_mny WRITE, account_transactions_act_trn WRITE, loans_lns WRITE, hyd_loans_hyd_ln WRITE, investments_inv WRITE, account_investments_act_invs WRITE, account_investment_act_inv WRITE, account_loan_act_ln WRITE");
 
-      $query = "SELECT act_wths_usr_id FROM account_withdraws_act_wths WHERE act_wths_usr_id = ".strval($id)." AND act_wths_time = '".$time->format("Y-m-d\TH:i:s")."' AND act_wths_bnk_number = '".$number."' AND act_wths_amount = ".strval($amount)." AND act_wths_fee = ".strval($fee)." AND act_wths_is_done IS NULL AND act_wths_done IS NULL";
+      $query = "SELECT act_wths_usr_id FROM account_withdraws_act_wths WHERE act_wths_usr_id = ".strval($id)." AND act_wths_time = ".sqlstr($time->format("Y-m-d\TH:i:s"))." AND act_wths_bnk_number = ".sqlstr($number)." AND act_wths_amount = ".strval($amount)." AND act_wths_fee = ".strval($fee)." AND act_wths_is_done IS NULL AND act_wths_done IS NULL";
       $result = mysqli_query($con, $query);
       if ($row = mysqli_fetch_array($result))
       {
@@ -167,7 +167,7 @@ function manage_set_withdraw(){
 
           if ($act_mny_frozen >= ($amount + $fee))
           {
-            $query = "UPDATE account_withdraws_act_wths SET act_wths_is_done = 0, act_wths_done = ".sqlstr($nowStr).", act_wths_mng_usr_id = ".sqlstrval($usr_id)." WHERE act_wths_usr_id = ".strval($id)." AND act_wths_time = '".$time->format("Y-m-d\TH:i:s")."' AND act_wths_bnk_number = '".$number."' AND act_wths_amount = ".strval($amount)." AND act_wths_fee = ".strval($fee)." AND act_wths_is_done IS NULL AND act_wths_done IS NULL";
+            $query = "UPDATE account_withdraws_act_wths SET act_wths_is_done = 0, act_wths_done = ".sqlstr($nowStr).", act_wths_mng_usr_id = ".sqlstrval($usr_id)." WHERE act_wths_usr_id = ".strval($id)." AND act_wths_time = ".sqlstr($time->format("Y-m-d\TH:i:s"))." AND act_wths_bnk_number = ".sqlstr($number)." AND act_wths_amount = ".strval($amount)." AND act_wths_fee = ".strval($fee)." AND act_wths_is_done IS NULL AND act_wths_done IS NULL";
             $flag = mysqli_query($con, $query) != false;
 
             $amount += $fee;

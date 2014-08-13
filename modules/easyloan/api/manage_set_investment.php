@@ -74,6 +74,34 @@ function manage_set_investment(){
       echo "{\"result\":0}";
       exit;
     }
+    // check start-date > today, end-date > start-date
+    if ($start >= $end || $start <= $today)
+    {
+      echo "{\"result\":0}";
+      exit;
+    }
+    if ($repayment_method == 1)
+    {// end-date - start-date >= 3 dyas
+      if ($start->diff($end)->days < 3){
+        echo "{\"result\":0}";
+        exit;
+      }
+    }
+    else if ($repayment_method == 2 || $repayment_method == 3)
+    { // end-date - start-date >= 2 months
+      if ($start->diff($end)->days < 59){
+        echo "{\"result\":0}";
+        exit;
+      }
+    }
+    else if ($repayment_method == 4 || $repayment_method == 5) 
+    { // end-date - start-date >= 3 months
+      if ($start->diff($end)->days < 89){
+        echo "{\"result\":0}";
+        exit;
+      }
+    }
+
     $duration = round($start->diff($end)->days / 30.0, 0);
     $fine_rate = str2float($_GET['fine_rate']);
     if ($fine_rate < 0)

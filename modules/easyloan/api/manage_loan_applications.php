@@ -37,7 +37,7 @@ function manage_loan_applications(){
       echo "{\"result\":0}";
       exit;
     }
-    $comment = $_POST['comment'];
+    $comment = strip_tags($_POST['comment']);
   }
   else // GET
   {
@@ -153,6 +153,11 @@ function manage_loan_applications(){
         $app_status = $row['app_status'];
         $app_applied = $row['app_applied'];
         $app_comment = $row['app_comment'];
+
+        if (!is_accountant($user) && !is_manager($user) && !is_administrator($user))
+        {
+          $app_usr_id = null;
+        }
 
         $json = $json.",{\"app_id\":".jsonstrval($app_id).",\"is_done\":".jsonstrval($app_is_done).",\"is_loaned\":".jsonstrval($app_is_loaned).",\"title\":".jsonstr($app_title).",\"user_id\":".jsonstrval($app_usr_id).",\"nick\":".jsonstr($act_info_nick).",\"name\":".jsonstr($act_info_name).",\"category\":".jsonstrval($app_category).",\"amount\":".jsonstrval($app_amount).",\"duration\":".jsonstrval($app_duration).",\"status\":".jsonstrval($app_status).",\"applied\":".jsonstr($app_applied).",\"comment\":".jsonstr($app_comment)."}";
       }

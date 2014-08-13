@@ -19,7 +19,7 @@ function update_investments()
   }
   mysqli_set_charset($con, "UTF8");
   mysqli_query($con, "LOCK TABLES investments_inv READ");
-  $result = mysqli_query($con, "SELECT inv_app_id FROM investments_inv WHERE inv_is_done = 0 AND inv_updated < '".$nowStr."'");
+  $result = mysqli_query($con, "SELECT inv_app_id FROM investments_inv WHERE inv_is_done = 0 AND inv_updated < ".sqlstr($nowStr));
   mysqli_query($con, "UNLOCK TABLES");
   mysqli_kill($con, mysqli_thread_id($con));
   mysqli_close($con);

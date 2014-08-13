@@ -25,7 +25,7 @@ function update_hyd($app_id)
   mysqli_autocommit($con, false);
   mysqli_query($con, "LOCK TABLES hyd_loans_hyd_ln WRITE, investments_inv WRITE, account_loan_act_ln READ, investment_accounts_inv_act READ, account_investments_act_invs WRITE, account_money_act_mny WRITE, account_transactions_act_trn WRITE");
 
-  $result = mysqli_query($con, "SELECT hyd_ln_usr_id, hyd_ln_total, hyd_ln_count, hyd_ln_r_amount, hyd_ln_r_interest, hyd_ln_w_amount, hyd_ln_w_interest, hyd_ln_n_date, hyd_ln_n_amount, hyd_ln_n_interest, hyd_ln_w_owned, hyd_ln_w_fine, hyd_ln_updated FROM hyd_loans_hyd_ln WHERE hyd_ln_app_id = ".strval($app_id)." AND hyd_ln_n_date IS NOT NULL AND hyd_ln_updated < '".$nowStr."'");
+  $result = mysqli_query($con, "SELECT hyd_ln_usr_id, hyd_ln_total, hyd_ln_count, hyd_ln_r_amount, hyd_ln_r_interest, hyd_ln_w_amount, hyd_ln_w_interest, hyd_ln_n_date, hyd_ln_n_amount, hyd_ln_n_interest, hyd_ln_w_owned, hyd_ln_w_fine, hyd_ln_updated FROM hyd_loans_hyd_ln WHERE hyd_ln_app_id = ".strval($app_id)." AND hyd_ln_n_date IS NOT NULL AND hyd_ln_updated < ".sqlstr($nowStr));
   if ($row = mysqli_fetch_array($result))
   {
     $hyd_ln_usr_id = $row['hyd_ln_usr_id'];

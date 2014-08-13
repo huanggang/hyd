@@ -10,7 +10,7 @@ function manage_user(){
     exit;
   }
 
-  if (!is_manager($user) && !is_administrator($user))
+  if (!is_accountant($user) && !is_manager($user) && !is_administrator($user))
   {
     echo "{\"result\":0}";
     exit;
@@ -42,7 +42,7 @@ function manage_user(){
         echo "{\"result\":0}";
         exit;
       }
-      $condition = "act_info_mobile = '".$mobile."'";
+      $condition = "act_info_mobile = ".sqlstr($mobile);
       break;
     case 3:
       $ssn = $_GET['ssn'];
@@ -51,7 +51,7 @@ function manage_user(){
         echo "{\"result\":0}";
         exit;
       }
-      $condition = "act_info_ssn = '".$ssn."'";
+      $condition = "act_info_ssn = ".sqlstr($ssn);
       break;
   }
 

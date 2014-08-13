@@ -66,7 +66,7 @@ drupal_add_js('var uid=' . strval($user->uid), 'inline');
             </div>
             <div class="ui-form-item">
               <label class="ui-label">过户次数</label>
-              <input class="ui-input w40" type="text" value="" name="tranfers" id="tranfers"> 次
+              <input class="ui-input w40" type="text" value="" name="transfers" id="transfers"> 次
             </div>
             <div class="ui-form-item">
               <label class="ui-label">国产/进口</label>

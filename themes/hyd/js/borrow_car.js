@@ -41,7 +41,7 @@
           register: {required: false, date: true},
           price: {required: false, number: true, min:1000, max:99999999},
           color: {required: false, maxlength:8},
-          tranfers: {required: false, digits: true, min:0, max:99},
+          transfers: {required: false, digits: true, min:0, max:99},
         },
         messages: {
           title: {
@@ -115,7 +115,7 @@
           color: {
             maxlength: "最多8字符"
           },
-          tranfers: {
+          transfers: {
             digits: "请填写整数",
             min: "过户次数不少于0次", 
             max: "过户次数不多于99次"
@@ -150,7 +150,7 @@
               register: $('#register').val().replace(/\//g,"-"),
               price: $('#price').val(),
               color: $('#color').val(),
-              tranfers: $('#tranfers').val(),
+              transfers: $('#transfers').val(),
               features: features,
               oversea: $('.oversea:checked').val(),
               status: $('#status option:selected').val(),

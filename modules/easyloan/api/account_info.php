@@ -45,7 +45,7 @@ function account_info(){
     {
       $city = null;
     }
-    $address = $_POST['address'];
+    $address = strip_tags($_POST['address']);
     if (is_null($address) || empty($address))
     {
       $address = null;

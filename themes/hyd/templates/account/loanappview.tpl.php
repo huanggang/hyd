@@ -192,10 +192,6 @@ drupal_add_js($theme_path . '/js/loanapp_view.js');
             <label class="ui-label">是否放款</label>
             <span id="is_loaned"></span>
           </div>
-          <div class="ui-form-item" id="is_done-div">
-            <label class="ui-label">是否还清</label>
-            <span id="is_done"></span>
-          </div>
         </div>
       </div>
     </div>

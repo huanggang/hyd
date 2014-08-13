@@ -83,7 +83,7 @@ function notify()
     {
       $day7Str = $today->add(new DateInterval('P7D'))->format("Y-m-d");
       mysqli_query($con, "LOCK TABLES account_loan_act_ln READ");
-      $result1 = mysqli_query($con, "SELECT act_ln_usr_id, act_ln_app_id, act_ln_n_date, act_ln_n_amount, act_ln_n_interest FROM account_loan_act_ln WHERE act_ln_n_date IS NOT NULL AND DATE(act_ln_n_date) = '".$day7Str."'");
+      $result1 = mysqli_query($con, "SELECT act_ln_usr_id, act_ln_app_id, act_ln_n_date, act_ln_n_amount, act_ln_n_interest FROM account_loan_act_ln WHERE act_ln_n_date IS NOT NULL AND DATE(act_ln_n_date) = ".sqlstr($day7Str));
       mysqli_query($con, "UNLOCK TABLES");
       while ($row1 = mysqli_fetch_array($result1))
       {
@@ -113,7 +113,7 @@ function notify()
     {
       $day3Str = $today->add(new DateInterval('P3D'))->format("Y-m-d");
       mysqli_query($con, "LOCK TABLES account_loan_act_ln READ");
-      $result1 = mysqli_query($con, "SELECT act_ln_usr_id, act_ln_app_id, act_ln_n_date, act_ln_n_amount, act_ln_n_interest FROM account_loan_act_ln WHERE act_ln_n_date IS NOT NULL AND DATE(act_ln_n_date) = '".$day3Str."'");
+      $result1 = mysqli_query($con, "SELECT act_ln_usr_id, act_ln_app_id, act_ln_n_date, act_ln_n_amount, act_ln_n_interest FROM account_loan_act_ln WHERE act_ln_n_date IS NOT NULL AND DATE(act_ln_n_date) = ".sqlstr($day3Str));
       mysqli_query($con, "UNLOCK TABLES");
       while ($row1 = mysqli_fetch_array($result1))
       {
@@ -168,7 +168,7 @@ function notify()
     if ($nt_receive >= 1)
     {
       mysqli_query($con, "LOCK TABLES investments_inv READ, loan_categories_ln_ctg READ, repayment_methods_rpy_mth READ");
-      $result1 = mysqli_query($con, "SELECT inv_app_id, ln_ctg_category, inv_title, inv_interest_rate, rpy_mth_method, inv_duration, inv_start, inv_end FROM investments_inv LEFT JOIN loan_categories_ln_ctg ON inv_category = ln_ctg_id LEFT JOIN repayment_methods_rpy_mth ON inv_repayment_method = rpy_mth_id WHERE inv_end = '".$todayStr."'");
+      $result1 = mysqli_query($con, "SELECT inv_app_id, ln_ctg_category, inv_title, inv_interest_rate, rpy_mth_method, inv_duration, inv_start, inv_end FROM investments_inv LEFT JOIN loan_categories_ln_ctg ON inv_category = ln_ctg_id LEFT JOIN repayment_methods_rpy_mth ON inv_repayment_method = rpy_mth_id WHERE inv_end = ".sqlstr($todayStr));
       mysqli_query($con, "UNLOCK TABLES");
       while ($row1 = mysqli_fetch_array($result1))
       {
@@ -218,7 +218,7 @@ function notify()
     {
       $yesterdayStr = $today->sub(new DateInterval('P1D'))->format("Y-m-d");
       mysqli_query($con, "LOCK TABLES account_withdraws_act_wths READ");
-      $result1 = mysqli_query($con, "SELECT act_wths_usr_id, act_wths_bnk_number, act_wths_amount, act_wths_fee FROM account_withdraws_act_wths WHERE act_wths_is_done = 1 AND DATE(act_wths_done) = '".$yesterdayStr."'");
+      $result1 = mysqli_query($con, "SELECT act_wths_usr_id, act_wths_bnk_number, act_wths_amount, act_wths_fee FROM account_withdraws_act_wths WHERE act_wths_is_done = 1 AND DATE(act_wths_done) = ".sqlstr($yesterdayStr));
       mysqli_query($con, "UNLOCK TABLES");
       while ($row1 = mysqli_fetch_array($result1))
       {

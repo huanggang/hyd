@@ -54,23 +54,23 @@ function transactions(){
   {
     case 1:
       $date = $today->sub(new DateInterval("P3D"));
-      $condition = $condition." AND act_trn_time >= '".$date->format("Y-m-d")."'";
+      $condition = $condition." AND act_trn_time >= ".sqlstr($date->format("Y-m-d"));
       break;
     case 2:
       $date = $today->sub(new DateInterval("P7D"));
-      $condition = $condition." AND act_trn_time >= '".$date->format("Y-m-d")."'";
+      $condition = $condition." AND act_trn_time >= ".sqlstr($date->format("Y-m-d"));
       break;
     case 3:
       $date = $today->sub(new DateInterval("P1M"));
-      $condition = $condition." AND act_trn_time >= '".$date->format("Y-m-d")."'";
+      $condition = $condition." AND act_trn_time >= ".sqlstr($date->format("Y-m-d"));
       break;
     case 4:
       $date = $today->sub(new DateInterval("P3M"));
-      $condition = $condition." AND act_trn_time >= '".$date->format("Y-m-d")."'";
+      $condition = $condition." AND act_trn_time >= ".sqlstr($date->format("Y-m-d"));
       break;
     case 5:
       $date = $today->sub(new DateInterval("P1Y"));
-      $condition = $condition." AND act_trn_time >= '".$date->format("Y-m-d")."'";
+      $condition = $condition." AND act_trn_time >= ".sqlstr($date->format("Y-m-d"));
       break;
   }
   $total = 0;

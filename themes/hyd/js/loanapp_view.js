@@ -108,13 +108,6 @@
                   $('#is_loaned-div').show();
                   $('#is_loaned').text(d.is_loaned == 1 ? '是' : '否');
                 }
-                if (d.is_done == null){
-                  $('#is_done-div').hide();
-                }
-                else {
-                  $('#is_done-div').show();
-                  $('#is_done').text(d.is_done == 1 ? '是' : '否');
-                }
               }
           })
           .fail(function( jqxhr, textStatus, error ) {

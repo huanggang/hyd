@@ -65,6 +65,34 @@ function manage_set_loan(){
     echo "{\"result\":0}";
     exit;
   }
+  // check end-date > today, start-date < end-date, loaned-date < end-date, today - start-date < 1 month
+  if ($loaned >= $end || $start >= $end || $end <= $today || ($start < $today && $start->diff($today)->days >= 28))
+  {
+    echo "{\"result\":0}";
+    exit;
+  }
+  if ($repayment_method == 1)
+  {// end-date - start-date >= 3 dyas
+    if ($start->diff($end)->days < 3){
+      echo "{\"result\":0}";
+      exit;
+    }
+  }
+  else if ($repayment_method == 2 || $repayment_method == 3)
+  { // end-date - start-date >= 2 months
+    if ($start->diff($end)->days < 59){
+      echo "{\"result\":0}";
+      exit;
+    }
+  }
+  else if ($repayment_method == 4 || $repayment_method == 5) 
+  { // end-date - start-date >= 3 months
+    if ($start->diff($end)->days < 89){
+      echo "{\"result\":0}";
+      exit;
+    }
+  }
+
   $fine_rate = str2float($_GET['fine_rate']);
   if ($fine_rate < 0)
   {

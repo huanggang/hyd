@@ -54,13 +54,13 @@ function account_withdraw(){
   mysqli_autocommit($con, false);
   mysqli_query($con, "LOCK TABLES account_info_act_info READ, account_banks_act_bnk READ, account_money_act_mny WRITE, account_withdraws_act_wths WRITE");
 
-  $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_cash_pass = SHA2('".$cash_pass."',256)";
+  $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id)." AND act_info_cash_pass = SHA2(".sqlstr($cash_pass).",256)";
   $result = mysqli_query($con, $query);
   if (mysqli_fetch_array($result))
   {
     mysqli_free_result($result);
 
-    $query = "SELECT act_bnk_number FROM account_banks_act_bnk WHERE act_bnk_usr_id = ".strval($usr_id)." AND act_bnk_number = '".$number."'";
+    $query = "SELECT act_bnk_number FROM account_banks_act_bnk WHERE act_bnk_usr_id = ".strval($usr_id)." AND act_bnk_number = ".sqlstr($number);
     $result = mysqli_query($con, $query);
     if (mysqli_fetch_array($result))
     {

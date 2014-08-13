@@ -28,7 +28,7 @@ function apply(){
     echo "{\"result\":0}";
     exit;
   }
-  $title = $_POST["title"];
+  $title = strip_tags($_POST["title"]);
   if (is_null($title))
   {
     echo "{\"result\":0}";
@@ -55,13 +55,13 @@ function apply(){
     echo "{\"result\":0}";
     exit;
   }
-  $purpose = $_POST["purpose"];
+  $purpose = strip_tags($_POST["purpose"]);
   if (is_null($purpose))
   {
     echo "{\"result\":0}";
     exit;
   }
-  $asset_description = $_POST["asset_description"];
+  $asset_description = strip_tags($_POST["asset_description"]);
   if (is_null($asset_description))
   {
     echo "{\"result\":0}";
@@ -78,7 +78,7 @@ function apply(){
   switch ($category)
   {
     case 1:
-      $address = $_POST["address"];
+      $address = strip_tags($_POST["address"]);
       if (is_null($address))
       {
         echo "{\"result\":0}";
@@ -116,7 +116,7 @@ function apply(){
         echo "{\"result\":0}";
         exit;
       }
-      $usage = $_POST["usage"];
+      $usage = strip_tags($_POST["usage"]);
       $has_loanStr = $_POST["has_loan"];
       $has_loan = str2int($has_loanStr, 0);
       if ($has_loan < 0 || $has_loan > 1)
@@ -125,7 +125,7 @@ function apply(){
       }
       break;
     case 2:
-      $brand = $_POST["brand"];
+      $brand = strip_tags($_POST["brand"]);
       if (is_null($brand))
       {
         echo "{\"result\":0}";
@@ -138,7 +138,7 @@ function apply(){
         echo "{\"result\":0}";
         exit;
       }
-      $vin = $_POST["vin"];
+      $vin = strip_tags($_POST["vin"]);
       if (is_null($vin))
       {
         echo "{\"result\":0}";
@@ -149,7 +149,7 @@ function apply(){
       {
         $made = $made->format("Y-m-d");
       }
-      $violations = str2int($_POST["violations"]);
+      $violations = str2int($_POST["violations"], -1);
       if ($violations < 0)
       {
         $violations = 0;
@@ -165,8 +165,8 @@ function apply(){
       {
         $vehicle_price = null;
       }
-      $color = $_POST["color"];
-      $features = $_POST["features"];
+      $color = strip_tags($_POST["color"]);
+      $features = strip_tags($_POST["features"]);
       $mileageStr = $_POST["mileage"];
       $mileage = str2int($mileageStr, 0);
       if ($mileage <= 0)
@@ -181,7 +181,7 @@ function apply(){
         $transfers = null;
       }
       $overseaStr = $_POST["oversea"];
-      $oversea = str2int($overseaStr, 0);
+      $oversea = str2int($overseaStr, -1);
       if ($oversea < 0)
       {
         $oversea = null;
@@ -194,7 +194,7 @@ function apply(){
       }
       break;
     case 3:
-      $gold_name = $_POST["name"];
+      $gold_name = strip_tags($_POST["name"]);
       if (is_null($gold_name))
       {
         echo "{\"result\":0}";
@@ -216,13 +216,13 @@ function apply(){
       }
       break;
     case 4:
-      $organization = $_POST["organization"];
+      $organization = strip_tags($_POST["organization"]);
       if (is_null($organization))
       {
         echo "{\"result\":0}";
         exit;
       }
-      $position = $_POST["position"];
+      $position = strip_tags($_POST["position"]);
       if (is_null($position))
       {
         echo "{\"result\":0}";
@@ -238,7 +238,7 @@ function apply(){
       }
       break;
     case 5:
-      $other_name = $_POST["name"];
+      $other_name = strip_tags($_POST["name"]);
       if (is_null($other_name))
       {
         echo "{\"result\":0}";
@@ -282,19 +282,42 @@ function apply(){
   {
     mysqli_free_result($result);
 
-    $query = "SELECT app_usr_id FROM applications_app WHERE app_usr_id = ".strval($usr_id)." AND (app_is_done = 0 OR (app_is_done = 1 AND app_is_loaned IS NULL))";
+    $ssn = "";
+    $query = "SELECT act_info_ssn FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id);
+    $result = mysqli_query($con, $query);
+    while ($row = mysqli_fetch_array($result)){
+      $act_info_ssn = $row["act_info_ssn"];
+      $ssn .= sqlstr($act_info_ssn) . ",";
+    }
+    mysqli_free_result($result);
+    $ssn = substr($ssn, 0, strlen($ssn)-1);
+
+    $usr_ids = "";
+    $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_ssn IN (".$ssn.")";
+    $result = mysqli_query($con, $query);
+    while ($row = mysqli_fetch_array($result)){
+      $act_info_usr_id = $row["act_info_usr_id"];
+      $usr_ids .= $act_info_usr_id . ",";
+    }
+    mysqli_free_result($result);
+    $usr_ids = substr($usr_ids, 0, strlen($usr_ids)-1);
+
+    //$query = "SELECT app_usr_id FROM applications_app WHERE app_usr_id = ".strval($usr_id)." AND (app_is_done = 0 OR (app_is_done = 1 AND app_is_loaned IS NULL))";
+    $query = "SELECT app_usr_id FROM applications_app WHERE app_usr_id IN (".$usr_ids.") AND (app_is_done = 0 OR (app_is_done = 1 AND app_is_loaned IS NULL))";
     $result = mysqli_query($con, $query);
     if (is_null(mysqli_fetch_array($result)))
     {
       mysqli_free_result($result);
 
-      $query = "SELECT lns_usr_id FROM loans_lns WHERE lns_usr_id = ".strval($usr_id)." AND lns_is_done = 0";
+      //$query = "SELECT lns_usr_id FROM loans_lns WHERE lns_usr_id = ".strval($usr_id)." AND lns_is_done = 0";
+      $query = "SELECT lns_usr_id FROM loans_lns WHERE lns_usr_id IN (".$usr_ids.") AND lns_is_done = 0";
       $result = mysqli_query($con, $query);
       if (is_null(mysqli_fetch_array($result)))
       {
         mysqli_free_result($result);
 
-        $query = "SELECT act_inv_usr_id FROM account_investment_act_inv WHERE act_inv_usr_id = ".strval($usr_id)." AND act_inv_holdings > 0";
+        //$query = "SELECT act_inv_usr_id FROM account_investment_act_inv WHERE act_inv_usr_id = ".strval($usr_id)." AND act_inv_holdings > 0";
+        $query = "SELECT act_inv_usr_id FROM account_investment_act_inv WHERE act_inv_usr_id IN (".$usr_ids.") AND act_inv_holdings > 0";
         $result = mysqli_query($con, $query);
         if (is_null(mysqli_fetch_array($result)))
         {

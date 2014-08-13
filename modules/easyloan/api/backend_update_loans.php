@@ -19,7 +19,7 @@ function update_loans()
   }
   mysqli_set_charset($con, "UTF8");
   mysqli_query($con, "LOCK TABLES loans_lns READ");
-  $result = mysqli_query($con, "SELECT lns_usr_id FROM loans_lns WHERE lns_is_done = 0 AND lns_updated < '".$nowStr."'");
+  $result = mysqli_query($con, "SELECT lns_usr_id FROM loans_lns WHERE lns_is_done = 0 AND lns_updated < ".sqlstr($nowStr));
   mysqli_query($con, "UNLOCK TABLES");
   mysqli_kill($con, mysqli_thread_id($con));
   mysqli_close($con);

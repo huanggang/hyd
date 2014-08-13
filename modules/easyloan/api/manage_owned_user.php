@@ -40,7 +40,7 @@ function manage_owned_user(){
   $json = "";
   $total = 0;
   mysqli_query($con, "LOCK TABLES account_transactions_act_trn READ");
-  $query = "SELECT act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note FROM account_transactions_act_trn WHERE act_trn_usr_id = ".strval($id)." AND act_trn_time >= '".$start->format('Y-m-d')."' ORDER BY act_trn_time ASC";
+  $query = "SELECT act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note FROM account_transactions_act_trn WHERE act_trn_usr_id = ".strval($id)." AND act_trn_time >= ".sqlstr($start->format('Y-m-d'))." ORDER BY act_trn_time ASC";
   $result = mysqli_query($con, $query);
   mysqli_query($con, "UNLOCK TABLES");
   while ($row = mysqli_fetch_array($result))

@@ -23,7 +23,7 @@ function check_pre_investment($app_id)
   mysqli_autocommit($con, false);
   mysqli_query($con, "LOCK TABLES investments_inv WRITE, hyd_loans_hyd_ln WRITE, investment_accounts_inv_act WRITE, account_investments_act_invs WRITE, account_investment_act_inv WRITE, account_money_act_mny WRITE, account_transactions_act_trn WRITE");
 
-  $result = mysqli_query($con, "SELECT inv_usr_id, inv_amount, inv_interest_rate, inv_repayment_method, inv_minimum, inv_step, inv_duration, inv_start, inv_end, inv_investment FROM investments_inv WHERE inv_app_id = ".strval($app_id)." AND inv_is_done IS NULL AND inv_updated <'".$nowStr."'");
+  $result = mysqli_query($con, "SELECT inv_usr_id, inv_amount, inv_interest_rate, inv_repayment_method, inv_minimum, inv_step, inv_duration, inv_start, inv_end, inv_investment FROM investments_inv WHERE inv_app_id = ".strval($app_id)." AND inv_is_done IS NULL AND inv_updated <".sqlstr($nowStr));
   if ($row = mysqli_fetch_array($result))
   {
     $inv_usr_id = $row['inv_usr_id'];
@@ -99,7 +99,7 @@ function check_pre_investment($app_id)
     }
     else // not created
     {
-      $flag = mysqli_query($con, "UPDATE investments_inv SET inv_updated = ".sqlstr($nowStr)." WHERE inv_app_id = ".strval($app_id)." AND inv_is_done IS NULL AND inv_updated < '".$nowStr."'") != false;
+      $flag = mysqli_query($con, "UPDATE investments_inv SET inv_updated = ".sqlstr($nowStr)." WHERE inv_app_id = ".strval($app_id)." AND inv_is_done IS NULL AND inv_updated < ".sqlstr($nowStr)) != false;
     }
   }
 

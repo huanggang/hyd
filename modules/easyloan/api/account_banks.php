@@ -32,8 +32,8 @@ function account_banks(){
       echo "{\"result\":0}";
       exit;
     }
-    $branch = $_POST['branch'];
-    $address = $_POST['address'];
+    $branch = strip_tags($_POST['branch']);
+    $address = strip_tags($_POST['address']);
 
     $now = new DateTime;
     $nowStr = $now->format("Y-m-d\TH:i:sP");

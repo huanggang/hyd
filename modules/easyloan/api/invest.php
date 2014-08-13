@@ -48,15 +48,35 @@ function invest(){
   mysqli_set_charset($con, "UTF8");
 
   mysqli_autocommit($con, false);
-  mysqli_query($con, "LOCK TABLES applications_app READ, loans_lns READ, account_money_act_mny WRITE, investments_inv WRITE, investment_accounts_inv_act WRITE");
+  mysqli_query($con, "LOCK TABLES applications_app READ, account_info_act_info READ, loans_lns READ, account_money_act_mny WRITE, investments_inv WRITE, investment_accounts_inv_act WRITE");
 
-  $query = "SELECT app_usr_id FROM applications_app WHERE app_usr_id = ".strval($usr_id)." AND (app_is_done = 0 OR (app_is_done = 1 AND app_is_loaned IS NULL))";
+  $ssn = "";
+  $query = "SELECT act_info_ssn FROM account_info_act_info WHERE act_info_usr_id = ".strval($usr_id);
+  $result = mysqli_query($con, $query);
+  while ($row = mysqli_fetch_array($result)){
+    $act_info_ssn = $row["act_info_ssn"];
+    $ssn .= sqlstr($act_info_ssn) . ",";
+  }
+  mysqli_free_result($result);
+  $ssn = substr($ssn, 0, strlen($ssn)-1);
+
+  $usr_ids = "";
+  $query = "SELECT act_info_usr_id FROM account_info_act_info WHERE act_info_ssn IN (".$ssn.")";
+  $result = mysqli_query($con, $query);
+  while ($row = mysqli_fetch_array($result)){
+    $act_info_usr_id = $row["act_info_usr_id"];
+    $usr_ids .= $act_info_usr_id . ",";
+  }
+  mysqli_free_result($result);
+  $usr_ids = substr($usr_ids, 0, strlen($usr_ids)-1);
+
+  $query = "SELECT app_usr_id FROM applications_app WHERE app_usr_id IN (".$usr_ids.") AND (app_is_done = 0 OR (app_is_done = 1 AND app_is_loaned IS NULL))";
   $result = mysqli_query($con, $query);
   if (is_null(mysqli_fetch_array($result)))
   {
     mysqli_free_result($result);
 
-    $query = "SELECT lns_usr_id FROM loans_lns WHERE lns_usr_id = ".strval($usr_id)." AND lns_is_done = 0";
+    $query = "SELECT lns_usr_id FROM loans_lns WHERE lns_usr_id IN (".$usr_ids.") AND lns_is_done = 0";
     $result = mysqli_query($con, $query);
     if (is_null(mysqli_fetch_array($result)))
     {
@@ -71,7 +91,7 @@ function invest(){
 
       if ($act_mny_available >= $amount)
       {
-        $query = "SELECT inv_amount, inv_minimum, inv_step, inv_investment FROM investments_inv WHERE inv_app_id = ".strval($id)." AND inv_is_done IS NULL AND inv_start > '".$todayStr."'";
+        $query = "SELECT inv_amount, inv_minimum, inv_step, inv_investment FROM investments_inv WHERE inv_app_id = ".strval($id)." AND inv_is_done IS NULL AND inv_start > ".sqlstr($todayStr);
         $result = mysqli_query($con, $query);
         if ($row = mysqli_fetch_array($result))
         {

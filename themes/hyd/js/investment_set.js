@@ -142,6 +142,37 @@
           var fine_rate = $("#fine_rate").val() / 100.0;
           var fine_rate_is_single = $("input[name=fine_rate_is_single]:checked").val();
 
+          // check start-date > today, end-date > start-date
+          var dtoday = new Date();
+          var dstart = new Date(start);
+          var dend = new Date(end);
+          if (dstart.getTime() <= dtoday.getTime()) {
+            alert('成立日期必须在今日之后');
+            return;
+          }
+          if (dstart.getTime() >= dend.getTime()) {
+            alert('到期日期必须在成立日期之后');
+            return;
+          }
+          if (repayment_method == 1) {
+            if (dend.getTime() - dstart.getTime() < (3 * 24 * 3600 * 1000)){
+              alert('投资期限必须在3日以上');
+              return;
+            }
+          }
+          else if (repayment_method == 2 || repayment_method == 3) {
+            if (dend.getTime() - dstart.getTime() < (59 * 24 * 3600 * 1000)){
+              alert('投资期限必须在2月以上');
+              return;
+            }
+          }
+          else if (repayment_method == 4 || repayment_method == 5) {
+            if (dend.getTime() - dstart.getTime() < (89 * 24 * 3600 * 1000)){
+              alert('投资期限必须在3月以上');
+              return;
+            }
+          }
+
           $.getJSON(Drupal.settings.basePath + "api/m_set_investment?type=1&app_id=" + app_id + "&amount=" + amount + "&rate=" + rate + "&method=" + method + "&minimum=" + minimum + "&step=" + step + "&start=" + start + "&end=" + end + "&fine_rate=" + fine_rate + "&fine_is_single=" + fine_rate_is_single,
             function(d) {
               if (d.result==1) {

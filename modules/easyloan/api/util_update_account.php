@@ -25,7 +25,7 @@ function update_account($id)
   mysqli_autocommit($con, false);
   mysqli_query($con, "LOCK TABLES account_loan_act_ln WRITE, loans_lns WRITE, account_money_act_mny WRITE, account_transactions_act_trn WRITE");
   
-  $result = mysqli_query($con, "SELECT act_ln_app_id, act_ln_amount, act_ln_interest, act_ln_fine, act_ln_interest_rate, act_ln_duration, act_ln_loans, act_ln_total, act_ln_count, act_ln_r_amount, act_ln_r_interest, act_ln_w_amount, act_ln_w_interest, act_ln_n_date, act_ln_n_amount, act_ln_n_interest, act_ln_w_owned, act_ln_w_fine, act_ln_updated FROM account_loan_act_ln WHERE act_ln_usr_id=".strval($id)." AND act_ln_app_id IS NOT NULL AND act_ln_updated < '".$nowStr."'");
+  $result = mysqli_query($con, "SELECT act_ln_app_id, act_ln_amount, act_ln_interest, act_ln_fine, act_ln_interest_rate, act_ln_duration, act_ln_loans, act_ln_total, act_ln_count, act_ln_r_amount, act_ln_r_interest, act_ln_w_amount, act_ln_w_interest, act_ln_n_date, act_ln_n_amount, act_ln_n_interest, act_ln_w_owned, act_ln_w_fine, act_ln_updated FROM account_loan_act_ln WHERE act_ln_usr_id=".strval($id)." AND act_ln_app_id IS NOT NULL AND act_ln_updated < ".sqlstr($nowStr));
   if ($row = mysqli_fetch_array($result)) // has unfinished loans
   {
     $act_ln_app_id = $row['act_ln_app_id'];

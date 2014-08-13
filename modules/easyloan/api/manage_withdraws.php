@@ -84,7 +84,7 @@ function manage_withdraws(){
     $act_wths_is_done = $row['act_wths_is_done'];
     $act_wths_done = $row['act_wths_done'];
 
-    $query = "SELECT act_bnk_bank, act_bnk_branch, act_bnk_address FROM account_banks_act_bnk WHERE act_bnk_usr_id = ".strval($act_wths_usr_id)." AND act_bnk_number = '".$act_wths_bnk_number."'";
+    $query = "SELECT act_bnk_bank, act_bnk_branch, act_bnk_address FROM account_banks_act_bnk WHERE act_bnk_usr_id = ".strval($act_wths_usr_id)." AND act_bnk_number = ".sqlstr($act_wths_bnk_number);
     $result1 = mysqli_query($con, $query);
     if ($row1 = mysqli_fetch_array($result1))
     {

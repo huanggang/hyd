@@ -58,10 +58,10 @@ function investments(){
       $condition = $condition." AND inv_is_done IS NULL";
       break;
     case 2:
-      $condition = $condition." AND inv_is_done = 0 AND inv_start > '".$todayStr."'";
+      $condition = $condition." AND inv_is_done = 0 AND inv_start > ".sqlstr($todayStr);
       break;
     case 3:
-      $condition = $condition." AND inv_is_done = 0 AND inv_start <= '".$todayStr."'";
+      $condition = $condition." AND inv_is_done = 0 AND inv_start <= ".sqlstr($todayStr);
       break;
     case 4:
       $condition = $condition." AND inv_is_done = 1";
@@ -80,7 +80,7 @@ function investments(){
 
   if ($page == 1 && $front == 0)
   {
-    $qTotal = "SELECT COUNT(inv_app_id) AS total FROM investments_inv WHERE DATE(inv_created) >= '".$twoYearsAgoStr."'".$condition;
+    $qTotal = "SELECT COUNT(inv_app_id) AS total FROM investments_inv WHERE DATE(inv_created) >= ".sqlstr($twoYearsAgoStr).$condition;
     mysqli_query($con, "LOCK TABLES investments_inv READ");
     $result = mysqli_query($con, $qTotal);
     mysqli_query($con, "UNLOCK TABLES");
@@ -91,7 +91,7 @@ function investments(){
     }
   }
   $products = "";
-  $query = "SELECT inv_app_id, inv_title, inv_category, inv_interest_rate, inv_repayment_method, inv_amount, inv_duration, inv_start, inv_end, inv_is_done, inv_investment, inv_created FROM investments_inv WHERE DATE(inv_created) >= '".$twoYearsAgoStr."'".$condition.$limit;
+  $query = "SELECT inv_app_id, inv_title, inv_category, inv_interest_rate, inv_repayment_method, inv_amount, inv_duration, inv_start, inv_end, inv_is_done, inv_investment, inv_created FROM investments_inv WHERE DATE(inv_created) >= ".sqlstr($twoYearsAgoStr).$condition.$limit;
   mysqli_query($con, "LOCK TABLES investments_inv READ");
   $result = mysqli_query($con, $query);
   mysqli_query($con, "UNLOCK TABLES");
