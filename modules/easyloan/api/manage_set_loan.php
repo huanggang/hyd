@@ -158,7 +158,12 @@ function manage_set_loan(){
 
         $interest = compute_interest($amount, $rate, $repayment_method, $start->format("Y-m-d"), $end->format("Y-m-d"), $today->format("Y-m-d"));
 
-        $lns_duration = round($start->diff($end)->days / 30.0, 0);
+        $duration = $start->diff($end);
+        $duration_years = $duration->y;
+        $duration_months = $duration->m;
+        $duration_days = $duration->d;
+        $lns_duration = $duration_years * 12 + $duration_months + round($duration_days / 30.0, 0);
+
         $lns_interest = $interest->r_interest + $interest->w_interest;
         $query = "INSERT INTO loans_lns (lns_app_id, lns_usr_id, lns_is_done, lns_created, lns_mng_usr_id, lns_category, lns_title, lns_amount, lns_purpose, lns_asset_description, lns_has_certificate, lns_interest_rate, lns_repayment_method, lns_duration, lns_start, lns_end, lns_interest, lns_fine_rate, lns_fine_rate_is_single, lns_finished, lns_fine, lns_updated) VALUES (".sqlstrval($app_id).",".sqlstrval($app_usr_id).",0,".sqlstr($loaned->format("Y-m-d")).",".sqlstrval($usr_id).",".sqlstrval($app_category).",".sqlstr($app_title).",".sqlstrval($amount).",".sqlstr($app_purpose).",".sqlstr($app_asset_description).",".sqlstrval($app_has_certificate).",".sqlstrval($rate).",".sqlstrval($repayment_method).",".sqlstrval($lns_duration).",".sqlstr($start->format("Y-m-d")).",".sqlstr($end->format("Y-m-d")).",".sqlstrval($lns_interest).",".sqlstrval($fine_rate).",".sqlstrval($fine_rate_is_single).",NULL,0,".sqlstr($nowStr).")";
         $flag = $flag && (mysqli_query($con, $query) != false);
