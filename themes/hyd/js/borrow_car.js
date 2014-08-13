@@ -62,7 +62,7 @@
             max: "最多36个月"
           },
           certificate: {
-            required: "请选择是否有房产证",
+            required: "请选择是否有来源凭证",
           },
           purpose: {
             required: "请填写借款描述",

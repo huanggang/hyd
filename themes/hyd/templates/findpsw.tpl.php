@@ -22,14 +22,14 @@ drupal_add_js($theme_path . '/js/findpwd.js');
               <input class="ui-input" type="text" name="phone" id="phone" value="">
               <input type="button" id="getMobileCode" class="ui-button ui-button-green ui-button-small" value="获取验证码" />
             </div>
-            <div class="ui-form-item">
+            <div class="ui-form-item fn-hide vcode">
               <label class="ui-label"><span class="ui-form-required">*</span>验证码</label>
               <input type="text" class="ui-input code" id="validateCode" name="validateCode" value="">
             </div>
-            <div class="ui-form-item">
+            <div class="ui-form-item fn-hide vcode">
               <input type="hidden" name="checkCode" value="other">
               <input type="submit" value="提 交" id="subNotLoginFindPswByMobileFormBt" class="ui-button ui-button-mid ui-button-green">
-            </div>  
+            </div>
           </div>
         <p class="info">若您无法使用上述方法找回，请联系客服400-027-XXXX</p>
     </div>

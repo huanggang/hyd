@@ -59,6 +59,7 @@ Drupal.behaviors.findpwd = {
             getMobileCodeBtn.after(m.delay(delaytime).fadeOut().queue(
                 function() { 
                   $(this).remove();
+                  $('div.vcode').show();
                 }
               )
             )
@@ -142,8 +143,6 @@ Drupal.behaviors.findpwd = {
         }
       },
     });
-
-
   }
 };
 })(jQuery, Drupal, this, this.document);
