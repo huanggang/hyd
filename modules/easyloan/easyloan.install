@@ -80,7 +80,7 @@ function easyloan_install(){
 	_declare_node_type('notice', $notice);
 	_declare_node_type('news', $news);
 	_declare_node_type('explanation', $explanation);
-	_declare_node_type('slideshow', $slideshow);
+	_declare_node_type('slideshow', $slideshow, false);
 	_declare_node_type('guide', $guide);
 }
 
@@ -88,12 +88,14 @@ function easyloan_install(){
 * 
 * 
 */
-function _declare_node_type($type, $content_type_array){
+function _declare_node_type($type, $content_type_array, $has_body = true){
 	// set default values for anything not explicitly defined in the above array
 	$content_type = node_type_set_defaults($content_type_array);
 
-	// add the body field to the content type
-	node_add_body_field($content_type, 'Body');
+	if ($has_body){
+		// add the body field to the content type
+		easyloan_node_add_body_field($content_type, 'Body');
+	}
 
 	// create the content type
 	node_type_save($content_type);
@@ -221,11 +223,10 @@ function _installed_fields($type) {
 			'cardinality'       => 1,
 			'settings' 			=> array(
 					'allowed_values' => array(
-						array(
-						'vocabulary' => 'help',
-						'parent'     => 0
+							array(
+							'vocabulary' => 'help',
+							'parent'     => 0)
 					)
-				)
 			)
   	      ),
 	  	);
@@ -249,7 +250,6 @@ function _installed_fields($type) {
 	  return $fields;
 	case 'guide':
   		$fields = array(
-
 		    'field_group' => array(
 		      'field_name'   => 'field_group',
 		      'label'        => $t('标签'),
@@ -295,24 +295,24 @@ function _installed_instances($type) {
 	    // instance of the text field above
 	    // instance of the taxonomy term reference field above
 	    'notice_publisher' => array(
-	      'field_name' => 'notice_publisher',
-	      'entity_type' => 'node',
-	      'label' => $t('公告发布者'),
-	      'bundle' => 'article',
-	      'required' => TRUE,
-	      '#default_value' => '好易贷团队',
-	      'widget' => array(
-	        'type' => 'text_textfield',
+			'field_name'     => 'notice_publisher',
+			'entity_type'    => 'node',
+			'label'          => $t('公告发布者'),
+			'bundle'         => 'article',
+			'required'       => TRUE,
+			'#default_value' => '好易贷团队',
+			'widget'         => array(
+				'type' => 'text_textfield',
 	      ),
 	    ),
-
 	    // instance of the date field above
 	    'notice_date' => array(
 	      'field_name'  => 'notice_date',
 	      'label'       => $t('公告发布日期'),
 	      'cardinality' => 1,
+	      'required'    => TRUE,
 	      'widget'      => array(
-	        'type'       => 'date_popup',
+				'type' => 'date_popup',
 	      ),
 	    ),
 	  );
@@ -321,11 +321,12 @@ function _installed_instances($type) {
   		$instances = array(
 	    // instance of the date field above
 	    'news_date' => array(
-	      'field_name'  => 'news_date',
-	      'label'       => $t('动态新闻发布日期'),
-	      'cardinality' => 1,
-	      'widget'      => array(
-	        'type'       => 'date_popup',
+			'field_name'  => 'news_date',
+			'label'       => $t('动态新闻发布日期'),
+			'cardinality' => 1,
+			'required'    => TRUE,
+			'widget'      => array(
+				'type' => 'date_popup',
 	      ),
 	    ),
 	  );
@@ -333,12 +334,12 @@ function _installed_instances($type) {
 	case 'explanation':
 		$instances = array(
 		'explanation_group' => array(
-	      'field_name'   => 'explanation_group',
-	      'label'        => $t('分组标签'),
-			'required' => TRUE,
-		    'widget' => array(
-		      'type' => 'options_select',
-		      'weight' => -10,
+			'field_name' => 'explanation_group',
+			'label'      => $t('分组标签'),
+			'required'   => TRUE,
+			'widget'     => array(
+					'type'   => 'options_select',
+					'weight' => -10,
 		    )
 	      ),
 	  	);
@@ -350,6 +351,7 @@ function _installed_instances($type) {
 	      'field_name'  => 'field_img',
 	      'label'       => $t('幻灯片图片'),
 	      'cardinality' => 1,
+	      'required'    => TRUE,
 	      'widget'      => array(
 	        'type'       => 'image_image',
 	      ),
@@ -366,34 +368,33 @@ function _installed_instances($type) {
 	  return $instances;
   	case 'guide':
 		$instances = array(
-
 			'field_group' => array(
-		      'field_name'   => 'field_group',
-		      'label'        => $t('标签'),
-				'required' => TRUE,
-			    'widget' => array(
-			      'type' => 'options_select',
-			      'weight' => -10,
-			    )
+				'field_name' => 'field_group',
+				'label'      => $t('标签'),
+				'required'   => TRUE,
+				'widget'     => array(
+						'type'   => 'options_select',
+						'weight' => -10,
+				    )
 		    ),
 
 			'field_invest_img' => array(
-		      'field_name'  => 'field_invest_img',
-		      'label'       => $t('新手指导-图片'),
-		      'required' => TRUE,
-		      'cardinality' => 1,
-		      'widget'      => array(
-		        'type'       => 'image_image',
+				'field_name'  => 'field_invest_img',
+				'label'       => $t('新手指导-图片'),
+				'required'    => TRUE,
+				'cardinality' => 1,
+				'widget'      => array(
+				'type' => 'image_image',
 		      ),
 		    ),
 
 	    	'field_weight' => array(
-				'field_name'   => 'field_weight',
-				'required' => TRUE,
-				'label'        => $t('权重'),
-				'cardinality'  => 1,
+				'field_name'  => 'field_weight',
+				'required'    => TRUE,
+				'label'       => $t('权重'),
+				'cardinality' => 1,
 				'widget'      => array(
-		        	'type'       => 'number',
+					'type' => 'number',
 		      	),
 	    	),
 
@@ -444,35 +445,35 @@ function easyloan_enable() {
 			'menu_name'   => 'easyloan_exchange', 
 			'title'       => $t('好易贷友情链接'),
 			'description' => $t('好易贷的友情链接'), 
-			'module'     => 'easyloan',
+			'module'      => 'easyloan',
 		));
 
 		menu_save(array(
 			'menu_name'   => 'easyloan_guide', 
 			'title'       => $t('好易贷新手指引链接'), 
 			'description' => $t('新手指引菜单'), 
-			'module'     => 'easyloan',
+			'module'      => 'easyloan',
 		));
 
 		menu_save(array(
 			'menu_name'   => 'easyloan_about', 
 			'title'       => $t('好易贷关于我们链接'), 
 			'description' => $t('关于我们左边菜单'), 
-			'module'     => 'easyloan',
+			'module'      => 'easyloan',
 		));
 
 		menu_save(array(
 			'menu_name'   => 'easyloan_account', 
 			'title'       => $t('好易贷个人账户链接'), 
 			'description' => $t('个人账户页面左边菜单'), 
-			'module'     => 'easyloan',
+			'module'      => 'easyloan',
 		));
 
 		menu_save(array(
 			'menu_name'   => 'easyloan_help', 
 			'title'       => $t('好易贷帮助中心链接'), 
 			'description' => $t('帮助中心左边链接'), 
-			'module'     => 'easyloan',
+			'module'      => 'easyloan',
 		));
 
 		$menu_item = array(
@@ -663,4 +664,45 @@ function _remove_flippy_variables($type){
 	variable_del('flippy_show_empty_' . $type);
 	variable_del('flippy_sort_' . $type);
 	variable_del('flippy_truncate_' . $type);
+}
+
+/*
+* The default node_add_body_field method(in node.module) won't allow people to 
+* disable summary, so use this instead to make that configurable 
+*/
+function easyloan_node_add_body_field($type, $label = 'Body', $display_summary = false) {
+  // Add or remove the body field, as needed.
+  $field = field_info_field('body');
+  $instance = field_info_instance('node', 'body', $type->type);
+  if (empty($field)) {
+    $field = array(
+		'field_name'   => 'body',
+		'type'         => 'text_with_summary',
+		'entity_types' => array('node'),
+    );
+    $field = field_create_field($field);
+  }
+  if (empty($instance)) {
+    $instance = array(
+		'field_name'  => 'body',
+		'entity_type' => 'node',
+		'bundle'      => $type->type,
+		'label'       => $label,
+		'required'    => TRUE,
+		'widget'      => array('type' => 'text_textarea_with_summary'),
+		'settings'    => array('display_summary' => $display_summary),
+		'display'     => array(
+		        'default' => array(
+		          'label' => 'hidden',
+		          'type' => 'text_default',
+		        ),
+        'teaser' 	  => array(
+				'label' => 'hidden',
+				'type'  => 'text_summary_or_trimmed',
+				),
+      ),
+    );
+    $instance = field_create_instance($instance);
+  }
+  return $instance;
 }
