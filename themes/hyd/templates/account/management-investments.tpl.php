@@ -20,6 +20,9 @@ drupal_add_js($theme_path . '/js/investments.js');
       <li class="ui-tab-item ui-tab-item-current" data-name="notyet">
         <a class="ui-tab-item-link">未发布</a>
       </li>
+      <li class="ui-tab-item" data-name="preinvesting">
+        <a class="ui-tab-item-link">募集中</a>
+      </li>
       <li class="ui-tab-item" data-name="investing">
         <a class="ui-tab-item-link">投资中</a>
       </li>
@@ -46,7 +49,7 @@ drupal_add_js($theme_path . '/js/investments.js');
       <div class="fn-right mt10 ui-pagination simple-pagination" id="investment-list-pagination-1">
       </div>
     </div>
-    <div class="ui-tab-content fn-clear" data-name="investing">
+    <div class="ui-tab-content fn-clear" data-name="preinvesting">
       <ul class="ui-list ui-list-s" id="investment-list-2">
         <li class="ui-list-header color-gray-text fn-clear">
           <span class="ui-list-title w130 ph5 fn-left">借款标题</span>
@@ -55,7 +58,7 @@ drupal_add_js($theme_path . '/js/investments.js');
           <span class="ui-list-title w85 ph5 fn-left">募集金额</span>
           <span class="ui-list-title w55 ph5 fn-left">年利率</span>
           <span class="ui-list-title w30 ph5 fn-left">月数</span>
-          <span class="ui-list-title w80 ph5 fn-left">到期日期</span>
+          <span class="ui-list-title w80 ph5 fn-left">成立日期</span>
           <span class="ui-list-title w80 ph5 fn-left">发布日期</span>
           <span class="ui-list-title w50 ph5 fn-left">详细</span>
         </li>
@@ -64,7 +67,7 @@ drupal_add_js($theme_path . '/js/investments.js');
       <div class="fn-right mt10 ui-pagination simple-pagination" id="investment-list-pagination-2">
       </div>
     </div>
-    <div class="ui-tab-content fn-clear" data-name="finished">
+    <div class="ui-tab-content fn-clear" data-name="investing">
       <ul class="ui-list ui-list-s" id="investment-list-3">
         <li class="ui-list-header color-gray-text fn-clear">
           <span class="ui-list-title w130 ph5 fn-left">借款标题</span>
@@ -80,6 +83,24 @@ drupal_add_js($theme_path . '/js/investments.js');
       </ul>
       <div class="fn-left mt10 fn-hide">共<span id="investment-total-3">0</span>条</div>
       <div class="fn-right mt10 ui-pagination simple-pagination" id="investment-list-pagination-3">
+      </div>
+    </div>
+    <div class="ui-tab-content fn-clear" data-name="finished">
+      <ul class="ui-list ui-list-s" id="investment-list-4">
+        <li class="ui-list-header color-gray-text fn-clear">
+          <span class="ui-list-title w130 ph5 fn-left">借款标题</span>
+          <span class="ui-list-title w50 ph5 fn-left">借款人</span>
+          <span class="ui-list-title w85 ph5 fn-left">计划金额</span>
+          <span class="ui-list-title w85 ph5 fn-left">募集金额</span>
+          <span class="ui-list-title w55 ph5 fn-left">年利率</span>
+          <span class="ui-list-title w30 ph5 fn-left">月数</span>
+          <span class="ui-list-title w80 ph5 fn-left">到期日期</span>
+          <span class="ui-list-title w80 ph5 fn-left">发布日期</span>
+          <span class="ui-list-title w50 ph5 fn-left">详细</span>
+        </li>
+      </ul>
+      <div class="fn-left mt10 fn-hide">共<span id="investment-total-4">0</span>条</div>
+      <div class="fn-right mt10 ui-pagination simple-pagination" id="investment-list-pagination-4">
       </div>
     </div>
   </div>

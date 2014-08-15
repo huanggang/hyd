@@ -90,7 +90,11 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       $obj->total = $total;
       if ($date2 >= $date3)
       {
-        $r_interval = compute_date_diff($date1, $date3);
+        $r_interval = new DateInterval('P0D');
+        if ($date1 < $date3)
+        {
+          $r_interval = compute_date_diff($date1, $date3);
+        }
         $count = 0;
         $r_interest = 0;
         if ($r_interval->y > 0) 
@@ -156,7 +160,11 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       $obj->total = $total;
       if ($date2 >= $date3)
       {
-        $r_interval = compute_date_diff($date1, $date3);
+        $r_interval = new DateInterval('P0D');
+        if ($date1 < $date3)
+        {
+          $r_interval = compute_date_diff($date1, $date3);
+        }
         $count = 0;
         $r_interest = round($amount * $b, 2); // initially deducted
         if ($r_interval->y > 0)
@@ -225,7 +233,11 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       $obj->total = $total;
       if ($date2 >= $date3)
       {
-        $r_interval = compute_date_diff($date1, $date3);
+        $r_interval = new DateInterval('P0D');
+        if ($date1 < $date3)
+        {
+          $r_interval = compute_date_diff($date1, $date3);
+        }
         $count = 0;
         if ($r_interval->y > 0)
         {
@@ -291,7 +303,11 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       $obj->total = $total;
       if ($date2 >= $date3)
       {
-        $r_interval = compute_date_diff($date1, $date3);
+        $r_interval = new DateInterval('P0D');
+        if ($date1 < $date3)
+        {
+          $r_interval = compute_date_diff($date1, $date3);
+        }
         $count = 0;
         if ($r_interval->y > 0)
         {

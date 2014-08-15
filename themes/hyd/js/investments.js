@@ -36,6 +36,13 @@
         displayedPages: display_pages, 
       });
 
+      $("#investment-list-pagination-4").pagination({
+        items: 0,
+        itemsOnPage: per_page,
+        hrefTextPrefix: '#type=4&page=', 
+        displayedPages: display_pages, 
+      });
+
       $(window).bind('hashchange', function(){
         var hash = window.location.hash;
         var type = 1;
@@ -75,10 +82,13 @@
           Drupal.behaviors.utils.showTab("notyet");
         }
         else if (type == 2){ // show tab 2
+          Drupal.behaviors.utils.showTab("preinvesting");
+        }
+        else if (type == 3){ // show tab 3
           Drupal.behaviors.utils.showTab("investing");
         }
-        else { // show tab 3
-          type = 3;
+        else { // show tab 4
+          type = 4;
           Drupal.behaviors.utils.showTab("finished");
         }
 
@@ -120,7 +130,7 @@
                     .append(span.clone().addClass('w30 text-right').append(w.duration.toFixed(0)))
                     .append(span.clone().addClass('w80 text-center').append(w.created.slice(0,10)))
                     .append(span.clone().addClass('w50 text-center').append(btn1.clone().attr('data-app-id', w.app_id)))
-                    .append(span.clone().addClass('w50 text-center').append(btn2.clone().attr('href', Drupal.settings.basePath + 'investments/set#app_id='+ w.app_id + '&title=' + w.title + '&user_id=' + w.user_id + '&name=' + w.name + '&nick=' + w.nick + '&category=' + w.category + '&amount=' + w.amount + '&interest=' + w.interest + '&rate=' + w.rate + '&method=' + w.method + '&duration=' + w.duration + '&start=' + w.start + '&end=' + w.end + '&fine_rate=' + w.fine_rate + '&fine_is_single=' + w.fine_is_single + '&created=' + w.created)));
+                    .append(span.clone().addClass('w50 text-center').append(btn2.clone().attr('href', Drupal.settings.basePath + 'management/investments/set#app_id='+ w.app_id + '&title=' + w.title + '&user_id=' + w.user_id + '&name=' + w.name + '&nick=' + w.nick + '&category=' + w.category + '&amount=' + w.amount + '&interest=' + w.interest + '&rate=' + w.rate + '&method=' + w.method + '&duration=' + w.duration + '&start=' + w.start + '&end=' + w.end + '&fine_rate=' + w.fine_rate + '&fine_is_single=' + w.fine_is_single + '&created=' + w.created)));
                   if (i % 2 == 0){
                     row.addClass('dark');
                   }
@@ -131,7 +141,31 @@
                 $(list).append(empty);
               }
             }
-            else if (type == 2){ // investing
+            else if (type == 2){ // preinvesting
+              if (d.investments.length > 0) {
+                for (var i = 0; i < d.investments.length; i++){
+                  var w = d.investments[i];
+                  var row = li.clone()
+                    .append(span.clone().addClass('w130 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'loan_view#id=' + w.app_id).attr('title', w.title).attr('style', w.loan_fine > 0 ? 'color:red' : '').append(cats[w.category] + w.title)))
+                    .append(span.clone().addClass('w50').append(a.clone().attr('href', Drupal.settings.basePath + 'user/' + w.user_id).attr('title', w.nick).append(w.name)))
+                    .append(span.clone().addClass('w85 text-right').append(w.investment_amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w85 text-right').append(w.investment.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w55 text-right').append((w.investment_rate * 100).toFixed(2) + '%'))
+                    .append(span.clone().addClass('w30 text-right').append(w.investment_duration.toFixed(0)))
+                    .append(span.clone().addClass('w80 text-center').append(w.investment_start.slice(0,10)))
+                    .append(span.clone().addClass('w80 text-center').append(w.investment_created.slice(0,10)))
+                    .append(span.clone().addClass('w50 text-center').append(btn3.clone().attr('href', Drupal.settings.basePath + 'invest/' + w.app_id)));
+                  if (i % 2 == 0){
+                    row.addClass('dark');
+                  }
+                  row.appendTo(list);
+                }
+              }
+              else {
+                $(list).append(empty);
+              }
+            }
+            else if (type == 3){ // investing
               if (d.investments.length > 0) {
                 for (var i = 0; i < d.investments.length; i++){
                   var w = d.investments[i];
@@ -219,7 +253,7 @@
           }
         }
       });
-      $(".ui-tab-item[data-name=investing]").click(function(event){
+      $(".ui-tab-item[data-name=preinvesting]").click(function(event){
         if (window.location.hash.indexOf("#type=2") < 0){
           var current_page_type_2 = $("#investment-list-pagination-2").pagination('getCurrentPage');
           if (current_page_type_2 > 1){
@@ -229,13 +263,23 @@
           }
         }
       });
-      $(".ui-tab-item[data-name=finished]").click(function(event){
+      $(".ui-tab-item[data-name=investing]").click(function(event){
         if (window.location.hash.indexOf("#type=3") < 0){
           var current_page_type_3 = $("#investment-list-pagination-3").pagination('getCurrentPage');
           if (current_page_type_3 > 1){
             window.location.hash = "#type=3&page=" + current_page_type_3;
           } else {
             window.location.hash = "#type=3";
+          }
+        }
+      });
+      $(".ui-tab-item[data-name=finished]").click(function(event){
+        if (window.location.hash.indexOf("#type=4") < 0){
+          var current_page_type_4 = $("#investment-list-pagination-4").pagination('getCurrentPage');
+          if (current_page_type_4 > 1){
+            window.location.hash = "#type=4&page=" + current_page_type_4;
+          } else {
+            window.location.hash = "#type=4";
           }
         }
       });

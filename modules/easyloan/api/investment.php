@@ -126,7 +126,7 @@ function investment(){
       // get list of investors
       $investors = "";
       $query = "SELECT inv_act_time, inv_act_amount, act_info_nick, act_info_usr_id, act_info_name FROM investment_accounts_inv_act LEFT JOIN account_info_act_info ON inv_act_usr_id = act_info_usr_id WHERE inv_act_app_id = ".strval($id);
-      mysqli_query($con, "LOCK TABLES investment_accounts_inv_act READ");
+      mysqli_query($con, "LOCK TABLES investment_accounts_inv_act READ, account_info_act_info READ");
       $result = mysqli_query($con, $query);
       mysqli_query($con, "UNLOCK TABLES");
       while ($row = mysqli_fetch_array($result))

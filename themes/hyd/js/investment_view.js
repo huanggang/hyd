@@ -104,6 +104,11 @@
                   });
 
                   $('#invest_submit').click(function(event){
+                    if (authenticated == 0)
+                    {
+                      window.location.href = Drupal.settings.basePath + "user/login"
+                      return;
+                    }
                     var v = Number($('#invest_amount').val().trim());
                     if (v <= 0 || isNaN(v) || v > d.available || v > (d.amount - d.investment)){
                       $('#invest_error').text("请输入正确的投资金额").show();
@@ -243,8 +248,8 @@
                 }
                 $('#check_mortgage_date').text(d.created.slice(0,10));
 
-                $('#purpose').text(d.purpose);
-                $('#asset_description').text(d.description);
+                $('#purpose').html(d.purpose);
+                $('#asset_description').html(d.description);
 
                 if ($('#investors_total').length > 0){
                   $('#investors_total').text(d.investments.length);

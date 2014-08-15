@@ -29,7 +29,7 @@ function manage_set_investment(){
     echo "{\"result\":0}";
     exit;
   }
-  $amount = null; $rate = null; $method = null; $minimum = null; $step = null; $start = null; $end = null; $fine_rate = null; $fine_is_single = null; $duration = null;
+  $amount = null; $rate = null; $repayment_method = null; $minimum = null; $step = null; $start = null; $end = null; $fine_rate = null; $fine_is_single = null; $duration = null;
   if ($type == 1)
   {
     $amount = str2float($_GET['amount']);
@@ -44,14 +44,19 @@ function manage_set_investment(){
       echo "{\"result\":0}";
       exit;
     }
-    $method = str2int($_GET['method']);
-    if ($method <= 0)
+    $repayment_method = str2int($_GET['method']);
+    if ($repayment_method <= 0)
     {
       echo "{\"result\":0}";
       exit;
     }
     $minimum = str2float($_GET['minimum']);
     if ($minimum <= 0)
+    {
+      echo "{\"result\":0}";
+      exit;
+    }
+    if ($minimum > $amount)
     {
       echo "{\"result\":0}";
       exit;
@@ -129,7 +134,7 @@ function manage_set_investment(){
   switch ($type)
   {
     case 1:
-      hyd_log($now, $usr_id, "投资产品", "发布: 借款申请编号, 投资金额, 年利率, 回收方式, 投资起点金额, 追加投资起点金额, 成立日期, 到期日期, 逾期日利率, 逾期日利率计算方式", "type=1&app_id=".strval($app_id)."&amount=".strval($amount)."&rate=".strval($rate)."&method=".strval($method)."&minimum=".strval($minimum)."&step=".strval($step)."&start=".$start->format("Y-m-d")."&end=".$end->format("Y-m-d")."&fine_rate=".strval($fine_rate)."&fine_is_single=".strval($fine_is_single));
+      hyd_log($now, $usr_id, "投资产品", "发布: 借款申请编号, 投资金额, 年利率, 回收方式, 投资起点金额, 追加投资起点金额, 成立日期, 到期日期, 逾期日利率, 逾期日利率计算方式", "type=1&app_id=".strval($app_id)."&amount=".strval($amount)."&rate=".strval($rate)."&method=".strval($repayment_method)."&minimum=".strval($minimum)."&step=".strval($step)."&start=".$start->format("Y-m-d")."&end=".$end->format("Y-m-d")."&fine_rate=".strval($fine_rate)."&fine_is_single=".strval($fine_is_single));
       break;
     default:
       hyd_log($now, $usr_id, "投资产品", "拒绝: 借款申请编号", "type=0&app_id=".strval($app_id));
@@ -167,7 +172,7 @@ function manage_set_investment(){
         $query = "UPDATE loans_lns SET lns_is_published = 1, lns_updated = ".sqlstr($nowStr)." WHERE lns_app_id = ".strval($app_id)." AND lns_is_published IS NULL";
         $flag = mysqli_query($con, $query) != false;
 
-        $query = "INSERT INTO investments_inv (inv_app_id, inv_usr_id, inv_is_done, inv_mng_usr_id, inv_category, inv_created, inv_title, inv_amount, inv_purpose, inv_asset_description, inv_has_certificate, inv_interest_rate, inv_repayment_method, inv_minimum, inv_step, inv_duration, inv_start, inv_end, inv_investment, inv_interest, inv_fine_rate, inv_fine_rate_is_single, inv_finished, inv_fine, inv_updated) VALUES (".sqlstrval($app_id).",".sqlstrval($lns_usr_id).",0,".sqlstrval($usr_id).",".sqlstrval($lns_category).",".sqlstr($nowStr).",".sqlstr($lns_title).",".sqlstrval($amount).",".sqlstr($lns_purpose).",".sqlstr($lns_asset_description).",".sqlstrval($lns_has_certificate).",".sqlstrval($rate).",".sqlstrval($method).",".sqlstrval($minimum).",".sqlstrval($step).",".sqlstrval($duration).",".sqlstr($start->format("Y-m-d")).",".sqlstr($end->format("Y-m-d")).",0,0,".sqlstrval($fine_rate).",".sqlstrval($fine_is_single).",NULL,0,".sqlstr($nowStr).")";
+        $query = "INSERT INTO investments_inv (inv_app_id, inv_usr_id, inv_is_done, inv_mng_usr_id, inv_category, inv_created, inv_title, inv_amount, inv_purpose, inv_asset_description, inv_has_certificate, inv_interest_rate, inv_repayment_method, inv_minimum, inv_step, inv_duration, inv_start, inv_end, inv_investment, inv_interest, inv_fine_rate, inv_fine_rate_is_single, inv_finished, inv_fine, inv_updated) VALUES (".sqlstrval($app_id).",".sqlstrval($lns_usr_id).",NULL,".sqlstrval($usr_id).",".sqlstrval($lns_category).",".sqlstr($nowStr).",".sqlstr($lns_title).",".sqlstrval($amount).",".sqlstr($lns_purpose).",".sqlstr($lns_asset_description).",".sqlstrval($lns_has_certificate).",".sqlstrval($rate).",".sqlstrval($repayment_method).",".sqlstrval($minimum).",".sqlstrval($step).",".sqlstrval($duration).",".sqlstr($start->format("Y-m-d")).",".sqlstr($end->format("Y-m-d")).",0,0,".sqlstrval($fine_rate).",".sqlstrval($fine_is_single).",NULL,0,".sqlstr($nowStr).")";
         $flag = $flag && (mysqli_query($con, $query) != false);
       }
       break;

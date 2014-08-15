@@ -229,7 +229,17 @@ function apply(){
         exit;
       }
       $years = str2int($_POST["years"], 0);
+      if ($years < 0 || $years > 50)
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
       $months = str2int($_POST["months"], 0);
+      if ($months < 0 || $months > 12)
+      {
+        echo "{\"result\":0}";
+        exit;
+      }
       $income = str2int($_POST["income"], 0);
       if ($income < 2000)
       {

@@ -33,8 +33,8 @@ drupal_add_js('var uid=' . strval($user->uid), 'inline');
             </div>
             <div class="ui-form-item">
               <label class="ui-label"><span class="ui-form-required">*</span>现单位工龄</label>
-              <input class="ui-input w40" type="text" value="" name="year" id="years"> 年
-              <input class="ui-input w40" type="text" value="" name="month" id="months"> 个月
+              <input class="ui-input w40" type="text" value="" name="years" id="years"> 年
+              <input class="ui-input w40" type="text" value="" name="months" id="months"> 个月
             </div>
             <div class="ui-form-item">
               <label class="ui-label"><span class="ui-form-required">*</span>平均月收入</label>

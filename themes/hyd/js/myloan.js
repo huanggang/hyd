@@ -21,13 +21,17 @@
             alert( "获取信息出现问题，请刷新页面。");
           }
           else {
+            var loan_times = d.total;
+            if (d.n_date){
+              loan_times += 1;
+            }
             $('#paid-interest').text((d.interest + d.r_interest).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $('#average-rate').text((d.rate * 100).toFixed(2));
             $('#owned-total').text((d.w_amount + d.w_interest + d.w_owned + d.w_fine).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $('#paid-fine').text(d.fine.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $('#average-duration').text(d.duration.toFixed(2));
             $('#loan-total').text((d.amount + d.r_amount + d.w_amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-            $('#loan-times').text(d.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            $('#loan-times').text(loan_times.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             if (d.n_date){
               $('#next-pay').html('下次还款日期 <em>' + d.n_date + '</em>，应还本息 <em>' + (d.n_amount + d.n_interest).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</em>元');
             }

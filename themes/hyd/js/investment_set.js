@@ -134,13 +134,18 @@
         if(v.form()){
           var amount = $("#amount").val();
           var rate = $("#rate").val() / 100.0;
-          var method = $("#method option:selected").val();
+          var repayment_method = $("#method option:selected").val();
           var minimum = $("#minimum").val();
           var step = $("#step").val();
           var start = $("#start").val().replace(/\//g,"-");
           var end = $("#end").val().replace(/\//g,"-");
           var fine_rate = $("#fine_rate").val() / 100.0;
           var fine_rate_is_single = $("input[name=fine_rate_is_single]:checked").val();
+
+          if (minimum > amount){
+            alert('投资起点金额必须小于募集金额');
+            return;
+          }
 
           // check start-date > today, end-date > start-date
           var dtoday = new Date();
@@ -173,7 +178,7 @@
             }
           }
 
-          $.getJSON(Drupal.settings.basePath + "api/m_set_investment?type=1&app_id=" + app_id + "&amount=" + amount + "&rate=" + rate + "&method=" + method + "&minimum=" + minimum + "&step=" + step + "&start=" + start + "&end=" + end + "&fine_rate=" + fine_rate + "&fine_is_single=" + fine_rate_is_single,
+          $.getJSON(Drupal.settings.basePath + "api/m_set_investment?type=1&app_id=" + app_id + "&amount=" + amount + "&rate=" + rate + "&method=" + repayment_method + "&minimum=" + minimum + "&step=" + step + "&start=" + start + "&end=" + end + "&fine_rate=" + fine_rate + "&fine_is_single=" + fine_rate_is_single,
             function(d) {
               if (d.result==1) {
                 window.close();
