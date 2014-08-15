@@ -58,7 +58,7 @@ drupal_add_js($theme_path . '/js/investment_view.js');
               <li class="fn-clear">
                 <span class="fn-left basic-label w70">投资起点金额</span>
                 <span class="fn-left basic-value num"><em id="minimum"></em> 元</span>
-                <span class="fn-left basic-label mr30">追加投资起点金</span>
+                <span class="fn-left basic-label mr30">追加投资起点金额</span>
                 <span class="fn-left basic-value num last"><em id="step"></em> 元</span>
               </li>
               <li class="fn-clear" style="display:none" id="has_fine">
