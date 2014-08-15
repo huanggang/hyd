@@ -305,6 +305,9 @@
       ///  provinceid - the id of the province
       ///  value      - the default city value
       function getCity(provinceid, value, async) {
+        if (provinceid == null){
+          return;
+        }
         if (async == undefined) { async = true; }
         var url = js_path + 'city/cities_' + provinceid + '.js';
         var cities = null;
