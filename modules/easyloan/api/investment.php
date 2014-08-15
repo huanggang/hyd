@@ -79,7 +79,7 @@ function investment(){
     $act_info_city = $row['act_info_city'];
     mysqli_free_result($result);
 
-    $age = str2date($act_info_dob)->diff($today)->y;
+    $age = compute_date_diff(str2date($act_info_dob), $today)->y;
 
     $investment = $investment.",\"title\":".jsonstr($inv_title).",\"category\":".jsonstrval($inv_category);
     if ($is_super_user){

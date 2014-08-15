@@ -24,7 +24,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
   {
     return null;
   }
-  $interval = $date1->diff($date2);
+  $interval = compute_date_diff($date1, $date2);
   $b = $rate / 12.0;
   $obj = new Repayment();
   switch ($method)
@@ -90,7 +90,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       $obj->total = $total;
       if ($date2 >= $date3)
       {
-        $r_interval = $date1->diff($date3);
+        $r_interval = compute_date_diff($date1, $date3);
         $count = 0;
         $r_interest = 0;
         if ($r_interval->y > 0) 
@@ -116,7 +116,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
         }
         else
         {
-          $date4 = $date1->add(new DateInterval('P'.strval($count + 1).'M'));
+          $date4 = add_month($date1, ($count + 1));
           $obj->n_date = $date4->format('Y-m-d');
           $obj->n_amount = 0;
           $obj->n_interest = round($amount * $b, 2);
@@ -156,7 +156,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       $obj->total = $total;
       if ($date2 >= $date3)
       {
-        $r_interval = $date1->diff($date3);
+        $r_interval = compute_date_diff($date1, $date3);
         $count = 0;
         $r_interest = round($amount * $b, 2); // initially deducted
         if ($r_interval->y > 0)
@@ -182,7 +182,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
         }
         else
         {
-            $date4 = $date1->add(new DateInterval('P'.strval($count+1).'M'));
+          $date4 = add_month($date1, ($count + 1));
             $obj->n_date = $date4->format('Y-m-d');
             $obj->n_amount = 0;
             if ($count + 2 == $total)
@@ -225,7 +225,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       $obj->total = $total;
       if ($date2 >= $date3)
       {
-        $r_interval = $date1->diff($date3);
+        $r_interval = compute_date_diff($date1, $date3);
         $count = 0;
         if ($r_interval->y > 0)
         {
@@ -255,7 +255,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
         }
         else
         {
-          $date4 = $date1->add(new DateInterval('P'.strval($count+1).'M'));
+          $date4 = add_month($date1, ($count + 1));
           $obj->n_date = $date4->format('Y-m-d');
           $obj->n_amount = round($amount * $b * pow((1 + $b), $count) / (pow((1 + $b), $total) - 1), 2);
           $obj->n_interest = round($amount * $b * (pow((1 + $b), $total) - pow((1 + $b), $count)) / (pow((1 + $b), $total) - 1), 2);
@@ -291,7 +291,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       $obj->total = $total;
       if ($date2 >= $date3)
       {
-        $r_interval = $date1->diff($date3);
+        $r_interval = compute_date_diff($date1, $date3);
         $count = 0;
         if ($r_interval->y > 0)
         {
@@ -321,7 +321,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
         }
         else
         {
-          $date4 = $date1->add(new DateInterval('P'.strval($count+1).'M'));
+          $date4 = add_month($date1, ($count + 1));
           $obj->n_date = $date4->format('Y-m-d');
           $obj->n_amount = round($amount / $total, 2);
           $obj->n_interest = round($amount * (1 - $count / $total) * $b, 2);

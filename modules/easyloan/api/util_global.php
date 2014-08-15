@@ -86,6 +86,82 @@ function compute_money_total($available, $frozen, $investment, $loaned, $interes
   return ($available + $frozen + $investment - ($loaned + $interest + $owned + $fine));
 }
 
+// compute year, month, and day difference between $start and $end
+// It is different with PHP DateTime->diff()
+// for example, 2014-02-28 - 2014-01-31 = 1 month
+// for example, 2014-02-28 - 2014-01-29 = 1 month
+// for example, 2014-02-27 - 2014-01-31 = 27 days
+// for example, 2014-03-01 - 2014-01-31 = 1 month 1 day
+function compute_date_diff($start, $end)
+{
+  $date1 = new DateTime($start->format("Y-m-d"));
+  $date2 = new DateTime($end->format("Y-m-d"));
+
+  $interval = $date1->diff($date2);
+
+  $day1 = intval($date1->format("d"));
+  $day2 = intval($date2->format("d"));
+  if ($day1 <= 28 || $day1 <= $day2)
+  {
+    return $interval;
+  }
+
+  $year1 = intval($date1->format("Y"));
+  $month1 = intval($date1->format("m"));
+
+  $year2 = intval($date2->format("Y"));
+  $month2 = intval($date2->format("m"));
+
+  $date3 = $date2->add(new DateInterval('P1D'));
+  $month3 = intval($date3->format("m"));
+  if ($month2 != $month3)
+  {
+    $interval->d = 0;
+    if ($interval->m == 11)
+    {
+      $interval->m = 0;
+      $interval->y = $interval->y + 1;
+    }
+    else
+    {
+      $interval->m = $interval->m + 1;
+    }
+    return $interval;
+  }
+
+  $interval->d = $day2;
+  $interval->m = $month2 - $month1 - 1;
+  if ($interval->m < 0)
+  {
+    $interval->y = $year2 - $year1 - 1;
+    $interval->m = $interval->m + 12;
+  }
+  return $interval;
+}
+
+// compute year, month, and day after adding months to $start
+// It is different with PHP DateTime->add()
+// for example, 2014-1-31 + 1month = 2014-2-28
+// for example, 2014-1-29 + 1month = 2014-2-28
+// for example, 2014-1-20 + 1month = 2014-2-20
+function add_month($start, $months)
+{
+  $date1 = new DateTime($start->format("Y-m-d\TH:i:sP"));
+  $day1 = intval($date1->format("d"));
+
+  $date2 = $date1->add(new DateInterval('P'.strval($months).'M'));
+  $year2 = intval($date2->format("Y"));
+  $month2 = intval($date2->format("m"));
+  $day2 = intval($date1->format("d"));
+
+  if ($day1 <= $day2)
+  {
+    return $date2;
+  }
+  $date2->setDate($year2, $month2, 0);
+  return $date2;
+}
+
 // convert string to interger with default value
 function str2int($str, $default = 0)
 {

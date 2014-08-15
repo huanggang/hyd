@@ -102,11 +102,8 @@ function manage_set_investment(){
       }
     }
 
-    $duration = $start->diff($end);
-    $duration_years = $duration->y;
-    $duration_months = $duration->m;
-    $duration_days = $duration->d;
-    $duration = $duration_years * 12 + $duration_months + round($duration_days / 30.0, 0);
+    $duration = compute_date_diff($start, $end);
+    $duration = $duration->y * 12 + $duration->m + round($duration->d / 30.0, 0);
 
     $fine_rate = str2float($_GET['fine_rate']);
     if ($fine_rate < 0)
