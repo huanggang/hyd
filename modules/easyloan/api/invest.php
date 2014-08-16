@@ -107,7 +107,21 @@ function invest(){
             $query = "UPDATE investments_inv SET inv_investment = ".sqlstrval($inv_investment)." WHERE inv_app_id = ".strval($id);
             $flag = (mysqli_query($con, $query) != false);
 
-            $query = "INSERT INTO investment_accounts_inv_act (inv_act_app_id, inv_act_time, inv_act_usr_id, inv_act_amount) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", ".sqlstrval($usr_id).", ".sqlstrval($amount).")";
+            // check if the user has invested the same product
+            $query = "SELECT inv_act_amount FROM investment_accounts_inv_act WHERE inv_act_app_id=".sqlstrval($id)." AND inv_act_usr_id=".sqlstrval($usr_id);
+            $result = mysqli_query($con, $query);
+            if ($row = mysqli_fetch_array($result))
+            {
+              $inv_act_amount = $row['inv_act_amount'];
+              mysqli_free_result($result);
+
+              $inv_act_amount += $amount;
+              $query = "UPDATE investment_accounts_inv_act SET inv_act_amount=".sqlstrval($inv_act_amount)." WHERE inv_act_app_id=".sqlstrval($id)." AND inv_act_usr_id=".sqlstrval($usr_id);
+            }
+            else
+            {
+              $query = "INSERT INTO investment_accounts_inv_act (inv_act_app_id, inv_act_time, inv_act_usr_id, inv_act_amount) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", ".sqlstrval($usr_id).", ".sqlstrval($amount).")";
+            }
             $flag = $flag && (mysqli_query($con, $query) != false);
 
             $act_mny_available = $act_mny_available - $amount;

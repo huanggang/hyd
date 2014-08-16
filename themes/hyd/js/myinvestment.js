@@ -118,7 +118,7 @@
               if(d.investments.length > 0){
                 for (var i = 0; i <= d.investments.length - 1; i++) {
                   var w = d.investments[i];
-                  var start = new Date(Date.parse(p.start.replace(/-/g, "/")));
+                  var start = new Date(Date.parse(w.start.replace(/-/g, "/")));
                   var progress = w.is_done == null ? "募集" : (w.is_done == 1 ? "结束" : (w.is_done == 0 && today < start ? "满标" : "还款"));
                   var row = li.clone()
                     .append(span.clone().addClass('w140 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'invest/' + w.id).attr('title', w.title).append(cats[w.category] + w.title)))
