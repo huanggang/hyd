@@ -415,7 +415,7 @@ function easyloan_views_default_views() {
   $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
   $handler->display->display_options['filters']['explanation_group_tid']['operator'] = 'and';
   $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
-    10 => '10',
+    7 => '7',
   );
   $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
   $handler->display->display_options['filters']['explanation_group_tid']['vocabulary'] = 'help';
@@ -557,9 +557,9 @@ function easyloan_views_default_views() {
   $handler->display->display_options['filters']['explanation_group_tid']['table'] = 'field_data_explanation_group';
   $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
   $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
-    14 => '14',
-    12 => '12',
-    13 => '13',
+    8 => '8',
+    10 => '10',
+    9 => '9',
     11 => '11',
   );
   $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
@@ -702,8 +702,8 @@ function easyloan_views_default_views() {
   $handler->display->display_options['filters']['explanation_group_tid']['table'] = 'field_data_explanation_group';
   $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
   $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
-    16 => '16',
-    15 => '15',
+    13 => '13',
+    12 => '12',
   );
   $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
   $handler->display->display_options['filters']['explanation_group_tid']['vocabulary'] = 'help';
@@ -845,14 +845,14 @@ function easyloan_views_default_views() {
   $handler->display->display_options['filters']['explanation_group_tid']['table'] = 'field_data_explanation_group';
   $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
   $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
-    23 => '23',
-    24 => '24',
-    18 => '18',
-    22 => '22',
     17 => '17',
-    21 => '21',
+    14 => '14',
+    18 => '18',
     19 => '19',
+    16 => '16',
+    15 => '15',
     20 => '20',
+    21 => '21',
   );
   $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
   $handler->display->display_options['filters']['explanation_group_tid']['vocabulary'] = 'help';
@@ -995,10 +995,10 @@ function easyloan_views_default_views() {
   $handler->display->display_options['filters']['explanation_group_tid']['table'] = 'field_data_explanation_group';
   $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
   $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
+    24 => '24',
     25 => '25',
-    26 => '26',
-    28 => '28',
-    27 => '27',
+    22 => '22',
+    23 => '23',
   );
   $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
   $handler->display->display_options['filters']['explanation_group_tid']['vocabulary'] = 'help';
@@ -1141,9 +1141,9 @@ function easyloan_views_default_views() {
   $handler->display->display_options['filters']['explanation_group_tid']['table'] = 'field_data_explanation_group';
   $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
   $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
-    31 => '31',
-    30 => '30',
-    29 => '29',
+    28 => '28',
+    27 => '27',
+    26 => '26',
   );
   $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
   $handler->display->display_options['filters']['explanation_group_tid']['vocabulary'] = 'help';
@@ -1464,10 +1464,10 @@ function easyloan_views_default_views() {
   $handler->display->display_options['filters']['field_group_tid']['table'] = 'field_data_field_group';
   $handler->display->display_options['filters']['field_group_tid']['field'] = 'field_group_tid';
   $handler->display->display_options['filters']['field_group_tid']['value'] = array(
-    40 => '40',
+    31 => '31',
   );
   $handler->display->display_options['filters']['field_group_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_group_tid']['vocabulary'] = 'help';
+  $handler->display->display_options['filters']['field_group_tid']['vocabulary'] = 'hyd_guide';
   $handler->display->display_options['filters']['field_group_tid']['hierarchy'] = 1;
 
   /* Display: Block */
@@ -1499,152 +1499,150 @@ function easyloan_views_default_views() {
   </div>'),
     t('Block'),
   );
-
-  
+    
   $views[$view->name] = $view;
 
   $view = new view();
-$view->name = 'guide_loan';
-$view->description = '';
-$view->tag = '新手指引';
-$view->base_table = 'node';
-$view->human_name = '我要借款';
-$view->core = 7;
-$view->api_version = '3.0';
-$view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+  $view->name = 'guide_loan';
+  $view->description = '';
+  $view->tag = '新手指引';
+  $view->base_table = 'node';
+  $view->human_name = '我要借款';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
-/* Display: Master */
-$handler = $view->new_display('default', 'Master', 'default');
-$handler->display->display_options['title'] = '新手指引-我要借款';
-$handler->display->display_options['use_more_always'] = FALSE;
-$handler->display->display_options['access']['type'] = 'perm';
-$handler->display->display_options['cache']['type'] = 'none';
-$handler->display->display_options['query']['type'] = 'views_query';
-$handler->display->display_options['exposed_form']['type'] = 'basic';
-$handler->display->display_options['pager']['type'] = 'some';
-$handler->display->display_options['pager']['options']['items_per_page'] = '10';
-$handler->display->display_options['style_plugin'] = 'default';
-$handler->display->display_options['style_options']['default_row_class'] = FALSE;
-$handler->display->display_options['row_plugin'] = 'fields';
-$handler->display->display_options['row_options']['default_field_elements'] = FALSE;
-/* Field: Content: Title */
-$handler->display->display_options['fields']['title']['id'] = 'title';
-$handler->display->display_options['fields']['title']['table'] = 'node';
-$handler->display->display_options['fields']['title']['field'] = 'title';
-$handler->display->display_options['fields']['title']['label'] = '';
-$handler->display->display_options['fields']['title']['exclude'] = TRUE;
-$handler->display->display_options['fields']['title']['alter']['text'] = '<h4 class="h4bg-bule"><span>[title]</span></h4>';
-$handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-$handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-$handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-$handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
-$handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-/* Field: Content: 新手指导-图片 */
-$handler->display->display_options['fields']['field_invest_img']['id'] = 'field_invest_img';
-$handler->display->display_options['fields']['field_invest_img']['table'] = 'field_data_field_invest_img';
-$handler->display->display_options['fields']['field_invest_img']['field'] = 'field_invest_img';
-$handler->display->display_options['fields']['field_invest_img']['label'] = '';
-$handler->display->display_options['fields']['field_invest_img']['exclude'] = TRUE;
-$handler->display->display_options['fields']['field_invest_img']['element_label_colon'] = FALSE;
-$handler->display->display_options['fields']['field_invest_img']['element_default_classes'] = FALSE;
-$handler->display->display_options['fields']['field_invest_img']['hide_alter_empty'] = FALSE;
-$handler->display->display_options['fields']['field_invest_img']['click_sort_column'] = 'fid';
-$handler->display->display_options['fields']['field_invest_img']['settings'] = array(
-  'image_style' => '',
-  'image_link' => '',
-);
-/* Field: Content: Body */
-$handler->display->display_options['fields']['body']['id'] = 'body';
-$handler->display->display_options['fields']['body']['table'] = 'field_data_body';
-$handler->display->display_options['fields']['body']['field'] = 'body';
-$handler->display->display_options['fields']['body']['label'] = '';
-$handler->display->display_options['fields']['body']['alter']['alter_text'] = TRUE;
-$handler->display->display_options['fields']['body']['alter']['text'] = '<div class="pg-guide-info mt20">
-<div class="pg-guide-item">
-<h4 class="h4bg-green"><span>[title]</span></h4>
-<div class="fn-clear">
-  <div class="grid_6 alpha">
-  <div class="p20 pl40">
-    [body]
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = '新手指引-我要借款';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['text'] = '<h4 class="h4bg-bule"><span>[title]</span></h4>';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: 新手指导-图片 */
+  $handler->display->display_options['fields']['field_invest_img']['id'] = 'field_invest_img';
+  $handler->display->display_options['fields']['field_invest_img']['table'] = 'field_data_field_invest_img';
+  $handler->display->display_options['fields']['field_invest_img']['field'] = 'field_invest_img';
+  $handler->display->display_options['fields']['field_invest_img']['label'] = '';
+  $handler->display->display_options['fields']['field_invest_img']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_invest_img']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_invest_img']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_invest_img']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['field_invest_img']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_invest_img']['settings'] = array(
+    'image_style' => '',
+    'image_link' => '',
+  );
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = '';
+  $handler->display->display_options['fields']['body']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['body']['alter']['text'] = '<div class="pg-guide-info mt20">
+  <div class="pg-guide-item">
+  <h4 class="h4bg-green"><span>[title]</span></h4>
+  <div class="fn-clear">
+    <div class="grid_6 alpha">
+    <div class="p20 pl40">
+      [body]
+    </div>
+    </div>
+    <div class="grid_6 omega text-center">
+      [field_invest_img]
+    </div>
   </div>
   </div>
-  <div class="grid_6 omega text-center">
-    [field_invest_img]
-  </div>
-</div>
-</div>
-</div>';
-$handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
-$handler->display->display_options['fields']['body']['element_default_classes'] = FALSE;
-$handler->display->display_options['fields']['body']['hide_alter_empty'] = FALSE;
-/* Field: Content: 标签 */
-$handler->display->display_options['fields']['field_group']['id'] = 'field_group';
-$handler->display->display_options['fields']['field_group']['table'] = 'field_data_field_group';
-$handler->display->display_options['fields']['field_group']['field'] = 'field_group';
-$handler->display->display_options['fields']['field_group']['label'] = '';
-$handler->display->display_options['fields']['field_group']['exclude'] = TRUE;
-$handler->display->display_options['fields']['field_group']['element_label_colon'] = FALSE;
-$handler->display->display_options['fields']['field_group']['element_default_classes'] = FALSE;
-/* Sort criterion: Content: 权重 (field_weight) */
-$handler->display->display_options['sorts']['field_weight_value']['id'] = 'field_weight_value';
-$handler->display->display_options['sorts']['field_weight_value']['table'] = 'field_data_field_weight';
-$handler->display->display_options['sorts']['field_weight_value']['field'] = 'field_weight_value';
-$handler->display->display_options['sorts']['field_weight_value']['order'] = 'DESC';
-/* Filter criterion: Content: Published */
-$handler->display->display_options['filters']['status']['id'] = 'status';
-$handler->display->display_options['filters']['status']['table'] = 'node';
-$handler->display->display_options['filters']['status']['field'] = 'status';
-$handler->display->display_options['filters']['status']['value'] = 1;
-$handler->display->display_options['filters']['status']['group'] = 1;
-$handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-/* Filter criterion: Content: Type */
-$handler->display->display_options['filters']['type']['id'] = 'type';
-$handler->display->display_options['filters']['type']['table'] = 'node';
-$handler->display->display_options['filters']['type']['field'] = 'type';
-$handler->display->display_options['filters']['type']['value'] = array(
-  'guide' => 'guide',
-);
-/* Filter criterion: Content: 标签 (field_group) */
-$handler->display->display_options['filters']['field_group_tid']['id'] = 'field_group_tid';
-$handler->display->display_options['filters']['field_group_tid']['table'] = 'field_data_field_group';
-$handler->display->display_options['filters']['field_group_tid']['field'] = 'field_group_tid';
-$handler->display->display_options['filters']['field_group_tid']['value'] = array(
-  39 => '39',
-);
-$handler->display->display_options['filters']['field_group_tid']['type'] = 'select';
-$handler->display->display_options['filters']['field_group_tid']['vocabulary'] = 'help';
-$handler->display->display_options['filters']['field_group_tid']['hierarchy'] = 1;
+  </div>';
+  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['body']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['body']['hide_alter_empty'] = FALSE;
+  /* Field: Content: 标签 */
+  $handler->display->display_options['fields']['field_group']['id'] = 'field_group';
+  $handler->display->display_options['fields']['field_group']['table'] = 'field_data_field_group';
+  $handler->display->display_options['fields']['field_group']['field'] = 'field_group';
+  $handler->display->display_options['fields']['field_group']['label'] = '';
+  $handler->display->display_options['fields']['field_group']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_group']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_group']['element_default_classes'] = FALSE;
+  /* Sort criterion: Content: 权重 (field_weight) */
+  $handler->display->display_options['sorts']['field_weight_value']['id'] = 'field_weight_value';
+  $handler->display->display_options['sorts']['field_weight_value']['table'] = 'field_data_field_weight';
+  $handler->display->display_options['sorts']['field_weight_value']['field'] = 'field_weight_value';
+  $handler->display->display_options['sorts']['field_weight_value']['order'] = 'DESC';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'guide' => 'guide',
+  );
+  /* Filter criterion: Content: 标签 (field_group) */
+  $handler->display->display_options['filters']['field_group_tid']['id'] = 'field_group_tid';
+  $handler->display->display_options['filters']['field_group_tid']['table'] = 'field_data_field_group';
+  $handler->display->display_options['filters']['field_group_tid']['field'] = 'field_group_tid';
+  $handler->display->display_options['filters']['field_group_tid']['value'] = array(
+    30 => '30',
+  );
+  $handler->display->display_options['filters']['field_group_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_group_tid']['vocabulary'] = 'hyd_guide';
+  $handler->display->display_options['filters']['field_group_tid']['hierarchy'] = 1;
 
-/* Display: Block */
-$handler = $view->new_display('block', 'Block', 'block');
-$translatables['guide_loan'] = array(
-  t('Master'),
-  t('新手指引-我要借款'),
-  t('more'),
-  t('Apply'),
-  t('Reset'),
-  t('Sort by'),
-  t('Asc'),
-  t('Desc'),
-  t('<h4 class="h4bg-bule"><span>[title]</span></h4>'),
-  t('<div class="pg-guide-info mt20">
-<div class="pg-guide-item">
-<h4 class="h4bg-green"><span>[title]</span></h4>
-<div class="fn-clear">
-  <div class="grid_6 alpha">
-  <div class="p20 pl40">
-    [body]
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block');
+  $translatables['guide_loan'] = array(
+    t('Master'),
+    t('新手指引-我要借款'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('<h4 class="h4bg-bule"><span>[title]</span></h4>'),
+    t('<div class="pg-guide-info mt20">
+  <div class="pg-guide-item">
+  <h4 class="h4bg-green"><span>[title]</span></h4>
+  <div class="fn-clear">
+    <div class="grid_6 alpha">
+    <div class="p20 pl40">
+      [body]
+    </div>
+    </div>
+    <div class="grid_6 omega text-center">
+      [field_invest_img]
+    </div>
   </div>
   </div>
-  <div class="grid_6 omega text-center">
-    [field_invest_img]
-  </div>
-</div>
-</div>
-</div>'),
-  t('Block'),
-);
-
+  </div>'),
+    t('Block'),
+  );
 
   $views[$view->name] = $view;
 
@@ -1684,6 +1682,25 @@ $translatables['guide_loan'] = array(
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: 标签 */
+  $handler->display->display_options['fields']['field_group']['id'] = 'field_group';
+  $handler->display->display_options['fields']['field_group']['table'] = 'field_data_field_group';
+  $handler->display->display_options['fields']['field_group']['field'] = 'field_group';
+  $handler->display->display_options['fields']['field_group']['label'] = '';
+  $handler->display->display_options['fields']['field_group']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_group']['element_label_colon'] = FALSE;
+  /* Field: Content: 新手指导-图片 */
+  $handler->display->display_options['fields']['field_invest_img']['id'] = 'field_invest_img';
+  $handler->display->display_options['fields']['field_invest_img']['table'] = 'field_data_field_invest_img';
+  $handler->display->display_options['fields']['field_invest_img']['field'] = 'field_invest_img';
+  $handler->display->display_options['fields']['field_invest_img']['label'] = '';
+  $handler->display->display_options['fields']['field_invest_img']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_invest_img']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_invest_img']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_invest_img']['settings'] = array(
+    'image_style' => '',
+    'image_link' => '',
+  );
   /* Field: Content: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
@@ -1708,13 +1725,6 @@ $translatables['guide_loan'] = array(
   $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['body']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['body']['hide_alter_empty'] = FALSE;
-  /* Field: Content: 标签 */
-  $handler->display->display_options['fields']['field_group']['id'] = 'field_group';
-  $handler->display->display_options['fields']['field_group']['table'] = 'field_data_field_group';
-  $handler->display->display_options['fields']['field_group']['field'] = 'field_group';
-  $handler->display->display_options['fields']['field_group']['label'] = '';
-  $handler->display->display_options['fields']['field_group']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_group']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: 权重 (field_weight) */
   $handler->display->display_options['sorts']['field_weight_value']['id'] = 'field_weight_value';
   $handler->display->display_options['sorts']['field_weight_value']['table'] = 'field_data_field_weight';
@@ -1739,10 +1749,10 @@ $translatables['guide_loan'] = array(
   $handler->display->display_options['filters']['field_group_tid']['table'] = 'field_data_field_group';
   $handler->display->display_options['filters']['field_group_tid']['field'] = 'field_group_tid';
   $handler->display->display_options['filters']['field_group_tid']['value'] = array(
-    38 => '38',
+    29 => '29',
   );
   $handler->display->display_options['filters']['field_group_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_group_tid']['vocabulary'] = 'help';
+  $handler->display->display_options['filters']['field_group_tid']['vocabulary'] = 'hyd_guide';
   $handler->display->display_options['filters']['field_group_tid']['hierarchy'] = 1;
 
   /* Display: Block */
@@ -1774,7 +1784,6 @@ $translatables['guide_loan'] = array(
   </div>'),
     t('Block'),
   );
-
 
   $views[$view->name] = $view;
 

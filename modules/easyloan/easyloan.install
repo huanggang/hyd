@@ -82,6 +82,35 @@ function easyloan_install(){
 	_declare_node_type('explanation', $explanation);
 	_declare_node_type('slideshow', $slideshow, false);
 	_declare_node_type('guide', $guide);
+
+	// The following lines 
+	// add taxonamy and vacabulary
+	$vocat_help = (object) array(
+	    'name' => $t('好易贷-帮助中心'),
+	    'description' => $t('帮助中心'), 
+	    'machine_name' => 'help', 
+  	); 
+	taxonomy_vocabulary_save($vocat_help); 
+
+	$vocat_guide = (object) array( 
+	    'name' => $t('好易贷-新手指引'), 
+	    'description' => '新手指引分类', 
+	    'machine_name' => 'hyd_guide', 
+  	); 
+	taxonomy_vocabulary_save($vocat_guide); 
+}
+
+function easyloan_save_term($title, $vid, $tid, $parent){
+	$term = array();
+	
+	$term['name'] = $title;
+	$term['description'] = 'hyd';
+	$term['vid'] = $vid;
+	$term['tid'] = $tid;
+	$term['parent'] = $parent;
+	$term['format'] = 'plain_text';
+	
+	easyloan_taxonomy_term_save((object)$term);
 }
 
 /*
@@ -258,7 +287,7 @@ function _installed_fields($type) {
 		      'settings' 	 => array(
 					'allowed_values' => array(
 						array(
-							'vocabulary' => 'help',
+							'vocabulary' => 'hyd_guide',
 							'parent'     => 0
 						)
 					)
@@ -594,6 +623,56 @@ management/*', // Please DO NOT change the 'pages' list, the whitespaces format 
 	    ->condition('theme', 'hyd')
 	    ->condition('delta', 'easyloan_account') // always cache 
 	    ->execute();
+
+
+	// Drop autoincrement 
+	db_query("ALTER TABLE  `taxonomy_term_data` CHANGE  `tid`  `tid` INT( 10 ) UNSIGNED NOT NULL");
+	// clean tables
+	db_query("DELETE FROM `taxonomy_term_data` WHERE description = 'hyd'");
+	db_query("DELETE FROM `taxonomy_term_hierarchy` WHERE tid NOT IN (SELECT tid FROM `taxonomy_term_data`)");
+
+    $help = taxonomy_vocabulary_machine_name_load('help');
+	easyloan_save_term('名词解释', $help->vid, 1, 0);
+	easyloan_save_term('平台介绍', $help->vid, 2, 0);
+	easyloan_save_term('利息和费用', $help->vid, 3, 0);
+	easyloan_save_term('我要借款', $help->vid, 4, 0);
+	easyloan_save_term('我要投资', $help->vid, 5, 0);
+	easyloan_save_term('好易贷账户', $help->vid, 6, 0);
+	
+	easyloan_save_term('名词解释', $help->vid, 7, 1);
+
+	easyloan_save_term('关于好易贷', $help->vid, 8, 2);
+	easyloan_save_term('政策法规', $help->vid, 9, 2);
+	easyloan_save_term('安全保障', $help->vid, 10, 2);
+	easyloan_save_term('网站协议及产品说明', $help->vid, 11, 2);
+	
+	easyloan_save_term('理财人费用', $help->vid, 12, 3);
+	easyloan_save_term('借款人费用', $help->vid, 13, 3);
+	
+	easyloan_save_term('借款产品分类', $help->vid, 14, 4);
+	easyloan_save_term('如何申请借款', $help->vid, 15, 4);
+	easyloan_save_term('好易贷认证', $help->vid, 16, 4);
+	easyloan_save_term('信用等级与信用额度', $help->vid, 17, 4);
+	easyloan_save_term('借款审核', $help->vid, 18, 4);
+	easyloan_save_term('借款成功', $help->vid, 19, 4);
+	easyloan_save_term('还款', $help->vid, 20, 4);
+	easyloan_save_term('逾期还款', $help->vid, 21, 4);
+
+	easyloan_save_term('如何理财（投标注意事项）', $help->vid, 22, 5);
+	easyloan_save_term('标的类型介绍', $help->vid, 23, 5);
+	easyloan_save_term('优选理财计划', $help->vid, 24, 5);
+	easyloan_save_term('债权转让', $help->vid, 25, 5);
+
+	easyloan_save_term('注册和登录', $help->vid, 26, 6);
+	easyloan_save_term('我的好易贷', $help->vid, 27, 6);
+	easyloan_save_term('充值和提现', $help->vid, 28, 6); 
+
+	$guide = taxonomy_vocabulary_machine_name_load('hyd_guide');
+	easyloan_save_term('我要投资', $guide->vid, 29, 0);
+	easyloan_save_term('我要借款', $guide->vid, 30, 0);
+	easyloan_save_term('安全保障', $guide->vid, 31, 0);
+
+	db_query("ALTER TABLE  `taxonomy_term_data` CHANGE  `tid`  `tid` INT( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT  'Primary Key: Unique term ID.'");
 }
 
 /**
@@ -634,6 +713,12 @@ function easyloan_uninstall() {
 	// remove the flippy settings for content types 
 	_remove_flippy_variables('notice');
 	_remove_flippy_variables('news');
+
+	$vocab_help = taxonomy_vocabulary_machine_name_load('help');
+	taxonomy_vocabulary_delete($vocab_help->vid);
+
+	$vocab_guide = taxonomy_vocabulary_machine_name_load('hyd_guide');
+	taxonomy_vocabulary_delete($vocab_guide->vid);
 }
 
 function easyloan_disable(){
@@ -705,4 +790,64 @@ function easyloan_node_add_body_field($type, $label = 'Body', $display_summary =
     $instance = field_create_instance($instance);
   }
   return $instance;
+}
+
+
+function easyloan_taxonomy_term_save($term) {
+  // Prevent leading and trailing spaces in term names. 
+  $term->name = trim($term->name);
+  if (!isset($term->vocabulary_machine_name)) {
+    $vocabulary = taxonomy_vocabulary_load($term->vid);
+    $term->vocabulary_machine_name = $vocabulary->machine_name;
+  }
+
+  // Load the stored entity, if any. 
+  if (!empty($term->tid) && !isset($term->original)) {
+    $term->original = entity_load_unchanged('taxonomy_term', $term->tid);
+  }
+
+  field_attach_presave('taxonomy_term', $term);
+  module_invoke_all('taxonomy_term_presave', $term);
+  module_invoke_all('entity_presave', $term, 'taxonomy_term');
+
+  $op = 'insert'; 
+  $status = drupal_write_record('taxonomy_term_data', $term);
+	field_attach_insert('taxonomy_term', $term);
+	if (!isset($term->parent)) {
+	$term->parent = array(0);
+	}
+
+  if (isset($term->parent)) {
+    if (!is_array($term->parent)) {
+      $term->parent = array($term->parent);
+    }
+    $query = db_insert('taxonomy_term_hierarchy')->fields(array('tid', 'parent'));
+    foreach ($term->parent as $parent) {
+      if (is_array($parent)) {
+        foreach ($parent as $tid) {
+          $query->values(array(
+            'tid' => $term->tid,
+            'parent' => $tid,
+          ));
+        }
+      }
+      else {
+        $query->values(array(
+          'tid' => $term->tid,
+          'parent' => $parent,
+        ));
+      }
+    }
+    $query->execute();
+  }
+
+  // Reset the taxonomy term static variables.
+  taxonomy_terms_static_reset();
+
+  // Invoke the taxonomy hooks.
+  module_invoke_all("taxonomy_term_$op", $term);
+  module_invoke_all("entity_$op", $term, 'taxonomy_term');
+  unset($term->original);
+
+  return $status;
 }
