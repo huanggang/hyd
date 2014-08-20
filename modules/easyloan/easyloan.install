@@ -410,7 +410,6 @@ function _installed_instances($type) {
 			'field_invest_img' => array(
 				'field_name'  => 'field_invest_img',
 				'label'       => $t('新手指导-图片'),
-				'required'    => TRUE,
 				'cardinality' => 1,
 				'widget'      => array(
 				'type' => 'image_image',

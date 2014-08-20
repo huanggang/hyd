@@ -1419,13 +1419,8 @@ function easyloan_views_default_views() {
   <div class="pg-guide-item">
   <h4 class="h4bg-orange"><span>[title]</span></h4>
   <div class="fn-clear">
-    <div class="grid_6 alpha">
-    <div class="p20 pl40">
+    <div class="pl40 pr40">
       [body]
-    </div>
-    </div>
-    <div class="grid_6 omega text-center">
-      [field_invest_img]
     </div>
   </div>
   </div>
@@ -1486,13 +1481,8 @@ function easyloan_views_default_views() {
   <div class="pg-guide-item">
   <h4 class="h4bg-orange"><span>[title]</span></h4>
   <div class="fn-clear">
-    <div class="grid_6 alpha">
-    <div class="p20 pl40">
+    <div class="pl40 pr40">
       [body]
-    </div>
-    </div>
-    <div class="grid_6 omega text-center">
-      [field_invest_img]
     </div>
   </div>
   </div>
@@ -1562,12 +1552,12 @@ function easyloan_views_default_views() {
   <div class="pg-guide-item">
   <h4 class="h4bg-green"><span>[title]</span></h4>
   <div class="fn-clear">
-    <div class="grid_6 alpha">
+    <div class="grid_5 alpha">
     <div class="p20 pl40">
       [body]
     </div>
     </div>
-    <div class="grid_6 omega text-center">
+    <div class="grid_7 omega text-center">
       [field_invest_img]
     </div>
   </div>
@@ -1630,12 +1620,12 @@ function easyloan_views_default_views() {
   <div class="pg-guide-item">
   <h4 class="h4bg-green"><span>[title]</span></h4>
   <div class="fn-clear">
-    <div class="grid_6 alpha">
+    <div class="grid_5 alpha">
     <div class="p20 pl40">
       [body]
     </div>
     </div>
-    <div class="grid_6 omega text-center">
+    <div class="grid_7 omega text-center">
       [field_invest_img]
     </div>
   </div>
@@ -1711,12 +1701,12 @@ function easyloan_views_default_views() {
   <div class="pg-guide-item">
   <h4 class="h4bg-bule"><span>[title]</span></h4>
   <div class="fn-clear">
-    <div class="grid_6 alpha">
+    <div class="grid_5 alpha">
     <div class="p20 pl40">
       [body]
     </div>
     </div>
-    <div class="grid_6 omega text-center">
+    <div class="grid_7 omega text-center">
       [field_invest_img]
     </div>
   </div>
@@ -1771,12 +1761,12 @@ function easyloan_views_default_views() {
   <div class="pg-guide-item">
   <h4 class="h4bg-bule"><span>[title]</span></h4>
   <div class="fn-clear">
-    <div class="grid_6 alpha">
+    <div class="grid_5 alpha">
     <div class="p20 pl40">
       [body]
     </div>
     </div>
-    <div class="grid_6 omega text-center">
+    <div class="grid_7 omega text-center">
       [field_invest_img]
     </div>
   </div>
