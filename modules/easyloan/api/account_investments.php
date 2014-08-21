@@ -12,6 +12,10 @@ function myinvestments(){
 
   $typeStr = $_GET["type"];
   $type = str2int($typeStr);
+  if ($type <= 0 || $type > 4)
+  {
+    $type = 1;
+  }
 
   $pageStr = $_GET["page"];
   $page = str2int($pageStr);
@@ -36,11 +40,49 @@ function myinvestments(){
   $json = "";
   switch ($type)
   {
-    case 2: // holding
+    case 2: // open
       $total = 0;
       if ($page == 1)
       {
-        $query = "SELECT COUNT(act_invs_app_id) AS total FROM account_investments_act_invs WHERE act_invs_usr_id = ".strval($usr_id)." AND act_invs_is_done <> 1";
+        $query = "SELECT COUNT(inv_act_app_id) AS total FROM investment_accounts_inv_act WHERE inv_act_usr_id = ".strval($usr_id)." AND inv_act_ratio IS NULL";
+        mysqli_query($con, "LOCK TABLES investment_accounts_inv_act READ");
+        $result = mysqli_query($con, $query);
+        mysqli_query($con, "UNLOCK TABLES");
+        if ($row = mysqli_fetch_array($result))
+        {
+          $total = $row['total'];
+          mysqli_free_result($result);
+        }
+      }
+      $start = ($page - 1) * $per_page;
+      $query = "SELECT inv_act_app_id, inv_title, inv_category, inv_act_amount, inv_interest_rate, inv_repayment_method, inv_duration, inv_start, inv_end, inv_finished FROM investment_accounts_inv_act LEFT JOIN investments_inv ON inv_act_app_id = inv_app_id WHERE inv_act_usr_id = ".strval($usr_id)." AND inv_act_ratio IS NULL ORDER BY inv_act_time ASC LIMIT ".strval($start).",".strval($per_page);
+      mysqli_query($con, "LOCK TABLES investment_accounts_inv_act READ, investments_inv READ");
+      $result = mysqli_query($con, $query);
+      mysqli_query($con, "UNLOCK TABLES");
+      while ($row = mysqli_fetch_array($result))
+      {
+        $inv_act_app_id = $row['inv_act_app_id'];
+        $inv_title = $row['inv_title'];
+        $inv_category = $row['inv_category'];
+        $inv_act_amount = $row['inv_act_amount'];
+        $inv_interest_rate = $row['inv_interest_rate'];
+        $inv_repayment_method = $row['inv_repayment_method'];
+        $inv_duration = $row['inv_duration'];
+        $inv_start = $row['inv_start'];
+        $inv_end = $row['inv_end'];
+        $inv_finished = $row['inv_finished'];
+
+        $json = $json.",{\"id\":".jsonstrval($inv_act_app_id).",\"title\":".jsonstr($inv_title).",\"category\":".jsonstrval($inv_category).",\"amount\":".jsonstrval($inv_act_amount).",\"rate\":".jsonstrval($inv_interest_rate).",\"method\":".jsonstrval($inv_repayment_method).",\"duration\":".jsonstrval($inv_duration).",\"start\":".jsonstr($inv_start).",\"end\":".jsonstr($inv_end).",\"finished\":null}";
+      }
+      mysqli_free_result($result);
+      $json = substr($json, 1);
+      $json = "{\"total\":".$total.",\"investments\":[".$json."]}";
+      break;
+    case 3: // holding
+      $total = 0;
+      if ($page == 1)
+      {
+        $query = "SELECT COUNT(act_invs_app_id) AS total FROM account_investments_act_invs WHERE act_invs_usr_id = ".strval($usr_id)." AND act_invs_is_done = 0";
         mysqli_query($con, "LOCK TABLES account_investments_act_invs READ");
         $result = mysqli_query($con, $query);
         mysqli_query($con, "UNLOCK TABLES");
@@ -51,7 +93,7 @@ function myinvestments(){
         }
       }
       $start = ($page - 1) * $per_page;
-      $query = "SELECT act_invs_app_id, act_invs_is_done, inv_title, inv_category, act_invs_amount, act_invs_r_amount, act_invs_r_interest, act_invs_w_amount, act_invs_w_interest, act_invs_a_amount, act_invs_a_interest, act_invs_r_fine, act_invs_n_date, act_invs_n_amount, act_invs_n_interest, act_invs_w_owned, act_invs_w_fine, act_invs_rate, inv_repayment_method, inv_duration, inv_start, inv_end, inv_finished FROM account_investments_act_invs LEFT JOIN investments_inv ON act_invs_app_id = inv_app_id WHERE act_invs_usr_id = ".strval($usr_id)." AND act_invs_is_done <> 1 ORDER BY act_invs_time ASC LIMIT ".strval($start).",".strval($per_page);
+      $query = "SELECT act_invs_app_id, act_invs_is_done, inv_title, inv_category, act_invs_amount, act_invs_r_amount, act_invs_r_interest, act_invs_w_amount, act_invs_w_interest, act_invs_a_amount, act_invs_a_interest, act_invs_r_fine, act_invs_n_date, act_invs_n_amount, act_invs_n_interest, act_invs_w_owned, act_invs_w_fine, act_invs_rate, inv_repayment_method, inv_duration, inv_start, inv_end, inv_finished FROM account_investments_act_invs LEFT JOIN investments_inv ON act_invs_app_id = inv_app_id WHERE act_invs_usr_id = ".strval($usr_id)." AND act_invs_is_done = 0 ORDER BY act_invs_time ASC LIMIT ".strval($start).",".strval($per_page);
       mysqli_query($con, "LOCK TABLES account_investments_act_invs READ, investments_inv READ");
       $result = mysqli_query($con, $query);
       mysqli_query($con, "UNLOCK TABLES");
@@ -87,7 +129,7 @@ function myinvestments(){
       $json = substr($json, 1);
       $json = "{\"total\":".$total.",\"investments\":[".$json."]}";
       break;
-    case 3: // finished
+    case 4: // finished
       $total = 0;
       if ($page == 1)
       {

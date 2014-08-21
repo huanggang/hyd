@@ -46,7 +46,10 @@ drupal_add_js($theme_path . '/js/myinvestment.js');
 <div class="mt20">
   <div class="ui-tab ui-tab-transparent">
     <ul class="ui-tab-items">
-      <li class="ui-tab-item ui-tab-item-current" data-name="holding">
+      <li class="ui-tab-item ui-tab-item-current" data-name="open">
+        <a class="ui-tab-item-link">募集中投资产品</a>
+      </li>
+      <li class="ui-tab-item" data-name="holding">
         <a class="ui-tab-item-link">持有投资产品</a>
       </li>
       <li class="ui-tab-item" data-name="closed">
@@ -57,8 +60,24 @@ drupal_add_js($theme_path . '/js/myinvestment.js');
 
   <div class="p20bs color-white-bg">
     <div>
-      <div class="ui-tab-content fn-clear ui-tab-content-current" data-name="holding">
+      <div class="ui-tab-content fn-clear ui-tab-content-current" data-name="open">
         <ul class="ui-list ui-list-s" id="investment-list-2">
+          <li class="ui-list-header color-gray-text fn-clear">
+            <span class="ui-list-title fn-left w180 ph5">借款标题</span>
+            <span class="ui-list-title fn-left w85 ph5">投资金额</span>
+            <span class="ui-list-title fn-left w115 ph5">还款方式</span>
+            <span class="ui-list-title fn-left w55 ph5">年利率</span>
+            <span class="ui-list-title fn-left w30 ph5">月数</span>
+            <span class="ui-list-title fn-left w80 ph5">成立日期</span>
+            <span class="ui-list-title fn-left w80 ph5">到期日期</span>
+          </li>
+        </ul>
+        <div class="fn-left mt10 fn-hide">共<span id="investment-total-2">0</span>条</div>
+        <div class="fn-right mt10 ui-pagination simple-pagination" id="investment-list-pagination-2"></div>
+      </div>
+
+      <div class="ui-tab-content fn-clear" data-name="holding">
+        <ul class="ui-list ui-list-s" id="investment-list-3">
           <li class="ui-list-header color-gray-text fn-clear">
             <span class="ui-list-title fn-left w140 ph5">借款标题</span>
             <span class="ui-list-title fn-left w85 ph5">投资金额</span>
@@ -71,12 +90,12 @@ drupal_add_js($theme_path . '/js/myinvestment.js');
             <span class="ui-list-title fn-left w60 ph5"></span>
           </li>
         </ul>
-        <div class="fn-left mt10 fn-hide">共<span id="investment-total-2">0</span>条</div>
-        <div class="fn-right mt10 ui-pagination simple-pagination" id="investment-list-pagination-2"></div>
+        <div class="fn-left mt10 fn-hide">共<span id="investment-total-3">0</span>条</div>
+        <div class="fn-right mt10 ui-pagination simple-pagination" id="investment-list-pagination-3"></div>
       </div>
 
       <div class="ui-tab-content fn-clear" data-name="closed">
-        <ul class="ui-list ui-list-s" id="investment-list-3">
+        <ul class="ui-list ui-list-s" id="investment-list-4">
           <li class="ui-list-header color-gray-text fn-clear">
             <span class="ui-list-title fn-left w180 ph5">借款标题</span>
             <span class="ui-list-title fn-left w85 ph5">投资金额</span>
@@ -88,8 +107,8 @@ drupal_add_js($theme_path . '/js/myinvestment.js');
             <span class="ui-list-title fn-left w60 ph5"></span>
           </li>
         </ul>
-        <div class="fn-left mt10 fn-hide">共<span id="investment-total-3">0</span>条</div>
-        <div class="fn-right mt10 ui-pagination simple-pagination" id="investment-list-pagination-3"></div>
+        <div class="fn-left mt10 fn-hide">共<span id="investment-total-4">0</span>条</div>
+        <div class="fn-right mt10 ui-pagination simple-pagination" id="investment-list-pagination-4"></div>
       </div>
     </div>
   </div>
