@@ -78,12 +78,12 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       }
       if ($interval->m > 0)
       {
-        $total += $total + $interval->m;
+        $total += $interval->m;
         $interest += $interval->m * $amount * $b;
       }
       if ($interval->d > 0)
       {
-        $total += $total + 1;
+        $total += 1;
         $interest += $interval->d * $amount * $b / 30.0;
       }
       $interest = round($interest, 2);
@@ -149,7 +149,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       if ($interval->m > 0)
       {
         $total += $interval->m;
-        $interest = $interval->m * $amount * $b;
+        $interest += $interval->m * $amount * $b;
       }
       if ($interval->d > 0)
       {

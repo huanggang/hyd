@@ -31,4 +31,6 @@ function update_investments()
   mysqli_free_result($result);
   return true;
 }
+
+update_investments();
 ?>

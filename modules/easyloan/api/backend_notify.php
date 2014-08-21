@@ -250,4 +250,6 @@ function notify()
   mysqli_close($con);
   return true;
 }
+
+notify();
 ?>
