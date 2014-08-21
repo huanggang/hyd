@@ -127,7 +127,7 @@ function myinvestments(){
       }
       mysqli_free_result($result);
       $json = substr($json, 1);
-      $json = "{\"total\":".$total.",\"investments\":[".$json."]}";
+      $json = "{\"total\":".$total.",\"investments\":[".$json."],\"today\":".jsonstr((new DateTime())->format("Y-m-d"))."}";
       break;
     case 4: // finished
       $total = 0;

@@ -123,7 +123,7 @@ function update_hyd($app_id)
             $act_mny_investment = $act_mny_investment - $act_invs_n_amount;
             $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($inv_act_usr_id).", ".sqlstr($todayStr).", 4, ".sqlstrval($act_invs_n_amount).", ".sqlstrval($act_trn_available).", ".sqlstrval($act_mny_owned).", ".sqlstrval($act_mny_fine).", NULL)") != false);
           }
-          $act_mny_total = compute_money_total($act_mny_available, $act_mny_frozen, $act_mny_investment, $act_mny_loaned, $act_mny_interest, $act_mny_owned, $act_trn_fine);
+          $act_mny_total = compute_money_total($act_mny_available, $act_mny_frozen, $act_mny_investment, $act_mny_loaned, $act_mny_interest, $act_mny_owned, $act_mny_fine);
           $flag = $flag && (mysqli_query($con, "UPDATE account_money_act_mny SET act_mny_available = ".sqlstrval($act_mny_available).", act_mny_investment = ".sqlstrval($act_mny_investment).", act_mny_total = ".sqlstrval($act_mny_total).", act_mny_updated = ".sqlstr($nowStr)." WHERE act_mny_usr_id = ".strval($inv_act_usr_id)) != false);
           $act_invs_a_amount += $act_invs_n_amount;
           $act_invs_a_interest += $act_invs_n_interest;

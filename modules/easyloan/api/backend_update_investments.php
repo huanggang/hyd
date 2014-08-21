@@ -26,7 +26,7 @@ function update_investments()
   while ($row = mysqli_fetch_array($result)) // has unfinished loans
   {
     $inv_app_id = $row['inv_app_id'];
-    $is_owned = updaet_hyd($inv_app_id);
+    $is_owned = update_hyd($inv_app_id);
   }
   mysqli_free_result($result);
   return true;

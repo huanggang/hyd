@@ -30,7 +30,7 @@ function investment(){
   }
   mysqli_set_charset($con, "UTF8");
 
-  $investment = "{\"id\":".jsonstrval($id);
+  $investment = "{\"today\":".jsonstr($todayStr).",\"id\":".jsonstrval($id);
 
   // get investment
   $query = "SELECT inv_title, inv_category, inv_usr_id, inv_interest_rate, inv_repayment_method, inv_amount, inv_duration, inv_is_done, inv_created, inv_start, inv_end, inv_minimum, inv_step, inv_fine_rate, inv_fine_rate_is_single, inv_investment, inv_finished, inv_fine, inv_purpose, inv_asset_description, inv_has_certificate FROM investments_inv WHERE inv_app_id = ".strval($id);

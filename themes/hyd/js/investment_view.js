@@ -178,7 +178,7 @@
                   });
                 }
                 else if (d.is_done == 0){ // start, but not finished
-                  var today = new Date();
+                  var today = new Date(d.today);
                   var start = new Date(Date.parse(d.start.replace(/-/g, "/")));
                   if (today < start){ // today < start
                     $('.stamp .READY').show();

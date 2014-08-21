@@ -123,7 +123,6 @@
             var span = $('<span />').addClass('ui-list-field fn-left ph5');
             var a = $('<a />').attr('target', '_blank');
             var btn = $('<a />').addClass('ui-button ui-button-small ui-button-green check').append("查看");
-            var today = new Date();
             if (type == 2){ // open investments
               if(d.investments.length > 0){
                 for (var i = 0; i <= d.investments.length - 1; i++) {
@@ -147,6 +146,7 @@
                 $(list).append(empty);
               }
             } else if (type == 3){ // holding investments
+              var today = new Date(d.today);
               if(d.investments.length > 0){
                 for (var i = 0; i <= d.investments.length - 1; i++) {
                   var w = d.investments[i];
