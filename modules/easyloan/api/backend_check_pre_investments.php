@@ -31,4 +31,6 @@ function check_pre_investments()
   mysqli_free_result($result);
   return true;
 }
+
+check_pre_investments();
 ?>

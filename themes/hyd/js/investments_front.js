@@ -26,7 +26,7 @@
                 btnClass = 'ui-list-invest-button-OPEN';
               }
               else if (p.is_done == 0){
-                var today = new Date();
+                var today = new Date(d.today);
                 var start = new Date(Date.parse(p.start.replace(/-/g, "/")));
                 if (today >= start){
                 	btnClass = 'ui-list-invest-button-IN_PROGRESS';

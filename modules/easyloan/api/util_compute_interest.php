@@ -45,7 +45,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       }
       $interest = round($interest, 2);
       $obj->total = 1;
-      if ($date2 >= $date3)
+      if ($date2 > $date3)
       {
         $obj->count = 0;
         $obj->r_amount = 0;
@@ -78,17 +78,17 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       }
       if ($interval->m > 0)
       {
-        $total += $total + $interval->m;
+        $total += $interval->m;
         $interest += $interval->m * $amount * $b;
       }
       if ($interval->d > 0)
       {
-        $total += $total + 1;
+        $total += 1;
         $interest += $interval->d * $amount * $b / 30.0;
       }
       $interest = round($interest, 2);
       $obj->total = $total;
-      if ($date2 >= $date3)
+      if ($date2 > $date3)
       {
         $r_interval = new DateInterval('P0D');
         if ($date1 < $date3)
@@ -149,7 +149,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       if ($interval->m > 0)
       {
         $total += $interval->m;
-        $interest = $interval->m * $amount * $b;
+        $interest += $interval->m * $amount * $b;
       }
       if ($interval->d > 0)
       {
@@ -158,7 +158,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       }
       $interest = round($interest, 2);
       $obj->total = $total;
-      if ($date2 >= $date3)
+      if ($date2 > $date3)
       {
         $r_interval = new DateInterval('P0D');
         if ($date1 < $date3)
@@ -231,7 +231,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       }
       $interest = round($amount * (($b * $total - 1) * pow((1 + $b), $total) + 1) / (pow((1 + $b), $total) - 1), 2);
       $obj->total = $total;
-      if ($date2 >= $date3)
+      if ($date2 > $date3)
       {
         $r_interval = new DateInterval('P0D');
         if ($date1 < $date3)
@@ -301,7 +301,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
       }
       $interest = round($amount * $b * ($total + 1) / 2.0, 2);
       $obj->total = $total;
-      if ($date2 >= $date3)
+      if ($date2 > $date3)
       {
         $r_interval = new DateInterval('P0D');
         if ($date1 < $date3)

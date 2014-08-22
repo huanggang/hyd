@@ -116,7 +116,7 @@ function investments(){
   mysqli_kill($con, mysqli_thread_id($con));
   mysqli_close($con);
   $products = substr($products, 1);
-  $list = "{\"result\":1,\"total\":".jsonstrval($total).",\"products\":[".$products."]}";
+  $list = "{\"result\":1,\"total\":".jsonstrval($total).",\"products\":[".$products."],\"today\":".jsonstr($todayStr)."}";
   echo $list;
 }
 ?>

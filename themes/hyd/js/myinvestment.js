@@ -17,7 +17,7 @@
       
       $.getJSON( Drupal.settings.basePath + "api/myinvestments", 
         function(d) {
-          if (d.result == 0){
+          if (d.result != null && d.result == 0){
             alert( "获取信息出现问题，请刷新页面。");
           }
           else {
@@ -44,6 +44,13 @@
         items: 0,      // total items 
         itemsOnPage: per_page,  // items per page
         hrefTextPrefix: '#type=3&page=', 
+        displayedPages: display_pages, 
+      });
+
+      $("#investment-list-pagination-4").pagination({
+        items: 0,      // total items 
+        itemsOnPage: per_page,  // items per page
+        hrefTextPrefix: '#type=4&page=', 
         displayedPages: display_pages, 
       });
 
@@ -83,10 +90,13 @@
           }
         }
         if (type == 2){ // show tab 1
+          Drupal.behaviors.utils.showTab("open");
+        }
+        else if (type == 3) { // show tab 2
           Drupal.behaviors.utils.showTab("holding");
         }
-        else { // show tab 2
-          type = 3;
+        else { // show tab 3
+          type = 4;
           Drupal.behaviors.utils.showTab("closed");
         }
         var list = '#investment-list-' + type;
@@ -113,8 +123,30 @@
             var span = $('<span />').addClass('ui-list-field fn-left ph5');
             var a = $('<a />').attr('target', '_blank');
             var btn = $('<a />').addClass('ui-button ui-button-small ui-button-green check').append("查看");
-            var today = new Date();
-            if (type == 2){ // holding investments
+            if (type == 2){ // open investments
+              if(d.investments.length > 0){
+                for (var i = 0; i <= d.investments.length - 1; i++) {
+                  var w = d.investments[i];
+                  var start = new Date(Date.parse(w.start.replace(/-/g, "/")));
+                  var row = li.clone()
+                    .append(span.clone().addClass('w180 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'invest/' + w.id).attr('title', w.title).append(cats[w.category] + w.title)))
+                    .append(span.clone().addClass('w85 text-right').append(w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
+                    .append(span.clone().addClass('w115 text-right').append(map_id_name(repayment_methods,w.method)))
+                    .append(span.clone().addClass('w55 text-right').append((w.rate * 100).toFixed(2) + '%'))
+                    .append(span.clone().addClass('w30 text-right').append(w.duration.toFixed(0)))
+                    .append(span.clone().addClass('w80 text-center').append(w.start.slice(0, 10)))
+                    .append(span.clone().addClass('w80 text-center').append(w.end.slice(0, 10)));
+                  if (i % 2 == 0){
+                    row.addClass('dark');
+                  }
+                  row.appendTo(list);
+                }
+              } else {
+                // no results
+                $(list).append(empty);
+              }
+            } else if (type == 3){ // holding investments
+              var today = new Date(d.today);
               if(d.investments.length > 0){
                 for (var i = 0; i <= d.investments.length - 1; i++) {
                   var w = d.investments[i];
@@ -238,23 +270,33 @@
 
       $(window).trigger('hashchange');
 
-      $(".ui-tab-item[data-name=holding]").click(function(event){
-        if (window.location.hash.indexOf("#type=2") < 0 && window.location.hash != ""){
+      $(".ui-tab-item[data-name=open]").click(function(event){
+        if (window.location.hash.indexOf("#type=2") < 0 && window.location.hash != "") {
           var current_page_type_2 = $("#investment-list-pagination-2").pagination('getCurrentPage');
           if (current_page_type_2 > 1){
-            window.location.hash = "#type=2&page=" + current_page_type_2;  
+            window.location.hash = "#type=2&page=" + current_page_type_2;
           } else {
-            window.location.hash = "#type=2";  
+            window.location.hash = "#type=2";
+          }
+        }
+      });
+      $(".ui-tab-item[data-name=holding]").click(function(event){
+        if (window.location.hash.indexOf("#type=3") < 0){
+          var current_page_type_3 = $("#investment-list-pagination-3").pagination('getCurrentPage');
+          if (current_page_type_3 > 1){
+            window.location.hash = "#type=3&page=" + current_page_type_3;
+          } else {
+            window.location.hash = "#type=3";  
           }
         }
       });
       $(".ui-tab-item[data-name=closed]").click(function(event){
-        if (window.location.hash.indexOf("#type=3") < 0) {
-          var current_page_type_3 = $("#investment-list-pagination-3").pagination('getCurrentPage');
-          if (current_page_type_3 > 1){
-            window.location.hash = "#type=3&page=" + current_page_type_3;  
+        if (window.location.hash.indexOf("#type=4") < 0) {
+          var current_page_type_4 = $("#investment-list-pagination-4").pagination('getCurrentPage');
+          if (current_page_type_4 > 1){
+            window.location.hash = "#type=4&page=" + current_page_type_4;
           } else {
-            window.location.hash = "#type=3";
+            window.location.hash = "#type=4";
           }
         }
       });

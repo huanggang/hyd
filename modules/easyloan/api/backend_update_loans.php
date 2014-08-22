@@ -31,4 +31,6 @@ function update_loans()
   mysqli_free_result($result);
   return true;
 }
+
+update_loans();
 ?>
