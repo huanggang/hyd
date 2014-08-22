@@ -1136,20 +1136,11 @@ function easyloan_menu_alter(&$items) {
   // the wizard registeration form menu
   $items['user/register']['page arguments'] = array('user_register_form');
   // disable the user/%/edit page to all users 
-  $items['user/%user/edit'] = array(
-    'access callback' => 'super_admin_access', 
-  );
-  $items['node/%node'] = array(
-    'title callback' => 'node_page_title',
-    'title arguments' => array(1),
-    'page callback' => 'node_page_view',
-    'page arguments' => array(1),
-    'access callback' => 'easyloan_node_access', 
-    'access arguments' => array('view', 1),
-  );
+  $items['user/%user/edit']['access callback'] = 'super_admin_access';
+  $items['node/%node/edit']['access callback'] = 'manager_access';
+  $items['node/%node']['access callback'] = 'easyloan_node_access';
   return $items;
 }
-
 
 function easyloan_node_access($op, $node, $account = NULL){
   if (!$node || !in_array($op, array('view', 'update', 'delete', 'create'), TRUE)) {
@@ -1157,13 +1148,24 @@ function easyloan_node_access($op, $node, $account = NULL){
     // supported ones, we return access denied.
     return FALSE;
   }
-/*
+
   // If no user object is supplied, the access check is for the current user.
   if (empty($account)) {
     global $user;
     $account = $user;
+
+    if ($user->uid ==1){
+      return TRUE;
+    }
+
+    $roles = array('manager',);
+    foreach ($roles as $key => $role_name) {
+      if (in_array($role_name, $account->roles)) {
+          return TRUE;
+      }
+    }
   }
-*/
+
   $forbidden = array();
   $forbidden[] = 'slideshow';
   $forbidden[] = 'guide';
@@ -1196,6 +1198,24 @@ function management_access() {
     return TRUE;
   }
 
+  foreach ($roles as $key => $role_name) {
+    if (in_array($role_name, $user->roles)) {
+        return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/*
+ * Any easyloan manager can get accessed 
+ */
+function manager_access() { 
+  global $user; 
+  if ($user->uid ==1){
+    return TRUE;
+  }
+
+  $roles = array('manager',);
   foreach ($roles as $key => $role_name) {
     if (in_array($role_name, $user->roles)) {
         return TRUE;
