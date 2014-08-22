@@ -16,6 +16,8 @@ CKEDITOR.editorConfig = function(config) {
   // The minimum editor width, in pixels, when resizing it with the resize handle.
   config.resize_minWidth = 450;
 
+  config.allowedContent = true; 
+
   // Protect PHP code tags (<?...?>) so CKEditor will not break them when
   // switching from Source to WYSIWYG.
   // Uncommenting this line doesn't mean the user will not be able to type PHP
