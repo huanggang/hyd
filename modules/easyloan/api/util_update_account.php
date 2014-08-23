@@ -98,7 +98,7 @@ function update_account($id)
         {
           $rate = compute_average_interest_rate($act_ln_amount, $act_ln_interest_rate, $act_ln_duration, $lns_amount, $lns_interest_rate, round($lns_duration/12.0, 4));
           $flag = $flag && (mysqli_query($con, "UPDATE account_loan_act_ln SET act_ln_amount = ".sqlstrval($act_ln_amount + $lns_amount).", act_ln_interest = ".sqlstrval($act_ln_interest + $interest->r_interest).", act_ln_fine = ".sqlstrval($act_ln_fine + $lns_fine).", act_ln_interest_rate = ".sqlstrval($rate->cr1).", act_ln_duration = ".sqlstrval($rate->cd1).", act_ln_loans = ".sqlstrval($act_ln_loans + 1).", act_ln_app_id = NULL, act_ln_total = 0, act_ln_count = 0, act_ln_r_amount = 0, act_ln_r_interest = 0, act_ln_w_amount = 0, act_ln_w_interest = 0, act_ln_n_date = NULL, act_ln_n_amount = 0, act_ln_n_interest = 0, act_ln_w_owned = 0, act_ln_w_fine = 0, act_ln_updated = ".sqlstr($nowStr)." WHERE act_ln_usr_id = ".strval($id)) != false);
-          $flag = $flag && (mysqli_query($con, "UPDATE loans_lns SET lns_finished = ".sqlstr($todayStr).", lns_updated = ".sqlstr($nowStr)." WHERE lns_app_id = ".strval($id)) != false);
+          $flag = $flag && (mysqli_query($con, "UPDATE loans_lns SET lns_is_done=1, lns_finished = ".sqlstr($todayStr).", lns_updated = ".sqlstr($nowStr)." WHERE lns_app_id = ".strval($act_ln_app_id)) != false);
         }
         else // loan is not finished yet
         {
@@ -112,7 +112,7 @@ function update_account($id)
         $act_trn_fine = 0;
         if ($act_mny_is_owned) // has been owned
         {
-          $days = (new DateTime($act_mny_updated))->diff($act_ln_n_date)->days;
+          $days = str2date($act_mny_updated)->diff(str2date($act_ln_n_date))->days;
           if ($days > 0)
           {
             $delta_fine = compute_fine($act_mny_owned, $act_mny_fine, $lns_fine_rate, $lns_fine_rate_is_single, $days);

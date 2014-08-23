@@ -135,11 +135,15 @@
                   alert('尚有借款申请，不可再申请借款。');
                   window.location.href = Drupal.settings.basePath + 'loan_management#type=2';
                 }
-                else if (d.message == 'Not certified yet'){
+                else if (d.message == 'Not certified yet') {
                   alert('尚未认证，不可申请借款。');
                   window.location.href = Drupal.settings.basePath + "account_management/security";
                 }
-                else{
+                else if (d.message == 'Overtime') {
+                  alert('申请借款时间段（北京时间）: 上午9:00 ~ 晚上11:00。');
+                  window.location.href = Drupal.settings.basePath + "borrow";
+                }
+                else {
                 	alert('请登录。');
                 	window.location.href = Drupal.settings.basePath + "user/login";
                 }

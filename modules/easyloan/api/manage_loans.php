@@ -156,7 +156,7 @@ function manage_loans(){
         $lns_fine = $row['lns_fine'];
         $lns_created = $row['lns_created'];
 
-        $json = $json.",{\"app_id\":".jsonstrval($lns_app_id).",\"title\":".jsonstr($lns_title).",\"user_id\":".jsonstrval($lns_usr_id).",\"nick\":".jsonstr($act_info_nick).",\"name\":".jsonstr($act_info_name).",\"category\":".jsonstrval($lns_category).",\"amount\":".jsonstrval($lns_amount).",\"interest\":".jsonstrval($lns_interest).",\"rate\":".jsonstrval($lns_interest_rate).",\"method\":".jsonstrval($lns_repayment_method).",\"duration\":".jsonstrval($lns_duration).",\"start\":".jsonstr($lns_start).",\"end\":".jsonstr($lns_end).",\"fine_rate\":".jsonstrval($lns_fine_rate).",\"fine_is_single\":".jsonstrval($lns_fine_rate_is_single).",\"finished\":".jsonstrval($lns_finished).",\"fine\":".jsonstrval($lns_fine).",\"created\":".jsonstr($lns_created)."}";
+        $json = $json.",{\"app_id\":".jsonstrval($lns_app_id).",\"title\":".jsonstr($lns_title).",\"user_id\":".jsonstrval($lns_usr_id).",\"nick\":".jsonstr($act_info_nick).",\"name\":".jsonstr($act_info_name).",\"category\":".jsonstrval($lns_category).",\"amount\":".jsonstrval($lns_amount).",\"interest\":".jsonstrval($lns_interest).",\"rate\":".jsonstrval($lns_interest_rate).",\"method\":".jsonstrval($lns_repayment_method).",\"duration\":".jsonstrval($lns_duration).",\"start\":".jsonstr($lns_start).",\"end\":".jsonstr($lns_end).",\"fine_rate\":".jsonstrval($lns_fine_rate).",\"fine_is_single\":".jsonstrval($lns_fine_rate_is_single).",\"finished\":".jsonstr($lns_finished).",\"fine\":".jsonstrval($lns_fine).",\"created\":".jsonstr($lns_created)."}";
       }
       mysqli_free_result($result);
       break;

@@ -18,6 +18,11 @@ function compute_average_interest_rate($ca0, $cr0, $cd0, $a1, $r1, $d1)
     $obj->cr1 = round($cr1, 4);
     $obj->cd1 = round($cd1, 4);
   }
+  else if ($ca0 == 0 && $a1 > 0)
+  {
+    $obj->cr1 = round($r1, 4);
+    $obj->cd1 = round($d1, 4);
+  }
   return $obj;
 }
 ?>

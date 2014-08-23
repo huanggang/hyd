@@ -41,7 +41,7 @@ function transactions(){
     $page = $max_pages;
   }
 
-  $limit = " ORDER BY act_trn_time DESC LIMIT ";
+  $limit = " ORDER BY act_trn_id DESC LIMIT ";
   $start = ($page - 1) * $per_page;
   $limit = $limit.strval($start).",".strval($per_page);
 

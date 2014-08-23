@@ -132,14 +132,14 @@
 
       $('#apply').click(function(event){
         if(v.form()){
-          var amount = $("#amount").val();
-          var rate = $("#rate").val() / 100.0;
+          var amount = Number($("#amount").val());
+          var rate = Number($("#rate").val()) / 100.0;
           var repayment_method = $("#method option:selected").val();
-          var minimum = $("#minimum").val();
-          var step = $("#step").val();
+          var minimum = Number($("#minimum").val());
+          var step = Number($("#step").val());
           var start = $("#start").val().replace(/\//g,"-");
           var end = $("#end").val().replace(/\//g,"-");
-          var fine_rate = $("#fine_rate").val() / 100.0;
+          var fine_rate = Number($("#fine_rate").val()) / 100.0;
           var fine_rate_is_single = $("input[name=fine_rate_is_single]:checked").val();
 
           if (minimum > amount){

@@ -103,12 +103,12 @@
       $('#apply').click(function(event){
         if(v.form()){
           var loaned = $("#loaned").val().replace(/\//g,"-");
-          var amount = $("#amount").val();
-          var rate = $("#rate").val() / 100.0;
+          var amount = Number($("#amount").val());
+          var rate = Number($("#rate").val()) / 100.0;
           var repayment_method = $("#repayment_method option:selected").val();
           var start = $("#start").val().replace(/\//g,"-");
           var end = $("#end").val().replace(/\//g,"-");
-          var fine_rate = $("#fine_rate").val() / 100.0;
+          var fine_rate = Number($("#fine_rate").val()) / 100.0;
           var fine_rate_is_single = $("input[name=fine_rate_is_single]:checked").val();
 
           // check end-date > today, start-date < end-date, loaned-date < end-date, today - start-date < 1 month

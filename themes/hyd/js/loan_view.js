@@ -56,7 +56,7 @@
                 $('#end').text(d.end.slice(0,10));
                 if (d.is_done == 1){
                   $('#finished-div').show();
-                  $('finished').text(d.finished.slice(0,10));
+                  $('#finished').text(d.finished.slice(0,10));
                   $('#wait-div').hide();
                 }
                 else{
