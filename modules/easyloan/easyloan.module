@@ -623,7 +623,7 @@ function easyloan_menu() {
   $items['about/company'] = array( 
     'title'           => t('公司简介'), 
     'page callback' => 'node_page_view',
-    'page arguments' => array (node_load(array('title' => '公司简介', 'type' => 'normal'))),
+    'page arguments' => array(entity_load('node', false, array('title' => '公司简介', 'type' => 'normal'))),
     'access callback' => TRUE, 
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_about', 
@@ -632,7 +632,7 @@ function easyloan_menu() {
   $items['about/invite'] = array( 
     'title'           => t('招贤纳士'), 
     'page callback' => 'node_page_view',
-    'page arguments' => array (node_load(array('title' => '招贤纳士', 'type' => 'normal'))),
+    'page arguments' => array(entity_load('node', false, array('title' => '招贤纳士', 'type' => 'normal'))),
     'access callback' => TRUE, 
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_about', 
@@ -641,16 +641,12 @@ function easyloan_menu() {
   $items['about/contact'] = array( 
     'title'           => t('联系我们'), 
     'page callback' => 'node_page_view',
-    'page arguments' => array (node_load(array('title' => '联系我们', 'type' => 'normal'))),
+    'page arguments' => array(entity_load('node', false, array('title' => '联系我们', 'type' => 'normal'))),
     'access callback' => TRUE, 
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_about', 
     'weight'          => '40'
   );
-
-
-
-
   
   $items['exists'] = array( 
     'page callback'   => 'easyloan_exists',
@@ -1077,7 +1073,6 @@ function hyd_menu_link($variables){
       $li_class = 'ui-side-item';
 
       if ($element['#below']) {
-        //var_dump($element['#below']);
         $element['#below']['#theme_wrappers'] = array('menu_tree__menu_account_second');
         $sub_menu = drupal_render($element['#below']);
       }
