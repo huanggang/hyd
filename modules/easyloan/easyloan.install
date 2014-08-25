@@ -9,9 +9,14 @@ function easyloan_install(){
 	);
 	$accountant_permissions = array(
 		'accountant permission',
+		'access user profiles',
 	);
 	$manager_permissions = array(
 		'manager permission',
+		'access user profiles',
+		'access content overview',
+		'administer nodes',
+		'bypass node access',
 	);
 	
 	add_role('auditor', 10);
@@ -509,6 +514,15 @@ function easyloan_enable() {
 			'menu_name'  => 'easyloan_account',
 			'customized' => 1,
 			'link_path'  => 'user', 
+			'module'     => 'easyloan',
+		);
+		menu_link_save($menu_item);
+
+		$menu_item = array(
+			'link_title' => $t('发布内容管理'),
+			'menu_name'  => 'easyloan_account',
+			'customized' => 1,
+			'link_path'  => 'admin/content', 
 			'module'     => 'easyloan',
 		);
 		menu_link_save($menu_item);

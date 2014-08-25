@@ -2,6 +2,7 @@
 
 
 - 如果没有搭建邮件服务，需要找到modules\user\user.module中的 **user\_register\_submit** 方法，注释掉里面所有对于方法 **\_user\_mail\_notify** 的调用，否则注册会因发送邮件失败而延时
+- Disable RDF module, 防止Slideshow图片HTML格式发生混乱
 - admin/config/system/site-information
 	- Site Name 设置为 **清远好易贷**
 	- Slogan 设置为 **中国最大最安全的B2C（公司对个人）网络金融投资平台**
@@ -44,5 +45,11 @@
 	![](http://localhost/img/easyloan-settings-captcha-image.png)
 - admin/people/permissions
 	- 分配权限
-		- View user profiles 允许accountant	manager访问
+		- Node
+			- Administer content 允许manager访问
+			- Access the content overview page 允许manager访问
+			- 帮助中心、新手指引、最新动态、好易贷普通内容类型、网站公告、首页幻灯片的全部权限都允许manager访问
+		- User
+			- View user profiles 允许accountant、manager访问
 		- ...
+		- 
