@@ -13,10 +13,7 @@
   <div id="pg-about-intro">
       <div class="container_12 mt20">
         <div class="grid_2">
-      <?php print render($page['sidebar_first']); ?>
-      	<?php
-      		print theme('menu_tree', menu_tree('easyloan_about')); 
-  		?>
+          <?php print render($page['sidebar_first']); ?>
         </div>
         <div class="grid_10 ">
       <?php print render($page['content']); ?>
