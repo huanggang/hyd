@@ -1,1 +1,1 @@
-var transaction_types=[{"id":1,"name":"充值"},{"id":2,"name":"提现"},{"id":3,"name":"投资"},{"id":4,"name":"本金回收"},{"id":5,"name":"投资利息"},{"id":6,"name":"投资逾期罚金"},{"id":7,"name":"借款"},{"id":8,"name":"还款本金"},{"id":9,"name":"还款利息"},{"id":10,"name":"借款逾期罚金"}];
+var transaction_types=[{"id":1,"name":"充值"},{"id":2,"name":"提现"},{"id":3,"name":"投资"},{"id":4,"name":"本金回收"},{"id":5,"name":"投资利息"},{"id":6,"name":"投资逾期罚金"},{"id":7,"name":"借款"},{"id":8,"name":"还款本金"},{"id":9,"name":"还款利息"},{"id":10,"name":"借款逾期罚金"},{"id":11,"name":"投资欠款"},{"id":12,"name":"借款欠款"}];

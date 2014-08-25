@@ -111,12 +111,12 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
         $obj->r_amount = 0;
         $obj->r_interest = $r_interest;
         $obj->w_amount = $amount;
-        $obj->w_interest = $interest - $r_interest;
+        $obj->w_interest = $interest > $r_interest ? ($interest - $r_interest) : 0;
         if ($count + 1 == $total) 
         {
           $obj->n_date = $end;
           $obj->n_amount = $amount;
-          $obj->n_interest = $interest - $r_interest;
+          $obj->n_interest = $interest > $r_interest ? ($interest - $r_interest) : 0;
         }
         else
         {
@@ -181,7 +181,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
         $obj->r_amount = 0;
         $obj->r_interest = $r_interest;
         $obj->w_amount = $amount;
-        $obj->w_interest = $interest - $r_interest;
+        $obj->w_interest = $interest > $r_interest ? ($interest - $r_interest) : 0;
         if ($count + 1 == $total)
         {
             $obj->n_date = $end;
@@ -195,7 +195,7 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
             $obj->n_amount = 0;
             if ($count + 2 == $total)
             {
-              $obj->n_interest = $interest - $r_interest;
+              $obj->n_interest = $interest > $r_interest ? ($interest - $r_interest) : 0;
             }
             else
             {
@@ -257,13 +257,13 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
         }
         $obj->r_amount = $r_amount;
         $obj->r_interest = $r_interest;
-        $obj->w_amount = $amount - $r_amount;
-        $obj->w_interest = $interest - $r_interest;
+        $obj->w_amount = $amount > $r_amount ? ($amount - $r_amount) : 0;
+        $obj->w_interest = $interest > $r_interest ? ($interest - $r_interest) : 0;
         if ($count + 1 == $total)
         {
           $obj->n_date = $end;
-          $obj->n_amount = $amount - $r_amount;
-          $obj->n_interest = $interest - $r_interest;
+          $obj->n_amount = $amount > $r_amount ? ($amount - $r_amount) : 0;
+          $obj->n_interest = $interest > $r_interest ? ($interest - $r_interest) : 0;
         }
         else
         {
@@ -327,13 +327,13 @@ function compute_interest($amount, $rate, $method, $start, $end, $today)
         }
         $obj->r_amount = $r_amount;
         $obj->r_interest = $r_interest;
-        $obj->w_amount = $amount - $r_amount;
-        $obj->w_interest = $interest - $r_interest;
+        $obj->w_amount = $amount > $r_amount ? ($amount - $r_amount) : 0;
+        $obj->w_interest = $interest > $r_interest ? ($interest - $r_interest) : 0;
         if ($count + 1 == $total)
         {
           $obj->n_date = $end;
-          $obj->n_amount = $amount - $r_amount;
-          $obj->n_interest = $interest - $r_interest;
+          $obj->n_amount = $amount > $r_amount ? ($amount - $r_amount) : 0;
+          $obj->n_interest = $interest > $r_interest ? ($interest - $r_interest) : 0;
         }
         else
         {

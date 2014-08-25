@@ -22,7 +22,7 @@
           }
           else {
             var loan_times = d.total;
-            if (d.n_date){
+            if (d.n_date != null || d.w_owned > 0){
               loan_times += 1;
             }
             $('#paid-interest').text((d.interest + d.r_interest).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));

@@ -67,7 +67,7 @@ function update_hyd($app_id)
     {
       $interest = compute_interest($inv_investment, $inv_interest_rate, $inv_repayment_method, $inv_start, $inv_end, $todayStr);
       $is_done = is_null($interest->n_date); // investment finished?
-      if (is_null($inv_fine_rate_is_single) || $act_ln_w_owned == 0) // HYD never overdues the repayment to the investers
+      if (is_null($inv_fine_rate_is_single) || ($act_ln_w_owned == 0 && $hyd_ln_w_owned == 0)) // HYD never overdues the repayment to the investers
       {
         if ($is_done)
         {
@@ -158,11 +158,16 @@ function update_hyd($app_id)
         $is_owned = true;
         if ($hyd_ln_w_owned > 0) // HYD has been owning to investers
         {
-          $days = (new DateTime($hyd_ln_updated))->diff($hyd_ln_n_date)->days;
-          if ($days > 0)
+          $date1 = str2date($hyd_ln_updated);
+          $date2 = str2date($hyd_ln_n_date);
+          if ($date1 < $date2)
           {
-            $delta_fine = compute_fine($hyd_ln_w_owned, $hyd_ln_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
-            $hyd_ln_w_fine += $delta_fine;
+            $days = $date1->diff($date2)->days;
+            if ($days > 0)
+            {
+              $delta_fine = compute_fine($hyd_ln_w_owned, $hyd_ln_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
+              $hyd_ln_w_fine += $delta_fine;
+            }
           }
         }
         $temp_owned = $hyd_ln_w_owned + $hyd_ln_n_amount + $hyd_ln_n_interest;
@@ -170,11 +175,14 @@ function update_hyd($app_id)
         $repay_amount = $temp_owned - $hyd_ln_w_owned;
         if ($hyd_ln_w_owned > 0)
         {
-          $days = str2date($hyd_ln_n_date)->diff($today)->days;
-          if ($days > 0)
+          if ($date2 < $today)
           {
-            $delta_fine = compute_fine($hyd_ln_w_owned, $hyd_ln_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
-            $hyd_ln_w_fine += $delta_fine;
+            $days = $date2->diff($today)->days;
+            if ($days > 0)
+            {
+              $delta_fine = compute_fine($hyd_ln_w_owned, $hyd_ln_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
+              $hyd_ln_w_fine += $delta_fine;
+            }
           }
         }
         if ($is_done)
@@ -223,22 +231,30 @@ function update_hyd($app_id)
           $act_fine = $act_invs_w_fine;
           if ($act_invs_w_owned > 0)
           {
-            $days = (new DateTime($act_invs_updated))->diff($hyd_ln_n_date)->days;
-            if ($days > 0)
+            $date1 = str2date($act_invs_updated);
+            $date2 = str2date($hyd_ln_n_date);
+            if ($date1 < $date2)
             {
-              $delta_fine = compute_fine($act_invs_w_owned, $act_invs_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
-              $act_fine += $delta_fine;
+              $days = $date1->diff($date2)->days;
+              if ($days > 0)
+              {
+                $delta_fine = compute_fine($act_invs_w_owned, $act_invs_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
+                $act_fine += $delta_fine;
+              }
             }
           }
           $act_repay_amount = round($repay_amount * $inv_act_ratio, 2);
           $act_invs_w_owned += $act_invs_n_amount + $act_invs_n_interest - $act_repay_amount;
           if ($act_invs_w_owned > 0)
           {
-            $days = str2date($hyd_ln_n_date)->diff($today)->days;
-            if ($days > 0)
+            if ($date2 < $today)
             {
-              $delta_fine = compute_fine($act_invs_w_owned, $act_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
-              $act_fine += $delta_fine;
+              $days = $date2->diff($today)->days;
+              if ($days > 0)
+              {
+                $delta_fine = compute_fine($act_invs_w_owned, $act_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
+                $act_fine += $delta_fine;
+              }
             }
           }
           if ($act_repay_amount > 0)
@@ -301,13 +317,17 @@ function update_hyd($app_id)
       if ($hyd_ln_w_owned > 0)
       {
         $is_owned = true;
-        $days = str2date($hyd_ln_updated)->diff($today)->days;
-        if ($days > 0)
+        $date1 = str2date($hyd_ln_updated);
+        if ($date1 < $today)
         {
-          $delta_fine = compute_fine($hyd_ln_w_owned, $hyd_ln_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
-          $hyd_ln_w_fine += $delta_fine;
+          $days = $date1->diff($today)->days;
+          if ($days > 0)
+          {
+            $delta_fine = compute_fine($hyd_ln_w_owned, $hyd_ln_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
+            $hyd_ln_w_fine += $delta_fine;
 
-          $flag = $flag && (mysqli_query($con, "UPDATE hyd_loans_hyd_ln SET hyd_ln_w_fine = ".sqlstrval($hyd_ln_w_fine).", hyd_ln_updated = ".sqlstr($nowStr)." WHERE hyd_ln_app_id = ".strval($app_id)) != false);
+            $flag = $flag && (mysqli_query($con, "UPDATE hyd_loans_hyd_ln SET hyd_ln_w_fine = ".sqlstrval($hyd_ln_w_fine).", hyd_ln_updated = ".sqlstr($nowStr)." WHERE hyd_ln_app_id = ".strval($app_id)) != false);
+          }
         }
 
         $result = mysqli_query($con, "SELECT inv_act_usr_id, inv_act_amount, inv_act_ratio FROM investment_accounts_inv_act WHERE inv_act_app_id = ".strval($app_id));
@@ -334,11 +354,15 @@ function update_hyd($app_id)
           $act_fine = $act_invs_w_fine;
           if ($act_invs_w_owned > 0)
           {
-            $days = str2date($act_invs_updated)->diff($today)->days;
-            if ($days > 0)
+            $date1 = str2date($act_invs_updated);
+            if ($date1 < $today)
             {
-              $delta_fine = compute_fine($act_invs_w_owned, $act_invs_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
-              $act_fine += $delta_fine;
+              $days = $date1->diff($today)->days;
+              if ($days > 0)
+              {
+                $delta_fine = compute_fine($act_invs_w_owned, $act_invs_w_fine, $inv_fine_rate, $inv_fine_rate_is_single, $days);
+                $act_fine += $delta_fine;
+              }
             }
           }
           $flag = $flag && (mysqli_query($con, "UPDATE account_investments_act_invs SET act_invs_w_fine = ".sqlstrval($act_fine).", act_invs_updated = ".sqlstr($nowStr)." WHERE act_invs_usr_id = ".strval($inv_act_usr_id)." AND act_invs_app_id = ".strval($app_id)) != false);
