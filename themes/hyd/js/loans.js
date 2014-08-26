@@ -134,7 +134,7 @@
                 for (var i = 0; i < d.loans.length; i++){
                   var w = d.loans[i];
                   var row = li.clone()
-                    .append(span.clone().addClass('w195 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'loan_view#id=' + w.app_id).attr('title', w.title).attr('style', w.fine > 0 ? 'color:red' : '').append(cats[w.category] + w.title)))
+                    .append(span.clone().addClass('w195 fn-text-overflow').append(a.clone().attr('href', Drupal.settings.basePath + 'loan_view#id=' + w.app_id).attr('title', w.title).attr('style', w.is_owned > 0 ? 'color:red' : '').append(cats[w.category] + w.title)))
                     .append(span.clone().addClass('w50').append(a.clone().attr('href', Drupal.settings.basePath + 'user/' + w.user_id).attr('title', w.nick).append(w.name)))
                     .append(span.clone().addClass('w85 text-right').append(w.amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
                     .append(span.clone().addClass('w85 text-right').append(w.interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
