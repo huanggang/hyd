@@ -29,7 +29,7 @@
             $('#average-rate').text((d.rate * 100).toFixed(2));
             $('#owned-total').text((d.w_amount + d.w_interest + d.w_owned + d.w_fine).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $('#paid-fine').text(d.fine.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-            $('#average-duration').text(d.duration.toFixed(2));
+            $('#average-duration').text((d.duration * 12).toFixed(2));
             $('#loan-total').text((d.amount + d.r_amount + d.w_amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $('#loan-times').text(loan_times.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             if (d.n_date){
@@ -39,7 +39,7 @@
               $('#next-pay').html('');
             }
             if ((d.w_owned + d.w_fine) > 0) {
-              $('#owned-now').html('目前所欠本金 <em>' + d.w_owned.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</em>，逾期罚金 <em>' + d.w_fine.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</em>元');
+              $('#owned-now').html('目前所欠本息 <em>' + d.w_owned.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</em>，逾期罚金 <em>' + d.w_fine.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</em>元');
             }
           }
       })

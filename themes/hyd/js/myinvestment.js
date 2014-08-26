@@ -23,7 +23,7 @@
           else {
             $('#investment_earnings').text((d.interest + d.fine).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $('#investment_rate').text((d.rate * 100).toFixed(2));
-            $('#investment_duration').text(d.duration.toFixed(2));
+            $('#investment_duration').text((d.duration * 12).toFixed(2));
             $('#investment_holdings').text(d.holdings);
             $('#investment_closed').text(d.total);
           }

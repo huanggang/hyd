@@ -142,16 +142,18 @@
                   case 1:
                   case 4:
                   case 5:
+                  case 6:
+                  case 11:
                     row = row
                       .append(span.clone().addClass('w85 text-right ph5').append(w.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")))
                       .append(span.clone().addClass('w85 text-right ph5').append('0.00'));
                     break;
                   case 2:
                   case 3:
-                  case 6:
                   case 8:
                   case 9:
                   case 10:
+                  case 12:
                     row = row
                       .append(span.clone().addClass('w85 text-right ph5').append('0.00'))
                       .append(span.clone().addClass('w85 text-right ph5').append(w.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")));
