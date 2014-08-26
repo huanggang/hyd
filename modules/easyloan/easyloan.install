@@ -524,6 +524,7 @@ function easyloan_enable() {
 			'customized' => 1,
 			'link_path'  => 'admin/content', 
 			'module'     => 'easyloan',
+			'weight'     => 50,
 		);
 		menu_link_save($menu_item);
 /*
