@@ -36,7 +36,7 @@ global $base_url;
     </div>
     <div class="grid_3 omega">
       <p class="color-gray-text text-right">客服电话</p>
-      <h4 class="color-gray-text text-right ui-footer-phone-number">400-***-****</h4>
+      <h4 class="color-gray-text text-right ui-footer-phone-number"><?php print variable_get('easyloan_service_tel_number');?></h4>
       <p class="color-gray-text text-right">9:00 - 21:00</p>
     </div>
   </div>

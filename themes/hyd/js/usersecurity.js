@@ -144,7 +144,7 @@ Drupal.behaviors.usersecurity = {
                 var m = showInfo('认证失败，您还可以免费认证' + (2 - d.verified) + '次');
                 setIdBtn.prop('disabled', false).after(m.delay(delaytime).fadeOut());
               } else {
-                var m = showInfo('您已两次认证失败，请联系客服: 400-***-****');  
+                var m = showInfo('您已两次认证失败，请联系客服!');  
                 setIdBtn.after(m).prop('disabled', true);
               }
             }

@@ -103,6 +103,9 @@ function easyloan_install(){
 	    'machine_name' => 'hyd_guide', 
   	); 
 	taxonomy_vocabulary_save($vocat_guide); 
+
+	// the phone number should be able to be set by manager in the future
+	variable_set('easyloan_service_tel_number', '400-9999-8888');
 }
 
 function easyloan_save_term($title, $vid, $tid, $parent){

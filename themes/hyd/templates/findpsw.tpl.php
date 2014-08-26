@@ -7,7 +7,6 @@ drupal_add_js($theme_path . '/js/jquery.validate.min.js');
 drupal_add_js($theme_path . '/js/valid_methods.js');
 drupal_add_js($theme_path . '/js/messages.js');
 drupal_add_js($theme_path . '/js/findpwd.js');
-
 ?>
 <div id="pg-findPsw">
   <div class="container_12 mt20">
@@ -31,7 +30,7 @@ drupal_add_js($theme_path . '/js/findpwd.js');
               <input type="submit" value="提 交" id="subNotLoginFindPswByMobileFormBt" class="ui-button ui-button-mid ui-button-green">
             </div>
           </div>
-        <p class="info">若您无法使用上述方法找回，请联系客服400-027-XXXX</p>
+        <p class="info">若您无法使用上述方法找回，请联系客服<?php print variable_get('easyloan_service_tel_number');?></p>
     </div>
   </div>
 </div>
