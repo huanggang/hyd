@@ -27,6 +27,15 @@ function easyloan_install(){
 	add_permissions('accountant', $accountant_permissions);
 	add_permissions('manager', $manager_permissions); 
 
+	
+	// add new date format for notice/news listings
+	$sql = "INSERT IGNORE INTO date_formats VALUES(NULL,'Y-m-d', 'custom', 0)";
+	db_query($sql);
+	// add new date type for notice/news listings
+	$sql = "INSERT IGNORE INTO date_format_type  VALUES ('listingdate', '列表日期', 0)";
+	db_query($sql);
+
+
 	// create new content types for easyloan
 	// get the translation function relevant to our current localisation
 	$t = get_t();
