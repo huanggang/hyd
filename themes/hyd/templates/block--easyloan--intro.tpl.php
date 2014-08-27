@@ -11,7 +11,7 @@ global $base_url;
 <!-- Intro -->
 <ul class="intro mb fn-clear">
   <li class="grid_4">
-    <a class="intro-link rrd-dimgray" href="<?php print $base_url;?>/lend" target="_blank">
+    <a class="intro-link rrd-dimgray" href="<?php print $base_url;?>/invest" target="_blank">
       <span class="intro-fig intro-fig-1"></span>
       <span class="intro-title h3">投资理财</span>
       <span class="intro-desc">成为理财人，通过主动投标或加入优选理财计划将资金进行出借投资，可获得预期12-14%的稳定年化收益。</span>
