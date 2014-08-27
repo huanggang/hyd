@@ -1,7 +1,8 @@
 <?php
 
   global $base_url; 
-  $img_path = $base_url . '/' . drupal_get_path('theme','hyd') . '/images/';
+  $theme_path = drupal_get_path('theme','hyd');
+  $img_path = $base_url . '/' . $theme_path . '/images/';
   
   if (isset($form['captcha'])) { 
     $form['captcha']['#theme_wrappers']                                             = NULL; 
@@ -13,10 +14,15 @@
     $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class'] = array('ui-input','input-icon','code');  
   }
   
-  drupal_add_css(drupal_get_path('theme','hyd') . '/css/login.css');
-  drupal_add_js(drupal_get_path('theme','hyd') . '/js/jquery.validate.min.js');
-  drupal_add_js(drupal_get_path('theme','hyd') . '/js/valid_methods.js');
-  drupal_add_js(drupal_get_path('theme','hyd') . '/js/login.js');
+  drupal_add_css($theme_path . '/css/login.css');
+  drupal_add_js($theme_path . '/js/jquery.validate.min.js');
+  drupal_add_js($theme_path . '/js/valid_methods.js');
+  
+  if (variable_get('maintenance_mode', 0)) {
+    drupal_add_js($theme_path . '/js/mlogin.js');
+  } else {
+    drupal_add_js($theme_path . '/js/login.js');
+  }
 
   $errors = form_get_errors();
 ?>
