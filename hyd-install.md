@@ -2,7 +2,14 @@
 
 
 - 如果没有搭建邮件服务，需要找到modules\user\user.module中的 **user\_register\_submit** 方法，注释掉里面所有对于方法 **\_user\_mail\_notify** 的调用，否则注册会因发送邮件失败而延时
-- Disable RDF module, 防止Slideshow图片HTML格式发生混乱
+- 模块设置admin/modules
+	- Enable easyloan模块
+	- Disable RDF module, 防止Slideshow图片HTML格式发生混乱
+- Theme设置admin/appearance
+	- 选择‘好易贷’主题，设置为Enable and set default
+- 设置maintenance页面
+	- 在站点的配置文件中设置**$conf['maintenance_theme'] = 'hyd';**(默认配置default.settings.php)
+	- 在admin/config/development/maintenance设置维护页面的message，**注意**：从维护状态恢复之前需要清空缓存
 - admin/config/system/site-information
 	- Site Name 设置为 **清远好易贷**
 	- Slogan 设置为 **中国最大最安全的B2C（公司对个人）网络金融投资平台**
@@ -43,13 +50,4 @@
 	- Code Length设置为4
 	- Font设置参考下图
 	![](http://localhost/img/easyloan-settings-captcha-image.png)
-- admin/people/permissions
-	- 分配权限
-		- Node
-			- Administer content 允许manager访问
-			- Access the content overview page 允许manager访问
-			- 帮助中心、新手指引、最新动态、好易贷普通内容类型、网站公告、首页幻灯片的全部权限都允许manager访问
-		- User
-			- View user profiles 允许accountant、manager访问
-		- ...
-		- 
+
