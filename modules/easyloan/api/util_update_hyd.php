@@ -427,10 +427,7 @@ function update_hyd($app_id)
         {
           $flag = $flag && (mysqli_query($con, "UPDATE investments_inv SET inv_is_done = 1, inv_finished = ".sqlstr($todayStr).", inv_fine = ".sqlstrval($inv_fine + $repay_fine).", inv_updated = ".sqlstr($nowStr)." WHERE inv_app_id = ".strval($app_id)) != false);
         }
-        else
-        {
-          $flag = $flag && (mysqli_query($con, "UPDATE hyd_loans_hyd_ln SET hyd_ln_w_owned = ".sqlstrval($hyd_ln_w_owned).", hyd_ln_w_fine = ".sqlstrval($hyd_ln_w_fine).", hyd_ln_updated = ".sqlstr($nowStr)." WHERE hyd_ln_app_id = ".strval($app_id)) != false);
-        }
+        $flag = $flag && (mysqli_query($con, "UPDATE hyd_loans_hyd_ln SET hyd_ln_w_owned = ".sqlstrval($hyd_ln_w_owned).", hyd_ln_w_fine = ".sqlstrval($hyd_ln_w_fine).", hyd_ln_updated = ".sqlstr($nowStr)." WHERE hyd_ln_app_id = ".strval($app_id)) != false);
 
         $result = mysqli_query($con, "SELECT inv_act_usr_id, inv_act_amount, inv_act_ratio FROM investment_accounts_inv_act WHERE inv_act_app_id = ".strval($app_id));
         while ($row = mysqli_fetch_array($result))
@@ -572,10 +569,12 @@ function update_hyd($app_id)
           {
             $flag = $flag && (mysqli_query($con, "UPDATE account_investments_act_invs SET act_invs_a_amount = ".sqlstrval($act_invs_a_amount).", act_invs_a_interest = ".sqlstrval($act_invs_a_interest).", act_invs_w_owned = ".sqlstrval($act_invs_w_owned).", act_invs_w_fine = ".sqlstrval($act_invs_w_fine).", act_invs_updated = ".sqlstr($nowStr)." WHERE act_invs_usr_id = ".strval($inv_act_usr_id)." AND act_invs_app_id = ".strval($app_id)) != false);
           }
-
-
         }
         mysqli_free_result($result);
+      }
+      else // not own anything to the investers
+      {
+        $flag = $flag && (mysqli_query($con, "UPDATE hyd_loans_hyd_ln SET hyd_ln_updated = ".sqlstr($nowStr)." WHERE hyd_ln_app_id = ".strval($app_id)) != false);
       }
     }
     $flag = $flag && (mysqli_query($con, "UPDATE investments_inv SET inv_updated = ".sqlstr($nowStr)." WHERE inv_app_id = ".strval($app_id)) != false);
