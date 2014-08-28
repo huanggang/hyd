@@ -33,7 +33,13 @@ function hyd_theme() {
         'preprocess functions' => array('hyd_preprocess_user_register_form'),
         //'file' => ''
         ),
-
+    'node_admin_content' => array(
+        'path'                   => $path, 
+        'template'               => 'node-admin-content',
+        'render element'         => 'form', 
+        //'arguments'            => array('form' => NULL), 
+        //'preprocess functions' => array('easyloan_preprocess_user_pass'), 
+        ),
     'about' => array(
         'path'     => $path . '/about', 
         'template' => 'about',),
