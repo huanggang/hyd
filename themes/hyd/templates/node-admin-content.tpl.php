@@ -18,7 +18,7 @@
   <div>
 	<ul class="action-links">
 		<li>
-			<a href="/d71/node/add">发布新内容</a>
+			<a href="/d71/node/add" class="ui-button ui-button-blue ui-button-mid">发布新内容</a>
 		</li>
 	</ul>
   </div>
