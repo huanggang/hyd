@@ -14,7 +14,12 @@ li.content-type{
   		global $base_url;
   		$base_path = $base_url . '/';
 
+  		$ignored_types = array('Article', 'Basic page', 'Node export: import');
+
   		foreach ($content as $key => $value) {
+  			if (in_array($value['link_title'], $ignored_types)){
+  				continue;
+  			}
 	?>
 		<li class="content-type">
 			<a href="<?php print $base_path . $value['link_path']; ?>" class="ui-button ui-button-blue ui-button-mid"><?php print $value['link_title']; ?></a>
