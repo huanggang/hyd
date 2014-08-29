@@ -22,21 +22,24 @@ function hyd_theme() {
         'path'                   => $path, 
         'template'               => 'findpsw',  
         'render element'         => 'form', 
-        //'arguments'            => array('form' => NULL), 
-        //'preprocess functions' => array('easyloan_preprocess_user_pass'), 
         ),
-    //'form_easyloan_wizard' => array(
     'user_register_form' => array(
         'path'                 => $path, 
         'template'             => 'user-register',
         'render element'       => 'form',
         'preprocess functions' => array('hyd_preprocess_user_register_form'),
-        //'file' => ''
         ),
     'node_admin_content' => array(
         'path'                   => $path, 
         'template'               => 'node-admin-content',
         'render element'         => 'form', 
+        //'arguments'            => array('form' => NULL), 
+        ),
+
+    'node_add_list' => array(
+        'path'                   => $path, 
+        'template'               => 'node-add-list',
+        //'render element'         => 'form', 
         //'arguments'            => array('form' => NULL), 
         //'preprocess functions' => array('easyloan_preprocess_user_pass'), 
         ),
