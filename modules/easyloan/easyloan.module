@@ -767,7 +767,6 @@ function easyloan_block_view($delta = ''){
   $block = array();
   switch($delta){
     case 'footer':
-      //if(user_access('access content')){ //good idea to check user perms here
       $block['subject'] = t('');
       $block['content'] = array('#title' => '', );
       return $block;
@@ -912,19 +911,6 @@ function menu_callback($menu, $param = ''){
     case 'account_loanappview':
       return theme('account-loanappview', $content);
     case 'account_basicinfo':
-/*
-      db_set_active('hyd');
-      global $user;
-      $result = db_select('account_info_act_info', 'a')
-        ->fields('a')
-        ->condition('act_info_usr_id', $user->uid)
-        ->execute()
-        ->fetchAssoc();
-      $user->basic = $result; 
-      //$content['age'] = $result; 
-      var_dump($user);
-      db_set_active();
-*/
       return theme('account-basicinfo', $content);
     case 'account_security':
       return theme('account-security', $content);
@@ -1227,27 +1213,8 @@ function authenticated_access() {
   return in_array("authenticated user", $user->roles);
 }
 
-function easyloan_block_list_alter(&$blocks){
-  // var_dump($blocks); 
-}
-
 function easyloan_goto($path = NULL){
   drupal_goto($path);
-}
-
-
-function easyloan_block_view_alter(&$data, $block) {
-
-  if ($block->delta=='easyloan_about' && $block->module=='menu'){
-    $node = menu_get_object();
-
-    if ($node && $node->type=='notice') {
-      // You have a valid node to work with.
-      // print 'hahahahaha';
-
-    }
-  }
-  
 }
 
 /**
