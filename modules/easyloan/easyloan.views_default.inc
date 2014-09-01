@@ -1187,7 +1187,7 @@ function easyloan_views_default_views() {
   $view = new view();
   $view->name = 'slideshow';
   $view->description = '';
-  $view->tag = 'default';
+  $view->tag = '首页';
   $view->base_table = 'node';
   $view->human_name = '首页幻灯片视图';
   $view->core = 7;
@@ -1199,7 +1199,7 @@ function easyloan_views_default_views() {
   $handler->display->display_options['title'] = '首页幻灯片视图';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'time';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'some';
@@ -1263,6 +1263,9 @@ function easyloan_views_default_views() {
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'block');
+  $handler->display->display_options['defaults']['cache'] = FALSE;
+  $handler->display->display_options['cache']['type'] = 'time';
+  $handler->display->display_options['block_caching'] = '8';
   $translatables['slideshow'] = array(
     t('Master'),
     t('首页幻灯片视图'),
