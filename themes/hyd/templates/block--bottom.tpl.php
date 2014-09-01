@@ -44,7 +44,7 @@ global $base_url;
     <div class="ui-footer-copyright">
       <span class="ui-footer-contact-link color-gray-text">© 2014 好易贷 All rights reserved</span>
       <span class="ui-footer-contact-link color-gray-text has-separator">好易贷商务顾问(北京)有限公司</span>
-      <span class="ui-footer-contact-link color-gray-text has-separator last"><a class="gray" target="_blank" href="/icp/icp.html">粤ICP证 xxxxx号</a></span>
+      <span class="ui-footer-contact-link color-gray-text has-separator last"><span class="gray">粤ICP证 14012987</span></span>
     </div>
     <div class="ui-footer-verification ui-footer-narrow-hide fn-clear">
       <a class="ui-footer-verification-item fn-left trust" title="好易贷已通过中网权威数据库对比，获得“可信网站”身份验证，您可放心使用。" href="https://ss.knet.cn/verifyseal.dll?sn=e13042311010040288j4wq000000&amp;ct=df&amp;a=1&amp;pa=931969" target="_blank"></a>
