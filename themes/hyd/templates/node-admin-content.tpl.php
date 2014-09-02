@@ -25,7 +25,7 @@
   <ul class="ui-list ui-list-m " id="content-list">
   	<?php print drupal_render($form['filter']);?>
 	<?php print drupal_render($form['admin']);?>
-	<?php print drupal_render($form['#form_id']);?>
+	<?php print drupal_render($form['form_id']);?>
 	<?php print drupal_render($form['#type']);?>
 	<?php print drupal_render($form['#build_id']);?>
 	<?php print drupal_render($form['form_build_id']);?>
