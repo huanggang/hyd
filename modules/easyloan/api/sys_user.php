@@ -2,8 +2,7 @@
 
 include_once 'util_global.php';
 
-function set_user($type, $id, $value = null)
-{
+function set_user($type, $id, $value = null){
   if (is_null($id) || $id <= 0)
   {
     return false;
@@ -14,14 +13,15 @@ function set_user($type, $id, $value = null)
     case 1: // register
       $now = new DateTime;
       $nowStr = $now->format("Y-m-d\TH:i:sP");
-      if (!is_valid_password($value))
-      {
-        return false;
-      }
 
       $namepass = preg_split('/;/', $value);
       $name = $namepass[0];
       $pass = $namepass[1];
+
+      if (!is_valid_password($pass))
+      {
+        return false;
+      }
 
       $query = $query."INSERT INTO users_usr (usr_id,usr_password,usr_registered) VALUES (".strval($id).",SHA2(".sqlstr($pass).",256),".sqlstr($nowStr).");";
       $query = $query."INSERT INTO account_info_act_info(act_info_usr_id,act_info_nick,act_info_ssn_status,act_info_ssn_times,act_info_mobile_status,act_info_email_status) VALUES (".strval($id).", ".sqlstr($name).", '0',  '0', '0', '0')";
@@ -82,4 +82,3 @@ function set_user($type, $id, $value = null)
 
   return $flag;
 }
-?>
