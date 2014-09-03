@@ -10,6 +10,10 @@ drupal_add_js($theme_path . '/js/facing.js');
 drupal_add_js($theme_path . '/js/borrow_estate.js');
 drupal_add_js($theme_path . '/js/borrow_validate.js');
 
+drupal_add_css($theme_path . '/css/iconfont.css');
+drupal_add_library('system', 'ui.dialog');
+drupal_add_css($theme_path . '/css/dialog.css');
+
 drupal_add_js('var uid=' . strval($user->uid), 'inline');
 ?>
 <div class="pg-loan" id="pg-loan">

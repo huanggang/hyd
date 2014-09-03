@@ -90,6 +90,42 @@
         event.preventDefault();
       });
 
+      function dialogError(message){
+        var html = '<div data-widget-cid="widget-0" class="ui-mask" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 99998; opacity: 0.85; background-color: rgb(255, 255, 255);"></div><div class="ui-dialog" tabindex="-1" data-widget-cid="widget-1" style="width: 500px; z-index: 99999; position: absolute; left: 0px; top: 0px;"><div style="display: block;" class="ui-dialog-close" title="关闭本框" data-role="close">×</div><div style="background: none repeat scroll 0% 0% rgb(255, 255, 255); height: 100%;" class="ui-dialog-content" data-role="content"><div class="ui-message-content"><div class="fn-clear"><div class="ui-message-icon fn-left"><i class="iconfont fn-left error" title="错误"></i></div><div class="ui-message-text fn-left"><p class="text-big">'
+          + message
+          + '</p></div></div><div class="ui-message-operation text-center mt20"><a class="ui-button ui-button-blue ui-button-mid ui-message-close-button">关闭</a></div></div></div></div>';
+          $('body').append(html);
+
+          $(window).resize(function() {
+            $('.ui-dialog').position({
+              my: "center",
+              at: "center",
+              of: window
+            });
+          });
+          $(window).resize();
+
+          $('.ui-mask').click(function(){
+            $(this).remove();
+            $('.ui-dialog').remove();
+          });
+
+          $('.ui-dialog-close').click(function(){
+            $('.ui-mask').click();
+          });
+
+          $('.ui-message-close-button').click(function(){
+            $('.ui-mask').click();
+          });
+        };
+
+      var hours = (new Date()).getHours();
+      if (hours < 9 || hours > 23){
+        // should use model dialog here
+        dialogError('请您在我们的工作时间提交申请(北京时间9:00-23:00)');
+      };
+
+
       $('#apply').click(function(event){
         if(v.form()){
           $.post(Drupal.settings.basePath + "api/apply", 
