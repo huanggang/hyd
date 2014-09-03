@@ -2,7 +2,8 @@
 
 include_once 'util_global.php';
 
-function set_user($type, $id, $value = null){
+function set_user($type, $id, $value = null)
+{
   if (is_null($id) || $id <= 0)
   {
     return false;
