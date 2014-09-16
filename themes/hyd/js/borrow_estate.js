@@ -127,7 +127,7 @@
         };
 
       var hours = (new Date()).getHours();
-      if (1 || hours < 9 || hours > 23){
+      if (hours < 9 || hours > 23){
         // should use model dialog here
         dialogError('请您在我们的工作时间提交申请(北京时间9:00-23:00)');
       };
