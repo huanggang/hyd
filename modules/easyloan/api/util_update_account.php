@@ -86,11 +86,11 @@ function update_account($id)
       {
         if ($act_ln_n_interest > 0)
         {
-          $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 9, ".sqlstrval($act_ln_n_interest).", ".sqlstrval($act_mny_available + $act_mny_frozen + $act_ln_n_amount).", 0, 0, NULL)") != false);
+          $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", 9, ".sqlstrval($act_ln_n_interest).", ".sqlstrval($act_mny_available + $act_mny_frozen + $act_ln_n_amount).", 0, 0, NULL)") != false);
         }
         if ($act_ln_n_amount > 0)
         {
-          $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 8, ".sqlstrval($act_ln_n_amount).", ".sqlstrval($act_mny_available + $act_mny_frozen).", 0, 0, NULL)") != false);
+          $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", 8, ".sqlstrval($act_ln_n_amount).", ".sqlstrval($act_mny_available + $act_mny_frozen).", 0, 0, NULL)") != false);
         }
         $act_mny_total = compute_money_total($act_mny_available, $act_mny_frozen, $act_mny_investment, $interest->w_amount, $interest->w_interest, $act_mny_owned, $act_mny_fine);
         $flag = $flag && (mysqli_query($con, "UPDATE account_money_act_mny SET act_mny_available = ".sqlstrval($act_mny_available).", act_mny_loaned = ".sqlstrval($interest->w_amount).", act_mny_interest = ".sqlstrval($interest->w_interest).", act_mny_total = ".sqlstrval($act_mny_total).", act_mny_updated = ".sqlstr($nowStr)." WHERE act_mny_usr_id = ".strval($id)) != false);
@@ -102,7 +102,7 @@ function update_account($id)
         }
         else // loan is not finished yet
         {
-          $flag = $flag && (mysqli_query($con, "UPDATE SET act_ln_r_amount = ".sqlstrval($interest->r_amount).", act_ln_r_interest = ".sqlstrval($interest->r_interest).", act_ln_w_amount = ".sqlstrval($interest->w_amount).", act_ln_w_interest = ".sqlstrval($interest->w_interest).", act_ln_n_date = ".sqlstr($interest->n_date).", act_ln_n_amount = ".sqlstrval($interest->n_amount).", act_ln_n_interest = ".sqlstrval($interest->n_interest).", act_ln_w_owned = 0, act_ln_w_fine = 0, act_ln_updated = ".sqlstr($nowStr)." WHERE act_ln_usr_id = ".strval($id)) != false);
+          $flag = $flag && (mysqli_query($con, "UPDATE account_loan_act_ln SET act_ln_r_amount = ".sqlstrval($interest->r_amount).", act_ln_r_interest = ".sqlstrval($interest->r_interest).", act_ln_w_amount = ".sqlstrval($interest->w_amount).", act_ln_w_interest = ".sqlstrval($interest->w_interest).", act_ln_n_date = ".sqlstr($interest->n_date).", act_ln_n_amount = ".sqlstrval($interest->n_amount).", act_ln_n_interest = ".sqlstrval($interest->n_interest).", act_ln_w_owned = 0, act_ln_w_fine = 0, act_ln_updated = ".sqlstr($nowStr)." WHERE act_ln_usr_id = ".strval($id)) != false);
         }
       }
       else // has been owned or just owned
@@ -118,24 +118,24 @@ function update_account($id)
             $delta_fine = compute_fine($act_mny_owned, $act_mny_fine, $lns_fine_rate, $lns_fine_rate_is_single, $days);
             $act_trn_owned = $act_mny_owned;
             $act_trn_fine = $act_mny_fine + $delta_fine;
-            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 10, ".sqlstrval($delta_fine).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
+            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", 10, ".sqlstrval($delta_fine).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
           }
           if ($act_ln_n_interest > 0)
           {
             $act_trn_owned += $act_ln_n_interest;
-            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 9, ".sqlstrval($act_ln_n_interest).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
+            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", 9, ".sqlstrval($act_ln_n_interest).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
           }
           if ($act_ln_n_amount > 0)
           {
             $act_trn_owned += $act_ln_n_amount;
-            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 8, ".sqlstrval($act_ln_n_amount).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
+            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", 8, ".sqlstrval($act_ln_n_amount).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
           }
           $days = str2date($act_ln_n_date)->diff($today)->days;
           if ($days > 0)
           {
             $delta_fine = compute_fine($act_trn_owned, $act_trn_fine, $lns_fine_rate, $lns_fine_rate_is_single, $days);
             $act_trn_fine += $delta_fine;
-            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 10, ".sqlstrval($delta_fine).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
+            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", 10, ".sqlstrval($delta_fine).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
           }
         }
         else // just owned
@@ -155,7 +155,7 @@ function update_account($id)
               $act_trn_available = $act_trn_available - $act_ln_n_interest;
               $act_mny_available = $act_mny_available - $act_ln_n_interest;
             }
-            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 9, ".sqlstrval($act_ln_n_interest).", ".sqlstrval($act_trn_available).", ".sqlstrval($act_trn_owned).", 0, NULL)") != false);
+            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", 9, ".sqlstrval($act_ln_n_interest).", ".sqlstrval($act_trn_available).", ".sqlstrval($act_trn_owned).", 0, NULL)") != false);
           }
           if ($act_ln_n_amount > 0)
           {
@@ -168,7 +168,7 @@ function update_account($id)
             {
               $act_trn_owned += $act_ln_n_amount;
             }
-            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 8, ".sqlstrval($act_ln_n_amount).", ".sqlstrval($act_trn_available).", ".sqlstrval($act_trn_owned).", 0, NULL)") != false);
+            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", 8, ".sqlstrval($act_ln_n_amount).", ".sqlstrval($act_trn_available).", ".sqlstrval($act_trn_owned).", 0, NULL)") != false);
           }
           // check if there are days passed $act_ln_n_date
           $days = str2date($act_ln_n_date)->diff($today)->days;
@@ -176,7 +176,7 @@ function update_account($id)
           {
             $delta_fine = compute_fine($act_mny_owned, $act_mny_fine, $lns_fine_rate, $lns_fine_rate_is_single, $days);
             $act_trn_fine = $delta_fine;
-            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 10, ".sqlstrval($delta_fine).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
+            $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", 10, ".sqlstrval($delta_fine).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_trn_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
           }
         }
         $act_mny_total = compute_money_total(0, $act_mny_frozen, $act_mny_investment, $interest->w_amount, $interest->w_interest, $act_trn_owned, $act_trn_fine);
@@ -201,7 +201,7 @@ function update_account($id)
         {
           $delta_fine = compute_fine($act_mny_owned, $act_mny_fine, $lns_fine_rate, $lns_fine_rate_is_single, $days);
           $act_trn_fine = $act_mny_fine + $delta_fine;
-          $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($todayStr).", 10, ".sqlstrval($delta_fine).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_mny_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
+          $flag = $flag && (mysqli_query($con, "INSERT INTO account_transactions_act_trn (act_trn_usr_id, act_trn_time, act_trn_type, act_trn_amount, act_trn_available, act_trn_owned, act_trn_fine, act_trn_note) VALUES (".sqlstrval($id).", ".sqlstr($nowStr).", 10, ".sqlstrval($delta_fine).", ".sqlstrval($act_mny_frozen).", ".sqlstrval($act_mny_owned).", ".sqlstrval($act_trn_fine).", NULL)") != false);
           $act_mny_total = compute_money_total($act_mny_available, $act_mny_frozen, $act_mny_investment, $act_mny_loaned, $act_mny_interest, $act_mny_owned, $act_trn_fine);
           $flag = $flag && (mysqli_query($con, "UPDATE account_money_act_mny SET act_mny_fine = ".sqlstrval($act_trn_fine).", act_mny_total = ".sqlstrval($act_mny_total).", act_mny_updated = ".sqlstr($nowStr)." WHERE act_mny_usr_id = ".strval($id)) != false);
           $flag = $flag && (mysqli_query($con, "UPDATE account_loan_act_ln SET act_ln_w_fine = ".sqlstrval($act_trn_fine).", act_ln_updated = ".sqlstr($nowStr)." WHERE act_ln_usr_id = ".strval($id)) != false);
