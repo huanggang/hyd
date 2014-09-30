@@ -25,7 +25,7 @@ function update_hyd($app_id)
   mysqli_autocommit($con, false);
   mysqli_query($con, "LOCK TABLES hyd_loans_hyd_ln WRITE, loans_lns READ, investments_inv WRITE, account_loan_act_ln READ, investment_accounts_inv_act READ, account_investments_act_invs WRITE, account_money_act_mny WRITE, account_transactions_act_trn WRITE, account_investment_act_inv WRITE");
 
-  $result = mysqli_query($con, "SELECT hyd_ln_usr_id, hyd_ln_total, hyd_ln_count, hyd_ln_r_amount, hyd_ln_r_interest, hyd_ln_w_amount, hyd_ln_w_interest, hyd_ln_n_date, hyd_ln_n_amount, hyd_ln_n_interest, hyd_ln_w_owned, hyd_ln_w_fine, hyd_ln_updated FROM hyd_loans_hyd_ln WHERE hyd_ln_app_id = ".strval($app_id)." AND hyd_ln_n_date IS NOT NULL AND hyd_ln_updated < ".sqlstr($nowStr));
+  $result = mysqli_query($con, "SELECT hyd_ln_usr_id, hyd_ln_total, hyd_ln_count, hyd_ln_r_amount, hyd_ln_r_interest, hyd_ln_w_amount, hyd_ln_w_interest, hyd_ln_n_date, hyd_ln_n_amount, hyd_ln_n_interest, hyd_ln_w_owned, hyd_ln_w_fine, hyd_ln_updated FROM hyd_loans_hyd_ln WHERE hyd_ln_app_id = ".strval($app_id)." AND (hyd_ln_n_date IS NOT NULL OR hyd_ln_w_owned > 0) AND hyd_ln_updated < ".sqlstr($nowStr));
   if ($row = mysqli_fetch_array($result))
   {
     $hyd_ln_usr_id = $row['hyd_ln_usr_id'];
@@ -159,10 +159,10 @@ function update_hyd($app_id)
       }
       else // HYD may overdues the repayment to the investers
       {
+        $date1 = str2date($hyd_ln_updated);
+        $date2 = str2date($hyd_ln_n_date);
         if ($hyd_ln_w_owned > 0) // HYD has been owning to investers
         {
-          $date1 = str2date($hyd_ln_updated);
-          $date2 = str2date($hyd_ln_n_date);
           if ($date1 < $date2)
           {
             $days = $date1->diff($date2)->days;
@@ -213,7 +213,7 @@ function update_hyd($app_id)
 
         if ($is_done)
         {
-          $flag = $flag && (mysqli_query($con, "UPDATE hyd_loans_hyd_ln SET hyd_ln_count = ".sqlstrval($interest->count).", hyd_ln_r_amount = ".sqlstrval($interest->r_amount).", hyd_ln_r_interest = ".sqlstrval($interest->r_interest).", hyd_ln_w_amount = ".sqlstrval($interest->w_amount).", hyd_ln_w_interest = ".sqlstrval($interest->w_interest).", hyd_ln_n_date = NULL, hyd_ln_n_amount = ".sqlstrval($interest->n_amount).", hyd_ln_n_interest = ".sqlsqlstrval($interest->n_interest).", hyd_ln_w_owned = ".sqlstrval($hyd_ln_w_owned).", hyd_ln_w_fine = ".sqlstrval($hyd_ln_w_fine).", hyd_ln_updated = ".sqlstr($nowStr)." WHERE hyd_ln_app_id = ".strval($app_id)) != false);
+          $flag = $flag && (mysqli_query($con, "UPDATE hyd_loans_hyd_ln SET hyd_ln_count = ".sqlstrval($interest->count).", hyd_ln_r_amount = ".sqlstrval($interest->r_amount).", hyd_ln_r_interest = ".sqlstrval($interest->r_interest).", hyd_ln_w_amount = ".sqlstrval($interest->w_amount).", hyd_ln_w_interest = ".sqlstrval($interest->w_interest).", hyd_ln_n_date = NULL, hyd_ln_n_amount = ".sqlstrval($interest->n_amount).", hyd_ln_n_interest = ".sqlstrval($interest->n_interest).", hyd_ln_w_owned = ".sqlstrval($hyd_ln_w_owned).", hyd_ln_w_fine = ".sqlstrval($hyd_ln_w_fine).", hyd_ln_updated = ".sqlstr($nowStr)." WHERE hyd_ln_app_id = ".strval($app_id)) != false);
           if ($hyd_ln_w_owned == 0)
           {
             $flag = $flag && (mysqli_query($con, "UPDATE investments_inv SET inv_is_done = 1, inv_finished = ".sqlstr($todayStr).", inv_fine = ".sqlstrval($inv_fine + $repay_fine).", inv_updated = ".sqlstr($nowStr)." WHERE inv_app_id = ".strval($app_id)) != false);
@@ -258,10 +258,10 @@ function update_hyd($app_id)
           $act_mny_updated = $row1['act_mny_updated'];
           mysqli_free_result($result1);
 
+          $date1 = str2date($act_invs_updated);
+          $date2 = str2date($hyd_ln_n_date);
           if ($act_invs_w_owned > 0)
           {
-            $date1 = str2date($act_invs_updated);
-            $date2 = str2date($hyd_ln_n_date);
             if ($date1 < $date2)
             {
               $days = $date1->diff($date2)->days;
@@ -354,7 +354,7 @@ function update_hyd($app_id)
           if ($is_done)
           {
             $act_invs_is_done = $act_invs_w_owned == 0 ? 1 : 0;
-            $flag = $flag && (mysqli_query($con, "UPDATE account_investments_act_invs SET act_invs_is_done = ".sqlstrval($act_invs_is_done).", act_invs_r_amount = ".sqlstrval($act_interest->r_amount).", act_invs_r_interest = ".sqlstrval($act_interest->r_interest).", act_invs_w_amount = ".sqlstrval($act_interest->w_amount).", act_invs_w_interest = ".sqlstrval($act_interest->w_interest).", act_invs_n_date = NULL, act_invs_n_amount = ".sqlstrval($act_interest->n_amount).", act_invs_n_interest = ".sqlstrval($act_interest->n_interest).", act_invs_a_amount = ".sqlstrval($act_invs_a_amount).", act_invs_a_interest = ".sqlstrval($act_invs_a_interest).", act_invs_w_owned = ".sqlstrval($act_invs_w_owned).", act_invs_w_fine = ".sqlstrval($act_invs_w_fine).", act_invs_updated = ".sqlstr($nowStr)." WHERE act_invs_usr_id = ".strval($inv_act_usr_id)." AND act_invs_app_id = ".strval($app_id)) != false);
+            $flag = $flag && (mysqli_query($con, "UPDATE account_investments_act_invs SET act_invs_is_done = ".sqlstrval($act_invs_is_done).", act_invs_r_amount = ".sqlstrval($act_interest->r_amount).", act_invs_r_interest = ".sqlstrval($act_interest->r_interest).", act_invs_r_fine = ".sqlstrval($act_invs_r_fine).", act_invs_w_amount = ".sqlstrval($act_interest->w_amount).", act_invs_w_interest = ".sqlstrval($act_interest->w_interest).", act_invs_n_date = NULL, act_invs_n_amount = ".sqlstrval($act_interest->n_amount).", act_invs_n_interest = ".sqlstrval($act_interest->n_interest).", act_invs_a_amount = ".sqlstrval($act_invs_a_amount).", act_invs_a_interest = ".sqlstrval($act_invs_a_interest).", act_invs_w_owned = ".sqlstrval($act_invs_w_owned).", act_invs_w_fine = ".sqlstrval($act_invs_w_fine).", act_invs_updated = ".sqlstr($nowStr)." WHERE act_invs_usr_id = ".strval($inv_act_usr_id)." AND act_invs_app_id = ".strval($app_id)) != false);
 
             if ($act_invs_is_done)
             {
@@ -376,7 +376,7 @@ function update_hyd($app_id)
           }
           else
           {
-            $flag = $flag && (mysqli_query($con, "UPDATE account_investments_act_invs SET act_invs_r_amount = ".sqlstrval($act_interest->r_amount).", act_invs_r_interest = ".sqlstrval($act_interest->r_interest).", act_invs_w_amount = ".sqlstrval($act_interest->w_amount).", act_invs_w_interest = ".sqlstrval($act_interest->w_interest).", act_invs_n_date = ".sqlstr($act_interest->n_date).", act_invs_n_amount = ".sqlstrval($act_interest->n_amount).", act_invs_n_interest = ".sqlstrval($act_interest->n_interest).", act_invs_a_amount = ".sqlstrval($act_invs_a_amount).", act_invs_a_interest = ".sqlstrval($act_invs_a_interest).", act_invs_w_owned = ".sqlstrval($act_invs_w_owned).", act_invs_w_fine = ".sqlstrval($act_invs_w_fine).", act_invs_updated = ".sqlstr($nowStr)." WHERE act_invs_usr_id = ".strval($inv_act_usr_id)." AND act_invs_app_id = ".strval($app_id)) != false);
+            $flag = $flag && (mysqli_query($con, "UPDATE account_investments_act_invs SET act_invs_r_amount = ".sqlstrval($act_interest->r_amount).", act_invs_r_interest = ".sqlstrval($act_interest->r_interest).", act_invs_r_fine = ".sqlstrval($act_invs_r_fine).", act_invs_w_amount = ".sqlstrval($act_interest->w_amount).", act_invs_w_interest = ".sqlstrval($act_interest->w_interest).", act_invs_n_date = ".sqlstr($act_interest->n_date).", act_invs_n_amount = ".sqlstrval($act_interest->n_amount).", act_invs_n_interest = ".sqlstrval($act_interest->n_interest).", act_invs_a_amount = ".sqlstrval($act_invs_a_amount).", act_invs_a_interest = ".sqlstrval($act_invs_a_interest).", act_invs_w_owned = ".sqlstrval($act_invs_w_owned).", act_invs_w_fine = ".sqlstrval($act_invs_w_fine).", act_invs_updated = ".sqlstr($nowStr)." WHERE act_invs_usr_id = ".strval($inv_act_usr_id)." AND act_invs_app_id = ".strval($app_id)) != false);
           }
         }
         mysqli_free_result($result);
@@ -545,7 +545,7 @@ function update_hyd($app_id)
           if ($is_done)
           {
             $act_invs_is_done = $act_invs_w_owned == 0 ? 1 : 0;
-            $flag = $flag && (mysqli_query($con, "UPDATE account_investments_act_invs SET act_invs_is_done = ".sqlstrval($act_invs_is_done).", act_invs_a_amount = ".sqlstrval($act_invs_a_amount).", act_invs_a_interest = ".sqlstrval($act_invs_a_interest).", act_invs_w_owned = ".sqlstrval($act_invs_w_owned).", act_invs_w_fine = ".sqlstrval($act_invs_w_fine).", act_invs_updated = ".sqlstr($nowStr)." WHERE act_invs_usr_id = ".strval($inv_act_usr_id)." AND act_invs_app_id = ".strval($app_id)) != false);
+            $flag = $flag && (mysqli_query($con, "UPDATE account_investments_act_invs SET act_invs_is_done = ".sqlstrval($act_invs_is_done).", act_invs_r_fine = ".sqlstrval($act_invs_r_fine).", act_invs_a_amount = ".sqlstrval($act_invs_a_amount).", act_invs_a_interest = ".sqlstrval($act_invs_a_interest).", act_invs_w_owned = ".sqlstrval($act_invs_w_owned).", act_invs_w_fine = ".sqlstrval($act_invs_w_fine).", act_invs_updated = ".sqlstr($nowStr)." WHERE act_invs_usr_id = ".strval($inv_act_usr_id)." AND act_invs_app_id = ".strval($app_id)) != false);
 
             if ($act_invs_is_done)
             {
@@ -567,7 +567,7 @@ function update_hyd($app_id)
           }
           else
           {
-            $flag = $flag && (mysqli_query($con, "UPDATE account_investments_act_invs SET act_invs_a_amount = ".sqlstrval($act_invs_a_amount).", act_invs_a_interest = ".sqlstrval($act_invs_a_interest).", act_invs_w_owned = ".sqlstrval($act_invs_w_owned).", act_invs_w_fine = ".sqlstrval($act_invs_w_fine).", act_invs_updated = ".sqlstr($nowStr)." WHERE act_invs_usr_id = ".strval($inv_act_usr_id)." AND act_invs_app_id = ".strval($app_id)) != false);
+            $flag = $flag && (mysqli_query($con, "UPDATE account_investments_act_invs SET act_invs_r_fine = ".sqlstrval($act_invs_r_fine).", act_invs_a_amount = ".sqlstrval($act_invs_a_amount).", act_invs_a_interest = ".sqlstrval($act_invs_a_interest).", act_invs_w_owned = ".sqlstrval($act_invs_w_owned).", act_invs_w_fine = ".sqlstrval($act_invs_w_fine).", act_invs_updated = ".sqlstr($nowStr)." WHERE act_invs_usr_id = ".strval($inv_act_usr_id)." AND act_invs_app_id = ".strval($app_id)) != false);
           }
         }
         mysqli_free_result($result);
