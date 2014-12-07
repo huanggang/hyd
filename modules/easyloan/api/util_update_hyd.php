@@ -218,10 +218,18 @@ function update_hyd($app_id)
           {
             $flag = $flag && (mysqli_query($con, "UPDATE investments_inv SET inv_is_done = 1, inv_finished = ".sqlstr($todayStr).", inv_fine = ".sqlstrval($inv_fine + $repay_fine).", inv_updated = ".sqlstr($nowStr)." WHERE inv_app_id = ".strval($app_id)) != false);
           }
+          else if ($repay_fine > 0)
+          {
+            $flag = $flag && (mysqli_query($con, "UPDATE investments_inv SET inv_fine = ".sqlstrval($inv_fine + $repay_fine).", inv_updated = ".sqlstr($nowStr)." WHERE inv_app_id = ".strval($app_id)) != false);
+          }
         }
         else
         {
           $flag = $flag && (mysqli_query($con, "UPDATE hyd_loans_hyd_ln SET hyd_ln_count = ".sqlstrval($interest->count).", hyd_ln_r_amount = ".sqlstrval($interest->r_amount).", hyd_ln_r_interest = ".sqlstrval($interest->r_interest).", hyd_ln_w_amount = ".sqlstrval($interest->w_amount).", hyd_ln_w_interest = ".sqlstrval($interest->w_interest).", hyd_ln_n_date = ".sqlstr($interest->n_date).", hyd_ln_n_amount = ".sqlstrval($interest->n_amount).", hyd_ln_n_interest = ".sqlstrval($interest->n_interest).", hyd_ln_w_owned = ".sqlstrval($hyd_ln_w_owned).", hyd_ln_w_fine = ".sqlstrval($hyd_ln_w_fine).", hyd_ln_updated = ".sqlstr($nowStr)." WHERE hyd_ln_app_id = ".strval($app_id)) != false);
+          if ($repay_fine > 0)
+          {
+            $flag = $flag && (mysqli_query($con, "UPDATE investments_inv SET inv_fine = ".sqlstrval($inv_fine + $repay_fine).", inv_updated = ".sqlstr($nowStr)." WHERE inv_app_id = ".strval($app_id)) != false);
+          }
         }
         $result = mysqli_query($con, "SELECT inv_act_usr_id, inv_act_amount, inv_act_ratio FROM investment_accounts_inv_act WHERE inv_act_app_id = ".strval($app_id));
         while ($row = mysqli_fetch_array($result))
@@ -427,6 +435,11 @@ function update_hyd($app_id)
         {
           $flag = $flag && (mysqli_query($con, "UPDATE investments_inv SET inv_is_done = 1, inv_finished = ".sqlstr($todayStr).", inv_fine = ".sqlstrval($inv_fine + $repay_fine).", inv_updated = ".sqlstr($nowStr)." WHERE inv_app_id = ".strval($app_id)) != false);
         }
+        else if ($repay_fine > 0)
+        {
+          $flag = $flag && (mysqli_query($con, "UPDATE investments_inv SET inv_fine = ".sqlstrval($inv_fine + $repay_fine).", inv_updated = ".sqlstr($nowStr)." WHERE inv_app_id = ".strval($app_id)) != false);
+        }
+
         $flag = $flag && (mysqli_query($con, "UPDATE hyd_loans_hyd_ln SET hyd_ln_w_owned = ".sqlstrval($hyd_ln_w_owned).", hyd_ln_w_fine = ".sqlstrval($hyd_ln_w_fine).", hyd_ln_updated = ".sqlstr($nowStr)." WHERE hyd_ln_app_id = ".strval($app_id)) != false);
 
         $result = mysqli_query($con, "SELECT inv_act_usr_id, inv_act_amount, inv_act_ratio FROM investment_accounts_inv_act WHERE inv_act_app_id = ".strval($app_id));
